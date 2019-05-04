@@ -7,6 +7,8 @@
 
 # production
 /build
+/semantic/dist
+
 
 # misc
 .DS_Store
