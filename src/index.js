@@ -6,19 +6,16 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 // packages for internationalization
 import { I18nextProvider } from "react-i18next";
-import i18n from "../config/internationalization";
-// package to build upon a previously exiting browser history
-import createHistory from "history/createBrowserHistory";
+import i18n from "./config/internationalization";
 // packages to configure redux
 import { Provider as ReduxStoreProvider } from "react-redux";
-import configureReduxStore from "../config/redux/configureReduxStore";
+import configureStore from "./config/redux/configureStore";
 
-const history = createHistory();
-const store = configureReduxStore(history);
+const reduxStore = configureStore().store;
 
 ReactDOM.render(
   <I18nextProvider i18n={i18n}>
-    <ReduxStoreProvider store={store}>
+    <ReduxStoreProvider store={reduxStore}>
       <App />
     </ReduxStoreProvider>
   </I18nextProvider>,

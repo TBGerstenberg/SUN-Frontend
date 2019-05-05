@@ -1,7 +1,7 @@
 import { userConstants } from "../_constants";
-import { userService } from "../_services";
+import { userService } from "../../../services";
 
-export const userActions = {
+const userActions = {
   register,
   login,
   logout
@@ -51,3 +51,5 @@ function logout() {
   userService.logout();
   return { type: userConstants.LOGOUT };
 }
+
+export default userActions;

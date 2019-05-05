@@ -3,9 +3,21 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "history": "^4.9.0",
+    "i18next": "^15.0.9",
+    "i18next-browser-languagedetector": "^3.0.1",
+    "i18next-xhr-backend": "^2.0.1",
+    "keycloak-js": "^5.0.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-scripts": "3.0.0"
+    "react-hot-loader": "^4.8.4",
+    "react-i18next": "^10.8.1",
+    "react-redux": "^7.0.2",
+    "react-scripts": "2.1.8",
+    "redux": "^4.0.1",
+    "redux-first-router": "^2.1.1",
+    "redux-first-router-link": "^2.1.1",
+    "semantic-ui-react": "^0.86.0"
   },
   "scripts": {
     "build-semantic": "cd semantic && gulp build-css build-assets",
@@ -31,6 +43,7 @@
     ]
   },
   "devDependencies": {
+    "redux-devtools-extension": "^2.13.8",
     "semantic-ui": "^2.4.2"
   }
 }

@@ -1,7 +1,7 @@
 /**
  * Constants used as action types in ../_actions/user.actions.js
  */
-export const userConstants = {
+const userConstants = {
   LOGIN_REQUEST: "USERS_LOGIN_REQUEST",
   LOGIN_SUCCESS: "USERS_LOGIN_SUCCESS",
   LOGIN_FAILURE: "USERS_LOGIN_FAILURE",
@@ -16,3 +16,5 @@ export const userConstants = {
   GETALL_SUCCESS: "USERS_GETALL_SUCCESS",
   GETALL_FAILURE: "USERS_GETALL_FAILURE"
 };
+
+export default userConstants;

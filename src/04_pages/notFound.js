@@ -1,7 +1,7 @@
 import React from "react";
 
-const notFound = () => {
-  return <header className="App-header">404 - Not Found.</header>;
+const NotFound = () => {
+  return <header className="App-header">403 - Not Found.</header>;
 };
 
-export default notFound;
+export default NotFound;
