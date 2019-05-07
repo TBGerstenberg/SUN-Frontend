@@ -7,8 +7,8 @@
 
 # production
 /build
-/semantic/dist
-
+# Built CSS and JS file for semantic-UI 
+src/semantic/dist
 
 # misc
 .DS_Store

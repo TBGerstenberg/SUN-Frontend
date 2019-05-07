@@ -20,8 +20,8 @@
     "semantic-ui-react": "^0.86.0"
   },
   "scripts": {
-    "build-semantic": "cd semantic && gulp build-css build-assets",
-    "watch-semantic": "cd semantic && yarn run build-semantic && gulp watch",
+    "build-semantic": "cd src/semantic && gulp build-css build-assets",
+    "watch-semantic": "cd src/semantic && yarn run build-semantic && gulp watch",
     "start": "yarn run build-semantic && react-scripts start",
     "build": "yarn run build-semantic && react-scripts build",
     "test": "react-scripts test --env=jsdom",

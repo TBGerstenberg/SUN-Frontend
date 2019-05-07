@@ -10,7 +10,7 @@ import options from "./storeOptions";
 const routesMap = {
   HOME: "/home",
   PROFILE: "/profile",
-  LOGIN: "/login"
+  LOGIN: "/"
 };
 
 export default function configureStore(history) {
