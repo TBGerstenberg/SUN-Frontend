@@ -17,7 +17,7 @@ const routesMap = {
 };
 
 export default function configureStore(history) {
-  const { reducer, middleware, enhancer, thunk } = connectRoutes(
+  let { reducer, middleware, enhancer, thunk } = connectRoutes(
     routesMap,
     options
   );
