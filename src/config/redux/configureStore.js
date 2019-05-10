@@ -8,9 +8,11 @@ import * as reducers from "./_reducers";
 import options from "./storeOptions";
 
 const routesMap = {
+  LOGIN: "/",
+  SIGNUP: "/signup",
+  COMPLETE_PROFILE: "/complete-profile",
   HOME: "/home",
-  PROFILE: "/profile",
-  LOGIN: "/"
+  PROFILE: "/profile"
 };
 
 export default function configureStore(history) {
