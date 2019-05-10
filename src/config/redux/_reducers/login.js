@@ -6,7 +6,9 @@ const initialState = user
       loggedIn: true,
       user
     }
-  : {};
+  : {
+      loggedIn: false
+    };
 
 const loginReducer = (state = initialState, action) => {
   switch (action.type) {

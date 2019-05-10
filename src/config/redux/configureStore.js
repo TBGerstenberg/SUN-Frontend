@@ -2,6 +2,7 @@
 import { combineReducers, createStore, compose, applyMiddleware } from "redux";
 import { connectRoutes } from "redux-first-router";
 import { composeWithDevTools } from "redux-devtools-extension/logOnlyInProduction";
+import reduxThunk from "redux-thunk";
 
 import * as actionCreators from "./_actions";
 import * as reducers from "./_reducers";
@@ -20,6 +21,8 @@ export default function configureStore(history) {
     routesMap,
     options
   );
+
+  middleware = { ...middleware, reduxThunk };
 
   const composeEnhancers = (...args) =>
     typeof window !== "undefined"

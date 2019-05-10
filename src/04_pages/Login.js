@@ -9,51 +9,76 @@ import {
   Segment
 } from "semantic-ui-react";
 
-const Login = () => (
-  <div className="login-form">
-    {/*
+import { connect } from "react-redux";
+import { userActions } from "../config/redux/_actions";
+
+class Login extends React.Component {
+  constructor(props) {
+    super(props);
+    this.login = this.login.bind(this);
+  }
+
+  render(props) {
+    return (
+      <div className="login-form">
+        {/*
       Heads up! The styles below are necessary for the correct render of this example.
       You can do same with CSS, the main idea is that all the elements up to the `Grid`
       below must have a height of 100%.
     */}
-    <style>
-      {`
+        <style>
+          {`
       body > div,
       body > div > div,
       body > div > div > div.login-form {
         height: 100%;
       }
     `}
-    </style>
-    <Grid textAlign="center" style={{ height: "100%" }} verticalAlign="middle">
-      <Grid.Column style={{ maxWidth: 450 }}>
-        <Header as="h2" color="teal" textAlign="center">
-          <Image src="/logo.png" /> Log-in to your account
-        </Header>
-        <Form size="large">
-          <Segment stacked>
-            <Form.Input
-              fluid
-              icon="user"
-              iconPosition="left"
-              placeholder="E-mail address"
-            />
-            <Form.Input
-              fluid
-              icon="lock"
-              iconPosition="left"
-              placeholder="Password"
-              type="password"
-            />
-            <Button color="teal" fluid size="large">
-              Login
-            </Button>
-          </Segment>
-        </Form>
-        <Message>New to us? Sign Up</Message>
-      </Grid.Column>
-    </Grid>
-  </div>
-);
+        </style>
+        <Grid
+          textAlign="center"
+          style={{ height: "100%" }}
+          verticalAlign="middle"
+        >
+          <Grid.Column style={{ maxWidth: 450 }}>
+            <Header as="h2" color="teal" textAlign="center">
+              <Image src="/logo.png" /> Log-in to your account
+            </Header>
+            <Form size="large">
+              <Segment stacked>
+                <Form.Input
+                  fluid
+                  icon="user"
+                  iconPosition="left"
+                  placeholder="E-mail address"
+                />
+                <Form.Input
+                  fluid
+                  icon="lock"
+                  iconPosition="left"
+                  placeholder="Password"
+                  type="password"
+                />
+                <Button color="teal" fluid size="large">
+                  Login
+                </Button>
+                <Button onClick={this.login} content="PrintProps" />
+              </Segment>
+            </Form>
+            <Message>New to us? Sign Up</Message>
+          </Grid.Column>
+        </Grid>
+      </div>
+    );
+  }
 
-export default Login;
+  login() {
+    this.props.dispatch(userActions.login());
+  }
+}
+
+const mapStateToProps = state => {
+  return { loggedIn: state.login.loggedIn };
+};
+
+export default connect(mapStateToProps)(Login);
