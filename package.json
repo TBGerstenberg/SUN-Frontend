@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "axios": "^0.18.0",
     "history": "^4.9.0",
     "i18next": "^15.0.9",
     "i18next-browser-languagedetector": "^3.0.1",
