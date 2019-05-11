@@ -1,5 +1,5 @@
 // React-speific packages
-import React from "react";
+import React, { Suspense } from "react";
 import ReactDOM from "react-dom";
 // Component specific packages
 import App from "./App";
@@ -12,13 +12,17 @@ import { Provider as ReduxStoreProvider } from "react-redux";
 import configureStore from "./config/redux/configureStore";
 // import the used UI Framework "Semantic UI"
 import "./semantic/dist/semantic.min.css";
+// custom components
+import Spinner from "./01_atoms/Spinner";
 
 const reduxStore = configureStore().store;
 
 ReactDOM.render(
   <I18nextProvider i18n={i18n}>
     <ReduxStoreProvider store={reduxStore}>
-      <App />
+      <Suspense fallback={<Spinner />}>
+        <App />
+      </Suspense>
     </ReduxStoreProvider>
   </I18nextProvider>,
   document.getElementById("root")
