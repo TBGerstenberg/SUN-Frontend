@@ -23,7 +23,7 @@ function register({
   return async dispatch => {
     dispatch(request({ email }));
 
-    const registrationResponse = await userService.register(
+    const registrationResponse = await userService.signup(
       email,
       password,
       consentToDataProcessingAgreement,

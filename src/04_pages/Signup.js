@@ -6,11 +6,7 @@ import { userActions } from "../config/redux/_actions";
 
 // Redux-Form and Bindings Semantic-UI forms
 import { Field, reduxForm } from "redux-form";
-import {
-  LabelInputField,
-  Checkbox,
-  CheckboxField
-} from "react-semantic-redux-form";
+import { LabelInputField, CheckboxField } from "react-semantic-redux-form";
 
 // Internationalization
 import i18next from "i18next";
@@ -26,6 +22,7 @@ import {
   Container,
   Icon
 } from "semantic-ui-react";
+
 import Link from "redux-first-router-link";
 import LanguageSwitcher from "../02_molecules/LanguageSwitcher";
 

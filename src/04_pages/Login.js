@@ -38,6 +38,11 @@ class Login extends React.Component {
   }
 
   render() {
+    console.log(this.props.loggedIn);
+    if (this.props.loggedIn) {
+      this.props.dispatch();
+    }
+
     return (
       <div className="login-form">
         <Container>
@@ -85,7 +90,7 @@ class Login extends React.Component {
                 </Form>
               </Segment>
               <Trans i18nKey="login-message-new-to-us" />
-              <Link to="/Signup">
+              <Link to="Signup">
                 <Trans i18nKey="login-message-call-to-action" />
               </Link>
             </Grid.Column>

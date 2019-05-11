@@ -68,11 +68,14 @@ const userService = {
       headers: { Authorization: "bearer " + token }
     };
 
-    // Perform the http request
-    const logoutResponse = await axios.get(
-      API_CONFIG.LOGIN.GET_LOGOUT_URL,
-      logoutHttpHeaders
-    );
+    try {
+      // Perform the http request
+      const logoutResponse = await axios.get(
+        API_CONFIG.LOGIN.GET_LOGOUT_URL,
+        logoutHttpHeaders
+      );
+      return logoutResponse;
+    } catch (error) {}
   },
 
   /**
