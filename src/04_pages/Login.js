@@ -1,84 +1,124 @@
 import React from "react";
+
+// Redux bindings & HOCs
+import { connect } from "react-redux";
+import { userActions } from "../config/redux/_actions";
+
+// Redux-Form and Bindings Semantic-UI forms
+import { Field, reduxForm } from "redux-form";
+import { LabelInputField } from "react-semantic-redux-form";
+
+// Internationalization
+import i18next from "i18next";
+import { Trans, withTranslation } from "react-i18next";
+
+// Components from semantic ui and our own library
 import {
   Button,
   Form,
   Grid,
   Header,
-  Image,
-  Message,
-  Segment
+  Segment,
+  Container,
+  Icon
 } from "semantic-ui-react";
+import Link from "redux-first-router-link";
+import LanguageSwitcher from "../02_molecules/LanguageSwitcher";
 
-import { connect } from "react-redux";
-import { userActions } from "../config/redux/_actions";
+// Styles
+import "./Login.css";
 
+/**
+ * A Screen that allows a user to log in to the system.
+ */
 class Login extends React.Component {
   constructor(props) {
     super(props);
-    this.login = this.login.bind(this);
+    this._handleLoginSubmit = this._handleLoginSubmit.bind(this);
   }
 
-  render(props) {
+  render() {
     return (
       <div className="login-form">
-        {/*
-      Heads up! The styles below are necessary for the correct render of this example.
-      You can do same with CSS, the main idea is that all the elements up to the `Grid`
-      below must have a height of 100%.
-    */}
-        <style>
-          {`
-      body > div,
-      body > div > div,
-      body > div > div > div.login-form {
-        height: 100%;
-      }
-    `}
-        </style>
-        <Grid
-          textAlign="center"
-          style={{ height: "100%" }}
-          verticalAlign="middle"
-        >
-          <Grid.Column style={{ maxWidth: 450 }}>
-            <Header as="h2" color="teal" textAlign="center">
-              <Image src="/logo.png" /> Log-in to your account
-            </Header>
-            <Form size="large">
+        <Container>
+          <Grid
+            textAlign="center"
+            style={{ height: "100%" }}
+            verticalAlign="middle"
+          >
+            <Grid.Column style={{ maxWidth: 400 }}>
+              <LanguageSwitcher />
               <Segment stacked>
-                <Form.Input
-                  fluid
-                  icon="user"
-                  iconPosition="left"
-                  placeholder="E-mail address"
-                />
-                <Form.Input
-                  fluid
-                  icon="lock"
-                  iconPosition="left"
-                  placeholder="Password"
-                  type="password"
-                />
-                <Button color="teal" fluid size="large">
-                  Login
-                </Button>
-                <Button onClick={this.login} content="PrintProps" />
+                <Header as="h2" color="blue" textAlign="center">
+                  <Trans i18nKey="log-in-to-your-account-headline" />
+                </Header>
+
+                <Form
+                  onSubmit={this.props.handleSubmit(
+                    this._handleLoginSubmit.bind(this)
+                  )}
+                >
+                  <Field
+                    name="email"
+                    component={LabelInputField}
+                    label={{
+                      content: <Icon color="blue" name="user" size="small" />
+                    }}
+                    labelPosition="left"
+                    placeholder={i18next.t("login-email-input-placeholder")}
+                  />
+
+                  <Field
+                    name="password"
+                    component={LabelInputField}
+                    type="password"
+                    label={{
+                      content: <Icon color="blue" name="lock" size="small" />
+                    }}
+                    labelPosition="left"
+                    placeholder={i18next.t("login-password-input-placeholder")}
+                  />
+
+                  <Form.Field control={Button} primary type="submit">
+                    {i18next.t("log-in-to-your-account-button")}
+                  </Form.Field>
+                </Form>
               </Segment>
-            </Form>
-            <Message>New to us? Sign Up</Message>
-          </Grid.Column>
-        </Grid>
+              <Trans i18nKey="login-message-new-to-us" />
+              <Link to="/Signup">
+                <Trans i18nKey="login-message-call-to-action" />
+              </Link>
+            </Grid.Column>
+          </Grid>
+        </Container>
       </div>
     );
   }
 
-  login() {
-    this.props.dispatch(userActions.login());
+  /**
+   * Calls a redux-action creator to start a login attempt.
+   */
+  _handleLoginSubmit(values) {
+    const submittedEmail = values.email;
+    const submittedPassword = values.password;
+
+    this.props.dispatch(
+      userActions.login({ email: submittedEmail, password: submittedPassword })
+    );
   }
 }
 
 const mapStateToProps = state => {
-  return { loggedIn: state.login.loggedIn };
+  return {
+    loggedIn: state.login.loggedIn,
+    loginErorr: state.login.error
+  };
 };
 
-export default connect(mapStateToProps)(Login);
+export default withTranslation()(
+  connect(mapStateToProps)(
+    reduxForm({
+      form: "loginForm" // a unique identifier for this form
+    })(Login)
+  )
+);

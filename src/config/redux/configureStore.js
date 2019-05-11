@@ -13,7 +13,9 @@ const routesMap = {
   SIGNUP: "/signup",
   COMPLETE_PROFILE: "/complete-profile",
   HOME: "/home",
-  PROFILE: "/profile"
+  PROFILE: "/profile",
+  DATA_PROCESSING_AGREEMENT: "/DataProcessingAgreement",
+  TERMS_OF_SERVICE: "/TermsOfService"
 };
 
 export default function configureStore() {
