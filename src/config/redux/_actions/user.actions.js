@@ -16,17 +16,16 @@ function register(firstName, lastName, email) {}
  * @param {*} password
  */
 function login(email, password) {
-  return dispatch => {
+  return async dispatch => {
     dispatch(request({ email }));
 
-    userService.login(email, password).then(
-      user => {
-        dispatch(success(user));
-      },
-      error => {
-        dispatch(failure(error));
-      }
-    );
+    const loginResponse = await userService.login(email, password);
+
+    if (loginResponse && loginResponse.user) {
+      dispatch(success(loginResponse.user));
+    } else {
+      dispatch(failure(loginResponse));
+    }
   };
 
   /**

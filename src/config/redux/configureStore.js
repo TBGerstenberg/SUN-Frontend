@@ -16,13 +16,11 @@ const routesMap = {
   PROFILE: "/profile"
 };
 
-export default function configureStore(history) {
+export default function configureStore() {
   let { reducer, middleware, enhancer, thunk } = connectRoutes(
     routesMap,
     options
   );
-
-  middleware = { ...middleware, reduxThunk };
 
   const composeEnhancers = (...args) =>
     typeof window !== "undefined"
@@ -30,18 +28,9 @@ export default function configureStore(history) {
       : compose(...args);
 
   const rootReducer = combineReducers({ ...reducers, location: reducer });
-  const middlewares = applyMiddleware(middleware);
+  const middlewares = applyMiddleware(middleware, reduxThunk);
   const enhancers = composeEnhancers(enhancer, middlewares);
   const store = createStore(rootReducer, enhancers);
-
-  /*
-  if (module.hot && process.env.NODE_ENV === "development") {
-    module.hot.accept("./_reducers", () => {
-      const reducers = require("./_reducers").default;
-      const rootReducer = combineReducers({ ...reducers, location: reducer });
-      store.replaceReducer(rootReducer);
-    }); 
-  } */
 
   return { store, thunk };
 }
