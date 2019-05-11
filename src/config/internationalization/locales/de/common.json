@@ -1,6 +1,9 @@
 {
-  "loginScreen": {
-    "email_address": "Email-Adresse",
-    "password": "Passwort"
-  }
+  "signup-message-new-to-us": "Neu bei uns? ",
+  "signup-message-call-to-action": "Registrieren",
+
+  "log-in-to-your-account-headline": "Anmelden",
+  "log-in-to-your-account-button": "Anmelden",
+  "email-adress": "Email-Adresse",
+  "password": "Passwort"
 }
