@@ -1,4 +1,5 @@
 import axios from "axios";
+import API_CONFIG from "../config/api_config";
 
 const userService = {
   login: () => {},
@@ -19,9 +20,15 @@ const userService = {
     consentToTermsOfService
   ) => {
     try {
-      const signupResponse = await axios.post("");
+      const signupResponse = await axios.post(
+        API_CONFIG.REGISTRATION.POST_LOGIN_URL
+      );
+
+      if (signupResponse && signupResponse.user) {
+        return { user: signupResponse.user, error: null };
+      }
     } catch (error) {
-      console.log(error);
+      return { user: null, error: error };
     }
   }
 };

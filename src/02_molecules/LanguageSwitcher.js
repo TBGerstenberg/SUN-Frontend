@@ -10,7 +10,7 @@ const ChangeLanguage = props => {
         size="mini"
         onClick={() => props.i18n.changeLanguage("de")}
         basic
-        color="teal"
+        color="blue"
       >
         de
       </Button>
@@ -18,7 +18,7 @@ const ChangeLanguage = props => {
         size="mini"
         onClick={() => props.i18n.changeLanguage("en")}
         basic
-        color="teal"
+        color="blue"
       >
         en
       </Button>
