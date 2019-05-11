@@ -14,12 +14,12 @@ const userActions = {
  * @param consentToDataProcessingAgreement - Flag indicating that the newly registered user agreed to the dataprocessing-agreement when registering his account
  * @param consentToTermsOfService - Flag indicating that the newly registered user agreed to the terms of service when registering his account
  */
-function register(
+function register({
   email,
   password,
   consentToDataProcessingAgreement,
   consentToTermsOfService
-) {
+}) {
   return async dispatch => {
     dispatch(request({ email }));
 

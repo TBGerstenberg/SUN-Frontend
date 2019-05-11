@@ -7,16 +7,7 @@ import reduxThunk from "redux-thunk";
 import * as actionCreators from "./_actions";
 import * as reducers from "./_reducers";
 import options from "./storeOptions";
-
-const routesMap = {
-  LOGIN: "/",
-  SIGNUP: "/signup",
-  COMPLETE_PROFILE: "/complete-profile",
-  HOME: "/home",
-  PROFILE: "/profile",
-  DATA_PROCESSING_AGREEMENT: "/DataProcessingAgreement",
-  TERMS_OF_SERVICE: "/TermsOfService"
-};
+import { routesMap } from "./_constants/navigation.constants";
 
 export default function configureStore() {
   let { reducer, middleware, enhancer, thunk } = connectRoutes(
