@@ -1,9 +1,20 @@
 {
-  "signup-message-new-to-us": "New to us? ",
-  "signup-message-call-to-action": "Sign up",
+  "signup-a-new-account-headline": "Register a new Account",
+  "signup-email-input-placeholder": "Email",
+  "signup-password-input-placeholder": "Password",
+  "i-agree-to-data-processing-agreement-start": "I have read the ",
+  "data-processing-agreement": "Data Processing Agreement",
+  "i-agree-to-data-processing-agreement-middle": " , aswell as the ",
+  "terms-of-service": "Terms of Service",
+  "i-agree-to-data-processing-agreement-end": " and agree to their terms and conditions.",
+  "signup-a-new-account-call-to-action-button": "Signup",
+  "signup-message-already-have-an-account": "Already registered? ",
+  "signup-message-already-have-an-account-call-to-action": "Log in",
 
-  "log-in-to-your-account-headline": "Log-in",
+  "log-in-to-your-account-headline": "Login to your account",
+  "login-email-input-placeholder": "Email",
+  "login-password-input-placeholder": "Password",
   "log-in-to-your-account-button": "Login",
-  "email-adress": "Email",
-  "password": "Password"
+  "login-message-new-to-us": "New to us? ",
+  "login-message-call-to-action": "Sign up"
 }

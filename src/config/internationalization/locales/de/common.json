@@ -1,9 +1,20 @@
 {
-  "signup-message-new-to-us": "Neu bei uns? ",
-  "signup-message-call-to-action": "Registrieren",
+  "signup-a-new-account-headline": "Registrieren",
+  "signup-email-input-placeholder": "Email-Adresse",
+  "signup-password-input-placeholder": "Passwort",
+  "i-agree-to-data-processing-agreement-start": "Ich habe die ",
+  "data-processing-agreement": "Datenschutzerklärung",
+  "i-agree-to-data-processing-agreement-middle": " , sowie die ",
+  "terms-of-service": "Nutzungsbedingungen",
+  "i-agree-to-data-processing-agreement-end": " gelesen und stimme der Datenverarbeitung gemäß den dort genannten Bedingungen zu.",
+  "signup-a-new-account-call-to-action-button": "Registrieren",
+  "signup-message-already-have-an-account": "Bereits registriert? ",
+  "signup-message-already-have-an-account-call-to-action": "Anmelden",
 
   "log-in-to-your-account-headline": "Anmelden",
+  "login-email-input-placeholder": "Email-Adresse",
+  "login-password-input-placeholder": "Passwort",
   "log-in-to-your-account-button": "Anmelden",
-  "email-adress": "Email-Adresse",
-  "password": "Passwort"
+  "login-message-new-to-us": "Neu bei uns? ",
+  "login-message-call-to-action": "Registrieren"
 }
