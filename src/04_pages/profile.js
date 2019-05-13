@@ -1,10 +1,15 @@
 import React from "react";
+import "./NotFound";
+import NotFound from "./NotFound";
+import NavBar from "../03_organisms/NavBar"
+
 
 const Profile = () => {
   return (
-    <header className="App-header">
-      <p>Profile</p>
-    </header>
+    <div>
+    <NavBar/>
+    <p>Profile</p>
+    </div>
   );
 };
 
