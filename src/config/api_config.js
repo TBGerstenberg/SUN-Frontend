@@ -1,4 +1,4 @@
-const BASEURL = "http://localhost:5001/api";
+const BASEURL = "http://localhost:5000/api";
 
 const API_CONFIG = {
   REGISTRATION: {
@@ -9,6 +9,9 @@ const API_CONFIG = {
   },
   USERS: {
     UPDATE_PROFILE_URL: BASEURL + "/persons"
+  },
+  CHAIRS: {
+    GET_ALL_CHAIRS_URL: BASEURL + "/chairs"
   }
 };
 

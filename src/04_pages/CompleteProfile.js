@@ -11,13 +11,10 @@ import {
 import { Field, reduxForm } from "redux-form";
 import { Trans, withTranslation } from "react-i18next";
 import { connect } from "react-redux";
-import {
-  LabelInputField,
-  CheckboxField,
-  DropdownField
-} from "react-semantic-redux-form";
+import { LabelInputField, CheckboxField } from "react-semantic-redux-form";
 import i18next from "i18next";
 import { userActions } from "../config/redux/_actions";
+import ChairSelectionDropdown from "../03_organisms/ChairSelectionDropdown";
 
 const renderSelect = field => {
   return (
@@ -25,7 +22,6 @@ const renderSelect = field => {
       label={field.label}
       name={field.input.name}
       onBlur={(e, { value }) => {
-        console.log("BLUR", value);
         field.input.onChange(value);
       }}
       onChange={(e, { value }) => field.input.onChange(value)}
@@ -38,6 +34,8 @@ const renderSelect = field => {
 
 const renderChairSelectionDropdown = () => {
   return (
+    /* <ChairSelectionDropdown /> */
+
     <Field
       name="chairs"
       label={i18next.t("complete-profile-chair-label")}
@@ -55,6 +53,7 @@ const renderChairSelectionDropdown = () => {
 };
 
 const CompleteProfile = props => {
+  console.log("Component Props:");
   console.log(props);
 
   return (
@@ -211,11 +210,12 @@ const CompleteProfile = props => {
                 </Form.Group>
               </Grid.Column>
 
-              {props.isEmployee && renderChairSelectionDropdown()}
-
-              {
-                // Empty(
-              }
+              <Grid.Column width={6} />
+            </Grid.Row>
+            <Grid.Row columns={2}>
+              <Grid.Column width={6}>
+                {props.isEmployee && renderChairSelectionDropdown()}
+              </Grid.Column>
               <Grid.Column width={6} />
             </Grid.Row>
 
@@ -249,15 +249,13 @@ const _handleCompleteProfileSubmit = values => {
 };
 
 const mapStateToProps = state => {
-  const { completeProfileForm } = state.form;
-
-  if (completeProfileForm && completeProfileForm.values) {
-    console.log(completeProfileForm.values);
+  if (state.form.completeProfileForm && state.form.completeProfileForm.values) {
     return {
-      isEmployee: state.form.completeProfileForm.employeeStatusCheckbox
+      ...state,
+      isEmployee: state.form.completeProfileForm.values.employeeStatusCheckbox
     };
   } else {
-    return {};
+    return { state };
   }
 };
 
