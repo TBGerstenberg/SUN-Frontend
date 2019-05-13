@@ -1,12 +1,6 @@
 import { userConstants } from "../_constants";
 import { userService } from "../../../services";
 
-const userActions = {
-  register,
-  login,
-  logout
-};
-
 /**
  * Isses a Registration request, tracking its progress and status in the redux store by dispatching actions
  * @param email - Email adress that shall be registered
@@ -113,5 +107,59 @@ function logout() {
   userService.logout();
   return { type: userConstants.LOGOUT };
 }
+
+/**
+ * Updates a users profile with a set of personal information
+ * @param {String} firstName - the first name of the user that attempts to complete his profile
+ * @param {String} lastName - the last name of the user that attempts to complete his profile
+ * @param {String} title - the acadaemic or professional title of the user that attempts to complete his profile
+ * @param {String} gender - the gender of the user that attempts to complete his profile - can be "male", "female" or "other",
+ * @param {Date} birthDate - an ISO-8601 Date string in the format YYYY-DD-MM describing the users date of birth
+ * @param {boolean} studentStatus  - flag indicating wether the user is a student or not.
+ * @param {Array of Numbers} chairs - Array of chairs that the user belongs to.
+ */
+function updateProfile(
+  firstName,
+  lastName,
+  title,
+  gender,
+  birthDate,
+  address,
+  studentStatus,
+  chairs
+) {
+  return async dispatch => {};
+
+  /**
+   * Redux action creator triggered when an update-Profile-request is started
+   * @param {string - email-Format} email - email of the user that is attempting to update his profile
+   */
+  function request(email) {
+    return { type: userConstants.UPDATE_USER_PROFILE_REQUEST, email };
+  }
+
+  /**
+   * Redux action creator triggered when an update-Profile-request succeeded
+   * @param {Object} user - user profile that has successfully been updated
+   */
+  function success(user) {
+    return { type: userConstants.UPDATE_USER_PROFILE_SUCCESS, user };
+  }
+
+  /**
+   * Redux action creator triggered when a update-Profile-Request failed with an error
+   * @param {*} error - Error object thrown when updating the profile
+   */
+  function failure(error) {
+    return { type: userConstants.UPDATE_USER_PROFILE_FAILURE, error };
+  }
+}
+
+const userActions = {
+  register,
+  login,
+  logout,
+  updateProfile
+};
 
 export default userActions;

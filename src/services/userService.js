@@ -28,6 +28,15 @@ const userService = {
         password: password
       };
 
+      console.log(
+        "Issuing a login request with " +
+          postLoginRequestBody.email +
+          " and " +
+          postLoginRequestBody.password +
+          "to " +
+          API_CONFIG.LOGIN.POST_LOGIN_URL
+      );
+
       // Perform the http request
       const LoginResponse = await axios.post(
         API_CONFIG.LOGIN.POST_LOGIN_URL,
@@ -100,6 +109,19 @@ const userService = {
         consentToTermsOfService: consentToTermsOfService
       };
 
+      console.log(
+        "Issuing a login request with " +
+          registrationRequestBody.email +
+          " and " +
+          registrationRequestBody.password +
+          " and consent to data processing: " +
+          consentToDataProcessingAgreement +
+          " and Consent to terms of service: " +
+          consentToTermsOfService +
+          "to " +
+          API_CONFIG.REGISTRATION.POST_REGISTRATION_URL
+      );
+
       // Perform the request
       const signupResponse = await axios.post(
         API_CONFIG.REGISTRATION.POST_REGISTRATION_URL,
@@ -123,6 +145,63 @@ const userService = {
             error: null
           };
         }
+      }
+    } catch (error) {
+      return { user: null, error: error };
+    }
+  },
+
+  /**
+   * Updates a users profile with a set of personal information
+   * @param {String} firstName - the first name of the user that attempts to complete his profile
+   * @param {String} lastName - the last name of the user that attempts to complete his profile
+   * @param {String} title - the acadaemic or professional title of the user that attempts to complete his profile
+   * @param {String} gender - the gender of the user that attempts to complete his profile - can be "male", "female" or "other",
+   * @param {Date} birthDate - an ISO-8601 Date string in the format YYYY-DD-MM describing the users date of birth
+   * @param {boolean} studentStatus  - flag indicating wether the user is a student or not.
+   * @param {Array of Numbers} chairs - Array of chairs that the user belongs to.
+   */
+  updateProfile: async (
+    firstName,
+    lastName,
+    title,
+    gender,
+    birthDate,
+    address,
+    studentStatus,
+    chairs
+  ) => {
+    try {
+      //Build request headers
+      const headers = {
+        Authorization: "SOMETOKEN"
+      };
+
+      //Build request Body
+      const updateProfileRequestBody = {
+        firstName: firstName,
+        lastName: lastName,
+        title: title,
+        gender: gender,
+        birthDate: birthDate,
+        address: address,
+        studentStatus: studentStatus,
+        chairs: chairs
+      };
+
+      // Perform the request
+      const updateProfileResponse = await axios.put(
+        API_CONFIG.USERS.UPDATE_PROFILE_URL,
+        updateProfileRequestBody,
+        headers
+      );
+
+      // Handle the response
+      if (updateProfileResponse.status === 200) {
+        return {
+          user: updateProfileResponse.person,
+          error: null
+        };
       }
     } catch (error) {
       return { user: null, error: error };

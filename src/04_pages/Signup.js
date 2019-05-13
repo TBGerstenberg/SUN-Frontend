@@ -126,9 +126,13 @@ class Signup extends React.Component {
   _handleRegistrationSubmit(values) {
     const submittedEmail = values.email;
     const submittedPassword = values.password;
+
+    // Using values.consentToDataProcessingAgreement for capturing consent
+    // to Terms of Service and data processing, since we use only a single checkbox for both.
     const submittedConsentToDataProcessingAgreement =
       values.consentToDataProcessingAgreement;
-    const submittedConsentToTermsOfService = values.consentToTermsOfService;
+    const submittedConsentToTermsOfService =
+      values.consentToDataProcessingAgreement;
 
     this.props.dispatch(
       userActions.register({

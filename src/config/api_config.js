@@ -5,7 +5,10 @@ const API_CONFIG = {
     POST_REGISTRATION_URL: BASEURL + "/signup"
   },
   LOGIN: {
-    POST_LOGIN_URL: BASEURL + "/login"
+    POST_LOGIN_URL: BASEURL + "/auth/session"
+  },
+  USERS: {
+    UPDATE_PROFILE_URL: BASEURL + "/persons"
   }
 };
 
