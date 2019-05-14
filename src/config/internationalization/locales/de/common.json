@@ -1,6 +1,43 @@
 {
-  "loginScreen": {
-    "email_address": "Email-Adresse",
-    "password": "Passwort"
-  }
+  "signup-a-new-account-headline": "Registrieren",
+  "signup-email-input-placeholder": "Email-Adresse",
+  "signup-password-input-placeholder": "Passwort",
+  "i-agree-to-data-processing-agreement-start": "Ich habe die ",
+  "data-processing-agreement": "Datenschutzerklärung",
+  "i-agree-to-data-processing-agreement-middle": " , sowie die ",
+  "terms-of-service": "Nutzungsbedingungen",
+  "i-agree-to-data-processing-agreement-end": " gelesen und stimme der Datenverarbeitung gemäß den dort genannten Bedingungen zu.",
+  "signup-a-new-account-call-to-action-button": "Registrieren",
+  "signup-message-already-have-an-account": "Bereits registriert? ",
+  "signup-message-already-have-an-account-call-to-action": "Anmelden",
+
+  "log-in-to-your-account-headline": "Anmelden",
+  "login-email-input-placeholder": "Email-Adresse",
+  "login-password-input-placeholder": "Passwort",
+  "log-in-to-your-account-button": "Anmelden",
+  "login-message-new-to-us": "Neu bei uns? ",
+  "login-message-call-to-action": "Registrieren",
+
+  "complete-your-profile-headline": "Vervollständige dein Profil",
+  "complete-profile-firstName-label": "Vorname",
+  "complete-profile-firstName-placeholder": "Vorname",
+  "complete-profile-lastName-label": "Nachname",
+  "complete-profile-lastName-placeholder": "Nachname",
+  "complete-profile-title-label": "Titel",
+  "complete-profile-title-placeholder": "Titel",
+  "complete-profile-title-dropdown-option-bachelor": "Bachelor",
+  "complete-profile-title-dropdown-option-master": "Master",
+  "complete-profile-title-dropdown-option-dr": "Dr.",
+  "complete-profile-title-dropdown-option-prof-dr": "Prof. Dr.",
+  "complete-profile-gender-label": "Geschlecht",
+  "complete-profile-gender-dropdown-option-male": "Männlich",
+  "complete-profile-gender-dropdown-option-female": "Weiblich",
+  "complete-profile-gender-dropdown-option-other": "Andere",
+
+  "complete-profile-studentStatus-checkbox-label": "Student",
+  "complete-profile-employeeStatus-checkbox-label": "Mitarbeiter",
+  "complete-profile-chair-label": "Lehrstuhl",
+
+  "complete-your-profile-abort-button": "Abbrechen",
+  "complete-your-profile-continue-button": "Abschließen"
 }

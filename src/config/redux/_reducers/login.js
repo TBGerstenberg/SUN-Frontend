@@ -6,23 +6,30 @@ const initialState = user
       loggedIn: true,
       user
     }
-  : {};
+  : {
+      loggedIn: false
+    };
 
 const loginReducer = (state = initialState, action) => {
   switch (action.type) {
     case userConstants.LOGIN_REQUEST:
       return {
+        ...state,
         loggingIn: true,
         user: action.email
       };
     case userConstants.LOGIN_SUCCESS:
       return {
+        ...state,
+        loggingIn: false,
         loggedIn: true,
         user: action.user
       };
     case userConstants.LOGIN_FAILURE:
       return {
-        loginError: action.error
+        ...state,
+        loggingIn: false,
+        error: action.error
       };
     case userConstants.LOGOUT:
       return {};

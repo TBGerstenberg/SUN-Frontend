@@ -3,7 +3,6 @@
  */
 import i18n from "i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
-import BackendServices from "i18next-xhr-backend";
 import common_de from "./locales/de/common.json";
 import common_en from "./locales/en/common.json";
 
@@ -23,11 +22,10 @@ const options = {
   },
   // Fallback in case the default user language could not be found
   fallbackLng: "en",
-
   // Namespace to be loaded
   ns: ["common"],
   defaultNS: "common",
-
+  useSuspense: true,
   react: {
     wait: false,
     bindI18n: "languageChanged loaded",
@@ -38,9 +36,6 @@ const options = {
 
 // Initialize the i18n package with the options configured above, register a "changelanguage" hook
 // in case the language shall be changed from a  UI component.
-i18n
-  .use(LanguageDetector)
-  .use(BackendServices)
-  .init(options);
+i18n.use(LanguageDetector).init(options);
 
 export default i18n;
