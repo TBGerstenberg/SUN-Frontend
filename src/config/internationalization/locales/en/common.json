@@ -21,5 +21,8 @@
   "complete-your-profile-headline": "Complete your profile",
   "complete-profile-firstName-label": "First name",
   "complete-profile-firstName-placeholder": "First name",
-  "complete-your-profile-headline-continue-button": "Continue"
+  "complete-your-profile-headline-continue-button": "Continue",
+
+  "navbar-search-placeholder": "Search...",
+  "navbar-logout-button-text": "Logout"
 }
