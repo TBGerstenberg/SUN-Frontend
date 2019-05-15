@@ -33,14 +33,41 @@
   "complete-profile-gender-dropdown-option-male": "Männlich",
   "complete-profile-gender-dropdown-option-female": "Weiblich",
   "complete-profile-gender-dropdown-option-other": "Andere",
-
   "complete-profile-studentStatus-checkbox-label": "Student",
+  "complete-profile-studentId-label": "Matrikelnummer",
+  "complete-profile-studentId-placeholder": "Matrikelnummer",
+
   "complete-profile-employeeStatus-checkbox-label": "Mitarbeiter",
   "complete-profile-chair-label": "Lehrstuhl",
-
   "complete-your-profile-abort-button": "Abbrechen",
   "complete-your-profile-continue-button": "Abschließen",
 
   "navbar-search-placeholder": "Suchen...",
-  "navbar-logout-button-text": "Abmelden"
+  "navbar-logout-button-text": "Abmelden",
+
+  "landingpage-hero-text": "SUN",
+  "landingpage-hero-subtext": "das soziale Uni-Netz der nächsten Generation",
+  "landingpage-hero-call-to-action": "Los geht's",
+  "landingpage-login-button-text": "Anmelden",
+  "landingpage-signup-button-text": "Registrieren",
+  "landingpage-what-we-do-headline": "Wir bringen die Erfahrung, die du von sozialen Netzwerken gewohnt bist in dein Uni-Netz.",
+  "landingpage-what-we-do-bodyText": "Soziale Netzwerke bringen instantane Updates aus der ganzen Welt zusammen. Gängige Universitätsnetzwerke kämpfen mit Inkonsistenzen, Undurchsichtigkeit und mittelmäßiger Organisation. Wir wollen helfen, diese Lücke zu schließen.",
+  "landingpage-see-features-call-to-action": "Features",
+
+  "landingpage-testimonials-text-0": "'Endlich zeitgemäßes Networking am Unis!'",
+  "landingpage-author-0-role": "Student",
+  "landingpage-author-0-name": "Peter",
+
+  "landingpage-testimonials-text-1": "'Mit SUN konnten wir die Zufriedenheit unserer Studenten spürbar steigern. Auch das Gründungsengagement ist gestiegen.'",
+  "landingpage-author-1-role": "Dekan",
+  "landingpage-author-1-name": "Volker W.",
+
+  "landingpage-footer-faq": "FAQ",
+  "landingpage-footer-contact": "Kontakt",
+  "landingpage-footer-terms-of-service": "Nutzungsbedingungen",
+  "landingpage-footer-data-processing-agreement": "Datenschutzerklärung",
+  "landingpage-footer-sitemap": "Sitemap",
+  "landingpage-footer-call-to-action": "Bereit für die nächste Generation?",
+  "landingpage-footer-pre-call-to-action-text": " ",
+  "landingpage-footer-signup-button-text": "Jetzt registrieren"
 }
