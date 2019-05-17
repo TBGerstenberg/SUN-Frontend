@@ -126,6 +126,7 @@ function updateProfile(
   birthDate,
   address,
   studentStatus,
+  employeeStatus,
   chairs
 ) {
   return async dispatch => {};
