@@ -1,12 +1,16 @@
 import React, { Component } from "react";
 import { Button } from "semantic-ui-react";
+import logo from "../05_images/Logo.PNG";
 
 class NavBar extends Component {
   render() {
     return (
-      <div class="ui large inverted segment">
+      <div class="ui teal large inverted segment" >
         <div class="ui large inverted secondary menu">
-          <a href="Home" class="item">
+        <div class="ui mini image">
+        <img src={logo} style={{ height: "100%"}}></img>
+        </div>
+          <a href="Home" class="item" >
             Home
           </a>
           <a href="Profile" class="item">
@@ -29,7 +33,9 @@ class NavBar extends Component {
             </a>
           </div>
         </div>
+        
       </div>
+
     );
   }
 }
