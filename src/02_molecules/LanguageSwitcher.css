@@ -3,3 +3,7 @@
   flex-direction: row;
   justify-content: flex-end;
 }
+
+.languageSwitcher-button {
+  padding-right: 20px;
+}

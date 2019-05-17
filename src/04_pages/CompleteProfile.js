@@ -32,10 +32,25 @@ const renderSelect = field => {
   );
 };
 
+const renderStudentIdInput = field => {
+  return (
+    <Field
+      name="studentId"
+      component={LabelInputField}
+      label={{
+        content: i18next.t("complete-profile-studentId-label")
+      }}
+      labelPosition="left"
+      placeholder={i18next.t("complete-profile-studentId-placeholder")}
+    />
+  );
+};
+
 const renderChairSelectionDropdown = () => {
   return (
-    /* <ChairSelectionDropdown /> */
+    <ChairSelectionDropdown />
 
+    /*
     <Field
       name="chairs"
       label={i18next.t("complete-profile-chair-label")}
@@ -48,7 +63,7 @@ const renderChairSelectionDropdown = () => {
           // TODO: Fetch chairs from backend and populate the dropdown with these values
         }
       ]}
-    />
+    /> */
   );
 };
 
@@ -198,23 +213,32 @@ const CompleteProfile = props => {
                     label={i18next.t(
                       "complete-profile-studentStatus-checkbox-label"
                     )}
-                    name="studentStatusCheckbox"
+                    name="isStudent"
                   />
                   <Field
                     component={CheckboxField}
                     label={i18next.t(
                       "complete-profile-employeeStatus-checkbox-label"
                     )}
-                    name="employeeStatusCheckbox"
+                    name="isEmployee"
                   />
                 </Form.Group>
               </Grid.Column>
 
               <Grid.Column width={6} />
             </Grid.Row>
+
+            <Grid.Row />
             <Grid.Row columns={2}>
               <Grid.Column width={6}>
-                {props.isEmployee && renderChairSelectionDropdown()}
+                {props.formState &&
+                  props.formState.values &&
+                  props.formState.values.isStudent &&
+                  renderStudentIdInput()}
+                {props.formState &&
+                  props.formState.values &&
+                  props.formState.values.isEmployee &&
+                  renderChairSelectionDropdown()}
               </Grid.Column>
               <Grid.Column width={6} />
             </Grid.Row>
@@ -248,16 +272,24 @@ const _handleCompleteProfileSubmit = values => {
   this.props.dispatch(userActions.updateProfile({}));
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = state => ({
+  formState: state.form.completeProfileForm
+});
+
+/*
+
   if (state.form.completeProfileForm && state.form.completeProfileForm.values) {
     return {
       ...state,
+      isStudent: state.form.completeProfileForm.values.studentStatusCheckbox,
       isEmployee: state.form.completeProfileForm.values.employeeStatusCheckbox
     };
   } else {
-    return { state };
+    return {
+      form: state.form.completeProfileForm
+    };
   }
-};
+}; */
 
 export default withTranslation()(
   connect(mapStateToProps)(

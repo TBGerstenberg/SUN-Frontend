@@ -6,6 +6,7 @@ import Signup from "./Signup";
 import Login from "./Login";
 import DataProcessingAgreement from "./DataProcessingAgreement";
 import TermsOfService from "./TermsOfService";
+import LandingPage from "./LandingPage";
 
 /**
  * This file exists to allow an import
@@ -20,5 +21,6 @@ export {
   Login,
   Signup,
   DataProcessingAgreement,
-  TermsOfService
+  TermsOfService,
+  LandingPage
 };
