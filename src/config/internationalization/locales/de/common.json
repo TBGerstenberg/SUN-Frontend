@@ -19,6 +19,7 @@
   "login-message-call-to-action": "Registrieren",
 
   "complete-your-profile-headline": "Vervollständige dein Profil",
+  "complete-profile-personal-information-headline": "Persönliches",
   "complete-profile-firstName-label": "Vorname",
   "complete-profile-firstName-placeholder": "Vorname",
   "complete-profile-lastName-label": "Nachname",
@@ -36,9 +37,13 @@
   "complete-profile-studentStatus-checkbox-label": "Student",
   "complete-profile-studentId-label": "Matrikelnummer",
   "complete-profile-studentId-placeholder": "Matrikelnummer",
-
   "complete-profile-employeeStatus-checkbox-label": "Mitarbeiter",
   "complete-profile-chair-label": "Lehrstuhl",
+  "complete-profile-role-headline": "Rolle an der Universität",
+  "complete-profile-skills-headline": "Fähigkeiten",
+  "complete-profile-skill-input-placeholder": "Fähigkeit",
+  "complete-your-profile-add-skill-button": "Hinzufügen",
+
   "complete-your-profile-abort-button": "Abbrechen",
   "complete-your-profile-continue-button": "Abschließen",
 

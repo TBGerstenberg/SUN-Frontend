@@ -19,6 +19,7 @@
   "login-message-call-to-action": "Sign up",
 
   "complete-your-profile-headline": "Complete your profile",
+  "complete-profile-personal-information-headline": "Personal information",
   "complete-profile-firstName-label": "First name",
   "complete-profile-firstName-placeholder": "First name",
   "complete-profile-lastName-label": "Last name",
@@ -38,6 +39,9 @@
   "complete-profile-studentId-placeholder": "Student ID",
   "complete-profile-employeeStatus-checkbox-label": "Employee",
   "complete-profile-chair-label": "Chair",
+  "complete-profile-skills-headline": "Skills",
+  "complete-profile-skill-input-placeholder": "Skill",
+  "complete-your-profile-add-skill-button": "Add",
   "complete-your-profile-abort-button": "Abort",
   "complete-your-profile-continue-button": "Continue",
 
