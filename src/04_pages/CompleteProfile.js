@@ -5,13 +5,15 @@ import {
   Segment,
   Header,
   Button,
-  Form
+  Form,
+  Divider
 } from "semantic-ui-react";
 import { Field, reduxForm } from "redux-form";
 import { Trans, withTranslation } from "react-i18next";
 import { connect } from "react-redux";
 import { LabelInputField, CheckboxField } from "react-semantic-redux-form";
 import i18next from "i18next";
+import { DateInput } from "semantic-ui-calendar-react";
 import { userActions, skillCatalogueActions } from "../config/redux/_actions";
 import ChairSelectionDropdown from "../03_organisms/ChairSelectionDropdown";
 import SkillCatalogue from "../03_organisms/SkillCatalogue";
@@ -19,7 +21,13 @@ import SkillCatalogue from "../03_organisms/SkillCatalogue";
 class CompleteProfile extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { currentSkillInputValue: "", currentlySelectedSkill: null };
+    this.state = {
+      currentSkillInputValue: "",
+      currentlySelectedSkill: null,
+      dateOfBirth: "",
+      immatriculationDate: "",
+      exmatriculationDate: ""
+    };
     this._handleCompleteProfileSubmit = this._handleCompleteProfileSubmit.bind(
       this
     );
@@ -28,10 +36,28 @@ class CompleteProfile extends React.Component {
     this._handleSkillItemClick = this._handleSkillItemClick.bind(this);
     this._handleSkillDeletion = this._handleSkillDeletion.bind(this);
     this._handleSkillRating = this._handleSkillRating.bind(this);
+    this._handleDateOfBirthChange = this._handleDateOfBirthChange.bind(this);
+    this._handleImmatriculationDateChange = this._handleImmatriculationDateChange.bind(
+      this
+    );
+    this._handleExmatriculationDateChange = this._handleExmatriculationDateChange.bind(
+      this
+    );
   }
 
   render() {
     const props = this.props;
+
+    const isStudent =
+      props.formState &&
+      props.formState.values &&
+      props.formState.values.isStudent;
+
+    const isEmployee =
+      props.formState &&
+      props.formState.values &&
+      props.formState.values.isEmployee;
+
     return (
       <Container>
         <Segment stacked>
@@ -45,12 +71,18 @@ class CompleteProfile extends React.Component {
               colums={2}
               stackable
             >
+              {
+                // Headline
+              }
               <Grid.Row>
                 <Header as="h3" color="blue" textAlign="center">
                   <Trans i18nKey="complete-your-profile-headline" />
                 </Header>
               </Grid.Row>
 
+              {
+                // SubHeadline
+              }
               <Grid.Row textAlign="left">
                 <Grid.Column width={6} textAlign="left">
                   <Header as="h4" color="black" textAlign="left">
@@ -132,6 +164,7 @@ class CompleteProfile extends React.Component {
                   />
                 </Grid.Column>
               </Grid.Row>
+
               {
                 // FirstName and Lastname inputs
               }
@@ -166,42 +199,41 @@ class CompleteProfile extends React.Component {
               </Grid.Row>
 
               {
-                // Role(s)
+                // Date of Birth
               }
               <Grid.Row columns={2}>
-                <Grid.Column textAlign="left" width={6}>
-                  <Header as="h5" color="black" textAlign="left">
-                    <Trans i18nKey="complete-profile-role-headline" />
-                  </Header>
-                  <Field
-                    component={CheckboxField}
-                    label={i18next.t(
-                      "complete-profile-studentStatus-checkbox-label"
+                <Grid.Column width={6}>
+                  <DateInput
+                    name="dateOfBirth"
+                    placeholder={i18next.t(
+                      "complete-profile-dateOfBirth-placeholder"
                     )}
-                    name="isStudent"
+                    value={this.state.dateOfBirth}
+                    iconPosition="left"
+                    onChange={this._handleDateOfBirthChange}
                   />
-                  {props.formState &&
-                    props.formState.values &&
-                    props.formState.values.isStudent &&
-                    this.renderStudentIdInput()}
                 </Grid.Column>
                 <Grid.Column width={6} />
               </Grid.Row>
+
+              {
+                // Address
+              }
               <Grid.Row columns={2}>
-                <Grid.Column textAlign="left" width={6}>
-                  <Field
-                    component={CheckboxField}
-                    label={i18next.t(
-                      "complete-profile-employeeStatus-checkbox-label"
-                    )}
-                    name="isEmployee"
-                  />
-                  {props.formState &&
-                    props.formState.values &&
-                    props.formState.values.isEmployee &&
-                    this.renderChairSelectionDropdown()}
+                <Grid.Column width={6}>
+                  {this.renderCityNameInput()}
                 </Grid.Column>
-                <Grid.Column width={6} />
+                <Grid.Column width={6}>
+                  {this.renderPostalCodeInput()}
+                </Grid.Column>
+              </Grid.Row>
+              <Grid.Row columns={2}>
+                <Grid.Column width={6}>
+                  {this.renderStreetNameInput()}
+                </Grid.Column>
+                <Grid.Column width={6}>
+                  {this.renderHouseNumberInput()}
+                </Grid.Column>
               </Grid.Row>
 
               {
@@ -209,7 +241,7 @@ class CompleteProfile extends React.Component {
               }
               <Grid.Row columns={2}>
                 <Grid.Column width={6}>
-                  <Header as="h4" color="black" textAlign="left">
+                  <Header as="h5" color="black" textAlign="left">
                     <Trans i18nKey="complete-profile-skills-headline" />
                   </Header>
 
@@ -251,6 +283,73 @@ class CompleteProfile extends React.Component {
                 <Grid.Column width={6} />
               </Grid.Row>
 
+              <Divider />
+              {
+                // StudentRole Checkbox(s)
+              }
+              <Grid.Row columns={2}>
+                <Grid.Column textAlign="left" width={6}>
+                  <Header as="h5" color="black" textAlign="left">
+                    <Trans i18nKey="complete-profile-role-headline" />
+                  </Header>
+                  <Field
+                    component={CheckboxField}
+                    label={i18next.t(
+                      "complete-profile-studentStatus-checkbox-label"
+                    )}
+                    name="isStudent"
+                  />
+                </Grid.Column>
+                <Grid.Column width={6} />
+              </Grid.Row>
+
+              {
+                // StudentRole Inputs
+              }
+              <Grid.Row columns={2}>
+                <Grid.Column width={6}>
+                  {isStudent && this.renderStudentIdInput()}
+                </Grid.Column>
+                <Grid.Column width={6}>
+                  {isStudent && this.renderCourseOfStudyInput()}
+                </Grid.Column>
+              </Grid.Row>
+              <Grid.Row columns={2}>
+                <Grid.Column textAlign="left" width={6}>
+                  {isStudent && this.renderImmatriculationDateInput()}
+                </Grid.Column>
+                <Grid.Column textAlign="left" width={6}>
+                  {isStudent && this.renderExmatericulationDateInput()}
+                </Grid.Column>
+              </Grid.Row>
+
+              {
+                // EmployeeStatus Checkbox
+              }
+              <Grid.Row columns={2}>
+                <Grid.Column textAlign="left" width={6}>
+                  <Field
+                    component={CheckboxField}
+                    label={i18next.t(
+                      "complete-profile-employeeStatus-checkbox-label"
+                    )}
+                    name="isEmployee"
+                  />
+                </Grid.Column>
+                <Grid.Column width={6} />
+              </Grid.Row>
+
+              {
+                // EmployeeStatus
+              }
+              <Grid.Row columns={2}>
+                <Grid.Column width={6}>
+                  {isEmployee && this.renderRoomNameInput()}
+                  {isEmployee && this.renderChairSelectionDropdown()}
+                </Grid.Column>
+                <Grid.Column width={6} />
+              </Grid.Row>
+
               {
                 // Submit and Abort Buttons
               }
@@ -271,6 +370,27 @@ class CompleteProfile extends React.Component {
         </Segment>
       </Container>
     );
+  }
+
+  /**
+   * Handles a change in the dateOfBirth-Datepicker input
+   */
+  _handleDateOfBirthChange(event, { name, value }) {
+    this.setState({ dateOfBirth: value });
+  }
+
+  /**
+   * Handles a change in the immatriculationDate-Picker input
+   */
+  _handleImmatriculationDateChange(event, { name, value }) {
+    this.setState({ immatriculationDate: value });
+  }
+
+  /**
+   * Handles a change in the immatriculationDate-Picker input
+   */
+  _handleExmatriculationDateChange(event, { name, value }) {
+    this.setState({ exmatriculationDate: value });
   }
 
   /**
@@ -324,19 +444,36 @@ class CompleteProfile extends React.Component {
    * @param {} values
    */
   _handleCompleteProfileSubmit(values) {
-    this.props.dispatch(
-      userActions.updateProfile(
-        values.firstName,
-        values.lastName,
-        values.title,
-        values.gender,
-        null,
-        null,
-        values.isStudent,
-        values.isEmployee
-      )
-    );
+    // Values that are extracted from the various input fields, each field is either managed by redux form
+    // or via the components state.
+    const profileValues = {
+      title: values.title,
+      gender: values.gender,
+      firstName: values.firstName,
+      lastName: values.lastName,
+      dateOfBirth: this.state.dateOfBirth,
+      adress: {
+        cityName: values.cityName,
+        postalCode: values.postalCode,
+        streetName: values.streetName,
+        roomName: values.roomName
+      },
+      studentStatus: {
+        studentId: values.studentId,
+        courseOfStudy: values.courseOfStudy,
+        immatriculationDate: this.state.immatriculationDate,
+        exmatriculationDate: this.state.exmatriculationDate
+      },
+      employeeStatus: null
+    };
+
+    this.props.dispatch(userActions.updateProfile(profileValues));
   }
+
+  /**
+   * Render Methods to keep the component markup in rneder() cleaner
+   *
+   */
 
   renderStudentIdInput(field) {
     return (
@@ -348,6 +485,50 @@ class CompleteProfile extends React.Component {
         }}
         labelPosition="left"
         placeholder={i18next.t("complete-profile-studentId-placeholder")}
+      />
+    );
+  }
+
+  renderCourseOfStudyInput() {
+    return (
+      <Field
+        name="courseOfStudy"
+        component={LabelInputField}
+        label={{
+          content: i18next.t("complete-profile-courseOfStudy-label")
+        }}
+        labelPosition="left"
+        placeholder={i18next.t("complete-profile-courseOfStudy-placeholder")}
+      />
+    );
+  }
+
+  renderImmatriculationDateInput() {
+    return (
+      <DateInput
+        name="immatriculationDate"
+        placeholder={i18next.t(
+          "complete-profile-immatriculationDate-placeholder"
+        )}
+        value={this.state.immatriculationDate}
+        iconPosition="left"
+        onChange={this._handleImmatriculationDateChange}
+        label={i18next.t("complete-profile-immatriculationDate-label")}
+      />
+    );
+  }
+
+  renderExmatericulationDateInput() {
+    return (
+      <DateInput
+        name="exmatriculationDate"
+        placeholder={i18next.t(
+          "complete-profile-exmatriculationDate-placeholder"
+        )}
+        value={this.state.exmatriculationDate}
+        iconPosition="left"
+        onChange={this._handleExmatriculationDateChange}
+        label={i18next.t("complete-profile-exmatriculationDate-label")}
       />
     );
   }
@@ -368,6 +549,76 @@ class CompleteProfile extends React.Component {
     );
   }
 
+  renderCityNameInput() {
+    return (
+      <Field
+        name="cityName"
+        component={LabelInputField}
+        label={{
+          content: i18next.t("complete-profile-cityName-label")
+        }}
+        labelPosition="left"
+        placeholder={i18next.t("complete-profile-cityName-placeholder")}
+      />
+    );
+  }
+
+  renderStreetNameInput() {
+    return (
+      <Field
+        name="streetName"
+        component={LabelInputField}
+        label={{
+          content: i18next.t("complete-profile-streetName-label")
+        }}
+        labelPosition="left"
+        placeholder={i18next.t("complete-profile-streetName-placeholder")}
+      />
+    );
+  }
+
+  renderHouseNumberInput() {
+    return (
+      <Field
+        name="houseNumber"
+        component={LabelInputField}
+        label={{
+          content: i18next.t("complete-profile-houseNumber-label")
+        }}
+        labelPosition="left"
+        placeholder={i18next.t("complete-profile-houseNumber-placeholder")}
+      />
+    );
+  }
+
+  renderPostalCodeInput() {
+    return (
+      <Field
+        name="postalCode"
+        component={LabelInputField}
+        label={{
+          content: i18next.t("complete-profile-postalCode-label")
+        }}
+        labelPosition="left"
+        placeholder={i18next.t("complete-profile-postalCode-placeholder")}
+      />
+    );
+  }
+
+  renderRoomNameInput() {
+    return (
+      <Field
+        name="roomName"
+        component={LabelInputField}
+        label={{
+          content: i18next.t("complete-profile-roomName-label")
+        }}
+        labelPosition="left"
+        placeholder={i18next.t("complete-profile-roomName-placeholder")}
+      />
+    );
+  }
+
   renderChairSelectionDropdown() {
     return (
       <ChairSelectionDropdown />
@@ -376,6 +627,7 @@ class CompleteProfile extends React.Component {
       <Field
         name="chairs"
         label={i18next.t("complete-profile-chair-label")}
+        placeholder={i18next.t("complete-profile-placeholder-label")}
         component={renderSelect}
         options={[
           {
