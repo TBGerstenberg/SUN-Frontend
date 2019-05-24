@@ -21,13 +21,12 @@ const navigationConstants = {
 export const routesMap = {
   NAVIGATE_TO_LOGIN: { path: "/", requiresAuth: false },
   NAVIGATE_TO_SIGNUP: { path: "/signup", requiresAuth: false },
-  NAVIGATE_TO_HOME: { path: "/home", requiresAuth: true, role: "user" },
+  NAVIGATE_TO_HOME: { path: "/home", requiresAuth: true },
   NAVIGATE_TO_COMPLETE_PROFILE: {
     path: "/complete-profile",
-    requiresAuth: true,
-    role: "user"
+    requiresAuth: true
   },
-  NAVIGATE_TO_PROFILE: { path: "/profile", requiresAuth: true, role: "user" },
+  NAVIGATE_TO_PROFILE: { path: "/profile", requiresAuth: true },
   NAVIGATE_TO_DATA_PROCESSING_AGREEMENT: {
     path: "/DataProcessingAgreement",
     requiresAuth: false,

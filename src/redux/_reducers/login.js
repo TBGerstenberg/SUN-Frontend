@@ -1,23 +1,31 @@
 import { userConstants } from "../_constants";
 
-let user = JSON.parse(localStorage.getItem("user"));
-const initialState = user
-  ? {
-      loggedIn: true,
-      user
-    }
-  : {
-      loggedIn: false
-    };
+const initialState = {
+  loggedIn: false
+};
+
+const attachRolesToUser = user => {
+  let roles = [];
+  if (user.isAdmin) {
+    roles.push("ADMIN");
+  }
+  user.roles = roles;
+  return user;
+};
 
 const loginReducer = (state = initialState, action) => {
   switch (action.type) {
     case userConstants.REGISTRATION_SUCCESS:
+      //Tempoary workaround that changes the users admin status to an array containing his roles as strings
+      // as this eases the auth filtering
+      let user = action.payload.user;
+      user = attachRolesToUser(user);
+
       return {
         ...state,
         loggingIn: false,
         loggedIn: true,
-        user: action.payload.user,
+        user: user,
         accessToken: action.payload.token
       };
 
@@ -32,7 +40,7 @@ const loginReducer = (state = initialState, action) => {
         ...state,
         loggingIn: false,
         loggedIn: true,
-        user: action.user
+        user: attachRolesToUser(action.user, action.user.admin)
       };
     case userConstants.LOGIN_FAILURE:
       return {

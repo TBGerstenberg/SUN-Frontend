@@ -15,6 +15,8 @@ const reduxFirstRouterOptions = {
       location.routesMap
     );
 
+    console.log("Access allowed: " + allowed);
+
     if (!allowed) {
       const action = redirect({ type: navigationConstants.NAVIGATE_TO_LOGIN });
       dispatch(action);
@@ -35,20 +37,30 @@ const reduxFirstRouterOptions = {
 
 const isAllowedToVisitRoute = (navigationActionType, loginState, routesMap) => {
   const route = routesMap[navigationActionType];
-
   if (route && route.requiresAuth) {
     // Route exists and doesnt require authentication
-    if (route.requiresAuth === false) {
+    if (!route.requiresAuth) {
       return true;
     } else {
       // Route requires auth, but user is not logged in
       if (!loginState.loggedIn) {
+        console.log("Rejecting because of missing Login on protected route");
+        console.log("The user trying to access is ");
+        console.log(loginState);
         return false;
+      } else {
+        if (route.role) {
+          // Route requires auth, and user is logged in, but may not have the needed role (user, admin..) to access the route.
+          if (loginState.user && loginState.user.roles) {
+            console.log("Rejecting because of missing role to access route");
+            console.log("The user trying to access is ");
+            console.log(loginState);
+            return loginState.user.roles.includes(route.role);
+          }
+        } else {
+          return true;
+        }
       }
-      // Route requires auth, and user is logged in, but may not have the needed role (user, admin..) to access the route.
-      const roleRequiredByRoute = route.role;
-      const user = loginState.user;
-      return user.roles.includes(roleRequiredByRoute);
     }
   } else {
     return true;

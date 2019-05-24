@@ -9,7 +9,7 @@ import { I18nextProvider } from "react-i18next";
 import i18n from "./config/internationalization";
 // packages to configure redux
 import { Provider as ReduxStoreProvider } from "react-redux";
-import configureStore from "./config/redux/configureStore";
+import configureStore from "./redux/configureStore";
 // import the used UI Framework "Semantic UI"
 import "./semantic/dist/semantic.min.css";
 // custom components

@@ -2,7 +2,7 @@ import React from "react";
 
 // Redux bindings & HOCs
 import { connect } from "react-redux";
-import { userActions } from "../config/redux/_actions";
+import { userActions } from "../redux/_actions";
 
 // Redux-Form and Bindings Semantic-UI forms
 import { Field, reduxForm } from "redux-form";
@@ -38,9 +38,8 @@ class Login extends React.Component {
   }
 
   render() {
-    console.log(this.props.loggedIn);
     if (this.props.loggedIn) {
-      this.props.dispatch();
+      // Redirect to Home
     }
 
     return (

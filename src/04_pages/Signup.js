@@ -2,7 +2,8 @@ import React from "react";
 
 // Redux bindings & HOCs
 import { connect } from "react-redux";
-import { userActions } from "../config/redux/_actions";
+import { userActions } from "../redux/_actions";
+import { navigationConstants } from "../redux/_constants";
 
 // Redux-Form and Bindings Semantic-UI forms
 import { Field, reduxForm } from "redux-form";
@@ -26,7 +27,7 @@ import {
 import Link from "redux-first-router-link";
 import LanguageSwitcher from "../02_molecules/LanguageSwitcher";
 import { redirect } from "redux-first-router";
-import { navigationConstants } from "../config/redux/_constants";
+
 import formValidationUtilities from "../utilities/formValidationUtilities";
 
 // Styles
@@ -48,6 +49,7 @@ class Signup extends React.Component {
     const action = redirect({
       type: navigationConstants.NAVIGATE_TO_COMPLETE_PROFILE
     });
+    console.log("About to dispatch navigation action in signup form");
     this.props.dispatch(action);
   }
 

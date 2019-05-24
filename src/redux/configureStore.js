@@ -11,9 +11,9 @@ import { routesMap } from "./_constants/navigation.constants";
 import {
   loadReduxState,
   saveReduxState
-} from "../../services/localStorageService";
+} from "../services/localStorageService";
 
-import { FEATURE_CONFIG } from "../feature.config";
+import { FEATURE_CONFIG } from "../config/feature.config";
 import throttle from "lodash/throttle";
 
 export default function configureStore() {

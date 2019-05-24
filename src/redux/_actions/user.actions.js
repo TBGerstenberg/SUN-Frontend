@@ -1,5 +1,5 @@
 import { userConstants } from "../_constants";
-import { userService } from "../../../services";
+import { userService } from "../../services";
 
 /**
  * Isses a Registration request, tracking its progress and status in the redux store by dispatching actions

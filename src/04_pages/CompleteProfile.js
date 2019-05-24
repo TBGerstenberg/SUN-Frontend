@@ -14,7 +14,7 @@ import { connect } from "react-redux";
 import { LabelInputField, CheckboxField } from "react-semantic-redux-form";
 import i18next from "i18next";
 import { DateInput } from "semantic-ui-calendar-react";
-import { userActions, skillCatalogueActions } from "../config/redux/_actions";
+import { userActions, skillCatalogueActions } from "../redux/_actions";
 import ChairSelectionDropdown from "../03_organisms/ChairSelectionDropdown";
 import SkillCatalogue from "../03_organisms/SkillCatalogue";
 import formValidationUtilities from "../utilities/formValidationUtilities";
