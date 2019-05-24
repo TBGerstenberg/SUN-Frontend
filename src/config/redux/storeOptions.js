@@ -1,25 +1,27 @@
 import { redirect } from "redux-first-router";
+import navigationConstants from "./_constants/navigation.constants";
 // package to build upon a previously exiting browser history
-//import createHistory from "history/createBrowserHistory";
 const createHistory = require("history").createBrowserHistory;
 
-// The purpose of the below options is to demonstrate auth filtering.
-// onBeforeChange fires before going to a new route, and you can
-// redirect if certian conditions aren't met.
-
-export default {
+const reduxFirstRouterOptions = {
+  // Hook that fires before a navigation action is triggered
   onBeforeChange: (dispatch, getState, action) => {
-    const {
-      user,
-      location: { routesMap }
-    } = getState();
-    const allowed = isAllowed(action.type, user, routesMap);
+    const state = getState();
+    const loginState = state.login;
+    const location = state.location;
+    const allowed = isAllowedToVisitRoute(
+      action.action.type,
+      loginState,
+      location.routesMap
+    );
 
     if (!allowed) {
-      const action = redirect({ type: "LOGIN" });
+      const action = redirect({ type: navigationConstants.NAVIGATE_TO_LOGIN });
       dispatch(action);
     }
   },
+
+  // Hook that fires after a navigation action has been triggered
   onAfterChange: (dispatch, getState) => {
     const { type } = getState().location;
 
@@ -31,11 +33,26 @@ export default {
   history: createHistory
 };
 
-const isAllowed = (type, user, routesMap) => {
-  const role = routesMap[type] && routesMap[type].role; // you can put arbitrary keys in routes
+const isAllowedToVisitRoute = (navigationActionType, loginState, routesMap) => {
+  const route = routesMap[navigationActionType];
 
-  if (!role) return true;
-  if (!user) return false; // in a real app, a user isn't always logged in
-
-  return user.roles.includes(role);
+  if (route && route.requiresAuth) {
+    // Route exists and doesnt require authentication
+    if (route.requiresAuth === false) {
+      return true;
+    } else {
+      // Route requires auth, but user is not logged in
+      if (!loginState.loggedIn) {
+        return false;
+      }
+      // Route requires auth, and user is logged in, but may not have the needed role (user, admin..) to access the route.
+      const roleRequiredByRoute = route.role;
+      const user = loginState.user;
+      return user.roles.includes(roleRequiredByRoute);
+    }
+  } else {
+    return true;
+  }
 };
+
+export default reduxFirstRouterOptions;

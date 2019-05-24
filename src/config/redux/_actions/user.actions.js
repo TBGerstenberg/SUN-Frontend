@@ -24,8 +24,12 @@ function register({
       consentToTermsOfService
     );
 
+    console.log(registrationResponse);
+
     if (registrationResponse && registrationResponse.user) {
-      dispatch(success(registrationResponse.user));
+      dispatch(
+        success(registrationResponse.user, registrationResponse.authToken)
+      );
     } else {
       dispatch(failure(registrationResponse));
     }
@@ -43,16 +47,19 @@ function register({
    * Redux action creator triggered when a registration request succeeded
    * @param {Object} user - User that has been registered
    */
-  function success(user) {
-    return { type: userConstants.REGISTRATION_SUCCESS, user };
+  function success(user, token) {
+    return {
+      type: userConstants.REGISTRATION_SUCCESS,
+      payload: { user: user, token: token }
+    };
   }
 
   /**
    * Redux action creator triggered when a registration request failed with an error
-   * @param {*} error - Error object thrown when creating the registration request
+   * @param {*} registrationResponse - HttpResponse Object describing the response for the failed request
    */
-  function failure(error) {
-    return { type: userConstants.REGISTRATION_FAILURE, error };
+  function failure(registrationResponse) {
+    return { type: userConstants.REGISTRATION_FAILURE, registrationResponse };
   }
 }
 
