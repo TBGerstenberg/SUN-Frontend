@@ -12,6 +12,15 @@ const initialState = user
 
 const loginReducer = (state = initialState, action) => {
   switch (action.type) {
+    case userConstants.REGISTRATION_SUCCESS:
+      return {
+        ...state,
+        loggingIn: false,
+        loggedIn: true,
+        user: action.payload.user,
+        accessToken: action.payload.token
+      };
+
     case userConstants.LOGIN_REQUEST:
       return {
         ...state,

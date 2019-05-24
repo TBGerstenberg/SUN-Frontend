@@ -2,8 +2,8 @@ import { userConstants } from "../_constants";
 
 const initialState = {
   registration: {
-    email: "",
-    password: "",
+    registering: false,
+    userToBeRegistered: null,
     registrationCompleted: false
   }
 };
@@ -12,16 +12,22 @@ const registrationReducer = (state = initialState, action) => {
   switch (action.type) {
     case userConstants.REGISTRATION_REQUEST:
       return {
-        loggingIn: true,
-        user: action.user
+        registering: true,
+        userToBeRegistered: action.user
       };
     case userConstants.REGISTRATION_SUCCESS:
       return {
-        loggedIn: true,
-        user: action.user
+        registering: false,
+        registeredUser: action.payload.user.email,
+        registrationCompleted: true
       };
     case userConstants.REGISTRATION_FAILURE:
-      return {};
+      return {
+        registering: false,
+        registeredUser: null,
+        registrationCompleted: false,
+        registrationResponseError: action.registrationResponse.error
+      };
     default:
       return state;
   }
