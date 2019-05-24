@@ -105,26 +105,33 @@ class CompleteProfile extends React.Component {
                       {
                         key: 0,
                         text: i18next.t(
+                          "complete-profile-title-dropdown-option-none"
+                        ),
+                        value: ""
+                      },
+                      {
+                        key: 1,
+                        text: i18next.t(
                           "complete-profile-title-dropdown-option-bachelor"
                         ),
                         value: "bachelor"
                       },
                       {
-                        key: 1,
+                        key: 2,
                         text: i18next.t(
                           "complete-profile-title-dropdown-option-master"
                         ),
                         value: "master"
                       },
                       {
-                        key: 2,
+                        key: 3,
                         text: i18next.t(
                           "complete-profile-title-dropdown-option-dr"
                         ),
                         value: "Dr."
                       },
                       {
-                        key: 3,
+                        key: 4,
                         text: i18next.t(
                           "complete-profile-title-dropdown-option-prof-dr"
                         ),

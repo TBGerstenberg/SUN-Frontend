@@ -28,6 +28,7 @@
   "complete-profile-lastName-placeholder": "Nachname",
   "complete-profile-title-label": "Titel",
   "complete-profile-title-placeholder": "Titel",
+  "complete-profile-title-dropdown-option-none": "",
   "complete-profile-title-dropdown-option-bachelor": "Bachelor",
   "complete-profile-title-dropdown-option-master": "Master",
   "complete-profile-title-dropdown-option-dr": "Dr.",
