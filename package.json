@@ -21,6 +21,7 @@
     "redux-first-router-link": "^2.1.1",
     "redux-form": "^8.2.0",
     "redux-thunk": "^2.3.0",
+    "semantic-ui-calendar-react": "^0.15.0",
     "semantic-ui-react": "^0.86.0"
   },
   "scripts": {

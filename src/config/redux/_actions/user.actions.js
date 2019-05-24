@@ -110,24 +110,22 @@ function logout() {
 
 /**
  * Updates a users profile with a set of personal information
+ * @param {object} profileValues - Object containing a set of properties used in each persons profile.
+ *
+ * Contained in the profilevalues Object:
+ *
  * @param {String} firstName - the first name of the user that attempts to complete his profile
  * @param {String} lastName - the last name of the user that attempts to complete his profile
  * @param {String} title - the acadaemic or professional title of the user that attempts to complete his profile
  * @param {String} gender - the gender of the user that attempts to complete his profile - can be "male", "female" or "other",
- * @param {Date} birthDate - an ISO-8601 Date string in the format YYYY-DD-MM describing the users date of birth
+ * @param {Date} dateOfBirth - an ISO-8601 Date string in the format YYYY-DD-MM describing the users date of birth
+ * @param {Adress} Adress - an adress containg a cityName, postalCode, streetName and houseNumber
  * @param {boolean} studentStatus  - flag indicating wether the user is a student or not.
+ * @param {Date} immatriculationDate -
+ * @param {Date} exmatriculationDate -
  * @param {Array of Numbers} chairs - Array of chairs that the user belongs to.
  */
-function updateProfile(
-  firstName,
-  lastName,
-  title,
-  gender,
-  birthDate,
-  address,
-  studentStatus,
-  chairs
-) {
+function updateProfile() {
   return async dispatch => {};
 
   /**
