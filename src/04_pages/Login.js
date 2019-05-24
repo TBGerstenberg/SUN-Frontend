@@ -90,7 +90,7 @@ class Login extends React.Component {
                 </Form>
               </Segment>
               <Trans i18nKey="login-message-new-to-us" />
-              <Link to="Signup">
+              <Link to="/signup">
                 <Trans i18nKey="login-message-call-to-action" />
               </Link>
             </Grid.Column>
