@@ -17,6 +17,7 @@ import { DateInput } from "semantic-ui-calendar-react";
 import { userActions, skillCatalogueActions } from "../config/redux/_actions";
 import ChairSelectionDropdown from "../03_organisms/ChairSelectionDropdown";
 import SkillCatalogue from "../03_organisms/SkillCatalogue";
+import formValidationUtilities from "../utilities/formValidationUtilities";
 
 class CompleteProfile extends React.Component {
   constructor(props) {
@@ -28,9 +29,7 @@ class CompleteProfile extends React.Component {
       immatriculationDate: "",
       exmatriculationDate: ""
     };
-    this._handleCompleteProfileSubmit = this._handleCompleteProfileSubmit.bind(
-      this
-    );
+
     this._handleSkillInputChange = this._handleSkillInputChange.bind(this);
     this._handleSkillSubmission = this._handleSkillSubmission.bind(this);
     this._handleSkillItemClick = this._handleSkillItemClick.bind(this);
@@ -38,6 +37,9 @@ class CompleteProfile extends React.Component {
     this._handleSkillRating = this._handleSkillRating.bind(this);
     this._handleDateOfBirthChange = this._handleDateOfBirthChange.bind(this);
     this._handleImmatriculationDateChange = this._handleImmatriculationDateChange.bind(
+      this
+    );
+    this._handleCompleteProfileSubmit = this._handleCompleteProfileSubmit.bind(
       this
     );
     this._handleExmatriculationDateChange = this._handleExmatriculationDateChange.bind(
@@ -62,7 +64,9 @@ class CompleteProfile extends React.Component {
       <Container>
         <Segment stacked>
           <Form
-            onSubmit={props.handleSubmit(this._handleCompleteProfileSubmit)}
+            onSubmit={props.handleSubmit(
+              this._handleCompleteProfileSubmit.bind(this)
+            )}
           >
             <Grid
               container
@@ -298,6 +302,7 @@ class CompleteProfile extends React.Component {
                       "complete-profile-studentStatus-checkbox-label"
                     )}
                     name="isStudent"
+                    validate={[formValidationUtilities.required]}
                   />
                 </Grid.Column>
                 <Grid.Column width={6} />
@@ -345,6 +350,7 @@ class CompleteProfile extends React.Component {
               <Grid.Row columns={2}>
                 <Grid.Column width={6}>
                   {isEmployee && this.renderRoomNameInput()}
+                  {isEmployee && this.renderAdditionalEmailInput()}
                   {isEmployee && this.renderChairSelectionDropdown()}
                 </Grid.Column>
                 <Grid.Column width={6} />
@@ -444,6 +450,20 @@ class CompleteProfile extends React.Component {
    * @param {} values
    */
   _handleCompleteProfileSubmit(values) {
+    console.log("Triggered Submit");
+
+    const skillCatalogue = this.props.skillCatalogue;
+    let skillsRatings = [];
+
+    if (skillCatalogue) {
+      skillCatalogue.skills.forEach((element, index) => {
+        skillsRatings.push({
+          skill: element,
+          rating: skillCatalogue.ratings[index]
+        });
+      });
+    }
+
     // Values that are extracted from the various input fields, each field is either managed by redux form
     // or via the components state.
     const profileValues = {
@@ -453,9 +473,9 @@ class CompleteProfile extends React.Component {
       lastName: values.lastName,
       dateOfBirth: this.state.dateOfBirth,
       adress: {
-        cityName: values.cityName,
-        postalCode: values.postalCode,
-        streetName: values.streetName,
+        city: values.cityName,
+        postCode: values.postalCode,
+        street: values.streetName,
         roomName: values.roomName
       },
       studentStatus: {
@@ -464,8 +484,10 @@ class CompleteProfile extends React.Component {
         immatriculationDate: this.state.immatriculationDate,
         exmatriculationDate: this.state.exmatriculationDate
       },
-      employeeStatus: null
+      employeeStatus: null,
+      skills: skillsRatings
     };
+    console.log(profileValues);
 
     this.props.dispatch(userActions.updateProfile(profileValues));
   }
@@ -619,6 +641,19 @@ class CompleteProfile extends React.Component {
     );
   }
 
+  renderAdditionalEmailInput() {
+    return (
+      <Field
+        name="additional_email"
+        component={LabelInputField}
+        label={i18next.t("complete-profile-additional-email-label")}
+        labelPosition="left"
+        placeholder={i18next.t("complete-profile-additional-email-placeholder")}
+        validate={[formValidationUtilities.email]}
+      />
+    );
+  }
+
   renderChairSelectionDropdown() {
     return (
       <ChairSelectionDropdown />
@@ -650,7 +685,10 @@ const mapStateToProps = state => ({
 export default withTranslation()(
   connect(mapStateToProps)(
     reduxForm({
-      form: "completeProfileForm" // a unique identifier for this form
+      form: "completeProfileForm",
+      initialValues: {
+        isStudent: true
+      } // a unique identifier for this form
     })(CompleteProfile)
   )
 );
