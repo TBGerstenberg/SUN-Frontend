@@ -2,7 +2,7 @@ const BASEURL = "http://localhost:5000/api";
 
 const API_CONFIG = {
   REGISTRATION: {
-    POST_REGISTRATION_URL: BASEURL + "/signup"
+    POST_REGISTRATION_URL: BASEURL + "/auth/signup"
   },
   LOGIN: {
     POST_LOGIN_URL: BASEURL + "/auth/session"

@@ -1,5 +1,5 @@
 import { chairConstants } from "../_constants";
-import { chairService } from "../../../services";
+import { chairService } from "../../services";
 
 function getAllChairs() {
   return async dispatch => {

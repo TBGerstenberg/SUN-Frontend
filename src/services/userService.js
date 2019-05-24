@@ -103,22 +103,22 @@ const userService = {
     try {
       // Build the request body
       const registrationRequestBody = {
-        email: email,
-        password: password,
-        consentToDataProcessingAgreement: consentToDataProcessingAgreement,
-        consentToTermsOfService: consentToTermsOfService
+        Email: email,
+        Password: password
+        //consentToDataProcessingAgreement: consentToDataProcessingAgreement,
+        //consentToTermsOfService: consentToTermsOfService
       };
 
       console.log(
-        "Issuing a login request with " +
+        "Issuing a Signup request with " +
           registrationRequestBody.email +
           " and " +
           registrationRequestBody.password +
-          " and consent to data processing: " +
+          " and consent to data processing:  " +
           consentToDataProcessingAgreement +
-          " and Consent to terms of service: " +
+          " and Consent to terms of service:  " +
           consentToTermsOfService +
-          "to " +
+          "to  " +
           API_CONFIG.REGISTRATION.POST_REGISTRATION_URL
       );
 
@@ -128,12 +128,14 @@ const userService = {
         registrationRequestBody
       );
 
+      console.log(signupResponse);
+
       // Handle the response
       if (signupResponse) {
-        if (signupResponse.status() === 201 && signupResponse.user)
+        if (signupResponse.status === 200)
           return {
-            authToken: signupResponse.token,
-            user: signupResponse.account,
+            authToken: signupResponse.data.token,
+            user: signupResponse.data.account,
             status: signupResponse.status,
             error: null
           };
@@ -153,24 +155,19 @@ const userService = {
 
   /**
    * Updates a users profile with a set of personal information
+   * @param {object} Profile - a userprofile containg data about a user. In detail, the following properties are accepted:
+   *
    * @param {String} firstName - the first name of the user that attempts to complete his profile
    * @param {String} lastName - the last name of the user that attempts to complete his profile
    * @param {String} title - the acadaemic or professional title of the user that attempts to complete his profile
    * @param {String} gender - the gender of the user that attempts to complete his profile - can be "male", "female" or "other",
    * @param {Date} birthDate - an ISO-8601 Date string in the format YYYY-DD-MM describing the users date of birth
-   * @param {boolean} studentStatus  - flag indicating wether the user is a student or not.
+   * @param {Object} address - Object containing a cityName, postalCode, StreetName and HouseNumber
+   * @param {Object} studentStatus  - Object Containing a StudentId ("Matrikelnummer"), courseOfStudy, enrollmentDate and deregistrationDate
    * @param {Array of Numbers} chairs - Array of chairs that the user belongs to.
+   * @param {Array of Objects} skills - catalogue of skills conating a skillName (String) and a skillRating (number, 0-5)
    */
-  updateProfile: async (
-    firstName,
-    lastName,
-    title,
-    gender,
-    birthDate,
-    address,
-    studentStatus,
-    chairs
-  ) => {
+  updateProfile: async profile => {
     try {
       //Build request headers
       const headers = {
@@ -179,14 +176,15 @@ const userService = {
 
       //Build request Body
       const updateProfileRequestBody = {
-        firstName: firstName,
-        lastName: lastName,
-        title: title,
-        gender: gender,
-        birthDate: birthDate,
-        address: address,
-        studentStatus: studentStatus,
-        chairs: chairs
+        firstName: profile.firstName,
+        lastName: profile.lastName,
+        title: profile.title,
+        gender: profile.gender,
+        birthDate: profile.birthDate,
+        address: profile.address,
+        studentStatus: profile.studentStatus,
+        chairs: profile.chairs,
+        skills: profile.skills
       };
 
       // Perform the request

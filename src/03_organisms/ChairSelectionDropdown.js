@@ -2,7 +2,7 @@ import React from "react";
 import { Field } from "redux-form";
 import i18next from "i18next";
 import { Form } from "semantic-ui-react";
-import { chairActions } from "../config/redux/_actions";
+import { chairActions } from "../redux/_actions";
 
 import { withTranslation } from "react-i18next";
 import { connect } from "react-redux";
@@ -60,8 +60,6 @@ class ChairSelectionDropdown extends React.Component {
 
 // MOCKED API response, since CORS is currently disabled
 const mapStateToProps = state => {
-  console.log(state);
-
   return {
     chairs: [
       {

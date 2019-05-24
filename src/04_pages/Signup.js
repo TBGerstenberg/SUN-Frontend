@@ -2,7 +2,8 @@ import React from "react";
 
 // Redux bindings & HOCs
 import { connect } from "react-redux";
-import { userActions } from "../config/redux/_actions";
+import { userActions } from "../redux/_actions";
+import { navigationConstants } from "../redux/_constants";
 
 // Redux-Form and Bindings Semantic-UI forms
 import { Field, reduxForm } from "redux-form";
@@ -25,6 +26,9 @@ import {
 
 import Link from "redux-first-router-link";
 import LanguageSwitcher from "../02_molecules/LanguageSwitcher";
+import { redirect } from "redux-first-router";
+
+import formValidationUtilities from "../utilities/formValidationUtilities";
 
 // Styles
 import "./Signup.css";
@@ -36,9 +40,23 @@ class Signup extends React.Component {
   constructor(props) {
     super(props);
     this._handleRegistrationSubmit = this._handleRegistrationSubmit.bind(this);
+    this.redirectToCompleteProfilePage = this.redirectToCompleteProfilePage.bind(
+      this
+    );
+  }
+
+  redirectToCompleteProfilePage() {
+    const action = redirect({
+      type: navigationConstants.NAVIGATE_TO_COMPLETE_PROFILE
+    });
+    console.log("About to dispatch navigation action in signup form");
+    this.props.dispatch(action);
   }
 
   render() {
+    if (this.props.registrationCompleted) {
+      this.redirectToCompleteProfilePage();
+    }
     return (
       <div className="registration-form">
         <Container>
@@ -67,6 +85,11 @@ class Signup extends React.Component {
                     }}
                     labelPosition="left"
                     placeholder={i18next.t("signup-email-input-placeholder")}
+                    validate={[
+                      formValidationUtilities.requiredEmail,
+                      formValidationUtilities.email,
+                      formValidationUtilities.uniSiegenEmail
+                    ]}
                   />
 
                   <Field
@@ -78,6 +101,11 @@ class Signup extends React.Component {
                     }}
                     labelPosition="left"
                     placeholder={i18next.t("signup-password-input-placeholder")}
+                    validate={[
+                      formValidationUtilities.requiredPassword,
+                      formValidationUtilities.passwordStrength,
+                      formValidationUtilities.passwordNotJochen
+                    ]}
                   />
 
                   <Form.Group>
@@ -147,7 +175,8 @@ class Signup extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    registrationForm: state.registrationForm
+    registrationForm: state.registrationForm,
+    registrationCompleted: state.registration.registrationCompleted
   };
 };
 
