@@ -60,8 +60,6 @@ class ChairSelectionDropdown extends React.Component {
 
 // MOCKED API response, since CORS is currently disabled
 const mapStateToProps = state => {
-  console.log(state);
-
   return {
     chairs: [
       {
