@@ -8,7 +8,7 @@ import logo from "../05_images/Logo.PNG";
 class NavBar extends Component {
   render() {
     return (
-      <div class="ui teal large inverted segment" >
+      <div class="ui blue large inverted segment" >
         <div class="ui large inverted secondary menu">
         <div class="ui mini image">
         <img src={logo} style={{ height: "100%"}}></img>
