@@ -19,6 +19,18 @@ import ChairSelectionDropdown from "../03_organisms/ChairSelectionDropdown";
 import SkillCatalogue from "../03_organisms/SkillCatalogue";
 import formValidationUtilities from "../utilities/formValidationUtilities";
 
+import DropdownSelect from "../01_atoms/DropdownSelector";
+import StudentIdInput from "../02_molecules/StudentIdInput";
+import CourseOfStudyInput from "../02_molecules/CourseOfStudyInput";
+import CityNameInput from "../02_molecules/CityNameInput";
+import StreetNameInput from "../02_molecules/StreetNameInput";
+import PostalCodeInput from "../02_molecules/PostalCodeInput";
+import HouseNumberInput from "../02_molecules/HouseNumberInput";
+import FirstNameInput from "../02_molecules/FirstNameInput";
+import LastNameInput from "../02_molecules/LastNameInput";
+import TitleDropdownSelector from "../02_molecules/TitleDropdownSelector";
+import GenderDropdownSelector from "../02_molecules/GenderDropdownSelector";
+
 class CompleteProfile extends React.Component {
   constructor(props) {
     super(props);
@@ -101,71 +113,10 @@ class CompleteProfile extends React.Component {
               }
               <Grid.Row columns={2}>
                 <Grid.Column width={6} textAlign="left">
-                  <Field
-                    name="title"
-                    label={i18next.t("complete-profile-title-label")}
-                    component={this.renderSelect}
-                    options={[
-                      {
-                        key: 0,
-                        text: i18next.t(
-                          "complete-profile-title-dropdown-option-bachelor"
-                        ),
-                        value: "bachelor"
-                      },
-                      {
-                        key: 1,
-                        text: i18next.t(
-                          "complete-profile-title-dropdown-option-master"
-                        ),
-                        value: "master"
-                      },
-                      {
-                        key: 2,
-                        text: i18next.t(
-                          "complete-profile-title-dropdown-option-dr"
-                        ),
-                        value: "Dr."
-                      },
-                      {
-                        key: 3,
-                        text: i18next.t(
-                          "complete-profile-title-dropdown-option-prof-dr"
-                        ),
-                        value: "Prof. Dr."
-                      }
-                    ]}
-                  />
+                  <TitleDropdownSelector />
                 </Grid.Column>
                 <Grid.Column width={6} textAlign="left">
-                  <Field
-                    name="gender"
-                    label={i18next.t("complete-profile-gender-label")}
-                    component={this.renderSelect}
-                    options={[
-                      {
-                        key: 1,
-                        text: i18next.t(
-                          "complete-profile-gender-dropdown-option-male"
-                        ),
-                        value: "male"
-                      },
-                      {
-                        key: 2,
-                        text: i18next.t(
-                          "complete-profile-gender-dropdown-option-female"
-                        ),
-                        value: "female"
-                      },
-                      {
-                        key: 3,
-                        text: i18next.t(
-                          "complete-profile-gender-dropdown-option-other"
-                        ),
-                        value: "other"
-                      }
-                    ]}
-                  />
+                  <GenderDropdownSelector />
                 </Grid.Column>
               </Grid.Row>
 
@@ -174,31 +125,10 @@ class CompleteProfile extends React.Component {
               }
               <Grid.Row columns={2}>
                 <Grid.Column width={6}>
-                  <Field
-                    name="firstName"
-                    component={LabelInputField}
-                    label={{
-                      content: i18next.t("complete-profile-firstName-label")
-                    }}
-                    labelPosition="left"
-                    placeholder={i18next.t(
-                      "complete-profile-firstName-placeholder"
-                    )}
-                  />
+                  <FirstNameInput />
                 </Grid.Column>
-
                 <Grid.Column width={6}>
-                  <Field
-                    name="lastName"
-                    component={LabelInputField}
-                    label={{
-                      content: i18next.t("complete-profile-lastName-label")
-                    }}
-                    labelPosition="left"
-                    placeholder={i18next.t(
-                      "complete-profile-lastName-placeholder"
-                    )}
-                  />
+                  <LastNameInput />
                 </Grid.Column>
               </Grid.Row>
 
@@ -207,15 +137,7 @@ class CompleteProfile extends React.Component {
               }
               <Grid.Row columns={2}>
                 <Grid.Column width={6}>
-                  <DateInput
-                    name="dateOfBirth"
-                    placeholder={i18next.t(
-                      "complete-profile-dateOfBirth-placeholder"
-                    )}
-                    value={this.state.dateOfBirth}
-                    iconPosition="left"
-                    onChange={this._handleDateOfBirthChange}
-                  />
+                  {this.renderBirthDateInput()}
                 </Grid.Column>
                 <Grid.Column width={6} />
               </Grid.Row>
@@ -225,18 +147,18 @@ class CompleteProfile extends React.Component {
               }
               <Grid.Row columns={2}>
                 <Grid.Column width={6}>
-                  {this.renderCityNameInput()}
+                  <CityNameInput />
                 </Grid.Column>
                 <Grid.Column width={6}>
-                  {this.renderPostalCodeInput()}
+                  <PostalCodeInput />
                 </Grid.Column>
               </Grid.Row>
               <Grid.Row columns={2}>
                 <Grid.Column width={6}>
-                  {this.renderStreetNameInput()}
+                  <StreetNameInput />
                 </Grid.Column>
                 <Grid.Column width={6}>
-                  {this.renderHouseNumberInput()}
+                  <HouseNumberInput />
                 </Grid.Column>
               </Grid.Row>
 
@@ -286,7 +208,6 @@ class CompleteProfile extends React.Component {
                 </Grid.Column>
                 <Grid.Column width={6} />
               </Grid.Row>
-
               <Divider />
               {
                 // StudentRole Checkbox(s)
@@ -302,7 +223,7 @@ class CompleteProfile extends React.Component {
                       "complete-profile-studentStatus-checkbox-label"
                     )}
                     name="isStudent"
-                    validate={[formValidationUtilities.required]}
+                    validate={[]}
                   />
                 </Grid.Column>
                 <Grid.Column width={6} />
@@ -313,10 +234,10 @@ class CompleteProfile extends React.Component {
               }
               <Grid.Row columns={2}>
                 <Grid.Column width={6}>
-                  {isStudent && this.renderStudentIdInput()}
+                  {isStudent && <StudentIdInput />}
                 </Grid.Column>
                 <Grid.Column width={6}>
-                  {isStudent && this.renderCourseOfStudyInput()}
+                  {isStudent && <CourseOfStudyInput />}
                 </Grid.Column>
               </Grid.Row>
               <Grid.Row columns={2}>
@@ -497,30 +418,14 @@ class CompleteProfile extends React.Component {
    *
    */
 
-  renderStudentIdInput(field) {
+  renderBirthDateInput() {
     return (
-      <Field
-        name="studentId"
-        component={LabelInputField}
-        label={{
-          content: i18next.t("complete-profile-studentId-label")
-        }}
-        labelPosition="left"
-        placeholder={i18next.t("complete-profile-studentId-placeholder")}
-      />
-    );
-  }
-
-  renderCourseOfStudyInput() {
-    return (
-      <Field
-        name="courseOfStudy"
-        component={LabelInputField}
-        label={{
-          content: i18next.t("complete-profile-courseOfStudy-label")
-        }}
-        labelPosition="left"
-        placeholder={i18next.t("complete-profile-courseOfStudy-placeholder")}
+      <DateInput
+        name="dateOfBirth"
+        placeholder={i18next.t("complete-profile-dateOfBirth-placeholder")}
+        value={this.state.dateOfBirth}
+        iconPosition="left"
+        onChange={this._handleDateOfBirthChange}
       />
     );
   }
@@ -567,62 +472,6 @@ class CompleteProfile extends React.Component {
         options={field.options}
         placeholder={field.placeholder}
         value={field.input.value}
-      />
-    );
-  }
-
-  renderCityNameInput() {
-    return (
-      <Field
-        name="cityName"
-        component={LabelInputField}
-        label={{
-          content: i18next.t("complete-profile-cityName-label")
-        }}
-        labelPosition="left"
-        placeholder={i18next.t("complete-profile-cityName-placeholder")}
-      />
-    );
-  }
-
-  renderStreetNameInput() {
-    return (
-      <Field
-        name="streetName"
-        component={LabelInputField}
-        label={{
-          content: i18next.t("complete-profile-streetName-label")
-        }}
-        labelPosition="left"
-        placeholder={i18next.t("complete-profile-streetName-placeholder")}
-      />
-    );
-  }
-
-  renderHouseNumberInput() {
-    return (
-      <Field
-        name="houseNumber"
-        component={LabelInputField}
-        label={{
-          content: i18next.t("complete-profile-houseNumber-label")
-        }}
-        labelPosition="left"
-        placeholder={i18next.t("complete-profile-houseNumber-placeholder")}
-      />
-    );
-  }
-
-  renderPostalCodeInput() {
-    return (
-      <Field
-        name="postalCode"
-        component={LabelInputField}
-        label={{
-          content: i18next.t("complete-profile-postalCode-label")
-        }}
-        labelPosition="left"
-        placeholder={i18next.t("complete-profile-postalCode-placeholder")}
       />
     );
   }

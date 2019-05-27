@@ -10,6 +10,8 @@
   "signup-a-new-account-call-to-action-button": "Registrieren",
   "signup-message-already-have-an-account": "Bereits registriert? ",
   "signup-message-already-have-an-account-call-to-action": "Anmelden",
+  "signup-error-500-message": "Oops, da ist etwas schiefgelaufen",
+  "signup-error-500-explanation": "Wir können die Anfrage aufgrund technischer Probleme aktuell nicht beantworten. Bitte versuchen Sie es später erneut.",
 
   "log-in-to-your-account-headline": "Anmelden",
   "login-email-input-placeholder": "Email-Adresse",

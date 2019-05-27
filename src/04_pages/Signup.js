@@ -8,6 +8,7 @@ import { navigationConstants } from "../redux/_constants";
 // Redux-Form and Bindings Semantic-UI forms
 import { Field, reduxForm } from "redux-form";
 import { LabelInputField, CheckboxField } from "react-semantic-redux-form";
+import { Message } from "semantic-ui-react";
 
 // Internationalization
 import i18next from "i18next";
@@ -49,7 +50,6 @@ class Signup extends React.Component {
     const action = redirect({
       type: navigationConstants.NAVIGATE_TO_COMPLETE_PROFILE
     });
-    console.log("About to dispatch navigation action in signup form");
     this.props.dispatch(action);
   }
 
@@ -125,6 +125,8 @@ class Signup extends React.Component {
               <Link to="/">
                 <Trans i18nKey="signup-message-already-have-an-account-call-to-action" />
               </Link>
+              {this.props.registrationErrorStatus &&
+                this.renderErrorMessage(this.props.registrationErrorStatus)}
             </Grid.Column>
           </Grid>
         </Container>
@@ -171,12 +173,32 @@ class Signup extends React.Component {
       })
     );
   }
+
+  renderErrorMessage(status) {
+    console.log("Rendering error message ");
+    return (
+      <Message negative>
+        <Message.Header>
+          {i18next.t(`signup-error-${status}-message`)}
+        </Message.Header>
+        <p> {i18next.t(`signup-error-${status}-explanation`)}</p>
+      </Message>
+    );
+  }
 }
 
 const mapStateToProps = state => {
+  let registrationErrorStatus = null;
+
+  if (state.registration.registrationResponseError) {
+    registrationErrorStatus =
+      state.registration.registrationResponseError.response.status;
+  }
+
   return {
     registrationForm: state.registrationForm,
-    registrationCompleted: state.registration.registrationCompleted
+    registrationCompleted: state.registration.registrationCompleted,
+    registrationErrorStatus: registrationErrorStatus
   };
 };
 

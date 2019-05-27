@@ -31,9 +31,7 @@ class ChairSelectionDropdown extends React.Component {
 
   createDropdownOptionsFromProps() {
     const dropDownOptions = [];
-
     const chairsFromProps = this.props.chairs;
-
     chairsFromProps.forEach((chairElement, index) => {
       const dropDownOption = {
         key: index,
