@@ -2,13 +2,15 @@ import { chairConstants } from "../_constants";
 import { chairService } from "../../services";
 
 function getAllChairs() {
-  return async dispatch => {
+  return async (dispatch, getState) => {
+    const state = getState();
+    const accessToken = state.login.accessToken;
+
     dispatch(request());
+    const getAllChairsResponse = await chairService.getAllChairs(accessToken);
 
-    const getAllChairsResponse = await chairService.getAllChairs();
-
-    if (getAllChairsResponse && getAllChairsResponse) {
-      dispatch(success(getAllChairsResponse));
+    if (getAllChairsResponse) {
+      dispatch(success(getAllChairsResponse.data));
     } else {
       dispatch(failure(getAllChairsResponse));
     }

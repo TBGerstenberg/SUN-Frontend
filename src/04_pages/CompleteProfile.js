@@ -19,7 +19,6 @@ import ChairSelectionDropdown from "../03_organisms/ChairSelectionDropdown";
 import SkillCatalogue from "../03_organisms/SkillCatalogue";
 import formValidationUtilities from "../utilities/formValidationUtilities";
 
-import DropdownSelect from "../01_atoms/DropdownSelector";
 import StudentIdInput from "../02_molecules/StudentIdInput";
 import CourseOfStudyInput from "../02_molecules/CourseOfStudyInput";
 import CityNameInput from "../02_molecules/CityNameInput";
@@ -272,7 +271,7 @@ class CompleteProfile extends React.Component {
                 <Grid.Column width={6}>
                   {isEmployee && this.renderRoomNameInput()}
                   {isEmployee && this.renderAdditionalEmailInput()}
-                  {isEmployee && this.renderChairSelectionDropdown()}
+                  {isEmployee && <ChairSelectionDropdown />}
                 </Grid.Column>
                 <Grid.Column width={6} />
               </Grid.Row>
@@ -460,22 +459,6 @@ class CompleteProfile extends React.Component {
     );
   }
 
-  renderSelect(field) {
-    return (
-      <Form.Select
-        label={field.label}
-        name={field.input.name}
-        onBlur={(e, { value }) => {
-          field.input.onChange(value);
-        }}
-        onChange={(e, { value }) => field.input.onChange(value)}
-        options={field.options}
-        placeholder={field.placeholder}
-        value={field.input.value}
-      />
-    );
-  }
-
   renderRoomNameInput() {
     return (
       <Field
@@ -500,28 +483,6 @@ class CompleteProfile extends React.Component {
         placeholder={i18next.t("complete-profile-additional-email-placeholder")}
         validate={[formValidationUtilities.email]}
       />
-    );
-  }
-
-  renderChairSelectionDropdown() {
-    return (
-      <ChairSelectionDropdown />
-
-      /*
-      <Field
-        name="chairs"
-        label={i18next.t("complete-profile-chair-label")}
-        placeholder={i18next.t("complete-profile-placeholder-label")}
-        component={renderSelect}
-        options={[
-          {
-            key: 0,
-            value: "TODO",
-            text: "TODO"
-            // TODO: Fetch chairs from backend and populate the dropdown with these values
-          }
-        ]}
-      /> */
     );
   }
 }
