@@ -1,5 +1,6 @@
 import { redirect } from "redux-first-router";
 import navigationConstants from "./_constants/navigation.constants";
+import { FEATURE_CONFIG } from "../config/feature.config";
 // package to build upon a previously exiting browser history
 const createHistory = require("history").createBrowserHistory;
 
@@ -9,17 +10,22 @@ const reduxFirstRouterOptions = {
     const state = getState();
     const loginState = state.login;
     const location = state.location;
-    const allowed = isAllowedToVisitRoute(
-      action.action.type,
-      loginState,
-      location.routesMap
-    );
 
-    console.log("Access allowed: " + allowed);
-
-    if (!allowed) {
-      const action = redirect({ type: navigationConstants.NAVIGATE_TO_LOGIN });
-      dispatch(action);
+    if (
+      FEATURE_CONFIG.authentication
+        .redirectToLoginWhenAccessingProtectedRoutesUnauthenticated
+    ) {
+      const allowed = isAllowedToVisitRoute(
+        action.action.type,
+        loginState,
+        location.routesMap
+      );
+      if (!allowed) {
+        const action = redirect({
+          type: navigationConstants.NAVIGATE_TO_LOGIN
+        });
+        dispatch(action);
+      }
     }
   },
 
