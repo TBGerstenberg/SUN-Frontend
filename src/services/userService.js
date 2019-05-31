@@ -45,7 +45,7 @@ const userService = {
 
       // Handle the response
       if (LoginResponse) {
-        if (LoginResponse.status() === 200 && LoginResponse.user)
+        if (LoginResponse.status === 200 && LoginResponse.user)
           return {
             authToken: LoginResponse.token,
             user: LoginResponse.account,
@@ -71,18 +71,10 @@ const userService = {
    * that logs out the currently authenticated user.
    * @param {string} token - The access token that shall be invalidated
    */
-  logout: async token => {
-    // Build http headers
-    const logoutHttpHeaders = {
-      headers: { Authorization: "bearer " + token }
-    };
-
+  logout: async () => {
     try {
       // Perform the http request
-      const logoutResponse = await axios.get(
-        API_CONFIG.LOGIN.GET_LOGOUT_URL,
-        logoutHttpHeaders
-      );
+      const logoutResponse = await axios.get(API_CONFIG.LOGIN.GET_LOGOUT_URL);
       return logoutResponse;
     } catch (error) {}
   },
@@ -203,6 +195,34 @@ const userService = {
       }
     } catch (error) {
       return { user: null, error: error };
+    }
+  },
+
+  /**
+   * Fetches all Users known within the system.
+   */
+  getAllUsers: async () => {
+    try {
+      //Build request headers
+      const headers = {
+        Authorization: "SOMETOKEN"
+      };
+
+      // Perform the request
+      const getAllUsersResponse = await axios.get(
+        API_CONFIG.USERS.GET_ALL_USERS_URL,
+        headers
+      );
+
+      // Handle the response
+      if (getAllUsersResponse.status === 200) {
+        return {
+          users: getAllUsersResponse.data,
+          error: null
+        };
+      }
+    } catch (error) {
+      return { users: null, error: error };
     }
   }
 };

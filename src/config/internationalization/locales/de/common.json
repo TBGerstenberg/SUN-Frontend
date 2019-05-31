@@ -97,5 +97,13 @@
   "landingpage-footer-sitemap": "Sitemap",
   "landingpage-footer-call-to-action": "Bereit für die nächste Generation?",
   "landingpage-footer-pre-call-to-action-text": " ",
-  "landingpage-footer-signup-button-text": "Jetzt registrieren"
+  "landingpage-footer-signup-button-text": "Jetzt registrieren",
+
+  "adminpanel-menu-user-management-label": "Benutzerverwaltung",
+  "adminpanel-menu-group-management-label": "Gruppenverwaltung",
+  "adminpanel-menu-chair-management-label": "Lehrstuhlverwaltung",
+
+  "userManagement-add-user-button": "Benutzer hinzufügen",
+  "userManagement-edit-user-button": "Benutzer bearbeiten",
+  "userManagement-delete-user-button": "Benutzer löschen"
 }
