@@ -12,7 +12,8 @@ const navigationConstants = {
   NAVIGATE_TO_DATA_PROCESSING_AGREEMENT:
     "NAVIGATE_TO_DATA_PROCESSING_AGREEMENT",
   NAVIGATE_TO_TERMS_OF_SERVICE: "NAVIGATE_TO_TERMS_OF_SERVICE",
-  NAVIGATE_TO_LANDING_PAGE: "NAVIGATE_TO_LANDING_PAGE"
+  NAVIGATE_TO_LANDING_PAGE: "NAVIGATE_TO_LANDING_PAGE",
+  NAVIGATE_TO_ADMIN_PANEL: "NAVIGATE_TO_ADMIN_PANEL"
 };
 
 /**
@@ -41,6 +42,11 @@ export const routesMap = {
     path: "/start",
     requiresAuth: false,
     role: ""
+  },
+  NAVIGATE_TO_ADMIN_PANEL: {
+    path: "/admin",
+    requiresAuth: true,
+    role: ""
   }
 };
 
@@ -57,6 +63,7 @@ export const componentsMap = {
   NAVIGATE_TO_DATA_PROCESSING_AGREEMENT: "DataProcessingAgreement",
   NAVIGATE_TO_TERMS_OF_SERVICE: "TermsOfService",
   NAVIGATE_TO_LANDING_PAGE: "LandingPage",
+  NAVIGATE_TO_ADMIN_PANEL: "AdminPanel",
   [NOT_FOUND]: "NotFound"
 };
 

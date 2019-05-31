@@ -74,6 +74,7 @@ function login({ email, password }) {
     dispatch(request({ email }));
 
     const loginResponse = await userService.login(email, password);
+    console.log(loginResponse);
 
     if (loginResponse && loginResponse.user) {
       dispatch(success(loginResponse.user));
@@ -160,10 +161,40 @@ function updateProfile() {
   }
 }
 
+/**
+ * Fetches all users
+ */
+function getAllUsers() {
+  return async dispatch => {
+    dispatch(request());
+
+    const getAllUsersResponse = await userService.getAllUsers();
+
+    if (getAllUsersResponse && getAllUsersResponse.users) {
+      dispatch(success(getAllUsersResponse.users));
+    } else {
+      dispatch(failure(getAllUsersResponse));
+    }
+  };
+
+  function request() {
+    return { type: userConstants.UPDATE_USER_PROFILE_REQUEST };
+  }
+
+  function success(users) {
+    return { type: userConstants.UPDATE_USER_PROFILE_SUCCESS, users };
+  }
+
+  function failure(error) {
+    return { type: userConstants.UPDATE_USER_PROFILE_FAILURE, error };
+  }
+}
+
 const userActions = {
   register,
   login,
   logout,
+  getAllUsers,
   updateProfile
 };
 
