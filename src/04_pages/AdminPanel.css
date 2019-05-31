@@ -1,0 +1,17 @@
+html,
+body {
+  min-height: 100% !important;
+  height: 100%;
+}
+
+#root {
+  height: 100%;
+}
+
+.pageWrapper {
+  height: 100%;
+}
+
+.panelWrapper {
+  height: 100%;
+}
