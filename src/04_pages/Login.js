@@ -28,6 +28,9 @@ import LanguageSwitcher from "../02_molecules/LanguageSwitcher";
 // Styles
 import "./Login.css";
 
+//Actions
+import { navigationConstants } from "../redux/_constants";
+
 /**
  * A Screen that allows a user to log in to the system.
  */
@@ -40,6 +43,7 @@ class Login extends React.Component {
   render() {
     if (this.props.loggedIn) {
       // Redirect to Home
+      this.props.dispatch({ type: navigationConstants.NAVIGATE_TO_HOME });
     }
 
     return (

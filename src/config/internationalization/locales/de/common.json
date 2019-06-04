@@ -97,5 +97,28 @@
   "landingpage-footer-sitemap": "Sitemap",
   "landingpage-footer-call-to-action": "Bereit für die nächste Generation?",
   "landingpage-footer-pre-call-to-action-text": " ",
-  "landingpage-footer-signup-button-text": "Jetzt registrieren"
+  "landingpage-footer-signup-button-text": "Jetzt registrieren",
+
+  "adminpanel-menu-user-management-label": "Benutzerverwaltung",
+  "adminpanel-menu-group-management-label": "Gruppenverwaltung",
+  "adminpanel-menu-chair-management-label": "Lehrstuhlverwaltung",
+
+  "usermanagement-tableheader-id": "BenutzerId",
+  "usermanagement-tableheader-email": "Email",
+  "usermanagement-tableheader-password": "Passwort",
+  "usermanagement-tableheader-gender": "Geschlecht",
+  "usermanagement-tableheader-title": "Titel",
+  "usermanagement-tableheader-firstName": "Vorname",
+  "usermanagement-tableheader-lastName": "Nachname",
+  "usermanagement-tableheader-birthDate": "Geburtsdatum",
+  "usermanagement-tableheader-city": "Stadt",
+  "usermanagement-tableheader-postCode": "Postleitzahl",
+  "usermanagement-tableheader-street": "Straße",
+  "usermanagement-tableheader-houseNumber": "Hausnummer",
+  "usermanagement-tableheader-studentStatus": "Ist Student",
+  "usermanagement-tableheader-employeeStatus": "Ist Mitarbeiter",
+
+  "userManagement-add-user-button": "Benutzer hinzufügen",
+  "userManagement-edit-user-button": "Benutzer bearbeiten",
+  "userManagement-delete-user-button": "Benutzer löschen"
 }
