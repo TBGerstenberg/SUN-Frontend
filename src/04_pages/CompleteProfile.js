@@ -30,6 +30,10 @@ import LastNameInput from "../02_molecules/LastNameInput";
 import TitleDropdownSelector from "../02_molecules/TitleDropdownSelector";
 import GenderDropdownSelector from "../02_molecules/GenderDropdownSelector";
 
+import Profile from "../models/profile";
+import { navigationConstants } from "../redux/_constants";
+import { navigationActions } from "../redux/_actions";
+
 class CompleteProfile extends React.Component {
   constructor(props) {
     super(props);
@@ -60,6 +64,10 @@ class CompleteProfile extends React.Component {
 
   render() {
     const props = this.props;
+
+    if (props.profileUpdateSucceeded) {
+      props.redirectToHome();
+    }
 
     const isStudent =
       props.formState &&
@@ -384,32 +392,41 @@ class CompleteProfile extends React.Component {
       });
     }
 
+    const DEFAULT_DATE_IF_UNSET = "0001-01-01T00:00:00";
+    const DEFAULT_GENDER_IF_UNSET = 0;
+
     // Values that are extracted from the various input fields, each field is either managed by redux form
     // or via the components state.
     const profileValues = {
+      userId: this.props.userId,
       title: values.title,
-      gender: values.gender,
+      gender: values.gender || DEFAULT_GENDER_IF_UNSET,
       firstName: values.firstName,
       lastName: values.lastName,
-      dateOfBirth: this.state.dateOfBirth,
-      adress: {
+      birthDate: this.state.dateOfBirth || DEFAULT_DATE_IF_UNSET,
+      address: {
         city: values.cityName,
         postCode: values.postalCode,
         street: values.streetName,
-        roomName: values.roomName
+        room: values.roomName,
+        email: values.additional_email
       },
       studentStatus: {
-        studentId: values.studentId,
-        courseOfStudy: values.courseOfStudy,
-        immatriculationDate: this.state.immatriculationDate,
-        exmatriculationDate: this.state.exmatriculationDate
+        matriculationNumber: values.studentId,
+        subect: values.courseOfStudy,
+        matriculationDate:
+          this.state.immatriculationDate || DEFAULT_DATE_IF_UNSET,
+        exmatriculationDate:
+          this.state.exmatriculationDate || DEFAULT_DATE_IF_UNSET
       },
       employeeStatus: null,
+      chairs: [values.chairs],
       skills: skillsRatings
     };
-    console.log(profileValues);
 
-    this.props.dispatch(userActions.updateProfile(profileValues));
+    const profile = new Profile(profileValues);
+
+    this.props.dispatch(userActions.updateProfile(profile));
   }
 
   /**
@@ -425,6 +442,7 @@ class CompleteProfile extends React.Component {
         value={this.state.dateOfBirth}
         iconPosition="left"
         onChange={this._handleDateOfBirthChange}
+        dateFormat=""
       />
     );
   }
@@ -440,6 +458,7 @@ class CompleteProfile extends React.Component {
         iconPosition="left"
         onChange={this._handleImmatriculationDateChange}
         label={i18next.t("complete-profile-immatriculationDate-label")}
+        dateFormat=""
       />
     );
   }
@@ -455,6 +474,7 @@ class CompleteProfile extends React.Component {
         iconPosition="left"
         onChange={this._handleExmatriculationDateChange}
         label={i18next.t("complete-profile-exmatriculationDate-label")}
+        dateFormat=""
       />
     );
   }
@@ -487,13 +507,28 @@ class CompleteProfile extends React.Component {
   }
 }
 
+const mapDispatchToProps = dispatch => {
+  return {
+    redirectToHome: () => {
+      dispatch(
+        navigationActions.redirect(navigationConstants.NAVIGATE_TO_HOME)
+      );
+    }
+  };
+};
+
 const mapStateToProps = state => ({
+  profileUpdateSucceeded: state.user.profileUpdateSucceeded,
+  userId: state.login.user.id,
   formState: state.form.completeProfileForm,
   skillCatalogue: state.skillCatalogue
 });
 
 export default withTranslation()(
-  connect(mapStateToProps)(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(
     reduxForm({
       form: "completeProfileForm",
       initialValues: {

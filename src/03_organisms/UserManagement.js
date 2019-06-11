@@ -22,7 +22,6 @@ class UserManagement extends React.Component {
   }
 
   renderUsersTable(users) {
-    console.log(users);
     return (
       <Table celled selectable>
         {this.renderUsersTableHeader()}
@@ -125,7 +124,6 @@ class UserManagement extends React.Component {
   }
 
   renderUsersTableRow(user) {
-    console.log(user);
     return (
       <Table.Row
         key={"row" + user.id}

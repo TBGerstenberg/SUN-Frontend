@@ -51,7 +51,7 @@ const createDropdownOptionsFromChairs = chairs => {
   chairs.forEach((chairElement, index) => {
     const dropDownOption = {
       key: index,
-      value: chairElement.name,
+      value: chairElement.id,
       text: chairElement.name
     };
 

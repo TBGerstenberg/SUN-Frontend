@@ -50,17 +50,11 @@ const isAllowedToVisitRoute = (navigationActionType, loginState, routesMap) => {
     } else {
       // Route requires auth, but user is not logged in
       if (!loginState.loggedIn) {
-        console.log("Rejecting because of missing Login on protected route");
-        console.log("The user trying to access is ");
-        console.log(loginState);
         return false;
       } else {
         if (route.role) {
           // Route requires auth, and user is logged in, but may not have the needed role (user, admin..) to access the route.
           if (loginState.user && loginState.user.roles) {
-            console.log("Rejecting because of missing role to access route");
-            console.log("The user trying to access is ");
-            console.log(loginState);
             return loginState.user.roles.includes(route.role);
           }
         } else {

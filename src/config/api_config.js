@@ -10,7 +10,7 @@ const API_CONFIG = {
   },
   USERS: {
     GET_ALL_USERS_URL: BASEURL + "/person",
-    UPDATE_PROFILE_URL: BASEURL + "/persons"
+    UPDATE_PROFILE_URL: BASEURL + "/person/" // :userId
   },
   CHAIRS: {
     GET_ALL_CHAIRS_URL: BASEURL + "/chairs"

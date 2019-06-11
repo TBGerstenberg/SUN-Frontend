@@ -152,6 +152,7 @@ const userService = {
    * Updates a users profile with a set of personal information
    * @param {object} Profile - a userprofile containg data about a user. In detail, the following properties are accepted:
    *
+   * @param {Number} userId - the public id of the profile that shall be updated
    * @param {String} firstName - the first name of the user that attempts to complete his profile
    * @param {String} lastName - the last name of the user that attempts to complete his profile
    * @param {String} title - the acadaemic or professional title of the user that attempts to complete his profile
@@ -171,10 +172,10 @@ const userService = {
 
       //Build request Body
       const updateProfileRequestBody = {
-        firstName: profile.firstName,
-        lastName: profile.lastName,
         title: profile.title,
         gender: profile.gender,
+        firstName: profile.firstName,
+        lastName: profile.lastName,
         birthDate: profile.birthDate,
         address: profile.address,
         studentStatus: profile.studentStatus,
@@ -184,7 +185,7 @@ const userService = {
 
       // Perform the request
       const updateProfileResponse = await axios.put(
-        API_CONFIG.USERS.UPDATE_PROFILE_URL,
+        API_CONFIG.USERS.UPDATE_PROFILE_URL + profile.userId,
         updateProfileRequestBody,
         headers
       );
@@ -192,12 +193,12 @@ const userService = {
       // Handle the response
       if (updateProfileResponse.status === 200) {
         return {
-          user: updateProfileResponse.person,
+          response: updateProfileResponse,
           error: null
         };
       }
     } catch (error) {
-      return { user: null, error: error };
+      return { response: null, error: error };
     }
   },
 

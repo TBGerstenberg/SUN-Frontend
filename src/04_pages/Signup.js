@@ -175,7 +175,6 @@ class Signup extends React.Component {
   }
 
   renderErrorMessage(status) {
-    console.log("Rendering error message ");
     return (
       <Message negative>
         <Message.Header>
