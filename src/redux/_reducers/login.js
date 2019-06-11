@@ -60,7 +60,7 @@ const loginReducer = (state = initialState, action) => {
         user: null,
         loggedIn: false
       };
-    case userConstants.LOGOUt_FAILURE:
+    case userConstants.LOGOUT_FAILURE:
       return { ...state, loggingOut: false };
 
     default:
