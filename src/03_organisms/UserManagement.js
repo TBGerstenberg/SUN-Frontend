@@ -157,11 +157,7 @@ class UserManagement extends React.Component {
   }
 
   openModalUserForm() {
-    return (
-      <Modal>
-        <UpdateProfileForm />
-      </Modal>
-    );
+    return <Modal />;
   }
 }
 

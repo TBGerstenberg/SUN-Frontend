@@ -198,7 +198,7 @@ function updateProfile(profileValues) {
     console.log("Updated User");
     return {
       type: userConstants.UPDATE_USER_PROFILE_SUCCESS,
-      payload: { user: user }
+      payload: { user }
     };
   }
 
@@ -228,11 +228,41 @@ function getAllUsers() {
   };
 
   function request() {
-    return { type: userConstants.UPDATE_USER_PROFILE_REQUEST };
+    return { type: userConstants.GETALL_USERS_REQUEST };
   }
 
   function success(users) {
-    return { type: userConstants.UPDATE_USER_PROFILE_SUCCESS, users };
+    return { type: userConstants.GETALL_USERS_SUCCESS, users };
+  }
+
+  function failure(error) {
+    return { type: userConstants.GETALL_USERS_FAILURE, error };
+  }
+}
+
+/**
+ * Fetches a single User
+ */
+function getSingleUser(userId) {
+  return async dispatch => {
+    dispatch(request());
+
+    console.log("Fetching user with id " + userId + "In action creator layer");
+    const getSingleUserResponse = await userService.getSingleUser(userId);
+
+    if (getSingleUserResponse && getSingleUserResponse.user) {
+      dispatch(success(getSingleUserResponse.user));
+    } else {
+      dispatch(failure(getSingleUserResponse));
+    }
+  };
+
+  function request() {
+    return { type: userConstants.GET_SINGLE_USER_REQUEST };
+  }
+
+  function success(user) {
+    return { type: userConstants.GET_SINGLE_USER_SUCCESS, user };
   }
 
   function failure(error) {
@@ -245,6 +275,7 @@ const userActions = {
   login,
   logout,
   getAllUsers,
+  getSingleUser,
   updateProfile
 };
 

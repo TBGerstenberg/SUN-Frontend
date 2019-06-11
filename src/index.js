@@ -2,6 +2,7 @@
 import React, { Suspense } from "react";
 import ReactDOM from "react-dom";
 // Component specific packages
+import { configureRequestInterceptors } from "./api/interceptors";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 // packages for internationalization
@@ -10,7 +11,6 @@ import i18n from "./config/internationalization";
 // packages to configure redux
 import { Provider as ReduxStoreProvider } from "react-redux";
 import store from "./redux/store";
-import { configureRequestInterceptors } from "./api/interceptors";
 
 // import the used UI Framework "Semantic UI"
 import "./semantic/dist/semantic.min.css";

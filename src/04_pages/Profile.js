@@ -1,20 +1,17 @@
 import React from "react";
-// Redux-Form and Bindings Semantic-UI forms
+import { connect } from "react-redux";
 import NavBar from "../03_organisms/NavBar";
-//Image Import
-import avatar from "../assets/images/avatar";
+import Avatar from "../02_molecules/Avatar";
+import avatarSourcePath from "../assets/images/avatar.png";
+
 // Components from semantic ui and our own library
 import {
   Button,
-  Form,
   Grid,
   Header,
   Segment,
-  Container,
-  Icon,
   Image,
   Label,
-  GridColumn,
   Placeholder
 } from "semantic-ui-react";
 
@@ -23,23 +20,39 @@ const Profile = () => {
     <div>
       <NavBar />
       <HeaderProfilePage />
-      <Zeilen />
 
       <Grid columns={3} divided>
-        <Grid.Row>
+        <Grid.Row columns={3}>
           <Grid.Column textAlign="center" width={3}>
-            <Avatar />
+            <Avatar src={avatarSourcePath} />
           </Grid.Column>
           <Grid.Column width={6}>
-            <FirstProfile />
+            <Grid>
+              <Segment raised>
+                <Label as="a" color="blue" ribbon>
+                  Overview
+                </Label>
+                <span>Account Details</span>
 
-            <Zeilen />
+                <Grid.Row>
+                  <Grid.Column>
+                    <FirstProfileRow />
+                  </Grid.Column>
+                </Grid.Row>
 
-            <SecondProfile />
+                <Grid.Row>
+                  <Grid.Column>
+                    <SecondProfileRow />
+                  </Grid.Column>
+                </Grid.Row>
 
-            <Zeilen />
-
-            <ThirdProfile />
+                <Grid.Row>
+                  <Grid.Column>
+                    <ThirdProfileRow />
+                  </Grid.Column>
+                </Grid.Row>
+              </Segment>
+            </Grid>
           </Grid.Column>
           <Grid.Column>
             <SkillCatalog />
@@ -62,59 +75,46 @@ const Profile = () => {
   );
 };
 
-const Zeilen = () => {
-  return (
-    <div>
-      <br />
-      <br />
-      <br />
-    </div>
-  );
-};
-const Avatar = () => {
-  return <Image src={avatar} />;
-};
-
-const FirstProfile = () => {
+const FirstProfileRow = props => {
   return (
     <div>
       <Label color="blue" size={"massive"}>
-        Titel
+        {props.title}
       </Label>
       <Label color="blue" size={"massive"}>
-        Vorname
+        {props.firstName}
       </Label>
       <Label color="blue" size={"massive"}>
-        Nachname
+        {props.lastName}
       </Label>
     </div>
   );
 };
-const SecondProfile = () => {
+const SecondProfileRow = props => {
   return (
     <div>
-      <Label size={"big"}>Geschlecht</Label>
-      <Label size={"big"}>Geburtsdatum</Label>
+      <Label size={"big"}> {props.gender}</Label>
+      <Label size={"big"}>{props.birthDate}</Label>
     </div>
   );
 };
-const ThirdProfile = () => {
+const ThirdProfileRow = props => {
   return (
     <div>
-      <Label color="green" size={"massive"}>
-        Studiengang
-      </Label>
       <Label color="green" size={"big"}>
         Studentenstatus
       </Label>
+      <Label color="green" size={"massive"}>
+        {props.courseOfStudy}
+      </Label>
     </div>
   );
 };
-const FourthProfile = () => {
+const FourthProfile = props => {
   return (
     <div>
-      <Label size={"big"}>E-Mail</Label>
-      <Label size={"big"}>Mobile</Label>
+      <Label size={"big"}> {props.email}</Label>
+      <Label size={"big"}> {props.mobile}</Label>
     </div>
   );
 };
@@ -128,10 +128,10 @@ const FifthProfile = () => {
   );
 };
 
-const HeaderProfilePage = () => {
+const HeaderProfilePage = props => {
   return (
     <Header as="h1" color="blue" block>
-      Willkommen Herr Mustermann
+      {`Herzlich Willkommen ${props.gender} ${props.lastName}`}
     </Header>
   );
 };
@@ -160,4 +160,10 @@ const SkillCatalog = () => {
   );
 };
 
-export default Profile;
+const mapStateToProps = state => {
+  return {
+    profileValues: state.user.ownProfile
+  };
+};
+
+export default connect(mapStateToProps)(Profile);

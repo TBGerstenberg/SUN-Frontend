@@ -9,6 +9,7 @@ export const configureRequestInterceptors = () => {
 
     config.headers.Authorization = token;
 
+    console.log(config.headers);
     return config;
   });
 };

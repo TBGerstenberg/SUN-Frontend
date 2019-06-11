@@ -1,5 +1,6 @@
 import axios from "axios";
 import API_CONFIG from "../config/api_config";
+import { async } from "q";
 
 /**
  * Service that handles interaction with the <Account> and <Person> API.
@@ -207,21 +208,35 @@ const userService = {
    */
   getAllUsers: async () => {
     try {
-      //Build request headers
-      const headers = {
-        Authorization: "SOMETOKEN"
-      };
-
       // Perform the request
       const getAllUsersResponse = await axios.get(
-        API_CONFIG.USERS.GET_ALL_USERS_URL,
-        headers
+        API_CONFIG.USERS.GET_ALL_USERS_URL
       );
 
       // Handle the response
       if (getAllUsersResponse.status === 200) {
         return {
           users: getAllUsersResponse.data,
+          error: null
+        };
+      }
+    } catch (error) {
+      return { users: null, error: error };
+    }
+  },
+
+  getSingleUser: async userId => {
+    try {
+      console.log("Fetching user with id " + userId + "In service layer");
+      // Perform the request
+      const getSingleUserResponse = await axios.get(
+        API_CONFIG.USERS.GET_SINGLE_USER_URL(userId)
+      );
+
+      // Handle the response
+      if (getSingleUserResponse.status === 200) {
+        return {
+          users: getSingleUserResponse.data,
           error: null
         };
       }

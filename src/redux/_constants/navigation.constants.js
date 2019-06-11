@@ -1,4 +1,5 @@
 import { NOT_FOUND } from "redux-first-router";
+import { userActions } from "../_actions";
 
 /**
  * Action-types for the navigation related redux actions.
@@ -27,7 +28,16 @@ export const routesMap = {
     path: "/complete-profile",
     requiresAuth: true
   },
-  NAVIGATE_TO_PROFILE: { path: "/profile", requiresAuth: true },
+  NAVIGATE_TO_PROFILE: {
+    path: "/profile/:id",
+    thunk: (dispatch, getState) => {
+      console.log("Firing route thunk");
+
+      const userId = getState().location.payload.id;
+      dispatch(userActions.getSingleUser(userId));
+    },
+    requiresAuth: true
+  },
   NAVIGATE_TO_DATA_PROCESSING_AGREEMENT: {
     path: "/DataProcessingAgreement",
     requiresAuth: false,
