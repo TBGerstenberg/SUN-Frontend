@@ -33,7 +33,8 @@ class NavBar extends Component {
       this.redirectToLogin();
     }
     return (
-      <div className="ui teal large inverted segment">
+
+      <div className="ui blue large inverted segment">
         <div className="ui large inverted secondary menu">
           <div className="ui mini image">
             {/*  <img src={logo} style={{ height: "100%" }} /> */}
