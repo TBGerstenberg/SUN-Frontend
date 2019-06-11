@@ -5,37 +5,62 @@ import { withTranslation, Trans } from "react-i18next";
 import i18next from "i18next";
 import logo from "../05_images/Logo.PNG";
 
+// Redux bindings & HOCs
+import { connect } from "react-redux";
+import { userActions } from "../redux/_actions";
+import { navigationConstants } from "../redux/_constants";
+import { navigationActions } from "../redux/_actions";
+
 class NavBar extends Component {
+  constructor(props) {
+    super(props);
+    this.dispatchLogout = this.dispatchLogout.bind(this);
+    this.redirectToLogin = this.redirectToLogin.bind(this);
+  }
+
+  dispatchLogout() {
+    this.props.dispatch(userActions.logout());
+  }
+
+  redirectToLogin() {
+    this.props.dispatch(
+      navigationActions.redirect(navigationConstants.NAVIGATE_TO_LOGIN)
+    );
+  }
+
   render() {
+    if (!this.props.loggedIn) {
+      this.redirectToLogin();
+    }
     return (
-      <div class="ui teal large inverted segment" >
-        <div class="ui large inverted secondary menu">
-        <div class="ui mini image">
-        <img src={logo} style={{ height: "100%"}}></img>
-        </div>
-          <a href="Home" class="item" >
+      <div className="ui teal large inverted segment">
+        <div className="ui large inverted secondary menu">
+          <div className="ui mini image">
+            {/*  <img src={logo} style={{ height: "100%" }} /> */}
+          </div>
+          <a href="Home" className="item">
             Home
           </a>
-          <a href="Profile" class="item">
+          <a href="Profile" className="item">
             Profile
           </a>
-          <a href="#" class="item">
+          <a href="#" className="item">
             Groups
           </a>
-          <div class="right menu">
-            <div class="item">
-              <div class="ui icon input">
+          <div className="right menu">
+            <div className="item">
+              <div className="ui icon input">
                 <input
                   type="text"
                   placeholder={i18next.t("navbar-search-placeholder")}
                 />
-                <i class="search link icon" />
+                <i className="search link icon" />
               </div>
             </div>
 
             <LanguageSwitcher />
-            <a href="#" class="ui item">
-              <i class="sign-out icon" />
+            <a href="#" className="ui item" onClick={this.dispatchLogout}>
+              <i className="sign-out icon" />
               <Trans i18nKey="navbar-logout-button-text" />
             </a>
           </div>
@@ -44,4 +69,11 @@ class NavBar extends Component {
     );
   }
 }
-export default withTranslation()(NavBar);
+
+const mapStateToProps = state => {
+  return {
+    loggedIn: state.login.loggedIn
+  };
+};
+
+export default withTranslation()(connect(mapStateToProps)(NavBar));

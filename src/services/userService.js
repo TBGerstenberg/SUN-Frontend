@@ -45,14 +45,14 @@ const userService = {
 
       // Handle the response
       if (LoginResponse) {
-        if (LoginResponse.status === 200 && LoginResponse.user)
+        if (LoginResponse.status === 200) {
           return {
-            authToken: LoginResponse.token,
-            user: LoginResponse.account,
+            authToken: LoginResponse.data.token,
+            user: LoginResponse.data.account,
             status: LoginResponse.status,
             error: null
           };
-        else {
+        } else {
           return {
             authToken: null,
             user: null,
@@ -72,11 +72,14 @@ const userService = {
    * @param {string} token - The access token that shall be invalidated
    */
   logout: async () => {
+    let logoutResponse;
     try {
       // Perform the http request
-      const logoutResponse = await axios.get(API_CONFIG.LOGIN.GET_LOGOUT_URL);
+      logoutResponse = await axios.get(API_CONFIG.LOGIN.GET_LOGOUT_URL);
       return logoutResponse;
-    } catch (error) {}
+    } catch (error) {
+      return { error: error };
+    }
   },
 
   /**
