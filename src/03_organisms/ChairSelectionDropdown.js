@@ -2,7 +2,7 @@ import React from "react";
 import { Field } from "redux-form";
 import i18next from "i18next";
 import { Form } from "semantic-ui-react";
-import { chairActions } from "../config/redux/_actions";
+import { chairActions } from "../redux/_actions";
 
 import { withTranslation } from "react-i18next";
 import { connect } from "react-redux";
@@ -29,45 +29,47 @@ class ChairSelectionDropdown extends React.Component {
     this.props.dispatch(chairActions.getAllChairs());
   }
 
-  createDropdownOptionsFromProps() {
-    const dropDownOptions = [];
-
-    const chairsFromProps = this.props.chairs;
-
-    chairsFromProps.forEach((chairElement, index) => {
-      const dropDownOption = {
-        key: index,
-        value: chairElement.name,
-        text: chairElement.name
-      };
-
-      dropDownOptions.push(dropDownOption);
-    });
-    return dropDownOptions;
-  }
-
   render(props) {
     return (
       <Field
         name="chairs"
         label={i18next.t("complete-profile-chair-label")}
         component={renderSelect}
-        options={this.createDropdownOptionsFromProps()}
+        options={this.props.chairsAsDropdownOptions}
       />
     );
   }
 }
 
-// MOCKED API response, since CORS is currently disabled
+/**
+ * Takes an API Response from the chairs api and constructs an
+ * array of dropdown options from it.
+ * @param chairs - {Array of Objects} - Array of chair-objects fetched from the API containg a name-attribute.
+ */
+const createDropdownOptionsFromChairs = chairs => {
+  const dropDownOptions = [];
+  chairs.forEach((chairElement, index) => {
+    const dropDownOption = {
+      key: index,
+      value: chairElement.name,
+      text: chairElement.name
+    };
+
+    dropDownOptions.push(dropDownOption);
+  });
+  return dropDownOptions;
+};
+
 const mapStateToProps = state => {
-  console.log(state);
+  let chairsAsDropdownOptions = [];
+  if (state.chair.chairs) {
+    chairsAsDropdownOptions = createDropdownOptionsFromChairs(
+      state.chair.chairs
+    );
+  }
 
   return {
-    chairs: [
-      {
-        name: "CSCW"
-      }
-    ]
+    chairsAsDropdownOptions: chairsAsDropdownOptions
   };
 };
 

@@ -15,8 +15,8 @@ import { LabelInputField, CheckboxField } from "react-semantic-redux-form";
 import i18next from "i18next";
 import { DateInput } from "semantic-ui-calendar-react";
 import { userActions, skillCatalogueActions } from "../redux/_actions";
-import ChairSelectionDropdown from "../03_organisms/ChairSelectionDropdown";
-import SkillCatalogue from "../03_organisms/SkillCatalogue";
+import ChairSelectionDropdown from "./ChairSelectionDropdown";
+import SkillCatalogue from "./SkillCatalogue";
 import formValidationUtilities from "../utilities/formValidationUtilities";
 
 import StudentIdInput from "../02_molecules/StudentIdInput";
@@ -30,7 +30,7 @@ import LastNameInput from "../02_molecules/LastNameInput";
 import TitleDropdownSelector from "../02_molecules/TitleDropdownSelector";
 import GenderDropdownSelector from "../02_molecules/GenderDropdownSelector";
 
-class CompleteProfile extends React.Component {
+class UpdateProfileForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -50,7 +50,7 @@ class CompleteProfile extends React.Component {
     this._handleImmatriculationDateChange = this._handleImmatriculationDateChange.bind(
       this
     );
-    this._handleCompleteProfileSubmit = this._handleCompleteProfileSubmit.bind(
+    this._handleUpdateProfileSubmit = this._handleUpdateProfileSubmit.bind(
       this
     );
     this._handleExmatriculationDateChange = this._handleExmatriculationDateChange.bind(
@@ -76,7 +76,7 @@ class CompleteProfile extends React.Component {
         <Segment stacked>
           <Form
             onSubmit={props.handleSubmit(
-              this._handleCompleteProfileSubmit.bind(this)
+              this._handleUpdateProfileSubmit.bind(this)
             )}
           >
             <Grid
@@ -369,7 +369,7 @@ class CompleteProfile extends React.Component {
    * the form.
    * @param {} values
    */
-  _handleCompleteProfileSubmit(values) {
+  _handleUpdateProfileSubmit(values) {
     console.log("Triggered Submit");
 
     const skillCatalogue = this.props.skillCatalogue;
@@ -488,17 +488,17 @@ class CompleteProfile extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  formState: state.form.completeProfileForm,
+  formState: state.form.UpdateProfileForm,
   skillCatalogue: state.skillCatalogue
 });
 
 export default withTranslation()(
   connect(mapStateToProps)(
     reduxForm({
-      form: "completeProfileForm",
+      form: "updateProfileForm",
       initialValues: {
         isStudent: true
       } // a unique identifier for this form
-    })(CompleteProfile)
+    })(UpdateProfileForm)
   )
 );
