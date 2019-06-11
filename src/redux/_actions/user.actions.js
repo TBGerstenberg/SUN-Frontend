@@ -24,8 +24,6 @@ function register({
       consentToTermsOfService
     );
 
-    console.log(registrationResponse);
-
     if (registrationResponse && registrationResponse.user) {
       dispatch(
         success(registrationResponse.user, registrationResponse.authToken)
@@ -126,6 +124,7 @@ function logout() {
       dispatch(failure(logoutResponse.error));
     }
   };
+
   /**
    * Redux action creator triggered when a logout-request is started
    */
@@ -154,11 +153,11 @@ function logout() {
  * @param {object} profileValues - Object containing a set of properties used in each persons profile.
  *
  * Contained in the profilevalues Object:
- *
- * @param {String} firstName - the first name of the user that attempts to complete his profile
- * @param {String} lastName - the last name of the user that attempts to complete his profile
+ * @param {Number} userId - the public id of the profile that shall be updated
  * @param {String} title - the acadaemic or professional title of the user that attempts to complete his profile
  * @param {String} gender - the gender of the user that attempts to complete his profile - can be "male", "female" or "other",
+ * @param {String} firstName - the first name of the user that attempts to complete his profile
+ * @param {String} lastName - the last name of the user that attempts to complete his profile
  * @param {Date} dateOfBirth - an ISO-8601 Date string in the format YYYY-DD-MM describing the users date of birth
  * @param {Adress} Adress - an adress containg a cityName, postalCode, streetName and houseNumber
  * @param {boolean} studentStatus  - flag indicating wether the user is a student or not.
@@ -166,8 +165,21 @@ function logout() {
  * @param {Date} exmatriculationDate -
  * @param {Array of Numbers} chairs - Array of chairs that the user belongs to.
  */
-function updateProfile() {
-  return async dispatch => {};
+function updateProfile(profileValues) {
+  return async dispatch => {
+    dispatch(request());
+
+    const updateProfileResponse = await userService.updateProfile(
+      profileValues
+    );
+
+    console.log(updateProfileResponse);
+    if (updateProfileResponse.response.status === 200) {
+      dispatch(success(updateProfileResponse.response.data));
+    } else {
+      dispatch(failure(updateProfileResponse.error));
+    }
+  };
 
   /**
    * Redux action creator triggered when an update-Profile-request is started
@@ -182,7 +194,12 @@ function updateProfile() {
    * @param {Object} user - user profile that has successfully been updated
    */
   function success(user) {
-    return { type: userConstants.UPDATE_USER_PROFILE_SUCCESS, user };
+    console.log(user);
+    console.log("Updated User");
+    return {
+      type: userConstants.UPDATE_USER_PROFILE_SUCCESS,
+      payload: { user: user }
+    };
   }
 
   /**

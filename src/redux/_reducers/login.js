@@ -36,7 +36,6 @@ const loginReducer = (state = initialState, action) => {
         user: action.email
       };
     case userConstants.LOGIN_SUCCESS:
-      console.log(action);
       return {
         ...state,
         loggingIn: false,

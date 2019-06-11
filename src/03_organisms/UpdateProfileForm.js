@@ -370,8 +370,6 @@ class UpdateProfileForm extends React.Component {
    * @param {} values
    */
   _handleUpdateProfileSubmit(values) {
-    console.log("Triggered Submit");
-
     const skillCatalogue = this.props.skillCatalogue;
     let skillsRatings = [];
 
@@ -387,24 +385,27 @@ class UpdateProfileForm extends React.Component {
     // Values that are extracted from the various input fields, each field is either managed by redux form
     // or via the components state.
     const profileValues = {
+      profileId: this.props.userId,
       title: values.title,
       gender: values.gender,
       firstName: values.firstName,
       lastName: values.lastName,
-      dateOfBirth: this.state.dateOfBirth,
+      birthDate: this.state.dateOfBirth,
       adress: {
         city: values.cityName,
         postCode: values.postalCode,
         street: values.streetName,
-        roomName: values.roomName
+        room: values.roomName,
+        email: values.additional_email
       },
       studentStatus: {
-        studentId: values.studentId,
-        courseOfStudy: values.courseOfStudy,
-        immatriculationDate: this.state.immatriculationDate,
+        matriculationNumber: values.studentId,
+        subect: values.courseOfStudy,
+        matriculationDate: this.state.immatriculationDate,
         exmatriculationDate: this.state.exmatriculationDate
       },
       employeeStatus: null,
+      chairs: [values.chairs],
       skills: skillsRatings
     };
     console.log(profileValues);
@@ -489,7 +490,8 @@ class UpdateProfileForm extends React.Component {
 
 const mapStateToProps = state => ({
   formState: state.form.UpdateProfileForm,
-  skillCatalogue: state.skillCatalogue
+  skillCatalogue: state.skillCatalogue,
+  userId: state.login.user.id
 });
 
 export default withTranslation()(
