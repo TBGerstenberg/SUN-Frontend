@@ -15,8 +15,8 @@ import { LabelInputField, CheckboxField } from "react-semantic-redux-form";
 import i18next from "i18next";
 import { DateInput } from "semantic-ui-calendar-react";
 import { userActions, skillCatalogueActions } from "../redux/_actions";
-import ChairSelectionDropdown from "../03_organisms/ChairSelectionDropdown";
-import SkillCatalogue from "../03_organisms/SkillCatalogue";
+import ChairSelectionDropdown from "./ChairSelectionDropdown";
+import SkillCatalogue from "./SkillCatalogue";
 import formValidationUtilities from "../utilities/formValidationUtilities";
 
 import StudentIdInput from "../02_molecules/StudentIdInput";
@@ -30,11 +30,7 @@ import LastNameInput from "../02_molecules/LastNameInput";
 import TitleDropdownSelector from "../02_molecules/TitleDropdownSelector";
 import GenderDropdownSelector from "../02_molecules/GenderDropdownSelector";
 
-import Profile from "../models/profile";
-import { navigationConstants } from "../redux/_constants";
-import { navigationActions } from "../redux/_actions";
-
-class CompleteProfile extends React.Component {
+class UpdateProfileForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -54,7 +50,7 @@ class CompleteProfile extends React.Component {
     this._handleImmatriculationDateChange = this._handleImmatriculationDateChange.bind(
       this
     );
-    this._handleCompleteProfileSubmit = this._handleCompleteProfileSubmit.bind(
+    this._handleUpdateProfileSubmit = this._handleUpdateProfileSubmit.bind(
       this
     );
     this._handleExmatriculationDateChange = this._handleExmatriculationDateChange.bind(
@@ -64,10 +60,6 @@ class CompleteProfile extends React.Component {
 
   render() {
     const props = this.props;
-
-    if (props.profileUpdateSucceeded) {
-      props.redirectToHome();
-    }
 
     const isStudent =
       props.formState &&
@@ -84,7 +76,7 @@ class CompleteProfile extends React.Component {
         <Segment stacked>
           <Form
             onSubmit={props.handleSubmit(
-              this._handleCompleteProfileSubmit.bind(this)
+              this._handleUpdateProfileSubmit.bind(this)
             )}
           >
             <Grid
@@ -377,9 +369,7 @@ class CompleteProfile extends React.Component {
    * the form.
    * @param {} values
    */
-  _handleCompleteProfileSubmit(values) {
-    console.log("Triggered Submit");
-
+  _handleUpdateProfileSubmit(values) {
     const skillCatalogue = this.props.skillCatalogue;
     let skillsRatings = [];
 
@@ -392,19 +382,16 @@ class CompleteProfile extends React.Component {
       });
     }
 
-    const DEFAULT_DATE_IF_UNSET = "0001-01-01T00:00:00";
-    const DEFAULT_GENDER_IF_UNSET = 0;
-
     // Values that are extracted from the various input fields, each field is either managed by redux form
     // or via the components state.
     const profileValues = {
-      userId: this.props.userId,
+      profileId: this.props.userId,
       title: values.title,
-      gender: values.gender || DEFAULT_GENDER_IF_UNSET,
+      gender: values.gender,
       firstName: values.firstName,
       lastName: values.lastName,
-      birthDate: this.state.dateOfBirth || DEFAULT_DATE_IF_UNSET,
-      address: {
+      birthDate: this.state.dateOfBirth,
+      adress: {
         city: values.cityName,
         postCode: values.postalCode,
         street: values.streetName,
@@ -414,19 +401,16 @@ class CompleteProfile extends React.Component {
       studentStatus: {
         matriculationNumber: values.studentId,
         subect: values.courseOfStudy,
-        matriculationDate:
-          this.state.immatriculationDate || DEFAULT_DATE_IF_UNSET,
-        exmatriculationDate:
-          this.state.exmatriculationDate || DEFAULT_DATE_IF_UNSET
+        matriculationDate: this.state.immatriculationDate,
+        exmatriculationDate: this.state.exmatriculationDate
       },
       employeeStatus: null,
       chairs: [values.chairs],
       skills: skillsRatings
     };
+    console.log(profileValues);
 
-    const profile = new Profile(profileValues);
-
-    this.props.dispatch(userActions.updateProfile(profile));
+    this.props.dispatch(userActions.updateProfile(profileValues));
   }
 
   /**
@@ -442,7 +426,6 @@ class CompleteProfile extends React.Component {
         value={this.state.dateOfBirth}
         iconPosition="left"
         onChange={this._handleDateOfBirthChange}
-        dateFormat=""
       />
     );
   }
@@ -458,7 +441,6 @@ class CompleteProfile extends React.Component {
         iconPosition="left"
         onChange={this._handleImmatriculationDateChange}
         label={i18next.t("complete-profile-immatriculationDate-label")}
-        dateFormat=""
       />
     );
   }
@@ -474,7 +456,6 @@ class CompleteProfile extends React.Component {
         iconPosition="left"
         onChange={this._handleExmatriculationDateChange}
         label={i18next.t("complete-profile-exmatriculationDate-label")}
-        dateFormat=""
       />
     );
   }
@@ -507,33 +488,19 @@ class CompleteProfile extends React.Component {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    redirectToHome: () => {
-      dispatch(
-        navigationActions.redirect(navigationConstants.NAVIGATE_TO_HOME)
-      );
-    }
-  };
-};
-
 const mapStateToProps = state => ({
-  profileUpdateSucceeded: state.user.profileUpdateSucceeded,
-  userId: state.login.user.id,
-  formState: state.form.completeProfileForm,
-  skillCatalogue: state.skillCatalogue
+  formState: state.form.UpdateProfileForm,
+  skillCatalogue: state.skillCatalogue,
+  userId: state.login.user.id
 });
 
 export default withTranslation()(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(
+  connect(mapStateToProps)(
     reduxForm({
-      form: "completeProfileForm",
+      form: "updateProfileForm",
       initialValues: {
         isStudent: true
       } // a unique identifier for this form
-    })(CompleteProfile)
+    })(UpdateProfileForm)
   )
 );
