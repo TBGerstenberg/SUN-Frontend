@@ -3,7 +3,6 @@ import { Button } from "semantic-ui-react";
 import LanguageSwitcher from "../02_molecules/LanguageSwitcher";
 import { withTranslation, Trans } from "react-i18next";
 import i18next from "i18next";
-import logo from "../05_images/Logo.PNG";
 
 // Redux bindings & HOCs
 import { connect } from "react-redux";
@@ -33,7 +32,6 @@ class NavBar extends Component {
       this.redirectToLogin();
     }
     return (
-
       <div className="ui blue large inverted segment">
         <div className="ui large inverted secondary menu">
           <div className="ui mini image">

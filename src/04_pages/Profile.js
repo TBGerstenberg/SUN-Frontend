@@ -2,7 +2,7 @@ import React from "react";
 // Redux-Form and Bindings Semantic-UI forms
 import NavBar from "../03_organisms/NavBar";
 //Image Import
-import avatar from "../05_images/avatar.png";
+import avatar from "../assets/images/avatar";
 // Components from semantic ui and our own library
 import {
   Button,
@@ -38,7 +38,7 @@ const Profile = () => {
             <SecondProfile />
 
             <Zeilen />
-            
+
             <ThirdProfile />
           </Grid.Column>
           <Grid.Column>
