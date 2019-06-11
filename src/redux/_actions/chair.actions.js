@@ -28,7 +28,7 @@ function getAllChairs() {
    * @param {Array of objects } chairs - Chairs that have been fetched
    */
   function success(chairs) {
-    return { type: chairConstants.GET_CHAIRS_SUCCESS, chairs };
+    return { type: chairConstants.GET_CHAIRS_SUCCESS, chairs: chairs };
   }
 
   /**

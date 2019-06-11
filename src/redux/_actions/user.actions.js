@@ -74,10 +74,10 @@ function login({ email, password }) {
     dispatch(request({ email }));
 
     const loginResponse = await userService.login(email, password);
-    console.log(loginResponse);
 
-    if (loginResponse && loginResponse.user) {
-      dispatch(success(loginResponse.user));
+    if (loginResponse.status === 200) {
+      console.log(loginResponse);
+      dispatch(success(loginResponse.user, loginResponse.authToken));
     } else {
       dispatch(failure(loginResponse));
     }
@@ -95,8 +95,11 @@ function login({ email, password }) {
    * Redux action creator triggered when a login request succeeded
    * @param {Object} user - User that has been logged in
    */
-  function success(user) {
-    return { type: userConstants.LOGIN_SUCCESS, user };
+  function success(user, authToken) {
+    return {
+      type: userConstants.LOGIN_SUCCESS,
+      payload: { user: user, token: authToken }
+    };
   }
 
   /**
@@ -112,8 +115,38 @@ function login({ email, password }) {
  * Dispatches a logout request
  */
 function logout() {
-  userService.logout();
-  return { type: userConstants.LOGOUT };
+  return async dispatch => {
+    dispatch(request());
+
+    const logoutResponse = await userService.logout();
+
+    if (logoutResponse.status === 200) {
+      dispatch(success(logoutResponse));
+    } else {
+      dispatch(failure(logoutResponse.error));
+    }
+  };
+  /**
+   * Redux action creator triggered when a logout-request is started
+   */
+  function request() {
+    return { type: userConstants.LOGOUT_REQUEST };
+  }
+
+  /**
+   * Redux action creator triggered when a login request succeeded
+   */
+  function success() {
+    return { type: userConstants.LOGOUT_SUCCESS };
+  }
+
+  /**
+   * Redux action creator triggered when a logout request failed with an error
+   * @param {*} error - Error object thrown when creating the login request
+   */
+  function failure(error) {
+    return { type: userConstants.LOGOUT_FAILURE, error };
+  }
 }
 
 /**
