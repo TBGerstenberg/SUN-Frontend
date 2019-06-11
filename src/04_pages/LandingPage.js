@@ -309,7 +309,7 @@ const HomepageLayout = () => (
                 <p style={{ fontSize: "1.33em" }}> Austausch</p>
               </Header>
               <p style={{ fontSize: "1.5em", color: "teal" }}>
-                Tausche dich mit deinen Kommolitonen aus und eröffne
+                Tausche dich mit deinen Kommilitonen aus und eröffne
                 Lerngruppen!
               </p>
             </Grid.Column>
@@ -347,7 +347,7 @@ const HomepageLayout = () => (
               </Header>
               <p style={{ fontSize: "1.5em", color: "teal" }}>
                 Du hast eine richtig gute Gründungsidee, aber niemand der Lust
-                hat mitzumachen? Dann vernetze dich hier mit gleichgesinnten!
+                hat mitzumachen? Finde Leute aus deiner Umgebung und starte dein StartUp!
               </p>
             </Grid.Column>
 
