@@ -30,10 +30,10 @@ class AdminPanel extends React.Component {
       <div className="pageWrapper">
         <Button.Group>
           <Button disabled={visible} onClick={this.handleShowClick}>
-            Show sidebar
+            <Trans i18nKey="adminpanel-sidebar-show-option" />
           </Button>
           <Button disabled={!visible} onClick={this.handleHideClick}>
-            Hide sidebar
+            <Trans i18nKey="adminpanel-sidebar-hide-option" />
           </Button>
         </Button.Group>
 
