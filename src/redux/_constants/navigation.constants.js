@@ -8,7 +8,7 @@ const navigationConstants = {
   NAVIGATE_TO_SIGNUP: "NAVIGATE_TO_SIGNUP",
   NAVIGATE_TO_HOME: "NAVIGATE_TO_HOME",
   NAVIGATE_TO_COMPLETE_PROFILE: "NAVIGATE_TO_COMPLETE_PROFILE",
-  NAVIGATE_TO_PROFILE: " NAVIGATE_TO_PROFILE",
+  NAVIGATE_TO_PROFILE: "NAVIGATE_TO_PROFILE",
   NAVIGATE_TO_DATA_PROCESSING_AGREEMENT:
     "NAVIGATE_TO_DATA_PROCESSING_AGREEMENT",
   NAVIGATE_TO_TERMS_OF_SERVICE: "NAVIGATE_TO_TERMS_OF_SERVICE",
@@ -30,7 +30,7 @@ export const routesMap = {
     requiresAuth: true
   },
   NAVIGATE_TO_PROFILE: {
-    path: "/profile/:id",
+    path: "/profile/:userId",
     thunk: (dispatch, getState, extra) => {
       console.log("Firing route thunk");
     },

@@ -79,8 +79,13 @@
   "address-card-street-label": "Straße:",
 
   "contact-card-header": "Kontakt",
-  "contact-card-email": "Adresse",
-  "contact-card-city-mobil": "Stadt:",
+  "contact-card-email-label": "Email:",
+  "contact-card-mobile-label": "Mobil:",
+
+  "gender-enum-UNSET-option": "k.A",
+  "gender-enum-MALE-option": "Männlich",
+  "gender-enum-FEMALE-option": "Weiblich",
+  "gender-enum-OTHER-option": "Andere",
 
   "navbar-search-placeholder": "Suchen...",
   "navbar-logout-button-text": "Abmelden",

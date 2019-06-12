@@ -3,8 +3,12 @@ import { connect } from "react-redux";
 import NavBar from "../03_organisms/NavBar";
 import Avatar from "../02_molecules/Avatar";
 import avatarSourcePath from "../assets/images/profile_man.png";
+import BodyText from "../01_atoms/BodyText";
 import AddressCard from "../03_organisms/AdressCard";
+import ContactCard from "../03_organisms/ContactCard";
 import { withTranslation, Trans } from "react-i18next";
+import moment from "moment";
+import tableFormattingUtilities from "../utilities/tableFormattingUtilities";
 
 // Components from semantic ui and our own library
 import {
@@ -22,11 +26,22 @@ import {
 import { userActions } from "../redux/_actions";
 
 class Profile extends React.Component {
-  componentDidMount() {
-    this.props.dispatch(userActions.getSingleUser(this.props.userId));
+  constructor(props) {
+    super(props);
+    this.state = { userId: null };
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.userId !== prevState.userId) {
+      nextProps.dispatch(userActions.getSingleUser(nextProps.userId));
+
+      return { userId: nextProps.userId };
+    } else return null;
   }
 
   render() {
+    console.log("Profile rendering");
+
     const props = this.props;
     const profileValuesExist = this.props.profileValues;
     return (
@@ -35,7 +50,10 @@ class Profile extends React.Component {
         <Grid columns={3} centered>
           <Grid.Row columns={3}>
             <Grid.Column textAlign="center" width={3}>
-              <HeaderProfilePage />
+              {profileValuesExist && (
+                <HeaderProfilePage firstName={props.profileValues.firstName} />
+              )}
+
               <Avatar src={avatarSourcePath} />
             </Grid.Column>
 
@@ -48,7 +66,7 @@ class Profile extends React.Component {
                 >
                   <Grid.Row>
                     <Grid.Column>
-                      <Label as="a" color="blue" ribbon>
+                      <Label as="a" color="blue" ribbon size="big">
                         <Trans i18nKey="profile-overview-label" />
                       </Label>
 
@@ -82,6 +100,16 @@ class Profile extends React.Component {
               ) : (
                 <OneLinePlaceHolder />
               )}
+
+              {profileValuesExist ? (
+                <ContactCard
+                  email={props.profileValues.address.email}
+                  mobile={props.profileValues.address.mobile}
+                />
+              ) : (
+                <OneLinePlaceHolder />
+              )}
+
               <SkillCatalog />
             </Grid.Column>
           </Grid.Row>
@@ -106,14 +134,16 @@ const FirstProfileRow = props => {
         <Grid.Row columns={2}>
           <Grid.Column width={6}>
             <Container>
-              <p>Titel:</p>
-              {props.title}
+              <Header size="medium">Titel:</Header>
+              <BodyText>{props.title}</BodyText>
             </Container>
           </Grid.Column>
           <Grid.Column width={10}>
             <Container>
-              <p>Geschlecht:</p>
-              {props.gender}
+              <Header size="medium">Geschlecht:</Header>
+              <BodyText>
+                {tableFormattingUtilities.genderEnumToString(props.gender)}
+              </BodyText>
             </Container>
           </Grid.Column>
         </Grid.Row>
@@ -121,8 +151,8 @@ const FirstProfileRow = props => {
         <Grid.Row columns={2}>
           <Grid.Column width={6}>
             <Container>
-              <p>Vorname:</p>
-              {props.firstName}
+              <Header size="medium">Vorname:</Header>
+              <BodyText>{props.firstName}</BodyText>
             </Container>
           </Grid.Column>
           <Grid.Column width={10} />
@@ -131,14 +161,14 @@ const FirstProfileRow = props => {
         <Grid.Row columns={2}>
           <Grid.Column width={6}>
             <Container>
-              <p>Nachname:</p>
-              {props.lastName}
+              <Header size="medium">Nachname:</Header>
+              <BodyText>{props.lastName}</BodyText>
             </Container>
           </Grid.Column>
           <Grid.Column width={10}>
             <Container>
-              <p>Geburtsdatum:</p>
-              {props.birthDate}
+              <Header size="medium">Geburtsdatum:</Header>
+              <BodyText>{moment(props.birthDate).format("L")}</BodyText>
             </Container>
           </Grid.Column>
         </Grid.Row>
@@ -146,14 +176,14 @@ const FirstProfileRow = props => {
         <Grid.Row columns={2}>
           <Grid.Column width={6}>
             <Container>
-              <p>MatrikelNummer:</p>
-              {props.matriculationNumber}
+              <Header size="medium">MatrikelNummer:</Header>
+              <BodyText>{props.matriculationNumber}</BodyText>
             </Container>
           </Grid.Column>
           <Grid.Column width={10}>
             <Container>
-              <p>Studiengang:</p>
-              {props.subject}
+              <Header size="medium">Studiengang:</Header>
+              <BodyText>{props.subject}</BodyText>
             </Container>
           </Grid.Column>
         </Grid.Row>
@@ -180,7 +210,7 @@ const ThirdProfileRow = props => {
 const HeaderProfilePage = props => {
   return (
     <Header as="h1" color="blue">
-      {`Herzlich Willkommen ${props.gender} ${props.lastName}`}
+      {`Herzlich Willkommen ${props.firstName}`}
     </Header>
   );
 };
@@ -221,7 +251,7 @@ const mapStateToProps = state => {
   console.log(state.user);
 
   return {
-    userId: state.location.payload.id,
+    userId: state.location.payload.userId,
     profileValues: state.user.currentlyViewedUser
   };
 };

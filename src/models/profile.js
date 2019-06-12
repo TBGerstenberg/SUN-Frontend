@@ -1,4 +1,4 @@
-import personChairRelationEnum from "./enumerations/personChairRelation";
+import personChairRelationEnum from "./enumerations/personChairRelationEnum";
 
 class Profile {
   constructor(profileValues) {

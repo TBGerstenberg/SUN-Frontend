@@ -1,3 +1,6 @@
+import i18next from "i18next";
+import genderEnum from "../models/enumerations/genderEnum";
+
 const tableFormattingUtilities = {
   stringValueForBoolean: boolean => {
     return boolean ? "true" : "false";
@@ -7,6 +10,9 @@ const tableFormattingUtilities = {
   },
   numberOrEmpty: number => {
     return number ? number : "none";
+  },
+  genderEnumToString: genderEnumValue => {
+    return i18next.t(`gender-enum-${genderEnum[genderEnumValue]}-option`);
   }
 };
 
