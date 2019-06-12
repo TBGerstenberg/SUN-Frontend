@@ -27,7 +27,13 @@ export const routesMap = {
     path: "/complete-profile",
     requiresAuth: true
   },
-  NAVIGATE_TO_PROFILE: { path: "/profile", requiresAuth: true },
+  NAVIGATE_TO_PROFILE: {
+    path: "/profile/:id",
+    thunk: (dispatch, getState, extra) => {
+      console.log("Firing route thunk");
+    },
+    requiresAuth: true
+  },
   NAVIGATE_TO_DATA_PROCESSING_AGREEMENT: {
     path: "/DataProcessingAgreement",
     requiresAuth: false,

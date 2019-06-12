@@ -1,4 +1,4 @@
-import axios from "axios";
+import apiClient from "../api/apiClient";
 import API_CONFIG from "../config/api_config";
 
 /**
@@ -38,7 +38,7 @@ const userService = {
       );
 
       // Perform the http request
-      const LoginResponse = await axios.post(
+      const LoginResponse = await apiClient.post(
         API_CONFIG.LOGIN.POST_LOGIN_URL,
         postLoginRequestBody
       );
@@ -75,7 +75,7 @@ const userService = {
     let logoutResponse;
     try {
       // Perform the http request
-      logoutResponse = await axios.get(API_CONFIG.LOGIN.GET_LOGOUT_URL);
+      logoutResponse = await apiClient.get(API_CONFIG.LOGIN.GET_LOGOUT_URL);
       return logoutResponse;
     } catch (error) {
       return { error: error };
@@ -118,7 +118,7 @@ const userService = {
       );
 
       // Perform the request
-      const signupResponse = await axios.post(
+      const signupResponse = await apiClient.post(
         API_CONFIG.REGISTRATION.POST_REGISTRATION_URL,
         registrationRequestBody
       );
@@ -183,8 +183,10 @@ const userService = {
         skills: profile.skills
       };
 
+      console.log(updateProfileRequestBody);
+
       // Perform the request
-      const updateProfileResponse = await axios.put(
+      const updateProfileResponse = await apiClient.put(
         API_CONFIG.USERS.UPDATE_PROFILE_URL + profile.userId,
         updateProfileRequestBody,
         headers
@@ -207,21 +209,37 @@ const userService = {
    */
   getAllUsers: async () => {
     try {
-      //Build request headers
-      const headers = {
-        Authorization: "SOMETOKEN"
-      };
-
       // Perform the request
-      const getAllUsersResponse = await axios.get(
-        API_CONFIG.USERS.GET_ALL_USERS_URL,
-        headers
+      const getAllUsersResponse = await apiClient.get(
+        API_CONFIG.USERS.GET_ALL_USERS_URL
       );
 
       // Handle the response
       if (getAllUsersResponse.status === 200) {
         return {
           users: getAllUsersResponse.data,
+          error: null
+        };
+      }
+    } catch (error) {
+      return { users: null, error: error };
+    }
+  },
+
+  getSingleUser: async userId => {
+    try {
+      console.log("Fetching user with id " + userId + "In service layer");
+      // Perform the request
+      const getSingleUserResponse = await apiClient.get(
+        API_CONFIG.USERS.GET_SINGLE_USER_URL(userId)
+      );
+
+      console.log(getSingleUserResponse);
+      // Handle the response
+      if (getSingleUserResponse.status === 200) {
+        console.log("Request succeeded");
+        return {
+          user: getSingleUserResponse.data,
           error: null
         };
       }

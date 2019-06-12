@@ -18,8 +18,8 @@ import {
 import LanguageSwitcher from "../02_molecules/LanguageSwitcher";
 import { withTranslation, Trans } from "react-i18next";
 import i18next from "i18next";
-import logo from "../05_images/landingpage_01.jpg";
-import logo2 from "../05_images/Logo_2.png";
+import logo from "../assets/images/landingpage_01.jpg";
+import logo2 from "../assets/images/Logo_2.png";
 
 // Heads up!
 // We using React Static to prerender our docs with server side rendering, this is a quite simple solution.
@@ -52,8 +52,6 @@ style={
   ></section>
 */}
 
-
-            
     <Header
       as="h1"
       content={i18next.t("landingpage-hero-text")}
@@ -65,23 +63,20 @@ style={
         fontWeight: "bold",
         marginTop: mobile ? "1.5em" : "3em",
         marginTop: "1.3em",
-        marginLeft:"2.5em"
+        marginLeft: "2.5em"
       }}
-      
     />
 
-        <Image src={logo2} height="175px" width="200px" 
-        
-        style={{
-          marginTop: "-11.75em",
-          marginLeft:"-0.3em"
-        }}
-        
-        
-        />
+    <Image
+      src={logo2}
+      height="175px"
+      width="200px"
+      style={{
+        marginTop: "-11.75em",
+        marginLeft: "-0.3em"
+      }}
+    />
     <br />
-    
-    
 
     <Header
       as="h2"
@@ -143,7 +138,6 @@ class DesktopContainer extends Component {
               size="large"
             >
               <Container>
-              
                 <Menu.Item>
                   <LanguageSwitcher />
                 </Menu.Item>
@@ -222,7 +216,7 @@ class MobileContainer extends Component {
                   <Icon name="sidebar" />
                 </Menu.Item>
                 <Menu.Item position="right">
-                 <Button color="blue" as="a" inverted>
+                  <Button color="blue" as="a" inverted>
                     <Trans i18nKey="landingpage-login-button-text" />
                   </Button>
                   <Button

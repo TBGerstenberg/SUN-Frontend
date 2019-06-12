@@ -1,6 +1,7 @@
 const BASEURL = "http://localhost:5000/api";
 
 const API_CONFIG = {
+  BASEURL: "http://localhost:5000/api",
   REGISTRATION: {
     POST_REGISTRATION_URL: BASEURL + "/auth/signup"
   },
@@ -10,6 +11,9 @@ const API_CONFIG = {
   },
   USERS: {
     GET_ALL_USERS_URL: BASEURL + "/person",
+    GET_SINGLE_USER_URL: userId => {
+      return BASEURL + "/person/" + userId;
+    },
     UPDATE_PROFILE_URL: BASEURL + "/person/" // :userId
   },
   CHAIRS: {

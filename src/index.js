@@ -9,16 +9,13 @@ import { I18nextProvider } from "react-i18next";
 import i18n from "./config/internationalization";
 // packages to configure redux
 import { Provider as ReduxStoreProvider } from "react-redux";
+
 import store from "./redux/store";
-import { configureRequestInterceptors } from "./api/interceptors";
 
 // import the used UI Framework "Semantic UI"
 import "./semantic/dist/semantic.min.css";
 // custom components
 import Spinner from "./01_atoms/Spinner";
-
-// Configure API intercreptors to attach common headers to each request by default
-configureRequestInterceptors();
 
 ReactDOM.render(
   <I18nextProvider i18n={i18n}>
