@@ -19,9 +19,9 @@ import {
   Modal
 } from "semantic-ui-react";
 
-import { incrementCounter } from "../config/redux/_actions/jobPost.actions";
+import { incrementCounter } from "../redux/_actions/jobPost.actions";
 import { connect } from "react-redux";
-import { addTodo } from "../config/redux/_actions/jobPost.actions";
+import { addTodo } from "../redux/_actions/jobPost.actions";
 
 export class Job extends React.Component {
   constructor(props) {
@@ -38,7 +38,9 @@ export class Job extends React.Component {
             <Grid.Column textAlign="center" width={3}>
               <Avatar_Job />
               <ConFirmModal />
-              <NewPostModal onNewPost={(newPostText) => this.props.addTodo(newPostText)} />
+              <NewPostModal
+                onNewPost={newPostText => this.props.addTodo(newPostText)}
+              />
             </Grid.Column>
             <Grid.Column width={8}>
               <ul>

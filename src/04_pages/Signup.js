@@ -2,11 +2,13 @@ import React from "react";
 
 // Redux bindings & HOCs
 import { connect } from "react-redux";
-import { userActions } from "../config/redux/_actions";
+import { userActions } from "../redux/_actions";
+import { navigationConstants } from "../redux/_constants";
 
 // Redux-Form and Bindings Semantic-UI forms
 import { Field, reduxForm } from "redux-form";
 import { LabelInputField, CheckboxField } from "react-semantic-redux-form";
+import { Message } from "semantic-ui-react";
 
 // Internationalization
 import i18next from "i18next";
@@ -25,6 +27,9 @@ import {
 
 import Link from "redux-first-router-link";
 import LanguageSwitcher from "../02_molecules/LanguageSwitcher";
+import { redirect } from "redux-first-router";
+
+import formValidationUtilities from "../utilities/formValidationUtilities";
 
 // Styles
 import "./Signup.css";
@@ -36,9 +41,22 @@ class Signup extends React.Component {
   constructor(props) {
     super(props);
     this._handleRegistrationSubmit = this._handleRegistrationSubmit.bind(this);
+    this.redirectToCompleteProfilePage = this.redirectToCompleteProfilePage.bind(
+      this
+    );
+  }
+
+  redirectToCompleteProfilePage() {
+    const action = redirect({
+      type: navigationConstants.NAVIGATE_TO_COMPLETE_PROFILE
+    });
+    this.props.dispatch(action);
   }
 
   render() {
+    if (this.props.registrationCompleted) {
+      this.redirectToCompleteProfilePage();
+    }
     return (
       <div className="registration-form">
         <Container>
@@ -67,6 +85,11 @@ class Signup extends React.Component {
                     }}
                     labelPosition="left"
                     placeholder={i18next.t("signup-email-input-placeholder")}
+                    validate={[
+                      formValidationUtilities.requiredEmail,
+                      formValidationUtilities.email,
+                      formValidationUtilities.uniSiegenEmail
+                    ]}
                   />
 
                   <Field
@@ -78,6 +101,11 @@ class Signup extends React.Component {
                     }}
                     labelPosition="left"
                     placeholder={i18next.t("signup-password-input-placeholder")}
+                    validate={[
+                      formValidationUtilities.requiredPassword,
+                      formValidationUtilities.passwordStrength,
+                      formValidationUtilities.passwordNotJochen
+                    ]}
                   />
 
                   <Form.Group>
@@ -97,6 +125,8 @@ class Signup extends React.Component {
               <Link to="/">
                 <Trans i18nKey="signup-message-already-have-an-account-call-to-action" />
               </Link>
+              {this.props.registrationErrorStatus &&
+                this.renderErrorMessage(this.props.registrationErrorStatus)}
             </Grid.Column>
           </Grid>
         </Container>
@@ -143,11 +173,31 @@ class Signup extends React.Component {
       })
     );
   }
+
+  renderErrorMessage(status) {
+    return (
+      <Message negative>
+        <Message.Header>
+          {i18next.t(`signup-error-${status}-message`)}
+        </Message.Header>
+        <p> {i18next.t(`signup-error-${status}-explanation`)}</p>
+      </Message>
+    );
+  }
 }
 
 const mapStateToProps = state => {
+  let registrationErrorStatus = null;
+
+  if (state.registration.registrationResponseError) {
+    registrationErrorStatus =
+      state.registration.registrationResponseError.response.status;
+  }
+
   return {
-    registrationForm: state.registrationForm
+    registrationForm: state.registrationForm,
+    registrationCompleted: state.registration.registrationCompleted,
+    registrationErrorStatus: registrationErrorStatus
   };
 };
 
