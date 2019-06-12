@@ -100,6 +100,8 @@
   "landingpage-footer-pre-call-to-action-text": " ",
   "landingpage-footer-signup-button-text": "Jetzt registrieren",
 
+  "adminpanel-sidebar-show-option": "Seitenleiste einbelden",
+  "adminpanel-sidebar-hide-option": "Seitenleiste ausblenden",
   "adminpanel-menu-user-management-label": "Benutzerverwaltung",
   "adminpanel-menu-group-management-label": "Gruppenverwaltung",
   "adminpanel-menu-chair-management-label": "Lehrstuhlverwaltung",
@@ -121,5 +123,18 @@
 
   "userManagement-add-user-button": "Benutzer hinzufügen",
   "userManagement-edit-user-button": "Benutzer bearbeiten",
-  "userManagement-delete-user-button": "Benutzer löschen"
+  "userManagement-delete-user-button": "Benutzer löschen",
+
+  "chairManagement-tableheader-id": "LehrstuhlId",
+  "chairManagement-tableheader-name": "Name",
+  "chairManagement-tableheader-city": "Stadt",
+  "chairManagement-tableheader-postCode": "Postleitzahl",
+  "chairManagement-tableheader-street": "Straße",
+  "chairManagement-tableheader-houseNumber": "Hausnummer",
+  "chairManagement-tableheader-room": "Raum",
+  "chairManagement-tableheader-phoneNumber": "TelefonNr",
+
+  "chairManagement-add-chair-button": "Lehrstuhl hinzufügen",
+  "chairManagement-edit-chair-button": "Lehrstuhl bearbeiten",
+  "chairManagement-delete-chair-button": "Lehrstuhl löschen"
 }

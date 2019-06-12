@@ -20,11 +20,8 @@ class UserManagement extends React.Component {
   }
 
   render() {
-    console.log(this.props);
     return (
       <div className="adminpanel-fragment-wrapper">
-        {console.log(this.props.users)}
-
         {this.props.users.length > 0 && (
           <Table
             celled
@@ -86,8 +83,6 @@ class UserManagement extends React.Component {
   }
 
   renderUsersTableRow(user) {
-    console.log("Rendering user with Id " + user.id);
-
     return (
       <Table.Row
         key={"row" + user.id}
