@@ -13,7 +13,9 @@ const navigationConstants = {
     "NAVIGATE_TO_DATA_PROCESSING_AGREEMENT",
   NAVIGATE_TO_TERMS_OF_SERVICE: "NAVIGATE_TO_TERMS_OF_SERVICE",
   NAVIGATE_TO_LANDING_PAGE: "NAVIGATE_TO_LANDING_PAGE",
-  NAVIGATE_TO_ADMIN_PANEL: "NAVIGATE_TO_ADMIN_PANEL"
+  NAVIGATE_TO_ADMIN_PANEL: "NAVIGATE_TO_ADMIN_PANEL",
+  NAVIGATE_TO_JOB_PAGE: "NAVIGATE_TO_JOB_PAGE",
+  NAVIGATE_TO_CHAIR_PAGE: "NAVIGATE_TO_CHAIR_PAGE"
 };
 
 /**
@@ -53,6 +55,16 @@ export const routesMap = {
     path: "/admin",
     requiresAuth: true,
     role: ""
+  },
+  NAVIGATE_TO_JOB_PAGE: {
+    path: "/job",
+    requiresAuth: true,
+    role: ""
+  },
+  NAVIGATE_TO_CHAIR_PAGE: {
+    path: "/chair",
+    requiresAuth: true,
+    role: ""
   }
 };
 
@@ -70,6 +82,9 @@ export const componentsMap = {
   NAVIGATE_TO_TERMS_OF_SERVICE: "TermsOfService",
   NAVIGATE_TO_LANDING_PAGE: "LandingPage",
   NAVIGATE_TO_ADMIN_PANEL: "AdminPanel",
+  NAVIGATE_TO_JOB_PAGE: "Job",
+  NAVIGATE_TO_CHAIR_PAGE: "ChairPage",
+
   [NOT_FOUND]: "NotFound"
 };
 

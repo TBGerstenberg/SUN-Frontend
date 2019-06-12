@@ -2,7 +2,7 @@ import React from "react";
 import NavBar from "../03_organisms/NavBar";
 import NewPostModal from "../03_organisms/NewPost";
 import ConFirmModal from "../03_organisms/ConfirmModal";
-import AvatarJob from "../05_images/job.png";
+import AvatarJob from "../assets/images/job.png";
 import App from "../App";
 import {
   Button,
@@ -19,9 +19,8 @@ import {
   Modal
 } from "semantic-ui-react";
 
-import { incrementCounter } from "../redux/_actions/jobPost.actions";
 import { connect } from "react-redux";
-import { addTodo } from "../redux/_actions/jobPost.actions";
+import { jobPostActions } from "../redux/_actions";
 
 export class Job extends React.Component {
   constructor(props) {
@@ -90,7 +89,7 @@ let mapStateToProps = state => {
 };
 
 let mapDispatchToProps = {
-  addTodo: addTodo
+  addTodo: jobPostActions.addTodo
 };
 
 let TodoListContainer = connect(

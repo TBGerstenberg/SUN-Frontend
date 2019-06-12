@@ -7,12 +7,9 @@ import Login from "./Login";
 import DataProcessingAgreement from "./DataProcessingAgreement";
 import TermsOfService from "./TermsOfService";
 import LandingPage from "./LandingPage";
-<<<<<<< HEAD
 import Job from "./Job";
 import ChairPage from "./ChairPage";
-=======
 import AdminPanel from "./AdminPanel";
->>>>>>> development
 
 /**
  * This file exists to allow an import
@@ -29,10 +26,7 @@ export {
   DataProcessingAgreement,
   TermsOfService,
   LandingPage,
-<<<<<<< HEAD
   Job,
-  ChairPage
-=======
+  ChairPage,
   AdminPanel
->>>>>>> development
 };

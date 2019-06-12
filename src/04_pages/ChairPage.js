@@ -1,8 +1,8 @@
 import React from "react";
 import NavBar from "../03_organisms/NavBar";
-import ContactForm from "../03_organisms/ContactForm"
-import ConFirmModal from "../03_organisms/ConfirmModal"
-import avatar_chair from "../05_images/chair_avatar.png";
+import ContactForm from "../03_organisms/ContactForm";
+import ConFirmModal from "../03_organisms/ConfirmModal";
+import avatar_chair from "../assets/images/chair_avatar.png";
 import {
   Button,
   Form,
@@ -22,13 +22,13 @@ const ChairPage = () => {
   return (
     <div>
       <NavBar />
-      <HeaderChairPage/>
+      <HeaderChairPage />
       <Grid columns={2}>
         <Grid.Row>
           <Grid.Column textAlign="center" width={3}>
             <Avatar_Chair />
-            <ConFirmModal/>
-           <ContactForm/>
+            <ConFirmModal />
+            <ContactForm />
           </Grid.Column>
           <Grid.Column width={8}>
             <Contact_Form />
@@ -45,8 +45,6 @@ const ChairPage = () => {
             <FirstProfile />
             <br />
             <ThirdProfile />
-            
-            
           </Grid.Column>
           <Grid.Column width={8}>
             <Contact_Form />
@@ -149,5 +147,3 @@ const Contact_Form = () => {
     </div>
   );
 };
-
-
