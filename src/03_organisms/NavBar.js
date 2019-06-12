@@ -9,6 +9,7 @@ import { connect } from "react-redux";
 import { userActions } from "../redux/_actions";
 import { navigationConstants } from "../redux/_constants";
 import { navigationActions } from "../redux/_actions";
+import Link from "redux-first-router-link";
 
 class NavBar extends Component {
   constructor(props) {
@@ -37,12 +38,26 @@ class NavBar extends Component {
           <div className="ui mini image">
             {/*  <img src={logo} style={{ height: "100%" }} /> */}
           </div>
-          <a href="Home" className="item">
+
+          <Link
+            className="item"
+            to={{
+              type: navigationConstants.NAVIGATE_TO_HOME
+            }}
+          >
             Home
-          </a>
-          <a href="Profile" className="item">
+          </Link>
+
+          <Link
+            className="item"
+            to={{
+              type: navigationConstants.NAVIGATE_TO_PROFILE,
+              payload: { userId: this.props.user.id }
+            }}
+          >
             Profile
-          </a>
+          </Link>
+
           <a href="#" className="item">
             Groups
           </a>
@@ -71,7 +86,8 @@ class NavBar extends Component {
 
 const mapStateToProps = state => {
   return {
-    loggedIn: state.login.loggedIn
+    loggedIn: state.login.loggedIn,
+    user: state.login.user
   };
 };
 

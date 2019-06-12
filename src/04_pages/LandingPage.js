@@ -20,6 +20,8 @@ import { withTranslation, Trans } from "react-i18next";
 import i18next from "i18next";
 import logo from "../assets/images/landingpage_01.jpg";
 import logo2 from "../assets/images/Logo_2.png";
+import profile_man from "../assets/images/profile_man.png"
+import profile_woman from "../assets/images/profile_woman.png"
 
 // Heads up!
 // We using React Static to prerender our docs with server side rendering, this is a quite simple solution.
@@ -369,7 +371,7 @@ const HomepageLayout = () => (
                 <div class="ui blue image large label">
                   <img
                     class="ui right spaced avatar image"
-                    src="/images/avatar/small/elliot.jpg"
+                    src={profile_man}
                   />{" "}
                   Peter B.
                   <div class="detail">Student</div>
@@ -385,10 +387,10 @@ const HomepageLayout = () => (
                 <div class="ui blue image large label">
                   <img
                     class="ui right spaced avatar image"
-                    src="/images/avatar/small/elliot.jpg"
+                    src={profile_woman}
                   />{" "}
-                  Volker W.
-                  <div class="detail">Dekan</div>
+                  Prof.Sarah Schmitz
+                  <div class="detail">Dekanin</div>
                 </div>
               </p>
             </Grid.Column>
