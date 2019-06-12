@@ -14,8 +14,12 @@ import store from "./redux/store";
 
 // import the used UI Framework "Semantic UI"
 import "./semantic/dist/semantic.min.css";
+
+import { Container } from "semantic-ui-react";
+
 // custom components
 import Spinner from "./01_atoms/Spinner";
+import NavBar from "./03_organisms/NavBar";
 
 ReactDOM.render(
   <I18nextProvider i18n={i18n}>

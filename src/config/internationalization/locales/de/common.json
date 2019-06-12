@@ -71,6 +71,13 @@
   "complete-your-profile-abort-button": "Abbrechen",
   "complete-your-profile-continue-button": "Abschließen",
 
+  "profile-overview-label": "Allgemeines",
+
+  "address-card-header": "Adresse",
+  "address-card-city-label": "Stadt:",
+  "address-card-postCode-label": "PLZ:",
+  "address-card-street-label": "Straße:",
+
   "navbar-search-placeholder": "Suchen...",
   "navbar-logout-button-text": "Abmelden",
 

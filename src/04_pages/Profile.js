@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import NavBar from "../03_organisms/NavBar";
 import Avatar from "../02_molecules/Avatar";
 import avatarSourcePath from "../assets/images/profile_man.png";
+import AddressCard from "../03_organisms/AdressCard";
+import { withTranslation, Trans } from "react-i18next";
 
 // Components from semantic ui and our own library
 import {
@@ -12,7 +14,9 @@ import {
   Segment,
   Image,
   Label,
-  Placeholder
+  Placeholder,
+  Responsive,
+  Container
 } from "semantic-ui-react";
 
 import { userActions } from "../redux/_actions";
@@ -28,77 +32,66 @@ class Profile extends React.Component {
     return (
       <div>
         <NavBar />
-        <HeaderProfilePage />
-
-        <Grid columns={3} divided>
+        <Grid columns={3} centered>
           <Grid.Row columns={3}>
             <Grid.Column textAlign="center" width={3}>
+              <HeaderProfilePage />
               <Avatar src={avatarSourcePath} />
             </Grid.Column>
+
             <Grid.Column width={6}>
-              <Grid>
-                <Segment raised>
-                  <Label as="a" color="blue" ribbon>
-                    Overview
-                  </Label>
-                  <span>Account Details</span>
-
+              <Grid centered>
+                <Segment
+                  raised
+                  style={{ width: "98%", marginTop: "14px", height: "500px" }}
+                  textAlign="left"
+                >
                   <Grid.Row>
                     <Grid.Column>
-                      {profileValuesExist ? (
-                        <FirstProfileRow
-                          title={props.profileValues.title}
-                          firstName={props.profileValues.firstName}
-                          lastName={props.profileValues.lastName}
-                        />
-                      ) : (
-                        <OneLinePlaceHolder />
-                      )}
-                    </Grid.Column>
-                  </Grid.Row>
+                      <Label as="a" color="blue" ribbon>
+                        <Trans i18nKey="profile-overview-label" />
+                      </Label>
 
-                  <Grid.Row>
-                    <Grid.Column>
-                      {profileValuesExist ? (
-                        <SecondProfileRow
-                          gender={props.profileValues.gender}
-                          birthDate={props.profileValues.birthDate}
-                        />
-                      ) : (
-                        <OneLinePlaceHolder />
-                      )}
-                    </Grid.Column>
-                  </Grid.Row>
-
-                  <Grid.Row>
-                    <Grid.Column>
-                      {profileValuesExist ? (
-                        <ThirdProfileRow
-                          subject={props.profileValues.subject}
-                        />
-                      ) : (
-                        <OneLinePlaceHolder />
-                      )}
+                      <Grid padded>
+                        {profileValuesExist ? (
+                          <FirstProfileRow
+                            title={props.profileValues.title}
+                            birthDate={props.profileValues.birthDate}
+                            firstName={props.profileValues.firstName}
+                            lastName={props.profileValues.lastName}
+                            gender={props.profileValues.gender}
+                            subject={props.profileValues.subject}
+                          />
+                        ) : (
+                          <OneLinePlaceHolder />
+                        )}
+                      </Grid>
                     </Grid.Column>
                   </Grid.Row>
                 </Segment>
               </Grid>
             </Grid.Column>
-            <Grid.Column>
+
+            <Grid.Column width={3}>
+              {profileValuesExist ? (
+                <AddressCard
+                  city={props.profileValues.address.city}
+                  postCode={props.profileValues.address.postCode}
+                  street={props.profileValues.address.street}
+                />
+              ) : (
+                <OneLinePlaceHolder />
+              )}
               <SkillCatalog />
             </Grid.Column>
           </Grid.Row>
 
-          <Grid.Row>
+          <Grid.Row columns={3}>
             <Grid.Column textAlign="center" width={3}>
               <Button primary>Profil bearbeiten</Button>
             </Grid.Column>
-            <Grid.Column width={3}>
-              <FourthProfile />
-            </Grid.Column>
-            <Grid.Column>
-              <FifthProfile />
-            </Grid.Column>
+            <Grid.Column width={6} />
+            <Grid.Column width={3} />
           </Grid.Row>
         </Grid>
       </div>
@@ -108,60 +101,85 @@ class Profile extends React.Component {
 
 const FirstProfileRow = props => {
   return (
-    <div>
-      <Label color="blue" size={"massive"}>
-        {props.title}
-      </Label>
-      <Label color="blue" size={"massive"}>
-        {props.firstName}
-      </Label>
-      <Label color="blue" size={"massive"}>
-        {props.lastName}
-      </Label>
-    </div>
+    <Grid.Row>
+      <Grid columns={2}>
+        <Grid.Row columns={2}>
+          <Grid.Column width={6}>
+            <Container>
+              <p>Titel:</p>
+              {props.title}
+            </Container>
+          </Grid.Column>
+          <Grid.Column width={10}>
+            <Container>
+              <p>Geschlecht:</p>
+              {props.gender}
+            </Container>
+          </Grid.Column>
+        </Grid.Row>
+
+        <Grid.Row columns={2}>
+          <Grid.Column width={6}>
+            <Container>
+              <p>Vorname:</p>
+              {props.firstName}
+            </Container>
+          </Grid.Column>
+          <Grid.Column width={10} />
+        </Grid.Row>
+
+        <Grid.Row columns={2}>
+          <Grid.Column width={6}>
+            <Container>
+              <p>Nachname:</p>
+              {props.lastName}
+            </Container>
+          </Grid.Column>
+          <Grid.Column width={10}>
+            <Container>
+              <p>Geburtsdatum:</p>
+              {props.birthDate}
+            </Container>
+          </Grid.Column>
+        </Grid.Row>
+
+        <Grid.Row columns={2}>
+          <Grid.Column width={6}>
+            <Container>
+              <p>MatrikelNummer:</p>
+              {props.matriculationNumber}
+            </Container>
+          </Grid.Column>
+          <Grid.Column width={10}>
+            <Container>
+              <p>Studiengang:</p>
+              {props.subject}
+            </Container>
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
+    </Grid.Row>
   );
 };
-const SecondProfileRow = props => {
-  return (
-    <div>
-      <Label size={"big"}> {props.gender}</Label>
-      <Label size={"big"}>{props.birthDate}</Label>
-    </div>
-  );
-};
+
 const ThirdProfileRow = props => {
   return (
-    <div>
-      <Label color="green" size={"big"}>
-        Studentenstatus
-      </Label>
-      <Label color="green" size={"massive"}>
-        {props.subject}
-      </Label>
-    </div>
-  );
-};
-const FourthProfile = props => {
-  return (
-    <div>
-      <Label size={"big"}> {props.email}</Label>
-      <Label size={"big"}> {props.mobile}</Label>
-    </div>
-  );
-};
-const FifthProfile = () => {
-  return (
-    <div>
-      <Label size={"big"}>Adresse</Label>
-      <Label size={"big"}>PLZ</Label>
-      <Label size={"big"}>Stadt</Label>
-    </div>
+    <Grid.Row columns={1} textAlign="left">
+      <Grid.Column>
+        <Label color="green" size={"big"}>
+          Studentenstatus
+        </Label>
+        <Label color="green" size={"massive"}>
+          {props.subject}
+        </Label>
+      </Grid.Column>
+    </Grid.Row>
   );
 };
 
 const HeaderProfilePage = props => {
   return (
-    <Header as="h1" color="blue" block>
+    <Header as="h1" color="blue">
       {`Herzlich Willkommen ${props.gender} ${props.lastName}`}
     </Header>
   );
@@ -208,4 +226,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(Profile);
+export default withTranslation()(connect(mapStateToProps)(Profile));
