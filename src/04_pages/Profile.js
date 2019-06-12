@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import NavBar from "../03_organisms/NavBar";
 import Avatar from "../02_molecules/Avatar";
-import avatarSourcePath from "../assets/images/avatar.png";
+import avatarSourcePath from "../assets/images/profile_man.png";
 
 // Components from semantic ui and our own library
 import {
