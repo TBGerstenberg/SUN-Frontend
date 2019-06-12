@@ -52,7 +52,7 @@ class NavBar extends Component {
             className="item"
             to={{
               type: navigationConstants.NAVIGATE_TO_PROFILE,
-              payload: { userId: this.props.user.id }
+              payload: { userId: this.props.user ? this.props.user.id : null }
             }}
           >
             Profile

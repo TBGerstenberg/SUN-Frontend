@@ -20,8 +20,8 @@ import { withTranslation, Trans } from "react-i18next";
 import i18next from "i18next";
 import logo from "../assets/images/landingpage_01.jpg";
 import logo2 from "../assets/images/Logo_2.png";
-import profile_man from "../assets/images/profile_man.png"
-import profile_woman from "../assets/images/profile_woman.png"
+import profile_man from "../assets/images/profile_man.png";
+import profile_woman from "../assets/images/profile_woman.png";
 
 // Heads up!
 // We using React Static to prerender our docs with server side rendering, this is a quite simple solution.
@@ -261,10 +261,10 @@ const HomepageLayout = () => (
   <div>
     <ResponsiveContainer>
       <Segment style={{ padding: "8em 0em" }} vertical>
-        <Grid container stackable verticalAlign="center">
+        <Grid container stackable verticalAlign="middle">
           <Grid.Row>
             <div width="750px" height="750px">
-              <Image src={logo} height="350px" width="500px" textAlign="left" />
+              <Image src={logo} height="350px" width="500px" />
             </div>
 
             <Grid.Column width={8}>
@@ -367,32 +367,30 @@ const HomepageLayout = () => (
               <Header as="h3" style={{ fontSize: "2em", color: "teal" }}>
                 {i18next.t("landingpage-testimonials-text-0")}
               </Header>
-              <p style={{ fontSize: "2em" }}>
-                <div class="ui blue image large label">
-                  <img
-                    class="ui right spaced avatar image"
-                    src={profile_man}
-                  />{" "}
-                  Peter B.
-                  <div class="detail">Student</div>
-                </div>
-              </p>
+
+              <div className="ui blue image large label">
+                <img
+                  className="ui right spaced avatar image"
+                  src={profile_man}
+                />{" "}
+                Peter B.
+                <div className="detail">Student</div>
+              </div>
             </Grid.Column>
 
             <Grid.Column style={{ paddingBottom: "5em", paddingTop: "5em" }}>
               <Header as="h3" style={{ fontSize: "2em", color: "teal" }}>
                 {i18next.t("landingpage-testimonials-text-1")}
               </Header>
-              <p style={{ fontSize: "2em" }}>
-                <div class="ui blue image large label">
-                  <img
-                    class="ui right spaced avatar image"
-                    src={profile_woman}
-                  />{" "}
-                  Prof.Sarah Schmitz
-                  <div class="detail">Dekanin</div>
-                </div>
-              </p>
+
+              <div className="ui blue image large label">
+                <img
+                  className="ui right spaced avatar image"
+                  src={profile_woman}
+                />{" "}
+                Prof.Sarah Schmitz
+                <div className="detail">Dekanin</div>
+              </div>
             </Grid.Column>
           </Grid.Row>
         </Grid>
