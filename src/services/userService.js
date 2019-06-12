@@ -1,4 +1,4 @@
-import axios from "axios";
+import apiClient from "../api/apiClient";
 import API_CONFIG from "../config/api_config";
 
 /**
@@ -38,21 +38,21 @@ const userService = {
       );
 
       // Perform the http request
-      const LoginResponse = await axios.post(
+      const LoginResponse = await apiClient.post(
         API_CONFIG.LOGIN.POST_LOGIN_URL,
         postLoginRequestBody
       );
 
       // Handle the response
       if (LoginResponse) {
-        if (LoginResponse.status === 200 && LoginResponse.user)
+        if (LoginResponse.status === 200) {
           return {
-            authToken: LoginResponse.token,
-            user: LoginResponse.account,
+            authToken: LoginResponse.data.token,
+            user: LoginResponse.data.account,
             status: LoginResponse.status,
             error: null
           };
-        else {
+        } else {
           return {
             authToken: null,
             user: null,
@@ -72,11 +72,14 @@ const userService = {
    * @param {string} token - The access token that shall be invalidated
    */
   logout: async () => {
+    let logoutResponse;
     try {
       // Perform the http request
-      const logoutResponse = await axios.get(API_CONFIG.LOGIN.GET_LOGOUT_URL);
+      logoutResponse = await apiClient.get(API_CONFIG.LOGIN.GET_LOGOUT_URL);
       return logoutResponse;
-    } catch (error) {}
+    } catch (error) {
+      return { error: error };
+    }
   },
 
   /**
@@ -115,7 +118,7 @@ const userService = {
       );
 
       // Perform the request
-      const signupResponse = await axios.post(
+      const signupResponse = await apiClient.post(
         API_CONFIG.REGISTRATION.POST_REGISTRATION_URL,
         registrationRequestBody
       );
@@ -149,6 +152,7 @@ const userService = {
    * Updates a users profile with a set of personal information
    * @param {object} Profile - a userprofile containg data about a user. In detail, the following properties are accepted:
    *
+   * @param {Number} userId - the public id of the profile that shall be updated
    * @param {String} firstName - the first name of the user that attempts to complete his profile
    * @param {String} lastName - the last name of the user that attempts to complete his profile
    * @param {String} title - the acadaemic or professional title of the user that attempts to complete his profile
@@ -168,10 +172,10 @@ const userService = {
 
       //Build request Body
       const updateProfileRequestBody = {
-        firstName: profile.firstName,
-        lastName: profile.lastName,
         title: profile.title,
         gender: profile.gender,
+        firstName: profile.firstName,
+        lastName: profile.lastName,
         birthDate: profile.birthDate,
         address: profile.address,
         studentStatus: profile.studentStatus,
@@ -179,9 +183,11 @@ const userService = {
         skills: profile.skills
       };
 
+      console.log(updateProfileRequestBody);
+
       // Perform the request
-      const updateProfileResponse = await axios.put(
-        API_CONFIG.USERS.UPDATE_PROFILE_URL,
+      const updateProfileResponse = await apiClient.put(
+        API_CONFIG.USERS.UPDATE_PROFILE_URL + profile.userId,
         updateProfileRequestBody,
         headers
       );
@@ -189,12 +195,12 @@ const userService = {
       // Handle the response
       if (updateProfileResponse.status === 200) {
         return {
-          user: updateProfileResponse.person,
+          response: updateProfileResponse,
           error: null
         };
       }
     } catch (error) {
-      return { user: null, error: error };
+      return { response: null, error: error };
     }
   },
 
@@ -203,21 +209,37 @@ const userService = {
    */
   getAllUsers: async () => {
     try {
-      //Build request headers
-      const headers = {
-        Authorization: "SOMETOKEN"
-      };
-
       // Perform the request
-      const getAllUsersResponse = await axios.get(
-        API_CONFIG.USERS.GET_ALL_USERS_URL,
-        headers
+      const getAllUsersResponse = await apiClient.get(
+        API_CONFIG.USERS.GET_ALL_USERS_URL
       );
 
       // Handle the response
       if (getAllUsersResponse.status === 200) {
         return {
           users: getAllUsersResponse.data,
+          error: null
+        };
+      }
+    } catch (error) {
+      return { users: null, error: error };
+    }
+  },
+
+  getSingleUser: async userId => {
+    try {
+      console.log("Fetching user with id " + userId + "In service layer");
+      // Perform the request
+      const getSingleUserResponse = await apiClient.get(
+        API_CONFIG.USERS.GET_SINGLE_USER_URL(userId)
+      );
+
+      console.log(getSingleUserResponse);
+      // Handle the response
+      if (getSingleUserResponse.status === 200) {
+        console.log("Request succeeded");
+        return {
+          user: getSingleUserResponse.data,
           error: null
         };
       }

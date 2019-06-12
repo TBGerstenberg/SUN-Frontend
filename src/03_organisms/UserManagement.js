@@ -11,121 +11,83 @@ class UserManagement extends React.Component {
     this.props.dispatch(userActions.getAllUsers());
   }
 
-  state = { visible: false, selectedEntry: null };
-
-  render() {
-    return (
-      <div className="adminpanel-fragment-wrapper">
-        {this.renderUsersTable(this.props.users)}
-      </div>
-    );
+  constructor(props) {
+    super(props);
+    this.state = { visible: false, selectedEntry: null };
+    this.renderUsersTableRow = this.renderUsersTableRow.bind(this);
+    this.renderUsersTableHeader = this.renderUsersTableHeader.bind(this);
+    this.renderUsersTableFooter = this.renderUsersTableFooter.bind(this);
   }
 
-  renderUsersTable(users) {
-    console.log(users);
+  render() {
+    console.log(this.props);
     return (
-      <Table celled selectable>
-        {this.renderUsersTableHeader()}
-        <Table.Body>
-          {this.renderUsersTableRow(users[0])}
-          {users.forEach(user => {
-            this.renderUsersTableRow(user);
-          })}
-        </Table.Body>
+      <div className="adminpanel-fragment-wrapper">
+        {console.log(this.props.users)}
 
-        <Table.Footer fullWidth>
-          <Table.Row>
-            <Table.HeaderCell colSpan="14">
-              <Button
-                floated="right"
-                icon
-                labelPosition="left"
-                primary
-                size="small"
-                onClick={this.handleAddUserButtonClick}
-              >
-                <Icon name="user" />
-                <Trans i18nKey="userManagement-add-user-button" />
-              </Button>
-
-              <Button
-                floated="right"
-                icon
-                labelPosition="left"
-                size="small"
-                disabled={!this.state.selectedEntry}
-              >
-                <Icon name="edit" />
-                <Trans i18nKey="userManagement-edit-user-button" />
-              </Button>
-
-              <Button
-                floated="right"
-                icon
-                labelPosition="left"
-                size="small"
-                disabled={!this.state.selectedEntry}
-              >
-                <Icon name="trash" />
-                <Trans i18nKey="userManagement-delete-user-button" />
-              </Button>
-            </Table.HeaderCell>
-          </Table.Row>
-        </Table.Footer>
-      </Table>
+        {this.props.users.length > 0 && (
+          <Table
+            celled
+            selectable
+            renderBodyRow={this.renderUsersTableRow}
+            headerRow={this.renderUsersTableHeader}
+            footerRow={this.renderUsersTableFooter}
+            tableData={this.props.users}
+          />
+        )}
+      </div>
     );
   }
 
   renderUsersTableHeader() {
     return (
-      <Table.Header fullWidth>
-        <Table.Row>
-          <Table.HeaderCell>
-            <Trans i18nKey="usermanagement-tableheader-id" />
-          </Table.HeaderCell>
-          <Table.HeaderCell>
-            <Trans i18nKey="usermanagement-tableheader-email" />
-          </Table.HeaderCell>
-          <Table.HeaderCell>
-            <Trans i18nKey="usermanagement-tableheader-password" />
-          </Table.HeaderCell>
-          <Table.HeaderCell>
-            <Trans i18nKey="usermanagement-tableheader-title" />
-          </Table.HeaderCell>
-          <Table.HeaderCell>
-            <Trans i18nKey="usermanagement-tableheader-gender" />
-          </Table.HeaderCell>
-          <Table.HeaderCell>
-            <Trans i18nKey="usermanagement-tableheader-firstName" />
-          </Table.HeaderCell>
-          <Table.HeaderCell>
-            <Trans i18nKey="usermanagement-tableheader-lastName" />
-          </Table.HeaderCell>
-          <Table.HeaderCell>
-            <Trans i18nKey="usermanagement-tableheader-birthDate" />
-          </Table.HeaderCell>
-          <Table.HeaderCell>
-            <Trans i18nKey="usermanagement-tableheader-city" />
-          </Table.HeaderCell>
-          <Table.HeaderCell>
-            <Trans i18nKey="usermanagement-tableheader-postCode" />
-          </Table.HeaderCell>
-          <Table.HeaderCell>
-            <Trans i18nKey="usermanagement-tableheader-street" />
-          </Table.HeaderCell>
-          <Table.HeaderCell>
-            <Trans i18nKey="usermanagement-tableheader-studentStatus" />
-          </Table.HeaderCell>
-          <Table.HeaderCell>
-            <Trans i18nKey="usermanagement-tableheader-employeeStatus" />
-          </Table.HeaderCell>
-        </Table.Row>
-      </Table.Header>
+      <Table.Row>
+        <Table.HeaderCell>
+          <Trans i18nKey="usermanagement-tableheader-id" />
+        </Table.HeaderCell>
+        <Table.HeaderCell>
+          <Trans i18nKey="usermanagement-tableheader-email" />
+        </Table.HeaderCell>
+        <Table.HeaderCell>
+          <Trans i18nKey="usermanagement-tableheader-password" />
+        </Table.HeaderCell>
+        <Table.HeaderCell>
+          <Trans i18nKey="usermanagement-tableheader-title" />
+        </Table.HeaderCell>
+        <Table.HeaderCell>
+          <Trans i18nKey="usermanagement-tableheader-gender" />
+        </Table.HeaderCell>
+        <Table.HeaderCell>
+          <Trans i18nKey="usermanagement-tableheader-firstName" />
+        </Table.HeaderCell>
+        <Table.HeaderCell>
+          <Trans i18nKey="usermanagement-tableheader-lastName" />
+        </Table.HeaderCell>
+        <Table.HeaderCell>
+          <Trans i18nKey="usermanagement-tableheader-birthDate" />
+        </Table.HeaderCell>
+        <Table.HeaderCell>
+          <Trans i18nKey="usermanagement-tableheader-city" />
+        </Table.HeaderCell>
+        <Table.HeaderCell>
+          <Trans i18nKey="usermanagement-tableheader-postCode" />
+        </Table.HeaderCell>
+        <Table.HeaderCell>
+          <Trans i18nKey="usermanagement-tableheader-street" />
+        </Table.HeaderCell>
+        <Table.HeaderCell>
+          <Trans i18nKey="usermanagement-tableheader-studentStatus" />
+        </Table.HeaderCell>
+        <Table.HeaderCell>
+          <Trans i18nKey="usermanagement-tableheader-employeeStatus" />
+        </Table.HeaderCell>
+      </Table.Row>
     );
   }
 
   renderUsersTableRow(user) {
-    console.log(user);
+    console.log("Rendering user with Id " + user.id);
+
     return (
       <Table.Row
         key={"row" + user.id}
@@ -133,17 +95,39 @@ class UserManagement extends React.Component {
           this.setState({ selectedEntry: user.id });
         }}
       >
-        <Table.Cell key="id">{user.id}</Table.Cell>
-        <Table.Cell key="email">{user.email}</Table.Cell>
-        <Table.Cell key="password">{user.password}</Table.Cell>
-        <Table.Cell key="title">{user.title}</Table.Cell>
-        <Table.Cell key="gender">{user.gender}</Table.Cell>
-        <Table.Cell key="firstName">{user.firstName}</Table.Cell>
-        <Table.Cell key="lastName">{user.lastName}</Table.Cell>
-        <Table.Cell key="birthDate">{user.birthDate}</Table.Cell>
-        <Table.Cell key="city">{user.address.city}</Table.Cell>
-        <Table.Cell key="postCode">{user.address.postCode}</Table.Cell>
-        <Table.Cell key="street">{user.address.street}</Table.Cell>
+        <Table.Cell key="id">
+          {tableFormattingUtilities.numberOrEmpty(user.id)}
+        </Table.Cell>
+        <Table.Cell key="email">
+          {tableFormattingUtilities.stringOrEmpty(user.email)}
+        </Table.Cell>
+        <Table.Cell key="password">
+          {tableFormattingUtilities.stringOrEmpty(user.password)}
+        </Table.Cell>
+        <Table.Cell key="title">
+          {tableFormattingUtilities.stringOrEmpty(user.title)}
+        </Table.Cell>
+        <Table.Cell key="gender">
+          {tableFormattingUtilities.stringOrEmpty(user.gender)}
+        </Table.Cell>
+        <Table.Cell key="firstName">
+          {tableFormattingUtilities.stringOrEmpty(user.firstName)}
+        </Table.Cell>
+        <Table.Cell key="lastName">
+          {tableFormattingUtilities.stringOrEmpty(user.lastName)}
+        </Table.Cell>
+        <Table.Cell key="birthDate">
+          {tableFormattingUtilities.stringOrEmpty(user.birthDate)}
+        </Table.Cell>
+        <Table.Cell key="city">
+          {tableFormattingUtilities.stringOrEmpty(user.address.city)}
+        </Table.Cell>
+        <Table.Cell key="postCode">
+          {tableFormattingUtilities.stringOrEmpty(user.address.postCode)}
+        </Table.Cell>
+        <Table.Cell key="street">
+          {tableFormattingUtilities.stringOrEmpty(user.address.street)}
+        </Table.Cell>
         <Table.Cell key="isStudent">
           {tableFormattingUtilities.stringValueForBoolean(user.studentStatus)}
         </Table.Cell>
@@ -154,21 +138,66 @@ class UserManagement extends React.Component {
     );
   }
 
+  renderUsersTableFooter() {
+    return (
+      <Table.Row>
+        <Table.HeaderCell colSpan="14">
+          <Button
+            floated="right"
+            icon
+            labelPosition="left"
+            primary
+            size="small"
+            onClick={this.handleAddUserButtonClick}
+          >
+            <Icon name="user" />
+            <Trans i18nKey="userManagement-add-user-button" />
+          </Button>
+
+          <Button
+            floated="right"
+            icon
+            labelPosition="left"
+            size="small"
+            disabled={!this.state.selectedEntry}
+          >
+            <Icon name="edit" />
+            <Trans i18nKey="userManagement-edit-user-button" />
+          </Button>
+
+          <Button
+            floated="right"
+            icon
+            labelPosition="left"
+            size="small"
+            disabled={!this.state.selectedEntry}
+          >
+            <Icon name="trash" />
+            <Trans i18nKey="userManagement-delete-user-button" />
+          </Button>
+        </Table.HeaderCell>
+      </Table.Row>
+    );
+  }
+
   handleAddUserButtonClick() {
     this.openModalUserForm();
   }
 
   openModalUserForm() {
-    return (
-      <Modal>
-        <UpdateProfileForm />
-      </Modal>
-    );
+    return <Modal />;
   }
 }
 
-const mapStateToProps = state => ({
-  users: [
+const mapStateToProps = state => {
+  return {
+    users: state.user.users || []
+  };
+};
+
+export default withTranslation()(connect(mapStateToProps)(UserManagement));
+
+/**[
     {
       id: 1,
       firstName: "Sebastian",
@@ -210,8 +239,4 @@ const mapStateToProps = state => ({
       authoredChairPosts: [],
       skills: []
     }
-  ],
-  ...state
-});
-
-export default withTranslation()(connect(mapStateToProps)(UserManagement));
+  ], */

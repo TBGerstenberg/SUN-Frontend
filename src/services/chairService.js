@@ -1,4 +1,4 @@
-import axios from "axios";
+import apiClient from "../api/apiClient";
 import API_CONFIG from "../config/api_config";
 
 /**
@@ -11,7 +11,7 @@ const chairService = {
     };
 
     try {
-      const getAllChairsResponse = await axios.get(
+      const getAllChairsResponse = await apiClient.get(
         API_CONFIG.CHAIRS.GET_ALL_CHAIRS_URL,
         {
           headers: headers

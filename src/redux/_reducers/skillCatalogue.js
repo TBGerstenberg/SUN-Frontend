@@ -12,10 +12,12 @@ const initialState = {
  * @param {*} action
  */
 const skillCatalogueReducer = (state = initialState, action) => {
+  const SKILL_UNRATED = -1;
+
   switch (action.type) {
     case skillCatalogueConstants.ADD_SKILL: {
       const extendedSkills = state.skills.concat([action.skill]);
-      const extendedRatings = state.ratings.concat(["UNRATED"]);
+      const extendedRatings = state.ratings.concat([SKILL_UNRATED]);
       return {
         ...state,
         skills: extendedSkills,

@@ -40,7 +40,8 @@ const loginReducer = (state = initialState, action) => {
         ...state,
         loggingIn: false,
         loggedIn: true,
-        user: attachRolesToUser(action.user, action.user.admin)
+        user: attachRolesToUser(action.payload.user, action.payload.user.admin),
+        accessToken: action.payload.token
       };
     case userConstants.LOGIN_FAILURE:
       return {
@@ -48,8 +49,19 @@ const loginReducer = (state = initialState, action) => {
         loggingIn: false,
         error: action.error
       };
-    case userConstants.LOGOUT:
-      return {};
+    case userConstants.LOGOUT_REQUEST:
+      return { ...state, loggingOut: true };
+    case userConstants.LOGOUT_SUCCESS:
+      return {
+        ...state,
+        loggingOut: false,
+        accessToken: null,
+        user: null,
+        loggedIn: false
+      };
+    case userConstants.LOGOUT_FAILURE:
+      return { ...state, loggingOut: false };
+
     default:
       return state;
   }

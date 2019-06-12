@@ -30,6 +30,7 @@
   "complete-profile-lastName-placeholder": "Nachname",
   "complete-profile-title-label": "Titel",
   "complete-profile-title-placeholder": "Titel",
+  "complete-profile-title-dropdown-option-none": "",
   "complete-profile-title-dropdown-option-bachelor": "Bachelor",
   "complete-profile-title-dropdown-option-master": "Master",
   "complete-profile-title-dropdown-option-dr": "Dr.",
@@ -73,8 +74,8 @@
   "navbar-search-placeholder": "Suchen...",
   "navbar-logout-button-text": "Abmelden",
 
-  "landingpage-hero-text": "SUN",
-  "landingpage-hero-subtext": "das soziale Uni-Netz der nächsten Generation",
+  "landingpage-hero-text": "Siegener Uni Netzwerk",
+  "landingpage-hero-subtext": "Das soziale Uni-Netz der nächsten Studenten-Generation",
   "landingpage-hero-call-to-action": "Los geht's",
   "landingpage-login-button-text": "Anmelden",
   "landingpage-signup-button-text": "Registrieren",
@@ -82,7 +83,7 @@
   "landingpage-what-we-do-bodyText": "Soziale Netzwerke bringen instantane Updates aus der ganzen Welt zusammen. Gängige Universitätsnetzwerke kämpfen mit Inkonsistenzen, Undurchsichtigkeit und mittelmäßiger Organisation. Wir wollen helfen, diese Lücke zu schließen.",
   "landingpage-see-features-call-to-action": "Features",
 
-  "landingpage-testimonials-text-0": "'Endlich zeitgemäßes Networking am Unis!'",
+  "landingpage-testimonials-text-0": "'Endlich zeitgemäßes Networking an Unis!'",
   "landingpage-author-0-role": "Student",
   "landingpage-author-0-name": "Peter",
 

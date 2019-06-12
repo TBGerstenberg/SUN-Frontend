@@ -30,6 +30,7 @@ import "./Login.css";
 
 //Actions
 import { navigationConstants } from "../redux/_constants";
+import { navigationActions } from "../redux/_actions";
 
 /**
  * A Screen that allows a user to log in to the system.
@@ -43,7 +44,9 @@ class Login extends React.Component {
   render() {
     if (this.props.loggedIn) {
       // Redirect to Home
-      this.props.dispatch({ type: navigationConstants.NAVIGATE_TO_HOME });
+      this.props.dispatch(
+        navigationActions.redirect(navigationConstants.NAVIGATE_TO_HOME)
+      );
     }
 
     return (
