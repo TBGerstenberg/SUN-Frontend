@@ -1,6 +1,7 @@
 import { redirect } from "redux-first-router";
 import navigationConstants from "./_constants/navigation.constants";
 import { FEATURE_CONFIG } from "../config/feature.config";
+
 // package to build upon a previously exiting browser history
 const createHistory = require("history").createBrowserHistory;
 
@@ -38,7 +39,9 @@ const reduxFirstRouterOptions = {
     }
   },
 
-  history: createHistory
+  history: createHistory,
+
+  extra: {}
 };
 
 const isAllowedToVisitRoute = (navigationActionType, loginState, routesMap) => {

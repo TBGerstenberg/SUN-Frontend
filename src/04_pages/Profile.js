@@ -15,65 +15,96 @@ import {
   Placeholder
 } from "semantic-ui-react";
 
-const Profile = () => {
-  return (
-    <div>
-      <NavBar />
-      <HeaderProfilePage />
+import { userActions } from "../redux/_actions";
 
-      <Grid columns={3} divided>
-        <Grid.Row columns={3}>
-          <Grid.Column textAlign="center" width={3}>
-            <Avatar src={avatarSourcePath} />
-          </Grid.Column>
-          <Grid.Column width={6}>
-            <Grid>
-              <Segment raised>
-                <Label as="a" color="blue" ribbon>
-                  Overview
-                </Label>
-                <span>Account Details</span>
+class Profile extends React.Component {
+  componentDidMount() {
+    this.props.dispatch(userActions.getSingleUser(this.props.userId));
+  }
 
-                <Grid.Row>
-                  <Grid.Column>
-                    <FirstProfileRow />
-                  </Grid.Column>
-                </Grid.Row>
+  render() {
+    const props = this.props;
+    const profileValuesExist = this.props.profileValues;
+    return (
+      <div>
+        <NavBar />
+        <HeaderProfilePage />
 
-                <Grid.Row>
-                  <Grid.Column>
-                    <SecondProfileRow />
-                  </Grid.Column>
-                </Grid.Row>
+        <Grid columns={3} divided>
+          <Grid.Row columns={3}>
+            <Grid.Column textAlign="center" width={3}>
+              <Avatar src={avatarSourcePath} />
+            </Grid.Column>
+            <Grid.Column width={6}>
+              <Grid>
+                <Segment raised>
+                  <Label as="a" color="blue" ribbon>
+                    Overview
+                  </Label>
+                  <span>Account Details</span>
 
-                <Grid.Row>
-                  <Grid.Column>
-                    <ThirdProfileRow />
-                  </Grid.Column>
-                </Grid.Row>
-              </Segment>
-            </Grid>
-          </Grid.Column>
-          <Grid.Column>
-            <SkillCatalog />
-          </Grid.Column>
-        </Grid.Row>
+                  <Grid.Row>
+                    <Grid.Column>
+                      {profileValuesExist ? (
+                        <FirstProfileRow
+                          title={props.profileValues.title}
+                          firstName={props.profileValues.firstName}
+                          lastName={props.profileValues.lastName}
+                        />
+                      ) : (
+                        <OneLinePlaceHolder />
+                      )}
+                    </Grid.Column>
+                  </Grid.Row>
 
-        <Grid.Row>
-          <Grid.Column textAlign="center" width={3}>
-            <Button primary>Profil bearbeiten</Button>
-          </Grid.Column>
-          <Grid.Column width={3}>
-            <FourthProfile />
-          </Grid.Column>
-          <Grid.Column>
-            <FifthProfile />
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
-    </div>
-  );
-};
+                  <Grid.Row>
+                    <Grid.Column>
+                      {profileValuesExist ? (
+                        <SecondProfileRow
+                          gender={props.profileValues.gender}
+                          birthDate={props.profileValues.birthDate}
+                        />
+                      ) : (
+                        <OneLinePlaceHolder />
+                      )}
+                    </Grid.Column>
+                  </Grid.Row>
+
+                  <Grid.Row>
+                    <Grid.Column>
+                      {profileValuesExist ? (
+                        <ThirdProfileRow
+                          subject={props.profileValues.subject}
+                        />
+                      ) : (
+                        <OneLinePlaceHolder />
+                      )}
+                    </Grid.Column>
+                  </Grid.Row>
+                </Segment>
+              </Grid>
+            </Grid.Column>
+            <Grid.Column>
+              <SkillCatalog />
+            </Grid.Column>
+          </Grid.Row>
+
+          <Grid.Row>
+            <Grid.Column textAlign="center" width={3}>
+              <Button primary>Profil bearbeiten</Button>
+            </Grid.Column>
+            <Grid.Column width={3}>
+              <FourthProfile />
+            </Grid.Column>
+            <Grid.Column>
+              <FifthProfile />
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </div>
+    );
+  }
+}
 
 const FirstProfileRow = props => {
   return (
@@ -105,7 +136,7 @@ const ThirdProfileRow = props => {
         Studentenstatus
       </Label>
       <Label color="green" size={"massive"}>
-        {props.courseOfStudy}
+        {props.subject}
       </Label>
     </div>
   );
@@ -160,9 +191,20 @@ const SkillCatalog = () => {
   );
 };
 
+const OneLinePlaceHolder = () => {
+  return (
+    <Placeholder>
+      <Placeholder.Line />
+    </Placeholder>
+  );
+};
+
 const mapStateToProps = state => {
+  console.log(state.user);
+
   return {
-    profileValues: state.user.ownProfile
+    userId: state.location.payload.id,
+    profileValues: state.user.currentlyViewedUser
   };
 };
 

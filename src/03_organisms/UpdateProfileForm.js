@@ -400,7 +400,7 @@ class UpdateProfileForm extends React.Component {
       },
       studentStatus: {
         matriculationNumber: values.studentId,
-        subect: values.courseOfStudy,
+        subject: values.courseOfStudy,
         matriculationDate: this.state.immatriculationDate,
         exmatriculationDate: this.state.exmatriculationDate
       },

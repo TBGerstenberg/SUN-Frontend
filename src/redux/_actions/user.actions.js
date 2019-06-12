@@ -244,7 +244,7 @@ function getAllUsers() {
  * Fetches a single User
  */
 function getSingleUser(userId) {
-  return async dispatch => {
+  return async (dispatch, getState) => {
     dispatch(request());
 
     console.log("Fetching user with id " + userId + "In action creator layer");

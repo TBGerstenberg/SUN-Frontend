@@ -15,6 +15,7 @@ import {
 
 import { FEATURE_CONFIG } from "../config/feature.config";
 import throttle from "lodash/throttle";
+import { configureApiClient } from "../api/apiClient";
 
 export default function configureStore() {
   // Load persisted state from local storage only if the feature switch is set to true.
@@ -23,10 +24,8 @@ export default function configureStore() {
     persistedState = loadReduxState();
   }
 
-  let { reducer, middleware, enhancer, thunk } = connectRoutes(
-    routesMap,
-    options
-  );
+  console.log("Setting up Routesmap");
+  let { reducer, middleware, enhancer } = connectRoutes(routesMap, options);
 
   const composeEnhancers = (...args) =>
     typeof window !== "undefined"
@@ -37,6 +36,8 @@ export default function configureStore() {
   const middlewares = applyMiddleware(middleware, reduxThunk);
   const enhancers = composeEnhancers(enhancer, middlewares);
   const store = createStore(rootReducer, persistedState, enhancers);
+
+  configureApiClient();
 
   // Write to local storage every time a change is taking place in redux.insecure,
   // NOTE: Saving Access tokens and login state in Browser storage is considered
@@ -65,5 +66,5 @@ export default function configureStore() {
     );
   }
 
-  return { store, thunk };
+  return { store };
 }
