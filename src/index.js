@@ -15,7 +15,12 @@ import "./semantic/dist/semantic.min.css";
 // custom components
 import Spinner from "./01_atoms/Spinner";
 
+
+
 const reduxStore = configureStore().store;
+
+
+
 
 ReactDOM.render(
   <I18nextProvider i18n={i18n}>

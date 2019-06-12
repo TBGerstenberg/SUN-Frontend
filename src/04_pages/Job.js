@@ -1,8 +1,9 @@
 import React from "react";
 import NavBar from "../03_organisms/NavBar";
-import NewPost from "../03_organisms/NewPost"
-import ConFirmModal from "../03_organisms/ConfirmModal"
+import NewPostModal from "../03_organisms/NewPost";
+import ConFirmModal from "../03_organisms/ConfirmModal";
 import AvatarJob from "../05_images/job.png";
+import App from "../App";
 import {
   Button,
   Form,
@@ -18,63 +19,100 @@ import {
   Modal
 } from "semantic-ui-react";
 
-const Job = () => {
+import { incrementCounter } from "../config/redux/_actions/jobPost.actions";
+import { connect } from "react-redux";
+import { addTodo } from "../config/redux/_actions/jobPost.actions";
+
+export class Job extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return (
+      <div>
+        <NavBar />
+        <HeaderJobPage />
+        <Grid columns={2}>
+          <Grid.Row>
+            <Grid.Column textAlign="center" width={3}>
+              <Avatar_Job />
+              <ConFirmModal />
+              <NewPostModal onNewPost={(newPostText) => this.props.addTodo(newPostText)} />
+            </Grid.Column>
+            <Grid.Column width={8}>
+              <ul>
+                {this.props.todos.map(todo => {
+                  return <li key={todo.id}>{todo.title}</li>;
+                })}
+              </ul>
+
+              {/**  Klickzähler: {this.props.value}
+  <button onClick={this.props.onIncrement}>Klick</button>*/}
+            </Grid.Column>
+            <Grid.Column width={4}>
+              <SecondProfile />
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+
+        <Grid columns={2}>
+          <Grid.Row>
+            <Grid.Column textAlign="center" width={3} />
+            <Grid.Column width={8} />
+          </Grid.Row>
+        </Grid>
+      </div>
+    );
+  }
+}
+
+const Contact_Form = () => {
   return (
     <div>
-      <NavBar />
-      <HeaderJobPage/>
-      <Grid columns={2}>
-        <Grid.Row>
-          <Grid.Column textAlign="center" width={3}>
-            <Avatar_Job/>
-            <ConFirmModal/>
-           <NewPost/>
-           <Inputtest/>
-          </Grid.Column>
-          <Grid.Column width={8}>
-            <Contact_Form />
-          </Grid.Column>
-          <Grid.Column width={4}>
-            <SecondProfile />
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
-
-      <Grid columns={2}>
-        <Grid.Row>
-          <Grid.Column textAlign="center" width={3}>
-            
-      
-            
-            
-          </Grid.Column>
-          <Grid.Column width={8}>
-            <Contact_Form />
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
+      {" "}
+      <Header color="blue">Jobangebote</Header>
     </div>
   );
 };
-
-export default Job;
 
 const Avatar_Job = () => {
   return <Image src={AvatarJob} />;
 };
 
-const Inputtest =() => {
-  return <form>
-  <label>
-    Name:
-    <input type="text" name="name" value="this.state.name" />
-  </label>
-  <input type="submit" onChange="this.onChange" value="Submit" />
-  <label>
-    
-  </label>
-</form>
+//todo
+let mapStateToProps = state => {
+  return {
+    todos: state.job.todos
+  };
+};
+
+let mapDispatchToProps = {
+  addTodo: addTodo
+};
+
+let TodoListContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Job);
+export default TodoListContainer;
+
+// Klickzähler
+/*let mapStateToProps = function(state) {
+  return {
+    value: state.job.counter,
+    name: "Hallo"
+  }
 }
+
+let mapDispatchToProps = {
+  onIncrement : incrementCounter
+}
+
+let AppContainer = connect(mapStateToProps, mapDispatchToProps)(Job);
+
+export default AppContainer;
+*/
 
 const HeaderJobPage = () => {
   return (
@@ -83,8 +121,6 @@ const HeaderJobPage = () => {
     </Header>
   );
 };
-
-
 
 const SecondProfile = () => {
   return (
@@ -98,17 +134,14 @@ const SecondProfile = () => {
         <Placeholder.Paragraph>
           <Placeholder.Line length="full" />
           <Placeholder.Line length="full" />
-          
         </Placeholder.Paragraph>
         <Placeholder.Paragraph>
           <Placeholder.Line length="full" />
           <Placeholder.Line length="full" />
-          
         </Placeholder.Paragraph>
         <Placeholder.Paragraph>
           <Placeholder.Line length="full" />
           <Placeholder.Line length="full" />
-          
         </Placeholder.Paragraph>
         <Placeholder.Paragraph>
           <Placeholder.Line length="full" />
@@ -121,48 +154,8 @@ const SecondProfile = () => {
           <Placeholder.Line length="full" />
           <Placeholder.Line length="full" />
           <Placeholder.Line length="full" />
-          
         </Placeholder.Paragraph>
       </Placeholder>
     </div>
   );
 };
-
-
-
-const Contact_Form = () => {
-  return (
-    <div>
-      {" "}
-      <Header color="blue">Jobangebote</Header>
-      <Placeholder fluid>
-        <Placeholder.Header image>
-          <Placeholder.Line />
-          <Placeholder.Line />
-        </Placeholder.Header>
-        <Placeholder.Paragraph>
-          <Placeholder.Line />
-          <Placeholder.Line />
-          <Placeholder.Line />
-          <Placeholder.Line />
-          <Placeholder.Line />
-          <Placeholder.Line />
-          <Placeholder.Line />
-          <Placeholder.Line />
-          <Placeholder.Line />
-          <Placeholder.Line />
-          <Placeholder.Line />
-          <Placeholder.Line />
-          <Placeholder.Line />
-          <Placeholder.Line />
-          <Placeholder.Line />
-          <Placeholder.Line />
-          <Placeholder.Line />
-          <Placeholder.Line />
-        </Placeholder.Paragraph>
-      </Placeholder>
-    </div>
-  );
-};
-
-
