@@ -78,6 +78,10 @@
   "address-card-postCode-label": "PLZ:",
   "address-card-street-label": "Straße:",
 
+  "contact-card-header": "Kontakt",
+  "contact-card-email": "Adresse",
+  "contact-card-city-mobil": "Stadt:",
+
   "navbar-search-placeholder": "Suchen...",
   "navbar-logout-button-text": "Abmelden",
 
