@@ -4,6 +4,7 @@ import { Trans, withTranslation } from "react-i18next";
 import { Button, Icon, Menu, Segment, Sidebar } from "semantic-ui-react";
 import "./AdminPanel.css";
 
+import AccountManagement from "../03_organisms/AccountManagement";
 import UserManagement from "../03_organisms/UserManagement";
 import GroupManagement from "../03_organisms/GroupManagement";
 import ChairManagement from "../03_organisms/ChairManagement";
@@ -13,6 +14,7 @@ class AdminPanel extends React.Component {
     visible: false,
     activeContentFragment: <UserManagement />,
     contentFragments: {
+      accountManagement: <AccountManagement />,
       userManagement: <UserManagement />,
       groupManagement: <GroupManagement />,
       chairManagement: <ChairManagement />
@@ -48,6 +50,19 @@ class AdminPanel extends React.Component {
             visible={this.state.visible}
             width="thin"
           >
+            <Menu.Item
+              as="a"
+              onClick={() => {
+                this.setState({
+                  activeContentFragment: this.state.contentFragments
+                    .accountManagement
+                });
+              }}
+            >
+              <Icon name="user outline" />
+              <Trans i18nKey="adminpanel-menu-account-management-label" />
+            </Menu.Item>
+
             <Menu.Item
               as="a"
               onClick={() => {

@@ -22,6 +22,7 @@
 
   "complete-your-profile-headline": "Vervollständige dein Profil",
   "complete-profile-personal-information-headline": "Persönliches",
+  "complete-profile-adress-information-headline": "Anschrift",
   "complete-profile-firstName-label": "Vorname",
   "complete-profile-firstName-placeholder": "Vorname",
   "complete-profile-dateOfBirth-label": "Geburtsdatum",
@@ -118,6 +119,7 @@
 
   "adminpanel-sidebar-show-option": "Seitenleiste einbelden",
   "adminpanel-sidebar-hide-option": "Seitenleiste ausblenden",
+  "adminpanel-menu-account-management-label": "Accountverwaltung",
   "adminpanel-menu-user-management-label": "Benutzerverwaltung",
   "adminpanel-menu-group-management-label": "Gruppenverwaltung",
   "adminpanel-menu-chair-management-label": "Lehrstuhlverwaltung",

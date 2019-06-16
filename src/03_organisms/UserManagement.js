@@ -3,8 +3,9 @@ import { connect } from "react-redux";
 import { Trans, withTranslation } from "react-i18next";
 import { Button, Icon, Table, Modal } from "semantic-ui-react";
 import { userActions } from "../redux/_actions";
-import UpdateProfileForm from "./UpdateProfileForm";
 import tableFormattingUtilities from "../utilities/tableFormattingUtilities";
+import AddEntityModal from "./AddEntityModal";
+import UserForm from "../03_organisms/UserForm";
 
 class UserManagement extends React.Component {
   componentWillMount() {
@@ -13,13 +14,16 @@ class UserManagement extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { visible: false, selectedEntry: null };
+    this.state = { visible: false, selectedEntry: null, modalOpen: false };
     this.renderUsersTableRow = this.renderUsersTableRow.bind(this);
     this.renderUsersTableHeader = this.renderUsersTableHeader.bind(this);
     this.renderUsersTableFooter = this.renderUsersTableFooter.bind(this);
+    this.handleAddUserButtonClick = this.handleAddUserButtonClick.bind(this);
+    this.openModalUserForm = this.openModalUserForm.bind(this);
   }
 
   render() {
+    console.log("Selected: " + this.state.selectedEntry);
     return (
       <div className="adminpanel-fragment-wrapper">
         {this.props.users.length > 0 && (
@@ -32,6 +36,25 @@ class UserManagement extends React.Component {
             tableData={this.props.users}
           />
         )}
+
+        <AddEntityModal
+          size="large"
+          modalContent={
+            <UserForm
+              user={this.props.users[this.state.selectedEntry - 1] || null}
+              onAbortButtonClick={() => {
+                this.setState({ modalOpen: false });
+              }}
+            />
+          }
+          open={this.state.modalOpen}
+          onOpen={() => {
+            console.log("Modal open");
+          }}
+          onClose={() => {
+            console.log("Modal closed");
+          }}
+        />
       </div>
     );
   }
@@ -89,6 +112,7 @@ class UserManagement extends React.Component {
         onClick={() => {
           this.setState({ selectedEntry: user.id });
         }}
+        active={this.state.selectedEntry === user.id}
       >
         <Table.Cell key="id">
           {tableFormattingUtilities.numberOrEmpty(user.id)}
@@ -180,7 +204,9 @@ class UserManagement extends React.Component {
   }
 
   openModalUserForm() {
-    return <Modal />;
+    return this.setState({
+      modalOpen: true
+    });
   }
 }
 
@@ -191,47 +217,3 @@ const mapStateToProps = state => {
 };
 
 export default withTranslation()(connect(mapStateToProps)(UserManagement));
-
-/**[
-    {
-      id: 1,
-      firstName: "Sebastian",
-      lastName: "Zilles",
-      title: null,
-      gender: 1,
-      birthDate: "1994-01-23T00:00:00",
-      address: {
-        id: 1,
-        name: null,
-        street: "Am Gänschenwald 15",
-        postCode: "51467",
-        city: "Bergisch Gladbach",
-        room: "Example",
-        phoneNumber: "01605000231",
-        phoneNumberMobile: null,
-        email: null
-      },
-      studentStatus: {
-        id: 0,
-        personForeignId: 0,
-        person: null,
-        matriculationNumber: null,
-        matriculationDate: "0001-01-01T00:00:00",
-        exmatriculationDate: "0001-01-01T00:00:00",
-        subject: null
-      },
-      chairs: [
-        {
-          personId: 1,
-          chairId: 1,
-          chair: null,
-          role: 2,
-          active: false,
-          chairAdmin: false
-        }
-      ],
-      chairSubscriptions: [],
-      authoredChairPosts: [],
-      skills: []
-    }
-  ], */

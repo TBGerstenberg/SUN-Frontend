@@ -1,6 +1,5 @@
 import React from "react";
 import { withTranslation } from "react-i18next";
-import { Form } from "semantic-ui-react";
 import { Field } from "redux-form";
 import i18next from "i18next";
 import DropdownSelector from "../01_atoms/DropdownSelector";
@@ -8,6 +7,7 @@ import DropdownSelector from "../01_atoms/DropdownSelector";
 const TitleDropdownSelector = props => {
   return (
     <Field
+      value={props.value}
       name="title"
       label={i18next.t("complete-profile-title-label")}
       component={DropdownSelector}

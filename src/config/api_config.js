@@ -2,6 +2,11 @@ const BASEURL = "http://localhost:5000/api";
 
 const API_CONFIG = {
   BASEURL: "http://localhost:5000/api",
+  ACCOUNT: {
+    GET_ALL_ACCOUNTS_URL: BASEURL + "/account",
+    EDIT_ACCCOUNT_URL: BASEURL + "/account/", // : accountId
+    DELETE_ACCOUNT_URL: BASEURL + "/account/" // : accountId
+  },
   REGISTRATION: {
     POST_REGISTRATION_URL: BASEURL + "/auth/signup"
   },
