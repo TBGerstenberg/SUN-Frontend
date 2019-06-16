@@ -1,9 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Trans, withTranslation } from "react-i18next";
-import { Button, Icon, Menu, Segment, Sidebar } from "semantic-ui-react";
+import { Button, Icon, Menu, Segment, Sidebar, Grid } from "semantic-ui-react";
 import "./AdminPanel.css";
 
+import NavBar from "../03_organisms/NavBar";
 import AccountManagement from "../03_organisms/AccountManagement";
 import UserManagement from "../03_organisms/UserManagement";
 import GroupManagement from "../03_organisms/GroupManagement";
@@ -30,14 +31,19 @@ class AdminPanel extends React.Component {
 
     return (
       <div className="pageWrapper">
-        <Button.Group>
-          <Button disabled={visible} onClick={this.handleShowClick}>
-            <Trans i18nKey="adminpanel-sidebar-show-option" />
-          </Button>
-          <Button disabled={!visible} onClick={this.handleHideClick}>
-            <Trans i18nKey="adminpanel-sidebar-hide-option" />
-          </Button>
-        </Button.Group>
+        <NavBar />
+        <Grid>
+          <Grid.Row className="adminPanel-buttonRow">
+            <Button.Group>
+              <Button disabled={visible} onClick={this.handleShowClick}>
+                <Trans i18nKey="adminpanel-sidebar-show-option" />
+              </Button>
+              <Button disabled={!visible} onClick={this.handleHideClick}>
+                <Trans i18nKey="adminpanel-sidebar-hide-option" />
+              </Button>
+            </Button.Group>
+          </Grid.Row>
+        </Grid>
 
         <Sidebar.Pushable as={Segment} className="panelWrapper">
           <Sidebar

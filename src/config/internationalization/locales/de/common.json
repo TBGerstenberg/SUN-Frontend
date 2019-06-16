@@ -90,6 +90,7 @@
 
   "navbar-search-placeholder": "Suchen...",
   "navbar-logout-button-text": "Abmelden",
+  "navbar-logged-in-as-text": "Angemeldet als ",
 
   "landingpage-hero-text": "Siegener Uni Netzwerk",
   "landingpage-hero-subtext": "Das soziale Uni-Netz der nächsten Studenten-Generation",
@@ -123,6 +124,10 @@
   "adminpanel-menu-user-management-label": "Benutzerverwaltung",
   "adminpanel-menu-group-management-label": "Gruppenverwaltung",
   "adminpanel-menu-chair-management-label": "Lehrstuhlverwaltung",
+
+  "usermanagement-edit-user-headline": "Benutzer bearbeiten",
+  "usermanagement-add-user-headline": "Neuen Benutzer anlegen",
+  "usermanagement-edit-user-accountinformation-label": "Accountinformation",
 
   "usermanagement-tableheader-id": "BenutzerId",
   "usermanagement-tableheader-email": "Email",

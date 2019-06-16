@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button } from "semantic-ui-react";
+import { Button, Grid } from "semantic-ui-react";
 import LanguageSwitcher from "../02_molecules/LanguageSwitcher";
 import { withTranslation, Trans } from "react-i18next";
 import i18next from "i18next";
@@ -58,25 +58,33 @@ class NavBar extends Component {
             Profile
           </Link>
 
-          <a href="#" className="item">
-            Groups
-          </a>
+          {this.props.user && this.props.user.admin && (
+            <Link
+              className="item"
+              to={{
+                type: navigationConstants.NAVIGATE_TO_ADMIN_PANEL
+              }}
+            >
+              Adminpanel
+            </Link>
+          )}
+
           <div className="right menu">
             <div className="item">
-              <div className="ui icon input">
-                <input
-                  type="text"
-                  placeholder={i18next.t("navbar-search-placeholder")}
-                />
-                <i className="search link icon" />
+              <div>
+                <Trans i18nKey="navbar-logged-in-as-text" />
+                {this.props.user.email}
               </div>
             </div>
 
-            <LanguageSwitcher />
-            <a href="#" className="ui item" onClick={this.dispatchLogout}>
-              <i className="sign-out icon" />
-              <Trans i18nKey="navbar-logout-button-text" />
-            </a>
+            <div className="item">
+              <LanguageSwitcher />
+
+              <a href="#" className="ui item" onClick={this.dispatchLogout}>
+                <i className="sign-out icon" />
+                <Trans i18nKey="navbar-logout-button-text" />
+              </a>
+            </div>
           </div>
         </div>
       </div>

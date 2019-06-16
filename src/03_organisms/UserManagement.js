@@ -6,6 +6,7 @@ import { userActions } from "../redux/_actions";
 import tableFormattingUtilities from "../utilities/tableFormattingUtilities";
 import AddEntityModal from "./AddEntityModal";
 import UserForm from "../03_organisms/UserForm";
+import onClickOutside from "react-onclickoutside";
 
 class UserManagement extends React.Component {
   componentWillMount() {
@@ -14,12 +15,18 @@ class UserManagement extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { visible: false, selectedEntry: null, modalOpen: false };
+    this.state = {
+      selectedEntry: null,
+      editUserModalOpen: false,
+      addUserModalOpen: false
+    };
     this.renderUsersTableRow = this.renderUsersTableRow.bind(this);
     this.renderUsersTableHeader = this.renderUsersTableHeader.bind(this);
     this.renderUsersTableFooter = this.renderUsersTableFooter.bind(this);
     this.handleAddUserButtonClick = this.handleAddUserButtonClick.bind(this);
-    this.openModalUserForm = this.openModalUserForm.bind(this);
+    this.handleEditUserButtonClick = this.handleEditUserButtonClick.bind(this);
+    this.openAddUserModal = this.openAddUserModal.bind(this);
+    this.openEditUserModal = this.openEditUserModal.bind(this);
   }
 
   render() {
@@ -28,8 +35,10 @@ class UserManagement extends React.Component {
       <div className="adminpanel-fragment-wrapper">
         {this.props.users.length > 0 && (
           <Table
+            size="small"
             celled
             selectable
+            attached="top"
             renderBodyRow={this.renderUsersTableRow}
             headerRow={this.renderUsersTableHeader}
             footerRow={this.renderUsersTableFooter}
@@ -37,23 +46,32 @@ class UserManagement extends React.Component {
           />
         )}
 
+        {/** Used to add a new user, thus handing a "null" user  */}
+        <AddEntityModal
+          size="large"
+          modalContent={
+            <UserForm
+              user={null}
+              onAbortButtonClick={() => {
+                this.setState({ addUserModalOpen: false });
+              }}
+            />
+          }
+          open={this.state.addUserModalOpen}
+        />
+
+        {/** Used to edit a user  */}
         <AddEntityModal
           size="large"
           modalContent={
             <UserForm
               user={this.props.users[this.state.selectedEntry - 1] || null}
               onAbortButtonClick={() => {
-                this.setState({ modalOpen: false });
+                this.setState({ editUserModalOpen: false });
               }}
             />
           }
-          open={this.state.modalOpen}
-          onOpen={() => {
-            console.log("Modal open");
-          }}
-          onClose={() => {
-            console.log("Modal closed");
-          }}
+          open={this.state.editUserModalOpen}
         />
       </div>
     );
@@ -179,6 +197,7 @@ class UserManagement extends React.Component {
             labelPosition="left"
             size="small"
             disabled={!this.state.selectedEntry}
+            onClick={this.handleEditUserButtonClick}
           >
             <Icon name="edit" />
             <Trans i18nKey="userManagement-edit-user-button" />
@@ -200,14 +219,29 @@ class UserManagement extends React.Component {
   }
 
   handleAddUserButtonClick() {
-    this.openModalUserForm();
+    this.openAddUserModal();
   }
 
-  openModalUserForm() {
+  handleEditUserButtonClick() {
+    this.openEditUserModal();
+  }
+
+  openEditUserModal() {
     return this.setState({
-      modalOpen: true
+      editUserModalOpen: true
     });
   }
+  openAddUserModal() {
+    return this.setState({
+      addUserModalOpen: true
+    });
+  }
+
+  handleClickOutside = evt => {
+    this.setState({
+      selectedEntry: null
+    });
+  };
 }
 
 const mapStateToProps = state => {
@@ -216,4 +250,6 @@ const mapStateToProps = state => {
   };
 };
 
-export default withTranslation()(connect(mapStateToProps)(UserManagement));
+export default withTranslation()(
+  connect(mapStateToProps)(onClickOutside(UserManagement))
+);

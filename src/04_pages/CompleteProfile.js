@@ -378,8 +378,6 @@ class CompleteProfile extends React.Component {
    * @param {} values
    */
   _handleCompleteProfileSubmit(values) {
-    console.log("Triggered Submit");
-
     const skillCatalogue = this.props.skillCatalogue;
     let skillsRatings = [];
 

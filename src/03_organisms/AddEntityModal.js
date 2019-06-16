@@ -6,12 +6,10 @@ class AddEntityModal extends Component {
     return (
       <Modal
         open={this.props.open}
-        onOpen={this.props.onOpen()}
-        onClose={this.props.onClose()}
+        onOpen={this.props.onOpen}
+        onClose={this.props.onClose}
         size={this.props.size}
-        trigger={<Button primary>{this.props.buttonContent}</Button>}
       >
-        <Modal.Header />
         <Modal.Content>{this.props.modalContent}</Modal.Content>
       </Modal>
     );

@@ -15,6 +15,7 @@ import { LabelInputField, CheckboxField } from "react-semantic-redux-form";
 import i18next from "i18next";
 import { DateInput } from "semantic-ui-calendar-react";
 import { userActions, skillCatalogueActions } from "../redux/_actions";
+import userService from "../services/userService";
 import ChairSelectionDropdown from "./ChairSelectionDropdown";
 import SkillCatalogue from "./SkillCatalogue";
 import formValidationUtilities from "../utilities/formValidationUtilities";
@@ -29,6 +30,9 @@ import FirstNameInput from "../02_molecules/FirstNameInput";
 import LastNameInput from "../02_molecules/LastNameInput";
 import TitleDropdownSelector from "../02_molecules/TitleDropdownSelector";
 import GenderDropdownSelector from "../02_molecules/GenderDropdownSelector";
+import EmailInput from "../02_molecules/EmailInput";
+import PasswordInput from "../02_molecules/PasswordInput";
+
 import genderEnum from "../models/enumerations/genderEnum";
 import personChairRelationEnum from "../models/enumerations/personChairRelationEnum";
 import Person from "../models/person";
@@ -96,8 +100,52 @@ class UserForm extends React.Component {
           }
           <Grid.Row>
             <Header as="h3" color="blue" textAlign="center">
-              <Trans i18nKey="complete-your-profile-headline" />
+              {this.props.mode === "edit" && (
+                <Trans i18nKey="usermanagement-edit-user-headline" />
+              )}
+              {this.props.mode === "add" && (
+                <Trans i18nKey="usermanagement-add-user-headline" />
+              )}
             </Header>
+          </Grid.Row>
+
+          {
+            // SubHeadline
+          }
+          <Grid.Row textAlign="left">
+            <Grid.Column width={6} textAlign="left">
+              <Header as="h4" color="black" textAlign="left">
+                <Trans i18nKey="usermanagement-edit-user-accountinformation-label" />
+              </Header>
+            </Grid.Column>
+            <Grid.Column width={6} />
+          </Grid.Row>
+
+          {
+            // Email and Password
+          }
+
+          <Grid.Row textAlign="left">
+            <Grid.Column width={6} textAlign="left">
+              <Header as="h4" color="black" textAlign="left">
+                <Trans i18nKey="complete-profile-account-information-headline" />
+              </Header>
+            </Grid.Column>
+            <Grid.Column width={6} />
+          </Grid.Row>
+
+          <Grid.Row textAlign="left">
+            <Grid.Column width={6} textAlign="left">
+              <EmailInput
+                validate={[
+                  formValidationUtilities.requiredEmail,
+                  formValidationUtilities.email,
+                  formValidationUtilities.uniSiegenEmail
+                ]}
+              />
+              <PasswordInput />
+            </Grid.Column>
+            <Grid.Column width={6} />
           </Grid.Row>
 
           {
@@ -386,7 +434,7 @@ class UserForm extends React.Component {
    * the form.
    * @param {} values
    */
-  _handleUpdateProfileSubmit(values) {
+  async _handleUpdateProfileSubmit(values) {
     const skillCatalogue = this.props.skillCatalogue;
     let skillsRatings = [];
 
@@ -433,7 +481,20 @@ class UserForm extends React.Component {
 
     if (this.state.mode === "edit") {
       this.props.dispatch(userActions.updateProfile(profileValues));
+      console.log("Editing a User");
     } else if (this.state.mode === "add") {
+      console.log("Adding new User");
+      // Create a new Account
+      const newAccountRequest = userService.signup(
+        values.email,
+        values.password
+      );
+
+      // If errors occur, update the profile of with values from the form.
+      if (newAccountRequest.error == null && newAccountRequest.status === 200) {
+        profileValues.userId = newAccountRequest.user.id;
+        userService.updateProfile(profileValues);
+      }
     }
   }
 
@@ -512,31 +573,35 @@ class UserForm extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  //console.log(ownProps.user);
+  if (ownProps.user) {
+    const isEmployee = ownProps.user.chairs.length !== 0;
 
-  const isEmployee = ownProps.user.chairs.length !== 0;
-
-  return {
-    skillCatalogue: state.skillCatalogue,
-    initialValues: {
-      title: ownProps.user.title || "",
-      gender: ownProps.user.gender || 0,
-      firstName: ownProps.user.firstName || "",
-      lastName: ownProps.user.lastName || "",
-      city: ownProps.user.address ? ownProps.user.address.city : "",
-      postalCode: ownProps.user.address ? ownProps.user.address.postalCode : "",
-      street: ownProps.user.address ? ownProps.user.address.street : "",
-      email: ownProps.user.address ? ownProps.user.address.email : "",
-      isStudent: ownProps.user.studentStatus ? true : false,
-      courseOfStudy: ownProps.user.studentStatus
-        ? ownProps.user.studentStatus.subject
-        : "",
-      matriculatonNumber: ownProps.user.studentStatus
-        ? ownProps.user.studentStatus.matriculationNumber
-        : "",
-      isEmployee: isEmployee
-    }
-  };
+    return {
+      skillCatalogue: state.skillCatalogue,
+      initialValues: {
+        title: ownProps.user.title || "",
+        gender: ownProps.user.gender || 0,
+        firstName: ownProps.user.firstName || "",
+        lastName: ownProps.user.lastName || "",
+        city: ownProps.user.address ? ownProps.user.address.city : "",
+        postalCode: ownProps.user.address
+          ? ownProps.user.address.postalCode
+          : "",
+        street: ownProps.user.address ? ownProps.user.address.street : "",
+        email: ownProps.user.address ? ownProps.user.address.email : "",
+        isStudent: ownProps.user.studentStatus ? true : false,
+        courseOfStudy: ownProps.user.studentStatus
+          ? ownProps.user.studentStatus.subject
+          : "",
+        matriculatonNumber: ownProps.user.studentStatus
+          ? ownProps.user.studentStatus.matriculationNumber
+          : "",
+        isEmployee: isEmployee
+      }
+    };
+  } else {
+    return {};
+  }
 };
 
 export default withTranslation()(

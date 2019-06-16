@@ -27,12 +27,14 @@ import {
 
 import Link from "redux-first-router-link";
 import LanguageSwitcher from "../02_molecules/LanguageSwitcher";
+import PasswordInput from "../02_molecules/PasswordInput";
 import { redirect } from "redux-first-router";
 
 import formValidationUtilities from "../utilities/formValidationUtilities";
 
 // Styles
 import "./Signup.css";
+import EmailInput from "../02_molecules/EmailInput";
 
 /**
  * A Screen that allows a user to log in to the system.
@@ -77,14 +79,7 @@ class Signup extends React.Component {
                     this._handleRegistrationSubmit.bind(this)
                   )}
                 >
-                  <Field
-                    name="email"
-                    component={LabelInputField}
-                    label={{
-                      content: <Icon color="blue" name="user" size="small" />
-                    }}
-                    labelPosition="left"
-                    placeholder={i18next.t("signup-email-input-placeholder")}
+                  <EmailInput
                     validate={[
                       formValidationUtilities.requiredEmail,
                       formValidationUtilities.email,
@@ -92,21 +87,7 @@ class Signup extends React.Component {
                     ]}
                   />
 
-                  <Field
-                    name="password"
-                    component={LabelInputField}
-                    type="password"
-                    label={{
-                      content: <Icon color="blue" name="lock" size="small" />
-                    }}
-                    labelPosition="left"
-                    placeholder={i18next.t("signup-password-input-placeholder")}
-                    validate={[
-                      formValidationUtilities.requiredPassword,
-                      formValidationUtilities.passwordStrength,
-                      formValidationUtilities.passwordNotJochen
-                    ]}
-                  />
+                  <PasswordInput />
 
                   <Form.Group>
                     <Field
