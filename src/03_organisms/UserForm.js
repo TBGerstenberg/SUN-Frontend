@@ -32,10 +32,12 @@ import TitleDropdownSelector from "../02_molecules/TitleDropdownSelector";
 import GenderDropdownSelector from "../02_molecules/GenderDropdownSelector";
 import EmailInput from "../02_molecules/EmailInput";
 import PasswordInput from "../02_molecules/PasswordInput";
+import CHairRoleList from "../02_molecules/ChairRoleList";
 
 import genderEnum from "../models/enumerations/genderEnum";
 import personChairRelationEnum from "../models/enumerations/personChairRelationEnum";
 import Person from "../models/person";
+import ChairRoleList from "../02_molecules/ChairRoleList";
 
 class UserForm extends React.Component {
   constructor(props) {
@@ -331,12 +333,19 @@ class UserForm extends React.Component {
             // EmployeeStatus
           }
           <Grid.Row columns={2}>
+            <Grid.Column width={6}>{this.renderRoomNameInput()}</Grid.Column>
             <Grid.Column width={6}>
-              {this.renderRoomNameInput()}
               {this.renderAdditionalEmailInput()}
-              {<ChairSelectionDropdown />}
             </Grid.Column>
-            <Grid.Column width={6} />
+          </Grid.Row>
+
+          <Grid.Row columns={2}>
+            <Grid.Column width={6}>
+              <ChairSelectionDropdown />
+            </Grid.Column>
+            <Grid.Column width={6}>
+              <ChairRoleList items={props.user ? props.user.chairs : []} />
+            </Grid.Column>
           </Grid.Row>
 
           {

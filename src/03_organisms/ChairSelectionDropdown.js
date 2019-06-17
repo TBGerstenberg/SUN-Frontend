@@ -26,7 +26,9 @@ const renderSelect = field => {
 
 class ChairSelectionDropdown extends React.Component {
   componentWillMount() {
-    this.props.dispatch(chairActions.getAllChairs());
+    if (this.props.chairsAsDropdownOptions.length === 0) {
+      this.props.dispatch(chairActions.getAllChairs());
+    }
   }
 
   render(props) {

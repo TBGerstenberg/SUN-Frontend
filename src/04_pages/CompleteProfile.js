@@ -427,11 +427,6 @@ class CompleteProfile extends React.Component {
     this.props.dispatch(userActions.updateProfile(profile));
   }
 
-  /**
-   * Render Methods to keep the component markup in rneder() cleaner
-   *
-   */
-
   renderBirthDateInput() {
     return (
       <DateInput

@@ -56,7 +56,27 @@ const accountService = {
     }
   },
 
-  deleteAccount: async () => {}
+  deleteAccount: async accountId => {
+    try {
+      console.log("Deleting account with id " + accountId + "In service layer");
+      // Perform the request
+      const deleteSingleAccountResponse = await apiClient.delete(
+        API_CONFIG.ACCOUNT.DELETE_ACCOUNT_URL(accountId)
+      );
+
+      console.log(deleteSingleAccountResponse);
+      // Handle the response
+      if (deleteSingleAccountResponse.status === 200) {
+        console.log("Deleting Account succeeded");
+        return {
+          user: deleteSingleAccountResponse.data,
+          error: null
+        };
+      }
+    } catch (error) {
+      return { users: null, error: error };
+    }
+  }
 };
 
 export default accountService;

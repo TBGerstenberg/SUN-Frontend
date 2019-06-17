@@ -71,6 +71,10 @@ class NavBar extends Component {
 
           <div className="right menu">
             <div className="item">
+              <LanguageSwitcher />
+            </div>
+
+            <div className="item">
               <div>
                 <Trans i18nKey="navbar-logged-in-as-text" />
                 {this.props.user.email}
@@ -78,8 +82,6 @@ class NavBar extends Component {
             </div>
 
             <div className="item">
-              <LanguageSwitcher />
-
               <a href="#" className="ui item" onClick={this.dispatchLogout}>
                 <i className="sign-out icon" />
                 <Trans i18nKey="navbar-logout-button-text" />

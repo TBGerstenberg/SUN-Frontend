@@ -5,7 +5,9 @@ const API_CONFIG = {
   ACCOUNT: {
     GET_ALL_ACCOUNTS_URL: BASEURL + "/account",
     EDIT_ACCCOUNT_URL: BASEURL + "/account/", // : accountId
-    DELETE_ACCOUNT_URL: BASEURL + "/account/" // : accountId
+    DELETE_ACCOUNT_URL: accountId => {
+      return BASEURL + "/account/" + accountId; // : accountId
+    }
   },
   REGISTRATION: {
     POST_REGISTRATION_URL: BASEURL + "/auth/signup"

@@ -7,6 +7,8 @@ import tableFormattingUtilities from "../utilities/tableFormattingUtilities";
 import AddEntityModal from "./AddEntityModal";
 import UserForm from "../03_organisms/UserForm";
 import onClickOutside from "react-onclickoutside";
+import { userService } from "../services";
+import accountService from "../services/accountService";
 
 class UserManagement extends React.Component {
   componentWillMount() {
@@ -20,11 +22,20 @@ class UserManagement extends React.Component {
       editUserModalOpen: false,
       addUserModalOpen: false
     };
+
+    // Table render methods
     this.renderUsersTableRow = this.renderUsersTableRow.bind(this);
     this.renderUsersTableHeader = this.renderUsersTableHeader.bind(this);
     this.renderUsersTableFooter = this.renderUsersTableFooter.bind(this);
+
+    // Button click handlers
     this.handleAddUserButtonClick = this.handleAddUserButtonClick.bind(this);
     this.handleEditUserButtonClick = this.handleEditUserButtonClick.bind(this);
+    this.handleDeleteUserButtonClick = this.handleDeleteUserButtonClick.bind(
+      this
+    );
+
+    // Modal opening methods
     this.openAddUserModal = this.openAddUserModal.bind(this);
     this.openEditUserModal = this.openEditUserModal.bind(this);
   }
@@ -209,6 +220,7 @@ class UserManagement extends React.Component {
             labelPosition="left"
             size="small"
             disabled={!this.state.selectedEntry}
+            onClick={this.handleDeleteUserButtonClick}
           >
             <Icon name="trash" />
             <Trans i18nKey="userManagement-delete-user-button" />
@@ -224,6 +236,10 @@ class UserManagement extends React.Component {
 
   handleEditUserButtonClick() {
     this.openEditUserModal();
+  }
+
+  handleDeleteUserButtonClick() {
+    accountService.deleteAccount(this.state.selectedEntry);
   }
 
   openEditUserModal() {
