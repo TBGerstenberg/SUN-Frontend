@@ -42,6 +42,17 @@ class NavBar extends Component {
           <Link
             className="item"
             to={{
+              type: navigationConstants.NAVIGATE_TO_ALLCHAIRS_PAGE
+            }}
+          >
+            AllChairs
+          </Link>
+
+
+
+          <Link
+            className="item"
+            to={{
               type: navigationConstants.NAVIGATE_TO_HOME
             }}
           >

@@ -21,6 +21,20 @@ const chairService = {
     } catch (error) {
       return error;
     }
+  },
+
+  getSingleChair: async chairId => {
+    
+
+    try {
+      const getAllChairsResponse = await apiClient.get(
+        API_CONFIG.CHAIRS.GET_SINGLE_CHAIR_URL(chairId)
+        
+      );
+      return getAllChairsResponse;
+    } catch (error) {
+      return error;
+    }
   }
 };
 

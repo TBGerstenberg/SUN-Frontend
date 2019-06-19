@@ -15,7 +15,8 @@ const navigationConstants = {
   NAVIGATE_TO_LANDING_PAGE: "NAVIGATE_TO_LANDING_PAGE",
   NAVIGATE_TO_ADMIN_PANEL: "NAVIGATE_TO_ADMIN_PANEL",
   NAVIGATE_TO_JOB_PAGE: "NAVIGATE_TO_JOB_PAGE",
-  NAVIGATE_TO_CHAIR_PAGE: "NAVIGATE_TO_CHAIR_PAGE"
+  NAVIGATE_TO_CHAIR_PAGE: "NAVIGATE_TO_CHAIR_PAGE",
+  NAVIGATE_TO_ALLCHAIRS_PAGE: "NAVIGATE_TO_ALLCHAIRS_PAGE"
 };
 
 /**
@@ -62,10 +63,15 @@ export const routesMap = {
     role: ""
   },
   NAVIGATE_TO_CHAIR_PAGE: {
-    path: "/chair",
+    path: "/chair/:chairId",
     requiresAuth: true,
     role: ""
-  }
+  },
+  NAVIGATE_TO_ALLCHAIRS_PAGE: {
+    path: "/allchairs",
+    requiresAuth: true,
+    role: ""
+  },
 };
 
 /**
@@ -84,6 +90,7 @@ export const componentsMap = {
   NAVIGATE_TO_ADMIN_PANEL: "AdminPanel",
   NAVIGATE_TO_JOB_PAGE: "Job",
   NAVIGATE_TO_CHAIR_PAGE: "ChairPage",
+  NAVIGATE_TO_ALLCHAIRS_PAGE: "AllChairs",
 
   [NOT_FOUND]: "NotFound"
 };
