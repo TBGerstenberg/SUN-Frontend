@@ -1,5 +1,12 @@
 import React, { Component } from "react";
-import { Button, Icon, Modal, Form, TextArea } from "semantic-ui-react";
+import {
+  Button,
+  Icon,
+  Modal,
+  Form,
+  TextArea,
+  Checkbox
+} from "semantic-ui-react";
 
 class NewPostConfirmedModal extends Component {
   state = { open: false };
@@ -51,10 +58,12 @@ class NewPostModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      subject: ""
+      subject: "",
+      content: ""
     };
 
     this.updateInputTheme = this.updateInputTheme.bind(this);
+    this.updateInputContent = this.updateInputContent.bind(this);
   }
 
   render() {
@@ -69,12 +78,23 @@ class NewPostModal extends Component {
                 placeholder="Job- oder Gründungsthema"
                 style={{ minHeight: 40 }}
               />
-              <TextArea placeholder="Beschreibung" style={{ minHeight: 400 }} />
+              <TextArea
+                onChange={this.updateInputContent}
+                placeholder="Beschreibung"
+                style={{ minHeight: 300 }}
+              />
             </Form>
-            {console.log("My input value is:" + this.state.subject)}
+
+            <Checkbox label="Job" />
+            <Checkbox label="Normal" />
+            <Checkbox label="Gründungsidee" />
           </Modal.Description>
           <Modal.Actions>
-            <NewPostConfirmedModal onNewPostButtonClicked={() => {this.props.onNewPost(this.state.subject)}} />
+            <NewPostConfirmedModal
+              onNewPostButtonClicked={() => {
+                this.props.onNewPost(this.state.subject);
+              }}
+            />
           </Modal.Actions>
         </Modal>
       </div>
@@ -84,6 +104,12 @@ class NewPostModal extends Component {
   updateInputTheme(event) {
     this.setState({
       subject: event.target.value
+    });
+  }
+
+  updateInputContent(event) {
+    this.setState({
+      content: event.target.value
     });
   }
 }
