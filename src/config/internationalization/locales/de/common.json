@@ -63,6 +63,7 @@
   "complete-profile-roomName-label": "Raum",
   "complete-profile-roomName-placeholder": "Raum",
   "complete-profile-chair-label": "Lehrstuhl",
+  "complete-profile-role-label": "Rolle am Lehrstuhl",
   "complete-profile-chair-placeholder": "Lehrstuhl",
   "complete-profile-additional-email-label": "Öffentliche Email",
   "complete-profile-additional-email-placeholder": "Öffentliche Email",
@@ -129,7 +130,6 @@
 
   "usermanagement-edit-user-headline": "Benutzer bearbeiten",
   "usermanagement-add-user-headline": "Neuen Benutzer anlegen",
-  "usermanagement-edit-user-accountinformation-label": "Accountinformation",
   "complete-profile-account-information-headline": "Accountinformation",
 
   "usermanagement-tableheader-id": "BenutzerId",
@@ -159,6 +159,8 @@
   "chairManagement-tableheader-houseNumber": "Hausnummer",
   "chairManagement-tableheader-room": "Raum",
   "chairManagement-tableheader-phoneNumber": "TelefonNr",
+
+  "chairForm-add-chair-core-data-headline": "Stammdaten",
 
   "chairManagement-add-chair-button": "Lehrstuhl hinzufügen",
   "chairManagement-edit-chair-button": "Lehrstuhl bearbeiten",

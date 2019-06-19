@@ -47,12 +47,8 @@ class AccountManagement extends React.Component {
             />
           }
           open={this.state.modalOpen}
-          onOpen={() => {
-            console.log("Modal open");
-          }}
-          onClose={() => {
-            console.log("Modal closed");
-          }}
+          onOpen={() => {}}
+          onClose={() => {}}
         />
       </div>
     );

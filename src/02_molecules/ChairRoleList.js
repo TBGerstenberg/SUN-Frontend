@@ -1,77 +1,147 @@
 import React from "react";
 import { withTranslation } from "react-i18next";
-import { List, Segment, Button } from "semantic-ui-react";
+import { List, Segment, Button, Grid } from "semantic-ui-react";
 import personChairRleationEnum from "../models/enumerations/personChairRelationEnum";
 import ChairSelectionDropdown from "../03_organisms/ChairSelectionDropdown";
+import RoleSelectionDropdown from "../03_organisms/RoleSelectionDropdown";
 
 class ChairRoleList extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      personChairRelations: props.personChairRelations
+      personChairRelations: props.items || [],
+      chairs: props.chairs || [],
+      userId: props.userId,
+      currentlySelectedRole: null,
+      currentlySelectedChair: null
     };
+
+    this.handleAddRoleButtonClick = this.handleAddRoleButtonClick.bind(this);
+    this.addListItem = this.addListItem.bind(this);
+    this.deleteListItem = this.deleteListItem.bind(this);
   }
 
-  renderListItems(items, onItemClickHandler, onItemDeleteHandler) {
+  handleAddRoleButtonClick() {
+    const newPersonChairRelation = {
+      personId: this.state.userId,
+      chairId: this.state.currentlySelectedChair,
+      role: this.state.currentlySelectedRole,
+      active: true,
+      chairAdmin: false
+    };
+
+    this.addListItem(newPersonChairRelation);
+  }
+
+  render() {
+    console.log(this.state.currentlySelectedRole);
+    return (
+      <div className="chairRoleList-container">
+        <Segment>
+          <Grid>
+            <Grid.Row>
+              <Grid.Column>
+                <List divided animated verticalAlign="middle">
+                  {this.renderListItems(this.state.personChairRelations)}
+                </List>
+              </Grid.Column>
+            </Grid.Row>
+            <Grid.Row columns={3} verticalAlign="bottom" textAlign="left">
+              <Grid.Column width={6}>
+                <RoleSelectionDropdown
+                  onChange={role => {
+                    this.setState({ currentlySelectedRole: role });
+                  }}
+                />
+              </Grid.Column>
+              <Grid.Column width={6}>
+                <ChairSelectionDropdown
+                  chairs={this.props.chairs}
+                  onChange={chair => {
+                    this.setState({ currentlySelectedChair: chair });
+                  }}
+                />
+              </Grid.Column>
+              <Grid.Column width={3} floated="right">
+                <Button onClick={this.handleAddRoleButtonClick}>
+                  Hinzufügen
+                </Button>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        </Segment>
+      </div>
+    );
+  }
+
+  renderListItems(items) {
     if (Array.isArray(items)) {
       if (items.length === 0) {
         return <span> Keine Lehrstuhlzugehörigkeit angegeben. </span>;
       }
 
       let renderedListItems = items.map((personChairRelation, index) => {
+        const chairWithId = this._findChairWithId(personChairRelation.chairId);
         return (
           <ChairRoleListItem
             itemClickHandler={() => {}}
             itemDeleteHandler={() => {
-              let mutatedpersonChairRelations = this.state.personChairRelations;
-              mutatedpersonChairRelations[index] = null;
-              this.setState({
-                personChairRelations: mutatedpersonChairRelations
-              });
+              this.deleteListItem(index);
             }}
-            personChairRelation={personChairRelation}
             key={index}
+            role={personChairRleationEnum[personChairRelation.role]}
+            chair={chairWithId ? chairWithId.name : "Lehrstuhl nicht vorhanden"}
           />
         );
       });
-
       return renderedListItems;
     }
   }
 
-  render() {
-    const props = this.props;
-    return (
-      <div className="skillCatalogue-container">
-        <Segment>
-          <List divided animated verticalAlign="middle">
-            {this.renderListItems(
-              props.items,
-              props.onItemClicked,
-              props.onItemDelete
-            )}
-          </List>
+  addListItem(personChairRelationValues) {
+    let mutatedPersonChairRelations = [...this.state.personChairRelations];
 
-          <ChairSelectionDropdown />
-          <Button />
-        </Segment>
-      </div>
-    );
+    const personChairRelation = {
+      personId: personChairRelationValues.personId,
+      chairId: personChairRelationValues.chairId,
+      role: personChairRelationValues.role,
+      active: personChairRelationValues.active,
+      chairAdmin: personChairRelationValues.chairAdmin
+    };
+
+    mutatedPersonChairRelations.push(personChairRelation);
+
+    console.log(mutatedPersonChairRelations);
+
+    this.setState({ personChairRelations: mutatedPersonChairRelations });
+  }
+
+  deleteListItem(index) {
+    let mutatedPersonChairRelations = [...this.state.personChairRelations];
+    mutatedPersonChairRelations.splice(index);
+    this.setState({ personChairRelations: mutatedPersonChairRelations });
+  }
+
+  _findChairWithId(id) {
+    const chairWithId = this.state.chairs.find(chair => {
+      return chair.id === id;
+    });
+    return chairWithId;
   }
 }
 
 const ChairRoleListItem = props => {
-  console.log(props);
   return (
-    <List.Item onClick={props.itemClickHandler} className="skillCatalogueItem">
+    <List.Item onClick={props.itemClickHandler} className="chairRoleListItem">
       <List.Content floated="left">
         <div className="chairRoleList-container">
-          <span>{personChairRleationEnum[props.personChairRelation.role]}</span>
+          <span>{props.role}</span>
+          <span> bei Lehrstuhl </span>
         </div>
       </List.Content>
-      <List.Content floated="right">
-        {props.personChairRelation.chair}
+      <List.Content floated="left">
+        <span>{props.chair}</span>
       </List.Content>
       <List.Content floated="right">
         <Button

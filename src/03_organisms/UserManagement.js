@@ -41,7 +41,6 @@ class UserManagement extends React.Component {
   }
 
   render() {
-    console.log("Selected: " + this.state.selectedEntry);
     return (
       <div className="adminpanel-fragment-wrapper">
         {this.props.users.length > 0 && (
@@ -180,7 +179,9 @@ class UserManagement extends React.Component {
           {tableFormattingUtilities.stringValueForBoolean(user.studentStatus)}
         </Table.Cell>
         <Table.Cell key="isEmployee">
-          {tableFormattingUtilities.stringValueForBoolean(user.employeeStatus)}
+          {tableFormattingUtilities.stringValueForBoolean(
+            user.chairs && user.chairs.length > 0
+          )}
         </Table.Cell>
       </Table.Row>
     );

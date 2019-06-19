@@ -5,9 +5,7 @@ import { Button, Icon, Menu, Segment, Sidebar, Grid } from "semantic-ui-react";
 import "./AdminPanel.css";
 
 import NavBar from "../03_organisms/NavBar";
-import AccountManagement from "../03_organisms/AccountManagement";
 import UserManagement from "../03_organisms/UserManagement";
-import GroupManagement from "../03_organisms/GroupManagement";
 import ChairManagement from "../03_organisms/ChairManagement";
 
 class AdminPanel extends React.Component {
@@ -15,9 +13,7 @@ class AdminPanel extends React.Component {
     visible: false,
     activeContentFragment: <UserManagement />,
     contentFragments: {
-      accountManagement: <AccountManagement />,
       userManagement: <UserManagement />,
-      groupManagement: <GroupManagement />,
       chairManagement: <ChairManagement />
     }
   };
@@ -61,19 +57,6 @@ class AdminPanel extends React.Component {
               onClick={() => {
                 this.setState({
                   activeContentFragment: this.state.contentFragments
-                    .accountManagement
-                });
-              }}
-            >
-              <Icon name="user outline" />
-              <Trans i18nKey="adminpanel-menu-account-management-label" />
-            </Menu.Item>
-
-            <Menu.Item
-              as="a"
-              onClick={() => {
-                this.setState({
-                  activeContentFragment: this.state.contentFragments
                     .userManagement
                 });
               }}
@@ -81,18 +64,7 @@ class AdminPanel extends React.Component {
               <Icon name="user" />
               <Trans i18nKey="adminpanel-menu-user-management-label" />
             </Menu.Item>
-            <Menu.Item
-              as="a"
-              onClick={() => {
-                this.setState({
-                  activeContentFragment: this.state.contentFragments
-                    .groupManagement
-                });
-              }}
-            >
-              <Icon name="group" />
-              <Trans i18nKey="adminpanel-menu-group-management-label" />
-            </Menu.Item>
+
             <Menu.Item
               as="a"
               onClick={() => {

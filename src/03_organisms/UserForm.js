@@ -1,13 +1,5 @@
 import React from "react";
-import {
-  Container,
-  Grid,
-  Segment,
-  Header,
-  Button,
-  Form,
-  Divider
-} from "semantic-ui-react";
+import { Grid, Header, Button, Form, Divider } from "semantic-ui-react";
 import { Field, reduxForm } from "redux-form";
 import { Trans, withTranslation } from "react-i18next";
 import { connect } from "react-redux";
@@ -16,9 +8,9 @@ import i18next from "i18next";
 import { DateInput } from "semantic-ui-calendar-react";
 import { userActions, skillCatalogueActions } from "../redux/_actions";
 import userService from "../services/userService";
-import ChairSelectionDropdown from "./ChairSelectionDropdown";
-import SkillCatalogue from "./SkillCatalogue";
+
 import formValidationUtilities from "../utilities/formValidationUtilities";
+import { chairActions } from "../redux/_actions";
 
 import StudentIdInput from "../02_molecules/StudentIdInput";
 import CourseOfStudyInput from "../02_molecules/CourseOfStudyInput";
@@ -32,13 +24,10 @@ import TitleDropdownSelector from "../02_molecules/TitleDropdownSelector";
 import GenderDropdownSelector from "../02_molecules/GenderDropdownSelector";
 import EmailInput from "../02_molecules/EmailInput";
 import PasswordInput from "../02_molecules/PasswordInput";
-import CHairRoleList from "../02_molecules/ChairRoleList";
+import ChairRoleList from "../02_molecules/ChairRoleList";
 
 import genderEnum from "../models/enumerations/genderEnum";
-import personChairRelationEnum from "../models/enumerations/personChairRelationEnum";
-import titleEnum from "../models/enumerations/titleEnum";
 import Person from "../models/person";
-import ChairRoleList from "../02_molecules/ChairRoleList";
 
 class UserForm extends React.Component {
   constructor(props) {
@@ -49,7 +38,6 @@ class UserForm extends React.Component {
     let immatriculationDate = "";
     let exmatriculationDate = "";
 
-    console.log(user);
     if (user && user.isStudent()) {
       immatriculationDate = user.studentStatus.matriculationDate || "";
       exmatriculationDate = user.studentStatus.exmatriculationDate || "";
@@ -82,10 +70,12 @@ class UserForm extends React.Component {
     );
   }
 
+  componentWillMount() {
+    this.props.dispatch(chairActions.getAllChairs());
+  }
+
   render() {
     const props = this.props;
-
-    console.log(props);
 
     return (
       <Form
@@ -120,7 +110,7 @@ class UserForm extends React.Component {
           <Grid.Row textAlign="left">
             <Grid.Column width={6} textAlign="left">
               <Header as="h4" color="black" textAlign="left">
-                <Trans i18nKey="usermanagement-edit-user-accountinformation-label" />
+                <Trans i18nKey="usermanagement-edit-user-headline" />
               </Header>
             </Grid.Column>
             <Grid.Column width={6} />
@@ -346,12 +336,16 @@ class UserForm extends React.Component {
             </Grid.Column>
           </Grid.Row>
 
-          <Grid.Row columns={2}>
-            <Grid.Column width={6}>
-              <ChairSelectionDropdown />
-            </Grid.Column>
-            <Grid.Column width={6}>
-              <ChairRoleList items={props.user ? props.user.chairs : []} />
+          <Grid.Row columns={1}>
+            <Grid.Column width={12}>
+              {console.log(props.chairs)}
+              {props.chairs && props.chairs.length > 0 && (
+                <ChairRoleList
+                  userId={props.userId}
+                  items={props.user ? props.user.chairs : []}
+                  chairs={props.chairs}
+                />
+              )}
             </Grid.Column>
           </Grid.Row>
 
@@ -591,14 +585,12 @@ class UserForm extends React.Component {
 const mapStateToProps = (state, ownProps) => {
   if (ownProps.user) {
     const isEmployee = ownProps.user.chairs.length !== 0;
-
     const gender = genderEnum[ownProps.user.gender];
 
-    console.log(ownProps.user.title);
-    console.log(gender);
-
     return {
+      chairs: state.chair.chairs,
       skillCatalogue: state.skillCatalogue,
+
       initialValues: {
         title: ownProps.user.title || "",
         gender: gender || 0,
@@ -621,7 +613,9 @@ const mapStateToProps = (state, ownProps) => {
       }
     };
   } else {
-    return {};
+    return {
+      chairs: state.chair.chairs
+    };
   }
 };
 

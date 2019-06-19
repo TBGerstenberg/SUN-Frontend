@@ -6,6 +6,11 @@ import { chairActions } from "../redux/_actions";
 import { Button, Icon, Table, Modal } from "semantic-ui-react";
 import i18next from "i18next";
 import tableFormattingUtilities from "../utilities/tableFormattingUtilities";
+import { chairService } from "../services";
+
+import AddEntityModal from "./AddEntityModal";
+import ChairForm from "../03_organisms/ChairForm";
+import onClickOutside from "react-onclickoutside";
 
 class ChairManagement extends React.Component {
   componentWillMount() {
@@ -14,10 +19,27 @@ class ChairManagement extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { visible: false, selectedEntry: null };
+    this.state = {
+      selectedEntry: null,
+      editChairModalOpen: false,
+      addChairModalOpen: false
+    };
     this.renderChairsTableRow = this.renderChairsTableRow.bind(this);
     this.renderChairsTableHeader = this.renderChairsTableHeader.bind(this);
     this.renderChairsTableFooter = this.renderChairsTableFooter.bind(this);
+
+    // Button click handlers
+    this.handleAddChairButtonClick = this.handleAddChairButtonClick.bind(this);
+    this.handleEditChairButtonClick = this.handleEditChairButtonClick.bind(
+      this
+    );
+    this.handleDeleteChairButtonClick = this.handleDeleteChairButtonClick.bind(
+      this
+    );
+
+    // Modal opening methods
+    this.openAddChairModal = this.openAddChairModal.bind(this);
+    this.openEditChairModal = this.openEditChairModal.bind(this);
   }
 
   render() {
@@ -33,6 +55,34 @@ class ChairManagement extends React.Component {
             tableData={this.props.chairs}
           />
         )}
+
+        {/** Used to add a new chair, thus handing a "null" chair  */}
+        <AddEntityModal
+          size="large"
+          modalContent={
+            <ChairForm
+              chair={null}
+              onAbortButtonClick={() => {
+                this.setState({ addChairModalOpen: false });
+              }}
+            />
+          }
+          open={this.state.addChairModalOpen}
+        />
+
+        {/** Used to edit a chair  */}
+        <AddEntityModal
+          size="large"
+          modalContent={
+            <ChairForm
+              chair={this.props.chairs[this.state.selectedEntry - 1] || null}
+              onAbortButtonClick={() => {
+                this.setState({ editChairModalOpen: false });
+              }}
+            />
+          }
+          open={this.state.editChairModalOpen}
+        />
       </div>
     );
   }
@@ -72,6 +122,7 @@ class ChairManagement extends React.Component {
         onClick={() => {
           this.setState({ selectedEntry: chair.id });
         }}
+        active={this.state.selectedEntry === chair.id}
       >
         <Table.Cell key="id">
           {tableFormattingUtilities.numberOrEmpty(chair.id)}
@@ -131,6 +182,7 @@ class ChairManagement extends React.Component {
             labelPosition="left"
             size="small"
             disabled={!this.state.selectedEntry}
+            onClick={this.handleDeleteChairButtonClick}
           >
             <Icon name="trash" />
             <Trans i18nKey="chairManagement-delete-chair-button" />
@@ -139,6 +191,35 @@ class ChairManagement extends React.Component {
       </Table.Row>
     );
   }
+
+  handleAddChairButtonClick() {
+    this.openAddChairModal();
+  }
+
+  handleEditChairButtonClick() {
+    this.openEditChairModal();
+  }
+
+  handleDeleteChairButtonClick() {
+    chairService.deleteChair(this.state.selectedEntry);
+  }
+
+  openEditChairModal() {
+    return this.setState({
+      editChairModalOpen: true
+    });
+  }
+  openAddChairModal() {
+    return this.setState({
+      addChairModalOpen: true
+    });
+  }
+
+  handleClickOutside = evt => {
+    this.setState({
+      selectedEntry: null
+    });
+  };
 }
 
 const mapStateToProps = state => {
@@ -147,4 +228,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default withTranslation()(connect(mapStateToProps)(ChairManagement));
+export default connect(mapStateToProps)(onClickOutside(ChairManagement));

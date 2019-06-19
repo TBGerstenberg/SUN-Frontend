@@ -1,10 +1,10 @@
 const personChairRelationEnum = {
-  PROFESSOR: 0,
-  RESEARCHER: 1,
-  TECHNICIAN: 2,
-  ADMINISTRATION: 3,
-  STUDENTASSISTANT: 4,
-  OTHER: 5
+  0: "PROFESSOR",
+  1: "RESEARCHER",
+  2: "TECHNICIAN",
+  3: "ADMINISTRATION",
+  4: "STUDENTASSISTANT",
+  5: "OTHER"
 };
 
 export default personChairRelationEnum;

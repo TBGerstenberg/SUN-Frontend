@@ -11,7 +11,6 @@ const DropdownSelector = props => {
       name={props.input.name}
       onBlur={(e, { value }) => {}}
       onChange={(e, { value }) => {
-        console.log("Changed value to " + value);
         return props.input.onChange(value);
       }}
       options={props.options}

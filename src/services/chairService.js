@@ -21,6 +21,17 @@ const chairService = {
     } catch (error) {
       return error;
     }
+  },
+
+  deleteChair: async chairId => {
+    try {
+      const deleteChairResponse = await apiClient.delete(
+        API_CONFIG.CHAIRS.DELETE_CHAIR_URL()
+      );
+      return deleteChairResponse;
+    } catch (error) {
+      return error;
+    }
   }
 };
 
