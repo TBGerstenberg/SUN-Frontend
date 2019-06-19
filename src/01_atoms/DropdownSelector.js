@@ -1,15 +1,15 @@
 import React from "react";
 import { withTranslation } from "react-i18next";
 import { Form } from "semantic-ui-react";
+import i18next from "i18next";
 
 const DropdownSelector = props => {
   return (
     <Form.Select
+      defaultValue={props.defaultValue}
       label={props.label}
       name={props.input.name}
-      onBlur={(e, { value }) => {
-        props.input.onChange(value);
-      }}
+      onBlur={(e, { value }) => {}}
       onChange={(e, { value }) => {
         console.log("Changed value to " + value);
         return props.input.onChange(value);

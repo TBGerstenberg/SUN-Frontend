@@ -156,7 +156,7 @@ class UserManagement extends React.Component {
           {tableFormattingUtilities.stringOrEmpty(user.title)}
         </Table.Cell>
         <Table.Cell key="gender">
-          {tableFormattingUtilities.stringOrEmpty(user.gender)}
+          {tableFormattingUtilities.genderEnumToString(user.gender)}
         </Table.Cell>
         <Table.Cell key="firstName">
           {tableFormattingUtilities.stringOrEmpty(user.firstName)}

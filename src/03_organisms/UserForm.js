@@ -36,6 +36,7 @@ import CHairRoleList from "../02_molecules/ChairRoleList";
 
 import genderEnum from "../models/enumerations/genderEnum";
 import personChairRelationEnum from "../models/enumerations/personChairRelationEnum";
+import titleEnum from "../models/enumerations/titleEnum";
 import Person from "../models/person";
 import ChairRoleList from "../02_molecules/ChairRoleList";
 
@@ -83,6 +84,8 @@ class UserForm extends React.Component {
 
   render() {
     const props = this.props;
+
+    console.log(props);
 
     return (
       <Form
@@ -167,7 +170,11 @@ class UserForm extends React.Component {
           }
           <Grid.Row columns={2}>
             <Grid.Column width={6} textAlign="left">
-              <TitleDropdownSelector />
+              <TitleDropdownSelector
+                defaultValue={
+                  props.initialValues ? props.initialValues.title : null
+                }
+              />
             </Grid.Column>
             <Grid.Column width={6} textAlign="left">
               <GenderDropdownSelector />
@@ -585,11 +592,16 @@ const mapStateToProps = (state, ownProps) => {
   if (ownProps.user) {
     const isEmployee = ownProps.user.chairs.length !== 0;
 
+    const gender = genderEnum[ownProps.user.gender];
+
+    console.log(ownProps.user.title);
+    console.log(gender);
+
     return {
       skillCatalogue: state.skillCatalogue,
       initialValues: {
         title: ownProps.user.title || "",
-        gender: ownProps.user.gender || 0,
+        gender: gender || 0,
         firstName: ownProps.user.firstName || "",
         lastName: ownProps.user.lastName || "",
         city: ownProps.user.address ? ownProps.user.address.city : "",
@@ -616,7 +628,7 @@ const mapStateToProps = (state, ownProps) => {
 export default withTranslation()(
   connect(mapStateToProps)(
     reduxForm({
-      form: "updateUserForm"
+      form: "completeProfileForm"
     })(UserForm)
   )
 );

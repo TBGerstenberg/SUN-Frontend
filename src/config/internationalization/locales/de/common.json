@@ -20,6 +20,8 @@
   "login-message-new-to-us": "Neu bei uns? ",
   "login-message-call-to-action": "Registrieren",
 
+  "form-dropdown-placeholder": "Option auswählen",
+
   "complete-your-profile-headline": "Vervollständige dein Profil",
   "complete-profile-personal-information-headline": "Persönliches",
   "complete-profile-adress-information-headline": "Anschrift",
@@ -83,10 +85,10 @@
   "contact-card-email-label": "Email:",
   "contact-card-mobile-label": "Mobil:",
 
-  "gender-enum-UNSET-option": "k.A",
-  "gender-enum-MALE-option": "Männlich",
-  "gender-enum-FEMALE-option": "Weiblich",
-  "gender-enum-OTHER-option": "Andere",
+  "gender-enum-unset-option": "k.A",
+  "gender-enum-male-option": "Männlich",
+  "gender-enum-female-option": "Weiblich",
+  "gender-enum-other-option": "Andere",
 
   "navbar-search-placeholder": "Suchen...",
   "navbar-logout-button-text": "Abmelden",
@@ -128,6 +130,7 @@
   "usermanagement-edit-user-headline": "Benutzer bearbeiten",
   "usermanagement-add-user-headline": "Neuen Benutzer anlegen",
   "usermanagement-edit-user-accountinformation-label": "Accountinformation",
+  "complete-profile-account-information-headline": "Accountinformation",
 
   "usermanagement-tableheader-id": "BenutzerId",
   "usermanagement-tableheader-email": "Email",

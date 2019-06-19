@@ -1,8 +1,8 @@
 const genderEnum = {
-  0: "UNSET",
-  1: "MALE",
-  2: "FEMALE",
-  3: "OTHER"
+  0: "unset",
+  1: "male",
+  2: "female",
+  3: "other"
 };
 
 export default genderEnum;

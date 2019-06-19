@@ -256,6 +256,8 @@ class CompleteProfile extends React.Component {
                 </Grid.Column>
               </Grid.Row>
 
+              {/* EmployeeStatus currently only manageable by admin 
+
               {
                 // EmployeeStatus Checkbox
               }
@@ -284,6 +286,7 @@ class CompleteProfile extends React.Component {
                 <Grid.Column width={6} />
               </Grid.Row>
 
+*/}
               {
                 // Submit and Abort Buttons
               }
