@@ -11,6 +11,8 @@ import { chairService } from "../services";
 import AddEntityModal from "./AddEntityModal";
 import ChairForm from "../03_organisms/ChairForm";
 import onClickOutside from "react-onclickoutside";
+import SuccessMessage from "../01_atoms/SuccessMessage";
+import ErrorMessage from "../01_atoms/ErrorMessage";
 
 class ChairManagement extends React.Component {
   componentWillMount() {
@@ -22,8 +24,12 @@ class ChairManagement extends React.Component {
     this.state = {
       selectedEntry: null,
       editChairModalOpen: false,
-      addChairModalOpen: false
+      addChairModalOpen: false,
+      successMessageShown: false,
+      errorMessageShown: false
     };
+
+    // Table Rendering
     this.renderChairsTableRow = this.renderChairsTableRow.bind(this);
     this.renderChairsTableHeader = this.renderChairsTableHeader.bind(this);
     this.renderChairsTableFooter = this.renderChairsTableFooter.bind(this);
@@ -40,6 +46,10 @@ class ChairManagement extends React.Component {
     // Modal opening methods
     this.openAddChairModal = this.openAddChairModal.bind(this);
     this.openEditChairModal = this.openEditChairModal.bind(this);
+
+    // Message-UI controlling methods
+    this.toggleErrorMessage = this.toggleErrorMessage.bind(this);
+    this.toggleSuccessMessage = this.toggleSuccessMessage.bind(this);
   }
 
   render() {
@@ -56,6 +66,11 @@ class ChairManagement extends React.Component {
           />
         )}
 
+        {this.state.successMessageShown && (
+          <SuccessMessage header={"Erfolg"} body={"Lehrstuhl angelegt"} />
+        )}
+        {this.state.ErrorMessageShown && <ErrorMessage />}
+
         {/** Used to add a new chair, thus handing a "null" chair  */}
         <AddEntityModal
           size="large"
@@ -68,6 +83,12 @@ class ChairManagement extends React.Component {
             />
           }
           open={this.state.addChairModalOpen}
+          onCompleteWithSuccess={() => {
+            this.toggleSuccessMessage();
+          }}
+          onCompleteWithError={error => {
+            this.toggleErrorMessage();
+          }}
         />
 
         {/** Used to edit a chair  */}
@@ -82,6 +103,12 @@ class ChairManagement extends React.Component {
             />
           }
           open={this.state.editChairModalOpen}
+          onCompleteWithSuccess={() => {
+            this.toggleSuccessMessage();
+          }}
+          onCompleteWithError={error => {
+            this.toggleErrorMessage();
+          }}
         />
       </div>
     );
@@ -171,6 +198,7 @@ class ChairManagement extends React.Component {
             labelPosition="left"
             size="small"
             disabled={!this.state.selectedEntry}
+            onClick={this.handleEditChairButtonClick}
           >
             <Icon name="edit" />
             <Trans i18nKey="chairManagement-edit-chair-button" />
@@ -205,13 +233,35 @@ class ChairManagement extends React.Component {
   }
 
   openEditChairModal() {
-    return this.setState({
+    this.setState({
       editChairModalOpen: true
     });
   }
+  closeEditChairModal() {
+    this.setState({
+      editChairModalOpen: false
+    });
+  }
   openAddChairModal() {
-    return this.setState({
+    this.setState({
       addChairModalOpen: true
+    });
+  }
+  closeAddChairModal() {
+    this.setState({
+      addChairModalOpen: false
+    });
+  }
+
+  toggleSuccessMessage() {
+    this.setState({
+      successMessageShown: !this.state.successMessageShown
+    });
+  }
+
+  toggleErrorMessage() {
+    this.setState({
+      errorMessageShown: !this.state.errorMessageShown
     });
   }
 
@@ -222,7 +272,7 @@ class ChairManagement extends React.Component {
   };
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, ownProps) => {
   return {
     chairs: state.chair.chairs || []
   };

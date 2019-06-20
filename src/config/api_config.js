@@ -25,6 +25,12 @@ const API_CONFIG = {
   },
   CHAIRS: {
     GET_ALL_CHAIRS_URL: BASEURL + "/chairs",
+    CREATE_CHAIR_URL: () => {
+      return BASEURL + "/chairs";
+    },
+    EDIT_CHAIR_URL: chairId => {
+      return BASEURL + "/chairs/" + chairId;
+    },
     DELETE_CHAIR_URL: chairId => {
       return BASEURL + "/chairs/" + chairId;
     }

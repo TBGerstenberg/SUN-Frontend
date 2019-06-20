@@ -471,7 +471,7 @@ class UserForm extends React.Component {
       birthDate: this.state.dateOfBirth || DEFAULT_DATE_IF_UNSET,
       address: {
         city: values.cityName,
-        postCode: values.postalCode,
+        postCode: values.postCode,
         street: values.streetName,
         room: values.roomName,
         email: values.additional_email
@@ -596,10 +596,8 @@ const mapStateToProps = (state, ownProps) => {
         gender: gender || 0,
         firstName: ownProps.user.firstName || "",
         lastName: ownProps.user.lastName || "",
-        city: ownProps.user.address ? ownProps.user.address.city : "",
-        postalCode: ownProps.user.address
-          ? ownProps.user.address.postalCode
-          : "",
+        cityName: ownProps.user.address ? ownProps.user.address.city : "",
+        postCode: ownProps.user.address ? ownProps.user.address.postCode : "",
         street: ownProps.user.address ? ownProps.user.address.street : "",
         email: ownProps.user.address ? ownProps.user.address.email : "",
         isStudent: ownProps.user.studentStatus ? true : false,

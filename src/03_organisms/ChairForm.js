@@ -24,6 +24,8 @@ class ChairForm extends React.Component {
     const mode = props.chair ? "edit" : "add";
     const chair = props.chair ? new Chair(props.chair) : null;
 
+    console.log(chair);
+
     this.state = {
       mode: mode,
       chair: chair
@@ -49,11 +51,11 @@ class ChairForm extends React.Component {
           }
           <Grid.Row>
             <Header as="h3" color="blue" textAlign="center">
-              {this.props.mode === "edit" && (
-                <Trans i18nKey="usermanagement-edit-user-headline" />
+              {this.state.mode === "edit" && (
+                <Trans i18nKey="chairmanagement-edit-chair-headline" />
               )}
-              {this.props.mode === "add" && (
-                <Trans i18nKey="usermanagement-add-user-headline" />
+              {this.state.mode === "add" && (
+                <Trans i18nKey="chairmanagement-add-chair-headline" />
               )}
             </Header>
           </Grid.Row>
@@ -73,6 +75,13 @@ class ChairForm extends React.Component {
           {
             // Address
           }
+
+          <Grid.Row textAlign="left">
+            <Grid.Column width={6} textAlign="left">
+              {this.renderChairNameInput()}
+            </Grid.Column>
+            <Grid.Column width={6} />
+          </Grid.Row>
 
           {
             // SubHeadline
@@ -139,6 +148,20 @@ class ChairForm extends React.Component {
     );
   }
 
+  renderChairNameInput() {
+    return (
+      <Field
+        name="chairName"
+        component={LabelInputField}
+        label={{
+          content: i18next.t("edit-chair-chairName-label")
+        }}
+        labelPosition="left"
+        placeholder={i18next.t("edit-chair-chairName-placeholder")}
+      />
+    );
+  }
+
   renderRoomNameInput() {
     return (
       <Field
@@ -170,10 +193,10 @@ class ChairForm extends React.Component {
     // Values that are extracted from the various input fields, each field is either managed by redux form
     // or via the components state.
     const chairValues = {
-      name: values.name,
+      name: values.chairName,
       address: {
         city: values.cityName,
-        postCode: values.postalCode,
+        postCode: values.postCode,
         street: values.streetName,
         room: values.roomName,
         email: values.additional_email
@@ -182,18 +205,57 @@ class ChairForm extends React.Component {
 
     if (this.state.mode === "edit") {
       console.log("Editing a Chair");
-      //chairService.updateChair(chairValues);
+
+      const response = await chairService.updateChair(
+        this.state.chair.id,
+        chairValues
+      );
+
+      if (response.status === 200) {
+        this.props.onCompleteWithSuccess();
+      } else {
+        this.props.onCompleteWithError(response.error);
+      }
     } else if (this.state.mode === "add") {
       console.log("Adding a chair");
-      //chairService.createChair();
+      const response = chairService.createChair(chairValues);
+
+      if (response.status === 200) {
+        this.props.onCompleteWithSuccess();
+      } else {
+        this.props.onCompleteWithError(response.error);
+      }
     }
   }
 }
 
 const mapStateToProps = (state, ownProps) => {
+  if (ownProps.chair) {
+    console.log(ownProps.chair.address);
+
+    const initialValues = {
+      chairName: ownProps.chair.name || "",
+      cityName: ownProps.chair.address ? ownProps.chair.address.city : "",
+      postCode: ownProps.chair.address ? ownProps.chair.address.postCode : "",
+      street: ownProps.chair.address ? ownProps.chair.address.street : "",
+      email: ownProps.chair.address ? ownProps.chair.address.email : ""
+    };
+
+    return {
+      initialValues: initialValues,
+      chairs: state.chair.chairs
+    };
+  }
+
   return {
     chairs: state.chair.chairs
   };
 };
 
-export default withTranslation()(connect(mapStateToProps)(ChairForm));
+export default withTranslation()(
+  connect(mapStateToProps)(
+    reduxForm({
+      form: "editChairForm"
+    })(ChairForm)
+  )
+);

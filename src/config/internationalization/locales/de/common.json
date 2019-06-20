@@ -160,7 +160,12 @@
   "chairManagement-tableheader-room": "Raum",
   "chairManagement-tableheader-phoneNumber": "TelefonNr",
 
+  "chairmanagement-add-chair-headline": "Lehrstuhl hinzufügen",
+  "chairmanagement-edit-chair-headline": "Lehrstuhl bearbeiten",
+
   "chairForm-add-chair-core-data-headline": "Stammdaten",
+  "edit-chair-chairName-label": "Name des Lehrstuhls",
+  "edit-chair-chairName-placeholder": "Name des Lehrstuhls",
 
   "chairManagement-add-chair-button": "Lehrstuhl hinzufügen",
   "chairManagement-edit-chair-button": "Lehrstuhl bearbeiten",

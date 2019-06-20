@@ -407,7 +407,7 @@ class CompleteProfile extends React.Component {
       birthDate: this.state.dateOfBirth || DEFAULT_DATE_IF_UNSET,
       address: {
         city: values.cityName,
-        postCode: values.postalCode,
+        postCode: values.postCode,
         street: values.streetName,
         room: values.roomName,
         email: values.additional_email

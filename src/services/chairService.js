@@ -23,10 +23,34 @@ const chairService = {
     }
   },
 
+  createChair: async chairBody => {
+    try {
+      const createChairResponse = await apiClient.post(
+        API_CONFIG.CHAIRS.CREATE_CHAIR_URL(),
+        chairBody
+      );
+      return createChairResponse;
+    } catch (error) {
+      return error;
+    }
+  },
+
+  updateChair: async (chairId, updatedChairBody) => {
+    try {
+      const editChairResponse = await apiClient.put(
+        API_CONFIG.CHAIRS.EDIT_CHAIR_URL(chairId),
+        updatedChairBody
+      );
+      return editChairResponse;
+    } catch (error) {
+      return error;
+    }
+  },
+
   deleteChair: async chairId => {
     try {
       const deleteChairResponse = await apiClient.delete(
-        API_CONFIG.CHAIRS.DELETE_CHAIR_URL()
+        API_CONFIG.CHAIRS.DELETE_CHAIR_URL(chairId)
       );
       return deleteChairResponse;
     } catch (error) {
