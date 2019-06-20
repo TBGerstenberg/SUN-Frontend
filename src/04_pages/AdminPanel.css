@@ -19,4 +19,9 @@ body {
 .adminPanel-buttonRow {
   color: gray;
   background-color: ghostwhite;
+  min-height: 100px;
+}
+
+.adminPanel-toastContainer {
+  z-index: 5;
 }

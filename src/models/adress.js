@@ -6,6 +6,8 @@ class Adress {
     this.street = addressValues.street || null;
     this.room = addressValues.room || null;
     this.email = addressValues.email || null;
+    this.phoneNumber = addressValues.phoneNumber || null;
+    this.phoneNumberMobile = addressValues.phoneNumberMobile || null;
   }
 }
 

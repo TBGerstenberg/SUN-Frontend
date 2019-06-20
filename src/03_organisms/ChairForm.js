@@ -8,19 +8,20 @@ import i18next from "i18next";
 import chairService from "../services/chairService";
 
 import formValidationUtilities from "../utilities/formValidationUtilities";
-import { chairActions } from "../redux/_actions";
 
 import CityNameInput from "../02_molecules/CityNameInput";
 import StreetNameInput from "../02_molecules/StreetNameInput";
 import PostalCodeInput from "../02_molecules/PostalCodeInput";
 import HouseNumberInput from "../02_molecules/HouseNumberInput";
-import ChairRoleList from "../02_molecules/ChairRoleList";
+import PhoneNumberInput from "../02_molecules/PhoneNumberInput";
 
 import Chair from "../models/chair";
+import PersonList from "./PersonList";
 
 class ChairForm extends React.Component {
   constructor(props) {
     super(props);
+    console.log(props.chair);
     const mode = props.chair ? "edit" : "add";
     const chair = props.chair ? new Chair(props.chair) : null;
 
@@ -115,13 +116,52 @@ class ChairForm extends React.Component {
           <Divider />
 
           {
-            // EmployeeStatus
+            // Contact
           }
+          <Grid.Row columns={2}>
+            <Grid.Column width={6}>
+              <PhoneNumberInput
+                name="phoneNumber"
+                label={i18next.t("complete-profile-phoneNumber-label")}
+                placeholder={i18next.t(
+                  "complete-profile-phoneNumber-placeholder"
+                )}
+              />
+            </Grid.Column>
+            <Grid.Column width={6}>
+              <PhoneNumberInput
+                name="phoneNumberMobile"
+                label={i18next.t("complete-profile-phoneNumberMobile-label")}
+                placeholder={i18next.t(
+                  "complete-profile-phoneNumberMobile-placeholder"
+                )}
+              />
+            </Grid.Column>
+          </Grid.Row>
           <Grid.Row columns={2}>
             <Grid.Column width={6}>{this.renderRoomNameInput()}</Grid.Column>
             <Grid.Column width={6}>
               {this.renderAdditionalEmailInput()}
             </Grid.Column>
+          </Grid.Row>
+
+          {
+            // Staff / Employees
+          }
+          <Grid.Row textAlign="left">
+            <Grid.Column width={6} textAlign="left">
+              <Header as="h4" color="black" textAlign="left">
+                <Trans i18nKey="chairForm-employees-headline" />
+              </Header>
+            </Grid.Column>
+            <Grid.Column width={6} />
+          </Grid.Row>
+
+          <Grid.Row columns={2}>
+            <Grid.Column width={6}>
+              <PersonList persons={this.state.chair.persons} />
+            </Grid.Column>
+            <Grid.Column width={6} />
           </Grid.Row>
 
           {
@@ -197,15 +237,15 @@ class ChairForm extends React.Component {
       address: {
         city: values.cityName,
         postCode: values.postCode,
-        street: values.streetName,
+        street: values.street,
         room: values.roomName,
-        email: values.additional_email
+        email: values.additional_email,
+        phoneNumber: values.phoneNumber,
+        phoneNumberMobile: values.phoneNumberMobile
       }
     };
 
     if (this.state.mode === "edit") {
-      console.log("Editing a Chair");
-
       const response = await chairService.updateChair(
         this.state.chair.id,
         chairValues
@@ -217,7 +257,6 @@ class ChairForm extends React.Component {
         this.props.onCompleteWithError(response.error);
       }
     } else if (this.state.mode === "add") {
-      console.log("Adding a chair");
       const response = chairService.createChair(chairValues);
 
       if (response.status === 200) {
@@ -238,7 +277,14 @@ const mapStateToProps = (state, ownProps) => {
       cityName: ownProps.chair.address ? ownProps.chair.address.city : "",
       postCode: ownProps.chair.address ? ownProps.chair.address.postCode : "",
       street: ownProps.chair.address ? ownProps.chair.address.street : "",
-      email: ownProps.chair.address ? ownProps.chair.address.email : ""
+      room: ownProps.chair.address ? ownProps.chair.address.room : "",
+      email: ownProps.chair.address ? ownProps.chair.address.email : "",
+      phoneNumber: ownProps.chair.address
+        ? ownProps.chair.address.phoneNumber
+        : "",
+      phoneNumberMobile: ownProps.chair.address
+        ? ownProps.chair.address.phoneNumberMobile
+        : ""
     };
 
     return {

@@ -472,7 +472,7 @@ class UserForm extends React.Component {
       address: {
         city: values.cityName,
         postCode: values.postCode,
-        street: values.streetName,
+        street: values.street,
         room: values.roomName,
         email: values.additional_email
       },

@@ -50,6 +50,10 @@
   "complete-profile-houseNumber-placeholder": "Hausnummer",
   "complete-profile-postalCode-label": "Postleitzahl",
   "complete-profile-postalCode-placeholder": "Postleitzahl",
+  "complete-profile-phoneNumber-label": "Telefon",
+  "complete-profile-phoneNumber-placeholder": "Telefonnummer",
+  "complete-profile-phoneNumberMobile-label": "Mobil",
+  "complete-profile-phoneNumberMobile-placeholder": "Mobilnummer",
   "complete-profile-studentStatus-checkbox-label": "Student",
   "complete-profile-studentId-label": "Matrikelnummer",
   "complete-profile-studentId-placeholder": "Matrikelnummer",
@@ -159,11 +163,16 @@
   "chairManagement-tableheader-houseNumber": "Hausnummer",
   "chairManagement-tableheader-room": "Raum",
   "chairManagement-tableheader-phoneNumber": "TelefonNr",
+  "chairManagement-tableheader-phoneNumberMobile": "Mobil",
 
   "chairmanagement-add-chair-headline": "Lehrstuhl hinzufügen",
   "chairmanagement-edit-chair-headline": "Lehrstuhl bearbeiten",
 
+  "chairManagement-delete-chair-success-title": "",
+  "chairManagement-delete-chair-success-message": "Lehrstuhl gelöscht",
+
   "chairForm-add-chair-core-data-headline": "Stammdaten",
+  "chairForm-employees-headline": "Mitarbeiter",
   "edit-chair-chairName-label": "Name des Lehrstuhls",
   "edit-chair-chairName-placeholder": "Name des Lehrstuhls",
 

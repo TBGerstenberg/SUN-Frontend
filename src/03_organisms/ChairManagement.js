@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Trans, withTranslation } from "react-i18next";
 import { Field, reduxForm } from "redux-form";
 import { chairActions } from "../redux/_actions";
-import { Button, Icon, Table, Modal } from "semantic-ui-react";
+import { Button, Icon, Table, Modal, Grid } from "semantic-ui-react";
 import i18next from "i18next";
 import tableFormattingUtilities from "../utilities/tableFormattingUtilities";
 import { chairService } from "../services";
@@ -46,10 +46,6 @@ class ChairManagement extends React.Component {
     // Modal opening methods
     this.openAddChairModal = this.openAddChairModal.bind(this);
     this.openEditChairModal = this.openEditChairModal.bind(this);
-
-    // Message-UI controlling methods
-    this.toggleErrorMessage = this.toggleErrorMessage.bind(this);
-    this.toggleSuccessMessage = this.toggleSuccessMessage.bind(this);
   }
 
   render() {
@@ -66,29 +62,24 @@ class ChairManagement extends React.Component {
           />
         )}
 
-        {this.state.successMessageShown && (
-          <SuccessMessage header={"Erfolg"} body={"Lehrstuhl angelegt"} />
-        )}
-        {this.state.ErrorMessageShown && <ErrorMessage />}
-
         {/** Used to add a new chair, thus handing a "null" chair  */}
         <AddEntityModal
           size="large"
           modalContent={
             <ChairForm
               chair={null}
-              onAbortButtonClick={() => {
-                this.setState({ addChairModalOpen: false });
+              onAbortButtonClick={this.closeAddChairModal}
+              onCompleteWithSuccess={() => {
+                this.props.toggleSuccessMessage();
+                this.closeAddChairModal();
+              }}
+              onCompleteWithError={error => {
+                this.props.toggleErrorMessage();
+                this.closeAddChairModal();
               }}
             />
           }
           open={this.state.addChairModalOpen}
-          onCompleteWithSuccess={() => {
-            this.toggleSuccessMessage();
-          }}
-          onCompleteWithError={error => {
-            this.toggleErrorMessage();
-          }}
         />
 
         {/** Used to edit a chair  */}
@@ -100,15 +91,17 @@ class ChairManagement extends React.Component {
               onAbortButtonClick={() => {
                 this.setState({ editChairModalOpen: false });
               }}
+              onCompleteWithSuccess={() => {
+                this.props.toggleSuccessMessage("Erfolg", "Lehrstuhl editiert");
+                this.closeEditChairModal();
+              }}
+              onCompleteWithError={error => {
+                this.props.toggleErrorMessage("Fehler", error);
+                this.closeEditChairModal();
+              }}
             />
           }
           open={this.state.editChairModalOpen}
-          onCompleteWithSuccess={() => {
-            this.toggleSuccessMessage();
-          }}
-          onCompleteWithError={error => {
-            this.toggleErrorMessage();
-          }}
         />
       </div>
     );
@@ -137,6 +130,9 @@ class ChairManagement extends React.Component {
         </Table.HeaderCell>
         <Table.HeaderCell>
           <Trans i18nKey="chairManagement-tableheader-phoneNumber" />
+        </Table.HeaderCell>
+        <Table.HeaderCell>
+          <Trans i18nKey="chairManagement-tableheader-phoneNumberMobile" />
         </Table.HeaderCell>
       </Table.Row>
     );
@@ -171,6 +167,11 @@ class ChairManagement extends React.Component {
         </Table.Cell>
         <Table.Cell key="phoneNumber">
           {tableFormattingUtilities.stringOrEmpty(chair.address.phoneNumber)}
+        </Table.Cell>
+        <Table.Cell key="phoneNumberMobile">
+          {tableFormattingUtilities.stringOrEmpty(
+            chair.address.phoneNumberMobile
+          )}
         </Table.Cell>
       </Table.Row>
     );
@@ -228,8 +229,21 @@ class ChairManagement extends React.Component {
     this.openEditChairModal();
   }
 
-  handleDeleteChairButtonClick() {
-    chairService.deleteChair(this.state.selectedEntry);
+  async handleDeleteChairButtonClick() {
+    const deletionResponse = await chairService.deleteChair(
+      this.state.selectedEntry
+    );
+
+    console.log(deletionResponse);
+
+    if (deletionResponse.status === 200) {
+      this.props.toggleSuccessMessage(
+        i18next.t("chairManagement-delete-chair-success-title"),
+        i18next.t("chairManagement-delete-chair-success-message")
+      );
+    } else {
+      this.props.toggleErrorMessage("Fehler", deletionResponse.error);
+    }
   }
 
   openEditChairModal() {
@@ -250,18 +264,6 @@ class ChairManagement extends React.Component {
   closeAddChairModal() {
     this.setState({
       addChairModalOpen: false
-    });
-  }
-
-  toggleSuccessMessage() {
-    this.setState({
-      successMessageShown: !this.state.successMessageShown
-    });
-  }
-
-  toggleErrorMessage() {
-    this.setState({
-      errorMessageShown: !this.state.errorMessageShown
     });
   }
 
