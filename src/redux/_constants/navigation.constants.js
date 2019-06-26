@@ -55,7 +55,7 @@ export const routesMap = {
   NAVIGATE_TO_ADMIN_PANEL: {
     path: "/admin",
     requiresAuth: true,
-    role: ""
+    role: "ADMIN"
   },
   NAVIGATE_TO_JOB_PAGE: {
     path: "/job",

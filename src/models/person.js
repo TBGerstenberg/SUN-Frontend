@@ -1,6 +1,8 @@
 import personChairRelationEnum from "./enumerations/personChairRelationEnum";
+import Adress from "./adress";
+import StudentStatus from "./studentStatus";
 
-class Profile {
+class Person {
   constructor(profileValues) {
     this.userId = profileValues.userId;
     this.title = profileValues.title;
@@ -8,8 +10,8 @@ class Profile {
     this.firstName = profileValues.firstName;
     this.lastName = profileValues.lastName;
     this.birthDate = profileValues.birthDate;
-    this.address = profileValues.address;
-    this.studentStatus = profileValues.studentStatus;
+    this.address = new Adress(profileValues.address);
+    this.studentStatus = new StudentStatus(profileValues.studentStatus);
     this.employeeStatus = profileValues.employeeStatus;
     this.chairs = this.buildPersonChairRelations(profileValues.chairs);
     this.skills = profileValues.skills;
@@ -34,6 +36,18 @@ class Profile {
 
     this.chairs = personChairRelations;
   }
+
+  isEmployee() {
+    return this.chairs.length !== 0;
+  }
+
+  isStudent() {
+    return this.studentStatus != null;
+  }
+
+  hasAddress() {
+    return this.address != null;
+  }
 }
 
-export default Profile;
+export default Person;

@@ -47,8 +47,13 @@ export default function configureStore() {
     // Persist login state in localstorage before the user closes the tab/window
     window.addEventListener("beforeunload", ev => {
       ev.preventDefault();
+      const state = store.getState();
       saveReduxState({
-        login: store.getState().login
+        login: {
+          accessToken: state.login.accessToken,
+          user: state.login.user,
+          loggedIn: state.login.loggedIn
+        }
       });
     });
   }
@@ -57,10 +62,16 @@ export default function configureStore() {
     // Writing to local storage periodically is expensive, since its using JSON.stringify internally.
     // We use lodashs "throttle" to execute the function only every 300ms, no matter how often
     // the redux-store subscription (on every change in redux store) triggers.
+
+    const state = store.getState();
     store.subscribe(
       throttle(() => {
         saveReduxState({
-          login: store.getState().login
+          login: {
+            accessToken: state.login.accessToken,
+            user: state.login.user,
+            loggedIn: state.login.loggedIn
+          }
         });
       }, 2000)
     );

@@ -30,7 +30,7 @@ import LastNameInput from "../02_molecules/LastNameInput";
 import TitleDropdownSelector from "../02_molecules/TitleDropdownSelector";
 import GenderDropdownSelector from "../02_molecules/GenderDropdownSelector";
 
-import Profile from "../models/profile";
+import Person from "../models/person";
 import { navigationConstants } from "../redux/_constants";
 import { navigationActions } from "../redux/_actions";
 
@@ -256,6 +256,8 @@ class CompleteProfile extends React.Component {
                 </Grid.Column>
               </Grid.Row>
 
+              {/* EmployeeStatus currently only manageable by admin 
+
               {
                 // EmployeeStatus Checkbox
               }
@@ -284,6 +286,7 @@ class CompleteProfile extends React.Component {
                 <Grid.Column width={6} />
               </Grid.Row>
 
+*/}
               {
                 // Submit and Abort Buttons
               }
@@ -378,8 +381,6 @@ class CompleteProfile extends React.Component {
    * @param {} values
    */
   _handleCompleteProfileSubmit(values) {
-    console.log("Triggered Submit");
-
     const skillCatalogue = this.props.skillCatalogue;
     let skillsRatings = [];
 
@@ -392,7 +393,7 @@ class CompleteProfile extends React.Component {
       });
     }
 
-    const DEFAULT_DATE_IF_UNSET = "0001-01-01T00:00:00";
+    const DEFAULT_DATE_IF_UNSET = "1990-01-01T00:00:00+01:00";
     const DEFAULT_GENDER_IF_UNSET = 0;
 
     // Values that are extracted from the various input fields, each field is either managed by redux form
@@ -406,8 +407,8 @@ class CompleteProfile extends React.Component {
       birthDate: this.state.dateOfBirth || DEFAULT_DATE_IF_UNSET,
       address: {
         city: values.cityName,
-        postCode: values.postalCode,
-        street: values.streetName,
+        postCode: values.postCode,
+        street: values.street,
         room: values.roomName,
         email: values.additional_email
       },
@@ -424,15 +425,10 @@ class CompleteProfile extends React.Component {
       skills: skillsRatings
     };
 
-    const profile = new Profile(profileValues);
+    const profile = new Person(profileValues);
 
     this.props.dispatch(userActions.updateProfile(profile));
   }
-
-  /**
-   * Render Methods to keep the component markup in rneder() cleaner
-   *
-   */
 
   renderBirthDateInput() {
     return (

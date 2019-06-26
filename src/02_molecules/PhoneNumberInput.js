@@ -4,19 +4,19 @@ import { Field } from "redux-form";
 import { LabelInputField } from "react-semantic-redux-form";
 import i18next from "i18next";
 
-const StreetNameInput = props => {
+const PhoneNumberInput = props => {
   return (
     <Field
-      name="street"
+      name={props.name}
       component={LabelInputField}
       label={{
-        content: i18next.t("complete-profile-streetName-label")
+        content: props.label
       }}
       labelPosition="left"
-      placeholder={i18next.t("complete-profile-streetName-placeholder")}
+      placeholder={props.placeholder}
     />
   );
 };
 
 // extended main view with translate hoc
-export default withTranslation()(StreetNameInput);
+export default withTranslation()(PhoneNumberInput);

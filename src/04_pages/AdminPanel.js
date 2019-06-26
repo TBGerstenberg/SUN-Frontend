@@ -1,21 +1,32 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Trans, withTranslation } from "react-i18next";
-import { Button, Icon, Menu, Segment, Sidebar } from "semantic-ui-react";
+import { Button, Icon, Menu, Segment, Sidebar, Grid } from "semantic-ui-react";
 import "./AdminPanel.css";
 
+import NavBar from "../03_organisms/NavBar";
 import UserManagement from "../03_organisms/UserManagement";
-import GroupManagement from "../03_organisms/GroupManagement";
 import ChairManagement from "../03_organisms/ChairManagement";
+
+import { SemanticToastContainer, toast } from "react-semantic-toasts";
 
 class AdminPanel extends React.Component {
   state = {
     visible: false,
     activeContentFragment: <UserManagement />,
     contentFragments: {
-      userManagement: <UserManagement />,
-      groupManagement: <GroupManagement />,
-      chairManagement: <ChairManagement />
+      userManagement: (
+        <UserManagement
+          toggleSuccessMessage={this.toggleSuccessMessage}
+          toggleErrorMessage={this.toggleErrorMessage}
+        />
+      ),
+      chairManagement: (
+        <ChairManagement
+          toggleSuccessMessage={this.toggleSuccessMessage}
+          toggleErrorMessage={this.toggleErrorMessage}
+        />
+      )
     }
   };
 
@@ -28,14 +39,24 @@ class AdminPanel extends React.Component {
 
     return (
       <div className="pageWrapper">
-        <Button.Group>
-          <Button disabled={visible} onClick={this.handleShowClick}>
-            <Trans i18nKey="adminpanel-sidebar-show-option" />
-          </Button>
-          <Button disabled={!visible} onClick={this.handleHideClick}>
-            <Trans i18nKey="adminpanel-sidebar-hide-option" />
-          </Button>
-        </Button.Group>
+        <NavBar />
+        <Grid columns={2} padded>
+          <Grid.Row className="adminPanel-buttonRow">
+            <Grid.Column width={12} verticalAlign="middle">
+              <Button.Group>
+                <Button disabled={visible} onClick={this.handleShowClick}>
+                  <Trans i18nKey="adminpanel-sidebar-show-option" />
+                </Button>
+                <Button disabled={!visible} onClick={this.handleHideClick}>
+                  <Trans i18nKey="adminpanel-sidebar-hide-option" />
+                </Button>
+              </Button.Group>
+            </Grid.Column>
+            <Grid.Column floated="right" width={4}>
+              <SemanticToastContainer className="adminPanel-toastContainer" />
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
 
         <Sidebar.Pushable as={Segment} className="panelWrapper">
           <Sidebar
@@ -60,18 +81,7 @@ class AdminPanel extends React.Component {
               <Icon name="user" />
               <Trans i18nKey="adminpanel-menu-user-management-label" />
             </Menu.Item>
-            <Menu.Item
-              as="a"
-              onClick={() => {
-                this.setState({
-                  activeContentFragment: this.state.contentFragments
-                    .groupManagement
-                });
-              }}
-            >
-              <Icon name="group" />
-              <Trans i18nKey="adminpanel-menu-group-management-label" />
-            </Menu.Item>
+
             <Menu.Item
               as="a"
               onClick={() => {
@@ -89,6 +99,40 @@ class AdminPanel extends React.Component {
         </Sidebar.Pushable>
       </div>
     );
+  }
+
+  toggleSuccessMessage(title, message) {
+    setTimeout(() => {
+      toast(
+        {
+          title: title,
+          description: <p>{message}</p>,
+          type: "success",
+          color: "green",
+          size: "mini",
+          animation: "fly left"
+        },
+        () => console.log("toast closed"),
+        () => console.log("toast clicked")
+      );
+    }, 1000);
+  }
+
+  toggleErrorMessage(title, message) {
+    setTimeout(() => {
+      toast(
+        {
+          title: title,
+          description: <p>{message}</p>,
+          type: "error",
+          color: "green",
+          size: "mini",
+          animation: "fly left"
+        },
+        () => console.log("toast closed"),
+        () => console.log("toast clicked")
+      );
+    }, 1000);
   }
 }
 

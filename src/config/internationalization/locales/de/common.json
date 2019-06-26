@@ -20,8 +20,11 @@
   "login-message-new-to-us": "Neu bei uns? ",
   "login-message-call-to-action": "Registrieren",
 
+  "form-dropdown-placeholder": "Option auswählen",
+
   "complete-your-profile-headline": "Vervollständige dein Profil",
   "complete-profile-personal-information-headline": "Persönliches",
+  "complete-profile-adress-information-headline": "Anschrift",
   "complete-profile-firstName-label": "Vorname",
   "complete-profile-firstName-placeholder": "Vorname",
   "complete-profile-dateOfBirth-label": "Geburtsdatum",
@@ -47,6 +50,10 @@
   "complete-profile-houseNumber-placeholder": "Hausnummer",
   "complete-profile-postalCode-label": "Postleitzahl",
   "complete-profile-postalCode-placeholder": "Postleitzahl",
+  "complete-profile-phoneNumber-label": "Telefon",
+  "complete-profile-phoneNumber-placeholder": "Telefonnummer",
+  "complete-profile-phoneNumberMobile-label": "Mobil",
+  "complete-profile-phoneNumberMobile-placeholder": "Mobilnummer",
   "complete-profile-studentStatus-checkbox-label": "Student",
   "complete-profile-studentId-label": "Matrikelnummer",
   "complete-profile-studentId-placeholder": "Matrikelnummer",
@@ -60,6 +67,7 @@
   "complete-profile-roomName-label": "Raum",
   "complete-profile-roomName-placeholder": "Raum",
   "complete-profile-chair-label": "Lehrstuhl",
+  "complete-profile-role-label": "Rolle am Lehrstuhl",
   "complete-profile-chair-placeholder": "Lehrstuhl",
   "complete-profile-additional-email-label": "Öffentliche Email",
   "complete-profile-additional-email-placeholder": "Öffentliche Email",
@@ -82,13 +90,14 @@
   "contact-card-email-label": "Email:",
   "contact-card-mobile-label": "Mobil:",
 
-  "gender-enum-UNSET-option": "k.A",
-  "gender-enum-MALE-option": "Männlich",
-  "gender-enum-FEMALE-option": "Weiblich",
-  "gender-enum-OTHER-option": "Andere",
+  "gender-enum-unset-option": "k.A",
+  "gender-enum-male-option": "Männlich",
+  "gender-enum-female-option": "Weiblich",
+  "gender-enum-other-option": "Andere",
 
   "navbar-search-placeholder": "Suchen...",
   "navbar-logout-button-text": "Abmelden",
+  "navbar-logged-in-as-text": "Angemeldet als ",
 
   "landingpage-hero-text": "Siegener Uni Netzwerk",
   "landingpage-hero-subtext": "Das soziale Uni-Netz der nächsten Studenten-Generation",
@@ -118,9 +127,14 @@
 
   "adminpanel-sidebar-show-option": "Seitenleiste einbelden",
   "adminpanel-sidebar-hide-option": "Seitenleiste ausblenden",
+  "adminpanel-menu-account-management-label": "Accountverwaltung",
   "adminpanel-menu-user-management-label": "Benutzerverwaltung",
   "adminpanel-menu-group-management-label": "Gruppenverwaltung",
   "adminpanel-menu-chair-management-label": "Lehrstuhlverwaltung",
+
+  "usermanagement-edit-user-headline": "Benutzer bearbeiten",
+  "usermanagement-add-user-headline": "Neuen Benutzer anlegen",
+  "complete-profile-account-information-headline": "Accountinformation",
 
   "usermanagement-tableheader-id": "BenutzerId",
   "usermanagement-tableheader-email": "Email",
@@ -149,6 +163,18 @@
   "chairManagement-tableheader-houseNumber": "Hausnummer",
   "chairManagement-tableheader-room": "Raum",
   "chairManagement-tableheader-phoneNumber": "TelefonNr",
+  "chairManagement-tableheader-phoneNumberMobile": "Mobil",
+
+  "chairmanagement-add-chair-headline": "Lehrstuhl hinzufügen",
+  "chairmanagement-edit-chair-headline": "Lehrstuhl bearbeiten",
+
+  "chairManagement-delete-chair-success-title": "",
+  "chairManagement-delete-chair-success-message": "Lehrstuhl gelöscht",
+
+  "chairForm-add-chair-core-data-headline": "Stammdaten",
+  "chairForm-employees-headline": "Mitarbeiter",
+  "edit-chair-chairName-label": "Name des Lehrstuhls",
+  "edit-chair-chairName-placeholder": "Name des Lehrstuhls",
 
   "chairManagement-add-chair-button": "Lehrstuhl hinzufügen",
   "chairManagement-edit-chair-button": "Lehrstuhl bearbeiten",

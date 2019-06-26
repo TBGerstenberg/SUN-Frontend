@@ -1,6 +1,5 @@
 import React from "react";
 import { withTranslation } from "react-i18next";
-import { Form } from "semantic-ui-react";
 import { Field } from "redux-form";
 import i18next from "i18next";
 import DropdownSelector from "../01_atoms/DropdownSelector";
@@ -10,6 +9,8 @@ const GenderDropdownSelector = props => {
     <Field
       name="gender"
       label={i18next.t("complete-profile-gender-label")}
+      defaultValue={props.defaultValue}
+      placeholder={i18next.t("form-dropdown-placeholder")}
       component={DropdownSelector}
       options={[
         {

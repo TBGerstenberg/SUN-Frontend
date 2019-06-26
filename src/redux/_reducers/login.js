@@ -6,7 +6,7 @@ const initialState = {
 
 const attachRolesToUser = user => {
   let roles = [];
-  if (user.isAdmin) {
+  if (user.admin) {
     roles.push("ADMIN");
   }
   user.roles = roles;

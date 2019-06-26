@@ -17,6 +17,13 @@ function register({
   return async dispatch => {
     dispatch(request({ email }));
 
+    console.log(
+      email,
+      password,
+      consentToDataProcessingAgreement,
+      consentToDataProcessingAgreement
+    );
+
     const registrationResponse = await userService.signup(
       email,
       password,
@@ -159,7 +166,7 @@ function logout() {
  * @param {String} firstName - the first name of the user that attempts to complete his profile
  * @param {String} lastName - the last name of the user that attempts to complete his profile
  * @param {Date} dateOfBirth - an ISO-8601 Date string in the format YYYY-DD-MM describing the users date of birth
- * @param {Adress} Adress - an adress containg a cityName, postalCode, streetName and houseNumber
+ * @param {Adress} Adress - an adress containg a cityName, postCode, street and houseNumber
  * @param {boolean} studentStatus  - flag indicating wether the user is a student or not.
  * @param {Date} immatriculationDate -
  * @param {Date} exmatriculationDate -

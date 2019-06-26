@@ -3,40 +3,104 @@ import { connect } from "react-redux";
 import { Trans, withTranslation } from "react-i18next";
 import { Button, Icon, Table, Modal } from "semantic-ui-react";
 import { userActions } from "../redux/_actions";
-import UpdateProfileForm from "./UpdateProfileForm";
 import tableFormattingUtilities from "../utilities/tableFormattingUtilities";
+import AddEntityModal from "./AddEntityModal";
+import UserForm from "../03_organisms/UserForm";
+import onClickOutside from "react-onclickoutside";
+import { userService, accountService } from "../services";
 
 class UserManagement extends React.Component {
-  componentWillMount() {
+  async componentWillMount() {
+    const accountRequest = await accountService.getAllAccounts();
+
+    if (accountRequest.status === 200) {
+      console.log(accountRequest.data);
+      this.setState({
+        accounts: accountRequest.data
+      });
+    } else {
+      console.log(accountRequest.status);
+    }
+
     this.props.dispatch(userActions.getAllUsers());
   }
 
   constructor(props) {
     super(props);
-    this.state = { visible: false, selectedEntry: null };
-    this.renderUsersTableRow = this.renderUsersTableRow.bind(this);
-    this.renderUsersTableHeader = this.renderUsersTableHeader.bind(this);
-    this.renderUsersTableFooter = this.renderUsersTableFooter.bind(this);
+    this.state = {
+      selectedEntry: null,
+      editUserModalOpen: false,
+      addUserModalOpen: false,
+      accounts: []
+    };
+
+    // Table render methods
+    this.renderAccountsTableRow = this.renderAccountsTableRow.bind(this);
+    this.renderAccountsTableHeader = this.renderAccountsTableHeader.bind(this);
+    this.renderAccountsTableFooter = this.renderAccountsTableFooter.bind(this);
+
+    // Button click handlers
+    this.handleAddUserButtonClick = this.handleAddUserButtonClick.bind(this);
+    this.handleEditUserButtonClick = this.handleEditUserButtonClick.bind(this);
+    this.handleDeleteUserButtonClick = this.handleDeleteUserButtonClick.bind(
+      this
+    );
+
+    // Modal opening methods
+    this.openAddUserModal = this.openAddUserModal.bind(this);
+    this.openEditUserModal = this.openEditUserModal.bind(this);
   }
 
   render() {
     return (
       <div className="adminpanel-fragment-wrapper">
-        {this.props.users.length > 0 && (
+        {this.state.accounts.length > 0 && (
           <Table
+            size="small"
             celled
             selectable
-            renderBodyRow={this.renderUsersTableRow}
-            headerRow={this.renderUsersTableHeader}
-            footerRow={this.renderUsersTableFooter}
-            tableData={this.props.users}
+            attached="top"
+            renderBodyRow={this.renderAccountsTableRow}
+            headerRow={this.renderAccountsTableHeader}
+            footerRow={this.renderAccountsTableFooter}
+            tableData={this.state.accounts}
           />
         )}
+
+        {/** Used to add a new user, thus handing a "null" user  */}
+        <AddEntityModal
+          size="large"
+          modalContent={
+            <UserForm
+              account={null}
+              onAbortButtonClick={() => {
+                this.setState({ addUserModalOpen: false });
+              }}
+            />
+          }
+          open={this.state.addUserModalOpen}
+        />
+
+        {/** Used to edit a user  */}
+        <AddEntityModal
+          size="large"
+          modalContent={
+            <UserForm
+              account={
+                this.state.accounts[this.state.selectedEntry - 1] || null
+              }
+              onAbortButtonClick={() => {
+                this.setState({ editUserModalOpen: false });
+              }}
+            />
+          }
+          open={this.state.editUserModalOpen}
+        />
       </div>
     );
   }
 
-  renderUsersTableHeader() {
+  renderAccountsTableHeader() {
     return (
       <Table.Row>
         <Table.HeaderCell>
@@ -45,9 +109,7 @@ class UserManagement extends React.Component {
         <Table.HeaderCell>
           <Trans i18nKey="usermanagement-tableheader-email" />
         </Table.HeaderCell>
-        <Table.HeaderCell>
-          <Trans i18nKey="usermanagement-tableheader-password" />
-        </Table.HeaderCell>
+
         <Table.HeaderCell>
           <Trans i18nKey="usermanagement-tableheader-title" />
         </Table.HeaderCell>
@@ -82,28 +144,28 @@ class UserManagement extends React.Component {
     );
   }
 
-  renderUsersTableRow(user) {
+  renderAccountsTableRow(account) {
+    const user = account.person;
+
     return (
       <Table.Row
-        key={"row" + user.id}
+        key={"row" + account.id}
         onClick={() => {
-          this.setState({ selectedEntry: user.id });
+          this.setState({ selectedEntry: account.id });
         }}
+        active={this.state.selectedEntry === account.id}
       >
         <Table.Cell key="id">
-          {tableFormattingUtilities.numberOrEmpty(user.id)}
+          {tableFormattingUtilities.numberOrEmpty(account.id)}
         </Table.Cell>
         <Table.Cell key="email">
-          {tableFormattingUtilities.stringOrEmpty(user.email)}
-        </Table.Cell>
-        <Table.Cell key="password">
-          {tableFormattingUtilities.stringOrEmpty(user.password)}
+          {tableFormattingUtilities.stringOrEmpty(account.email)}
         </Table.Cell>
         <Table.Cell key="title">
           {tableFormattingUtilities.stringOrEmpty(user.title)}
         </Table.Cell>
         <Table.Cell key="gender">
-          {tableFormattingUtilities.stringOrEmpty(user.gender)}
+          {tableFormattingUtilities.genderEnumToString(user.gender)}
         </Table.Cell>
         <Table.Cell key="firstName">
           {tableFormattingUtilities.stringOrEmpty(user.firstName)}
@@ -127,13 +189,15 @@ class UserManagement extends React.Component {
           {tableFormattingUtilities.stringValueForBoolean(user.studentStatus)}
         </Table.Cell>
         <Table.Cell key="isEmployee">
-          {tableFormattingUtilities.stringValueForBoolean(user.employeeStatus)}
+          {tableFormattingUtilities.stringValueForBoolean(
+            user.chairs && user.chairs.length > 0
+          )}
         </Table.Cell>
       </Table.Row>
     );
   }
 
-  renderUsersTableFooter() {
+  renderAccountsTableFooter() {
     return (
       <Table.Row>
         <Table.HeaderCell colSpan="14">
@@ -155,6 +219,7 @@ class UserManagement extends React.Component {
             labelPosition="left"
             size="small"
             disabled={!this.state.selectedEntry}
+            onClick={this.handleEditUserButtonClick}
           >
             <Icon name="edit" />
             <Trans i18nKey="userManagement-edit-user-button" />
@@ -166,6 +231,7 @@ class UserManagement extends React.Component {
             labelPosition="left"
             size="small"
             disabled={!this.state.selectedEntry}
+            onClick={this.handleDeleteUserButtonClick}
           >
             <Icon name="trash" />
             <Trans i18nKey="userManagement-delete-user-button" />
@@ -176,12 +242,33 @@ class UserManagement extends React.Component {
   }
 
   handleAddUserButtonClick() {
-    this.openModalUserForm();
+    this.openAddUserModal();
   }
 
-  openModalUserForm() {
-    return <Modal />;
+  handleEditUserButtonClick() {
+    this.openEditUserModal();
   }
+
+  handleDeleteUserButtonClick() {
+    accountService.deleteAccount(this.state.selectedEntry);
+  }
+
+  openEditUserModal() {
+    return this.setState({
+      editUserModalOpen: true
+    });
+  }
+  openAddUserModal() {
+    return this.setState({
+      addUserModalOpen: true
+    });
+  }
+
+  handleClickOutside = evt => {
+    this.setState({
+      selectedEntry: null
+    });
+  };
 }
 
 const mapStateToProps = state => {
@@ -190,48 +277,6 @@ const mapStateToProps = state => {
   };
 };
 
-export default withTranslation()(connect(mapStateToProps)(UserManagement));
-
-/**[
-    {
-      id: 1,
-      firstName: "Sebastian",
-      lastName: "Zilles",
-      title: null,
-      gender: 1,
-      birthDate: "1994-01-23T00:00:00",
-      address: {
-        id: 1,
-        name: null,
-        street: "Am Gänschenwald 15",
-        postCode: "51467",
-        city: "Bergisch Gladbach",
-        room: "Example",
-        phoneNumber: "01605000231",
-        phoneNumberMobile: null,
-        email: null
-      },
-      studentStatus: {
-        id: 0,
-        personForeignId: 0,
-        person: null,
-        matriculationNumber: null,
-        matriculationDate: "0001-01-01T00:00:00",
-        exmatriculationDate: "0001-01-01T00:00:00",
-        subject: null
-      },
-      chairs: [
-        {
-          personId: 1,
-          chairId: 1,
-          chair: null,
-          role: 2,
-          active: false,
-          chairAdmin: false
-        }
-      ],
-      chairSubscriptions: [],
-      authoredChairPosts: [],
-      skills: []
-    }
-  ], */
+export default withTranslation()(
+  connect(mapStateToProps)(onClickOutside(UserManagement))
+);

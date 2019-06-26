@@ -7,7 +7,7 @@ import i18next from "i18next";
 const PostalCodeInput = props => {
   return (
     <Field
-      name="postalCode"
+      name="postCode"
       component={LabelInputField}
       label={{
         content: i18next.t("complete-profile-postalCode-label")

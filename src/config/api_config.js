@@ -2,6 +2,13 @@ const BASEURL = "http://localhost:5000/api";
 
 const API_CONFIG = {
   BASEURL: "http://localhost:5000/api",
+  ACCOUNT: {
+    GET_ALL_ACCOUNTS_URL: BASEURL + "/account",
+    EDIT_ACCCOUNT_URL: BASEURL + "/account/", // : accountId
+    DELETE_ACCOUNT_URL: accountId => {
+      return BASEURL + "/account/" + accountId; // : accountId
+    }
+  },
   REGISTRATION: {
     POST_REGISTRATION_URL: BASEURL + "/auth/signup"
   },
@@ -18,7 +25,19 @@ const API_CONFIG = {
   },
   CHAIRS: {
     GET_ALL_CHAIRS_URL: BASEURL + "/chairs",
+
     GET_SINGLE_CHAIR_URL: chairId => {
+      return BASEURL + "/chairs/"  + chairId;
+    },
+
+    CREATE_CHAIR_URL: () => {
+      return BASEURL + "/chairs";
+    },
+    EDIT_CHAIR_URL: chairId => {
+      return BASEURL + "/chairs/" + chairId;
+    },
+    DELETE_CHAIR_URL: chairId => {
+
       return BASEURL + "/chairs/" + chairId;
     }
   }

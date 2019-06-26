@@ -98,17 +98,17 @@ const userService = {
     try {
       // Build the request body
       const registrationRequestBody = {
-        Email: email,
-        Password: password
+        email: email,
+        password: password
         //consentToDataProcessingAgreement: consentToDataProcessingAgreement,
         //consentToTermsOfService: consentToTermsOfService
       };
 
       console.log(
         "Issuing a Signup request with " +
-          registrationRequestBody.email +
+          registrationRequestBody.Email +
           " and " +
-          registrationRequestBody.password +
+          registrationRequestBody.Password +
           " and consent to data processing:  " +
           consentToDataProcessingAgreement +
           " and Consent to terms of service:  " +
@@ -158,7 +158,7 @@ const userService = {
    * @param {String} title - the acadaemic or professional title of the user that attempts to complete his profile
    * @param {String} gender - the gender of the user that attempts to complete his profile - can be "male", "female" or "other",
    * @param {Date} birthDate - an ISO-8601 Date string in the format YYYY-DD-MM describing the users date of birth
-   * @param {Object} address - Object containing a cityName, postalCode, StreetName and HouseNumber
+   * @param {Object} address - Object containing a cityName, postCode, StreetName and HouseNumber
    * @param {Object} studentStatus  - Object Containing a StudentId ("Matrikelnummer"), courseOfStudy, enrollmentDate and deregistrationDate
    * @param {Array of Numbers} chairs - Array of chairs that the user belongs to.
    * @param {Array of Objects} skills - catalogue of skills conating a skillName (String) and a skillRating (number, 0-5)
