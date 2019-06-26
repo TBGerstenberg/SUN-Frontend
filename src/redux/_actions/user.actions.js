@@ -277,13 +277,29 @@ function getSingleUser(userId) {
   }
 }
 
+function addSubscription(subscription) {
+  return {
+    type: userConstants.ADD_SUBSCRIPTION,
+    payload: { subscription: subscription }
+  };
+}
+
+function removeSubscription(subscription) {
+  return {
+    type: userConstants.REMOVE_SUBSCRIPTION,
+    payload: { subscription: subscription }
+  };
+}
+
 const userActions = {
   register,
   login,
   logout,
   getAllUsers,
   getSingleUser,
-  updateProfile
+  updateProfile,
+  addSubscription,
+  removeSubscription
 };
 
 export default userActions;

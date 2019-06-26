@@ -14,8 +14,7 @@ class NewPostModal extends Component {
     this.state = {
       title: "",
       content: "",
-      subject: "",
-      
+      subject: ""
     };
 
     this.updateInputTheme = this.updateInputTheme.bind(this);
@@ -23,13 +22,12 @@ class NewPostModal extends Component {
     this.handleCheckedJob = this.handleCheckedJob.bind(this);
     this.handleCheckedEvent = this.handleCheckedEvent.bind(this);
     this.handleCheckedOther = this.handleCheckedOther.bind(this);
-  
   }
 
   render() {
     return (
       <div>
-        <Modal   open={this.props.open} >
+        <Modal open={this.props.open}>
           <Modal.Header>Neuer Post</Modal.Header>
           <Modal.Description>
             <Form>
@@ -62,13 +60,12 @@ class NewPostModal extends Component {
               label="Bachelorarbeit"
               checked={this.state.isCheckedOther}
             />
-            {console.log(this.state.isCheckedJob)}
-            {console.log(this.state.isCheckedEvent)}
-            {console.log(this.state.isCheckedOther)}
           </Modal.Description>
           <Modal.Actions>
-            <Button secondary onClick = {this.props.onAbortButtonClick}
-            > Abbrechen </Button>
+            <Button secondary onClick={this.props.onAbortButtonClick}>
+              {" "}
+              Abbrechen{" "}
+            </Button>
             <Button
               onClick={() => {
                 const newPost = {
@@ -77,12 +74,9 @@ class NewPostModal extends Component {
                   subject: this.state.subject
                 };
 
-                
-{//* @ToDo: Hier wird die Server Anfrage reingeschickt 
-}
-
-
-
+                {
+                  //* @ToDo: Hier wird die Server Anfrage reingeschickt
+                }
 
                 this.props.onNewPost(newPost);
 
@@ -91,8 +85,7 @@ class NewPostModal extends Component {
                   isCheckedEvent: false,
                   isCheckedOther: false,
                   title: "",
-                  content:""
-                  
+                  content: ""
                 });
               }}
               color="teal"
@@ -135,9 +128,6 @@ class NewPostModal extends Component {
   handleContentInputChange(event) {
     this.setState({ content: event.target.value });
   }
-
-
 }
-
 
 export default NewPostModal;

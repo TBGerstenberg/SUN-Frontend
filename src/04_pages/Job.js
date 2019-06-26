@@ -36,7 +36,7 @@ export class Job extends React.Component {
           <Grid.Row>
             <Grid.Column textAlign="center" width={3}>
               <Avatar_Job />
-              <ConFirmModal />
+              {/* <ConfirmModal /> */}
               <NewPostModal
                 onNewPost={newPostText => this.props.addTodo(newPostText)}
               />

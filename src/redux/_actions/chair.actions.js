@@ -9,14 +9,12 @@ function getAllChairs() {
     dispatch(request());
     const getAllChairsResponse = await chairService.getAllChairs(accessToken);
 
-    if (getAllChairsResponse) {
+    if (getAllChairsResponse && getAllChairsResponse.status === 200) {
       dispatch(success(getAllChairsResponse.data));
     } else {
       dispatch(failure(getAllChairsResponse));
     }
   };
-
-
 
   /**
    * Redux action creator triggered when a FETCH-ALL-request for chairs is started
@@ -42,23 +40,17 @@ function getAllChairs() {
   }
 }
 
-
 function getSingleChair(chairId) {
   return async (dispatch, getState) => {
-   
-
-
     dispatch(request());
     const getSingleChairResponse = await chairService.getSingleChair(chairId);
 
-    if (getSingleChairResponse) {
+    if (getSingleChairResponse && getSingleChairResponse.status === 200) {
       dispatch(success(getSingleChairResponse.data));
     } else {
       dispatch(failure(getSingleChairResponse));
     }
   };
-
-  
 
   /**
    * Redux action creator triggered when a FETCH-ALL-request for chairs is started
@@ -90,5 +82,3 @@ const chairActions = {
 };
 
 export default chairActions;
-
-

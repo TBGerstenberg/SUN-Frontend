@@ -62,6 +62,66 @@ const loginReducer = (state = initialState, action) => {
     case userConstants.LOGOUT_FAILURE:
       return { ...state, loggingOut: false };
 
+    case userConstants.ADD_SUBSCRIPTION: {
+      const userHasSubscribedToChair = state.user.person.subscriptions.find(
+        element => {
+          return element.pageId === action.payload.subscription.pageId;
+        }
+      );
+
+      console.log(userHasSubscribedToChair);
+
+      if (!userHasSubscribedToChair) {
+        let mutatedSubscriptions = [...state.user.person.subscriptions];
+        mutatedSubscriptions.push(action.payload.subscription);
+
+        return {
+          ...state,
+          user: {
+            ...state.user,
+            person: {
+              ...state.user.person,
+              subscriptions: mutatedSubscriptions
+            }
+          }
+        };
+      } else {
+        return { ...state };
+      }
+    }
+
+    case userConstants.REMOVE_SUBSCRIPTION: {
+      const indexOfChair = state.user.person.subscriptions.findIndex(
+        element => {
+          return element.pageId === action.payload.subscription.pageId;
+        }
+      );
+
+      console.log(indexOfChair);
+
+      const userHasSubscribedToChair = indexOfChair !== -1;
+
+      console.log(userHasSubscribedToChair);
+
+      if (userHasSubscribedToChair) {
+        let mutatedSubscriptions = [...state.user.person.subscriptions];
+        mutatedSubscriptions.splice(indexOfChair);
+
+        return {
+          ...state,
+          user: {
+            ...state.user,
+            person: {
+              ...state.user.person,
+              subscriptions: mutatedSubscriptions
+            }
+          }
+        };
+      } else {
+        return { ...state };
+      }
+    }
+
     default:
       return state;
   }

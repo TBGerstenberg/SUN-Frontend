@@ -2,6 +2,9 @@
  * Constants used as action types in ../_actions/user.actions.js
  */
 const userConstants = {
+  ADD_SUBSCRIPTION: "ADD_SUBSCRIPTION",
+  REMOVE_SUBSCRIPTION: "REMOVE_SUBSCRIPTION",
+
   LOGIN_REQUEST: "USERS_LOGIN_REQUEST",
   LOGIN_SUCCESS: "USERS_LOGIN_SUCCESS",
   LOGIN_FAILURE: "USERS_LOGIN_FAILURE",

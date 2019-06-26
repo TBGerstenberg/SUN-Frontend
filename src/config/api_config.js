@@ -27,7 +27,7 @@ const API_CONFIG = {
     GET_ALL_CHAIRS_URL: BASEURL + "/chairs",
 
     GET_SINGLE_CHAIR_URL: chairId => {
-      return BASEURL + "/chairs/"  + chairId;
+      return BASEURL + "/chairs/" + chairId;
     },
 
     CREATE_CHAIR_URL: () => {
@@ -37,8 +37,13 @@ const API_CONFIG = {
       return BASEURL + "/chairs/" + chairId;
     },
     DELETE_CHAIR_URL: chairId => {
-
       return BASEURL + "/chairs/" + chairId;
+    },
+    SUBSCRIBE_TO_CHAIR_URL: chairId => {
+      return BASEURL + "/chairs/" + chairId + "/subscription";
+    },
+    UNSUBSCRIBE_FROM_CHAIR_URL: chairId => {
+      return BASEURL + "/chairs/" + chairId + "/subscription";
     }
   }
 };

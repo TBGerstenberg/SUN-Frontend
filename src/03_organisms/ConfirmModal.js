@@ -2,21 +2,13 @@ import { Button, Header, Icon, Modal } from "semantic-ui-react";
 import React, { Component } from "react";
 
 class ConfirmModal extends Component {
-  state = { open: false };
-
-  open = () => this.setState({ open: true });
-  close = () => this.setState({ open: false });
-
   render() {
-    const { open } = this.state;
-
     return (
       <Modal
-        open={open}
-        onOpen={this.open}
-        onClose={this.close}
+        open={this.props.open}
+        onOpen={this.props.onOpen}
+        onClose={this.props.onClose}
         size="small"
-        trigger={<Button primary>Abonnieren</Button>}
       >
         <Modal.Header />
         <Modal.Content>
@@ -26,7 +18,7 @@ class ConfirmModal extends Component {
               fontSize: "14pt"
             }}
           >
-            Erfolgreich Abonniert!
+            {this.props.content}
           </p>
         </Modal.Content>
         <Modal.Actions>
@@ -35,7 +27,7 @@ class ConfirmModal extends Component {
             icon="checkmark"
             labelPosition="right"
             content="Alles klar"
-            onClick={this.close}
+            onClick={this.props.onClose}
           />
         </Modal.Actions>
       </Modal>

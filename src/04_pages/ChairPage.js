@@ -1,7 +1,7 @@
 import React from "react";
 import NavBar from "../03_organisms/NavBar";
 import NewPostModal from "../03_organisms/NewPost";
-import ConFirmModal from "../03_organisms/ConfirmModal";
+import ConfirmModal from "../03_organisms/ConfirmModal";
 import AvatarJob from "../assets/images/chair_avatar.png";
 import { withTranslation, Trans } from "react-i18next";
 import ContactCard from "../03_organisms/ContactCard";
@@ -25,13 +25,19 @@ import {
 } from "semantic-ui-react";
 
 import { connect } from "react-redux";
-import { jobPostActions, chairActions } from "../redux/_actions";
+import { jobPostActions, chairActions, userActions } from "../redux/_actions";
+import { chairService } from "../services";
+import { SemanticToastContainer, toast } from "react-semantic-toasts";
+import SubscribeButton from "../02_molecules/SubscribeButton";
 
 export class ChairPage extends React.Component {
   constructor(props) {
     super(props);
 
     this.renderPostsFragment = this.renderPostsFragment.bind(this);
+    this._handleSubscribeButtonClick = this._handleSubscribeButtonClick.bind(
+      this
+    );
 
     const panes = [
       { menuItem: "Aktuelles", render: this.renderPostsFragment },
@@ -42,16 +48,33 @@ export class ChairPage extends React.Component {
       { menuItem: "Tab 3", render: () => <Tab.Pane>Tab 3 Content</Tab.Pane> }
     ];
 
-    this.state = { chairId: null, newPostModalOpen: false, tabBarPanes: panes };
+    this.state = {
+      chairId: null,
+      newPostModalOpen: false,
+      tabBarPanes: panes,
+      subscribeModalOpen: false,
+      unsubscribeModalOpen: false,
+      userHasSubscribedToChair: null,
+      subscriptions: null
+    };
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
+    console.log(nextProps.chairSubscriptions);
+
     if (nextProps.chairId !== prevState.chairId) {
-      console.log(nextProps);
+      const userHasSubscribedToChair = nextProps.chairSubscriptions.find(
+        element => {
+          return element.pageId === nextProps.chairId;
+        }
+      );
 
       nextProps.getSingleChair(nextProps.chairId);
 
-      return { chairId: nextProps.chairId };
+      return {
+        chairId: nextProps.chairId,
+        userHasSubscribedToChair: userHasSubscribedToChair
+      };
     } else return null;
   }
 
@@ -85,14 +108,82 @@ export class ChairPage extends React.Component {
     );
   }
 
+  async _handleSubscribeButtonClick() {
+    if (this.state.userHasSubscribedToChair) {
+      const unsubscribeRequest = await chairService.unsubscribeFromChair(
+        this.props.chairId
+      );
+
+      if (unsubscribeRequest.status === 200) {
+        console.log("setting subscribeModal Open");
+        this.setState({
+          userHasSubscribedToChair: false,
+          unsubscribeModalOpen: true
+        });
+        this.props.removeSubscription({ pageId: this.props.chairId });
+      } else {
+      }
+    } else {
+      const subscriptionRequest = await chairService.subscribeToChair(
+        this.props.chairId
+      );
+
+      if (subscriptionRequest.status === 200) {
+        console.log("setting subscribeModal Open");
+        this.setState({
+          userHasSubscribedToChair: true,
+          subscribeModalOpen: true
+        });
+        this.props.addSubscription({ pageId: this.props.chairId });
+      } else {
+      }
+    }
+  }
+
   render() {
+    const chairName = this.props.currentlyViewedChair
+      ? this.props.currentlyViewedChair.name
+      : "";
+
     return (
       <div>
         <NavBar />
-        <HeaderChairPage />
 
         <Grid columns={3} centered>
-          <Grid.Row>
+          <Grid.Row columns={3}>
+            <Grid.Column width={11}>
+              <Header as="h1" color="blue">
+                {"Lehrstuhl " + chairName}
+              </Header>
+            </Grid.Column>
+            <Grid.Column textAlign="center" width={1} />
+            <Grid.Column width={3} textAlign="left">
+              <ConfirmModal
+                open={this.state.subscribeModalOpen}
+                content={"Erfolgreich abonniert"}
+                onOpen={() => {}}
+                onClose={() => {
+                  this.setState({ subscribeModalOpen: false });
+                }}
+              />
+
+              <ConfirmModal
+                open={this.state.unsubscribeModalOpen}
+                content={"Erfolgreich deabonniert"}
+                onOpen={() => {}}
+                onClose={() => {
+                  this.setState({ unsubscribeModalOpen: false });
+                }}
+              />
+              <SubscribeButton
+                onClick={this._handleSubscribeButtonClick}
+                floated="left"
+                subscribed={this.state.userHasSubscribedToChair}
+              />
+            </Grid.Column>
+          </Grid.Row>
+
+          <Grid.Row columns={3}>
             <Grid.Column width={11}>
               <Tab
                 menu={{ fluid: true, vertical: true, tabular: true }}
@@ -123,7 +214,6 @@ export class ChairPage extends React.Component {
                 open={this.state.newPostModalOpen}
               />
             </Grid.Column>
-
             <Grid.Column width={3}>
               <Header>Înformationen</Header>
               <ContactCard />
@@ -139,14 +229,20 @@ export class ChairPage extends React.Component {
 let mapStateToProps = state => {
   return {
     posts: state.post.posts,
-    chairId: state.location.payload.chairId
+    chairId: state.location.payload.chairId,
+    currentlyViewedChair: state.chair.currentlyViewedChair,
+    chairSubscriptions: state.login.user
+      ? state.login.user.person.subscriptions
+      : null
   };
 };
 
 let mapDispatchToProps = {
   addPost: jobPostActions.addPost,
   addPostContent: jobPostActions.addPostContent,
-  getSingleChair: chairActions.getSingleChair
+  getSingleChair: chairActions.getSingleChair,
+  addSubscription: userActions.addSubscription,
+  removeSubscription: userActions.removeSubscription
 };
 
 let PostContainer = connect(
@@ -154,15 +250,3 @@ let PostContainer = connect(
   mapDispatchToProps
 )(ChairPage);
 export default PostContainer;
-
-const HeaderChairPage = () => {
-  return (
-    <Header as="h1" color="blue" block>
-      Lehrstuhlseite
-      <span textAlign="right">
-        {" "}
-        <ConFirmModal />
-      </span>
-    </Header>
-  );
-};
