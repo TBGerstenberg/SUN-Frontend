@@ -11,7 +11,7 @@ class AllChairs extends React.Component {
     this.state = { chairs: null };
   }
 
-  componentWillMount(allChairs){
+  componentWillMount(){
      this.props.getAllChairs()
   }
 
@@ -25,7 +25,6 @@ class AllChairs extends React.Component {
           <Grid.Row>
             <Card>
               <Card.Content>
-                {this.props.getAllChairs.name}
                 <Card.Header />
                 <Card.Description />
                 <Card.Meta>
@@ -54,7 +53,7 @@ class AllChairs extends React.Component {
 
 let mapStateToProps = state => {
   return {
-    chairs: state.location.payload.chairs
+    chairs: state.chair.chairs
   };
 };
 
