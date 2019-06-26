@@ -70,11 +70,11 @@ class ChairManagement extends React.Component {
               chair={null}
               onAbortButtonClick={this.closeAddChairModal}
               onCompleteWithSuccess={() => {
-                this.props.toggleSuccessMessage();
+                this.props.toggleSuccessMessage("Erfolg", "Lehrstuhl angelegt");
                 this.closeAddChairModal();
               }}
               onCompleteWithError={error => {
-                this.props.toggleErrorMessage();
+                this.props.toggleErrorMessage("Fehler", "irgendwas");
                 this.closeAddChairModal();
               }}
             />
@@ -96,7 +96,7 @@ class ChairManagement extends React.Component {
                 this.closeEditChairModal();
               }}
               onCompleteWithError={error => {
-                this.props.toggleErrorMessage("Fehler", error);
+                this.props.toggleErrorMessage("Fehler", "irgendwas");
                 this.closeEditChairModal();
               }}
             />

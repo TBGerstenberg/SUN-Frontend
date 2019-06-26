@@ -49,6 +49,8 @@ class UserManagement extends React.Component {
     // Modal opening methods
     this.openAddUserModal = this.openAddUserModal.bind(this);
     this.openEditUserModal = this.openEditUserModal.bind(this);
+    this.closeAddUserModal = this.closeAddUserModal.bind(this);
+    this.closeEditUserModal = this.closeEditUserModal.bind(this);
   }
 
   render() {
@@ -76,6 +78,14 @@ class UserManagement extends React.Component {
               onAbortButtonClick={() => {
                 this.setState({ addUserModalOpen: false });
               }}
+              onCompleteWithSuccess={() => {
+                this.props.toggleSuccessMessage("Erfolg", "Benutzer angelegt");
+                this.closeAddUserModal();
+              }}
+              onCompleteWithError={error => {
+                this.props.toggleErrorMessage("Fehler", error);
+                this.closeAddUserModal();
+              }}
             />
           }
           open={this.state.addUserModalOpen}
@@ -91,6 +101,16 @@ class UserManagement extends React.Component {
               }
               onAbortButtonClick={() => {
                 this.setState({ editUserModalOpen: false });
+              }}
+              onCompleteWithSuccess={() => {
+                this.props.toggleSuccessMessage("Erfolg", "Benutzer angelegt");
+                this.closeEditUserModal();
+              }}
+              onCompleteWithError={error => {
+                console.log(this.props);
+                console.log(this.props.toggleErrorMessage);
+                this.props.toggleErrorMessage("Fehler", error);
+                this.closeEditUserModal();
               }}
             />
           }
@@ -249,8 +269,19 @@ class UserManagement extends React.Component {
     this.openEditUserModal();
   }
 
-  handleDeleteUserButtonClick() {
-    accountService.deleteAccount(this.state.selectedEntry);
+  async handleDeleteUserButtonClick() {
+    const deleteAccountRequest = accountService.deleteAccount(
+      this.state.selectedEntry
+    );
+
+    if (deleteAccountRequest.status === 200) {
+      this.props.toggleSuccessMessage("Erfolg", "Benutzer gelöscht");
+    } else {
+      this.props.toggleErrorMessage(
+        "Fehler",
+        "Benutzer konnte nicht gelöscht werden"
+      );
+    }
   }
 
   openEditUserModal() {
@@ -258,9 +289,22 @@ class UserManagement extends React.Component {
       editUserModalOpen: true
     });
   }
+
+  closeEditUserModal() {
+    this.setState({
+      editUserModalOpen: false
+    });
+  }
+
   openAddUserModal() {
     return this.setState({
       addUserModalOpen: true
+    });
+  }
+
+  closeAddUserModal() {
+    this.setState({
+      addUserModalOpen: false
     });
   }
 

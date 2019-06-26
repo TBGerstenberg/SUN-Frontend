@@ -45,15 +45,27 @@ class UserForm extends React.Component {
         account.person.studentStatus.exmatriculationDate || "";
     }
 
-    this.state = {
-      currentSkillInputValue: "",
-      currentlySelectedSkill: null,
-      dateOfBirth: props.account.person ? props.account.person.birthDate : "",
-      immatriculationDate: immatriculationDate,
-      exmatriculationDate: exmatriculationDate,
-      mode: mode,
-      account: props.account
-    };
+    if (props.account && props.account.person) {
+      this.state = {
+        currentSkillInputValue: "",
+        currentlySelectedSkill: null,
+        dateOfBirth: props.account.person ? props.account.person.birthDate : "",
+        immatriculationDate: immatriculationDate,
+        exmatriculationDate: exmatriculationDate,
+        mode: mode,
+        account: props.account
+      };
+    } else {
+      this.state = {
+        currentSkillInputValue: "",
+        currentlySelectedSkill: null,
+        dateOfBirth: "",
+        immatriculationDate: immatriculationDate,
+        exmatriculationDate: exmatriculationDate,
+        mode: mode,
+        account: props.account
+      };
+    }
 
     this._handleSkillInputChange = this._handleSkillInputChange.bind(this);
     this._handleSkillSubmission = this._handleSkillSubmission.bind(this);
@@ -98,10 +110,10 @@ class UserForm extends React.Component {
           }
           <Grid.Row>
             <Header as="h3" color="blue" textAlign="center">
-              {this.props.mode === "edit" && (
+              {this.state.mode === "edit" && (
                 <Trans i18nKey="usermanagement-edit-user-headline" />
               )}
-              {this.props.mode === "add" && (
+              {this.state.mode === "add" && (
                 <Trans i18nKey="usermanagement-add-user-headline" />
               )}
             </Header>
@@ -141,7 +153,7 @@ class UserForm extends React.Component {
                   formValidationUtilities.uniSiegenEmail
                 ]}
               />
-              {this.mode === "add" && <PasswordInput />}
+              {this.state.mode === "add" && <PasswordInput />}
             </Grid.Column>
             <Grid.Column width={6}>
               <Form.Group>
@@ -363,9 +375,9 @@ class UserForm extends React.Component {
                       items={props.user ? props.user.chairs : []}
                       chairs={props.chairs}
                       onChange={personChairRelations => {
-                        this.setState({
+                        /* this.setState({
                           personChairRelations: personChairRelations
-                        });
+                        }); */
                       }}
                     />
                   )}
@@ -379,18 +391,18 @@ class UserForm extends React.Component {
           }
           <Grid.Row columns={2}>
             <Grid.Column width={3}>
-              <Form.Field
-                control={Button}
+              <Button
                 secondary
                 onClick={props.onAbortButtonClick}
+                type="button"
               >
-                {i18next.t("complete-your-profile-abort-button")}
-              </Form.Field>
+                {i18next.t("complete-your-profile-continue-button")}
+              </Button>
             </Grid.Column>
             <Grid.Column width={3}>
-              <Form.Field control={Button} primary type="submit">
+              <Button type="submit" primary>
                 {i18next.t("complete-your-profile-continue-button")}
-              </Form.Field>
+              </Button>
             </Grid.Column>
           </Grid.Row>
         </Grid>
@@ -470,6 +482,7 @@ class UserForm extends React.Component {
    * @param {} values
    */
   async _handleUpdateProfileSubmit(values) {
+    console.log("Triggered Submit");
     const skillCatalogue = this.props.skillCatalogue;
     let skillsRatings = [];
 
@@ -518,20 +531,41 @@ class UserForm extends React.Component {
     };
 
     if (this.state.mode === "edit") {
-      accountService.editAccount(accountValues, this.state.account.id);
+      const editAccountRequest = await accountService.editAccount(
+        accountValues,
+        this.state.account.id
+      );
+
+      if (editAccountRequest.status === 200) {
+        this.props.onCompleteWithSuccess();
+      } else {
+        this.props.onCompleteWithError();
+      }
       console.log("Editing a User");
     } else if (this.state.mode === "add") {
       console.log("Adding new User");
+
       // Create a new Account
-      const newAccountRequest = userService.signup(
+      const newAccountRequest = await userService.signup(
         values.email,
         values.password
       );
 
+      console.log(newAccountRequest);
+
       // If errors occur, update the profile of with values from the form.
       if (newAccountRequest.error == null && newAccountRequest.status === 200) {
-        accountValues.person.userId = newAccountRequest.data.person.id;
-        userService.updateProfile(accountValues.person);
+        console.log("Updating profile");
+        accountValues.person.userId = newAccountRequest.user.person.id;
+        const updateProfileRequest = userService.updateProfile(
+          accountValues.person
+        );
+
+        if (updateProfileRequest.status === 200) {
+          this.props.onCompleteWithSuccess();
+        } else {
+          this.props.onCompleteWithError();
+        }
       }
     }
   }

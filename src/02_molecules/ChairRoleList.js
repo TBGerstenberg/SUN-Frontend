@@ -64,7 +64,7 @@ class ChairRoleList extends React.Component {
                 />
               </Grid.Column>
               <Grid.Column width={3} floated="right">
-                <Button onClick={this.handleAddRoleButtonClick}>
+                <Button onClick={this.handleAddRoleButtonClick} type="button">
                   Hinzufügen
                 </Button>
               </Grid.Column>

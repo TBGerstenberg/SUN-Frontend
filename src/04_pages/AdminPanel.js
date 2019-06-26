@@ -13,7 +13,12 @@ import { SemanticToastContainer, toast } from "react-semantic-toasts";
 class AdminPanel extends React.Component {
   state = {
     visible: false,
-    activeContentFragment: <UserManagement />,
+    activeContentFragment: (
+      <UserManagement
+        toggleSuccessMessage={this.toggleSuccessMessage}
+        toggleErrorMessage={this.toggleErrorMessage}
+      />
+    ),
     contentFragments: {
       userManagement: (
         <UserManagement
@@ -125,7 +130,7 @@ class AdminPanel extends React.Component {
           title: title,
           description: <p>{message}</p>,
           type: "error",
-          color: "green",
+
           size: "mini",
           animation: "fly left"
         },
