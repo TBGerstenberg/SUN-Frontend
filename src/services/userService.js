@@ -98,17 +98,17 @@ const userService = {
     try {
       // Build the request body
       const registrationRequestBody = {
-        Email: email,
-        Password: password
+        email: email,
+        password: password
         //consentToDataProcessingAgreement: consentToDataProcessingAgreement,
         //consentToTermsOfService: consentToTermsOfService
       };
 
       console.log(
         "Issuing a Signup request with " +
-          registrationRequestBody.email +
+          registrationRequestBody.Email +
           " and " +
-          registrationRequestBody.password +
+          registrationRequestBody.Password +
           " and consent to data processing:  " +
           consentToDataProcessingAgreement +
           " and Consent to terms of service:  " +

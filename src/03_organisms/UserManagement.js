@@ -7,11 +7,21 @@ import tableFormattingUtilities from "../utilities/tableFormattingUtilities";
 import AddEntityModal from "./AddEntityModal";
 import UserForm from "../03_organisms/UserForm";
 import onClickOutside from "react-onclickoutside";
-import { userService } from "../services";
-import accountService from "../services/accountService";
+import { userService, accountService } from "../services";
 
 class UserManagement extends React.Component {
-  componentWillMount() {
+  async componentWillMount() {
+    const accountRequest = await accountService.getAllAccounts();
+
+    if (accountRequest.status === 200) {
+      console.log(accountRequest.data);
+      this.setState({
+        accounts: accountRequest.data
+      });
+    } else {
+      console.log(accountRequest.status);
+    }
+
     this.props.dispatch(userActions.getAllUsers());
   }
 
@@ -20,13 +30,14 @@ class UserManagement extends React.Component {
     this.state = {
       selectedEntry: null,
       editUserModalOpen: false,
-      addUserModalOpen: false
+      addUserModalOpen: false,
+      accounts: []
     };
 
     // Table render methods
-    this.renderUsersTableRow = this.renderUsersTableRow.bind(this);
-    this.renderUsersTableHeader = this.renderUsersTableHeader.bind(this);
-    this.renderUsersTableFooter = this.renderUsersTableFooter.bind(this);
+    this.renderAccountsTableRow = this.renderAccountsTableRow.bind(this);
+    this.renderAccountsTableHeader = this.renderAccountsTableHeader.bind(this);
+    this.renderAccountsTableFooter = this.renderAccountsTableFooter.bind(this);
 
     // Button click handlers
     this.handleAddUserButtonClick = this.handleAddUserButtonClick.bind(this);
@@ -43,16 +54,16 @@ class UserManagement extends React.Component {
   render() {
     return (
       <div className="adminpanel-fragment-wrapper">
-        {this.props.users.length > 0 && (
+        {this.state.accounts.length > 0 && (
           <Table
             size="small"
             celled
             selectable
             attached="top"
-            renderBodyRow={this.renderUsersTableRow}
-            headerRow={this.renderUsersTableHeader}
-            footerRow={this.renderUsersTableFooter}
-            tableData={this.props.users}
+            renderBodyRow={this.renderAccountsTableRow}
+            headerRow={this.renderAccountsTableHeader}
+            footerRow={this.renderAccountsTableFooter}
+            tableData={this.state.accounts}
           />
         )}
 
@@ -61,7 +72,7 @@ class UserManagement extends React.Component {
           size="large"
           modalContent={
             <UserForm
-              user={null}
+              account={null}
               onAbortButtonClick={() => {
                 this.setState({ addUserModalOpen: false });
               }}
@@ -75,7 +86,9 @@ class UserManagement extends React.Component {
           size="large"
           modalContent={
             <UserForm
-              user={this.props.users[this.state.selectedEntry - 1] || null}
+              account={
+                this.state.accounts[this.state.selectedEntry - 1] || null
+              }
               onAbortButtonClick={() => {
                 this.setState({ editUserModalOpen: false });
               }}
@@ -87,7 +100,7 @@ class UserManagement extends React.Component {
     );
   }
 
-  renderUsersTableHeader() {
+  renderAccountsTableHeader() {
     return (
       <Table.Row>
         <Table.HeaderCell>
@@ -96,9 +109,7 @@ class UserManagement extends React.Component {
         <Table.HeaderCell>
           <Trans i18nKey="usermanagement-tableheader-email" />
         </Table.HeaderCell>
-        <Table.HeaderCell>
-          <Trans i18nKey="usermanagement-tableheader-password" />
-        </Table.HeaderCell>
+
         <Table.HeaderCell>
           <Trans i18nKey="usermanagement-tableheader-title" />
         </Table.HeaderCell>
@@ -133,23 +144,22 @@ class UserManagement extends React.Component {
     );
   }
 
-  renderUsersTableRow(user) {
+  renderAccountsTableRow(account) {
+    const user = account.person;
+
     return (
       <Table.Row
-        key={"row" + user.id}
+        key={"row" + account.id}
         onClick={() => {
-          this.setState({ selectedEntry: user.id });
+          this.setState({ selectedEntry: account.id });
         }}
-        active={this.state.selectedEntry === user.id}
+        active={this.state.selectedEntry === account.id}
       >
         <Table.Cell key="id">
-          {tableFormattingUtilities.numberOrEmpty(user.id)}
+          {tableFormattingUtilities.numberOrEmpty(account.id)}
         </Table.Cell>
         <Table.Cell key="email">
-          {tableFormattingUtilities.stringOrEmpty(user.email)}
-        </Table.Cell>
-        <Table.Cell key="password">
-          {tableFormattingUtilities.stringOrEmpty(user.password)}
+          {tableFormattingUtilities.stringOrEmpty(account.email)}
         </Table.Cell>
         <Table.Cell key="title">
           {tableFormattingUtilities.stringOrEmpty(user.title)}
@@ -187,7 +197,7 @@ class UserManagement extends React.Component {
     );
   }
 
-  renderUsersTableFooter() {
+  renderAccountsTableFooter() {
     return (
       <Table.Row>
         <Table.HeaderCell colSpan="14">

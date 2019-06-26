@@ -42,6 +42,11 @@ import EmailInput from "../02_molecules/EmailInput";
 class Signup extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      ToSCheckboxChecked: false,
+      ToSCheckboxError: false
+    };
     this._handleRegistrationSubmit = this._handleRegistrationSubmit.bind(this);
     this.redirectToCompleteProfilePage = this.redirectToCompleteProfilePage.bind(
       this
@@ -94,6 +99,7 @@ class Signup extends React.Component {
                       name="consentToDataProcessingAgreement"
                       component={CheckboxField}
                       label={this._renderToSAgreementSnippet()}
+                      error={this.state.ToSCheckboxError}
                     />
                   </Form.Group>
 
@@ -135,6 +141,15 @@ class Signup extends React.Component {
    * Calls a redux-action creator to start a registration attempt.
    */
   _handleRegistrationSubmit(values) {
+    console.log(values);
+
+    if (!values.consentToDataProcessingAgreement) {
+      this.setState({
+        ToSCheckboxError: true
+      });
+      return;
+    }
+
     const submittedEmail = values.email;
     const submittedPassword = values.password;
 

@@ -77,7 +77,7 @@ class NavBar extends Component {
             <div className="item">
               <div>
                 <Trans i18nKey="navbar-logged-in-as-text" />
-                {this.props.user.email}
+                {this.props.user ? this.props.user.email : ""}
               </div>
             </div>
 

@@ -1,5 +1,8 @@
 const formValidationUtilities = {
-  required: value => (value ? undefined : "Pflichtfeld"),
+  required: value => {
+    console.log(value);
+    return value ? undefined : false;
+  },
   requiredEmail: value =>
     value
       ? undefined

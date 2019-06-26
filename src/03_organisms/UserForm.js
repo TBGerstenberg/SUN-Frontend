@@ -17,7 +17,6 @@ import CourseOfStudyInput from "../02_molecules/CourseOfStudyInput";
 import CityNameInput from "../02_molecules/CityNameInput";
 import StreetNameInput from "../02_molecules/StreetNameInput";
 import PostalCodeInput from "../02_molecules/PostalCodeInput";
-import HouseNumberInput from "../02_molecules/HouseNumberInput";
 import FirstNameInput from "../02_molecules/FirstNameInput";
 import LastNameInput from "../02_molecules/LastNameInput";
 import TitleDropdownSelector from "../02_molecules/TitleDropdownSelector";
@@ -27,30 +26,33 @@ import PasswordInput from "../02_molecules/PasswordInput";
 import ChairRoleList from "../02_molecules/ChairRoleList";
 
 import genderEnum from "../models/enumerations/genderEnum";
-import Person from "../models/person";
+import Account from "../models/account";
+import { accountService } from "../services";
 
 class UserForm extends React.Component {
   constructor(props) {
     super(props);
-    const mode = props.user ? "edit" : "add";
-    const user = props.user ? new Person(props.user) : null;
+    const mode = props.account ? "edit" : "add";
+    const account = props.account ? new Account(props.account) : null;
 
     let immatriculationDate = "";
     let exmatriculationDate = "";
 
-    if (user && user.isStudent()) {
-      immatriculationDate = user.studentStatus.matriculationDate || "";
-      exmatriculationDate = user.studentStatus.exmatriculationDate || "";
+    if (account && account.person && account.person.isStudent()) {
+      immatriculationDate =
+        account.person.studentStatus.matriculationDate || "";
+      exmatriculationDate =
+        account.person.studentStatus.exmatriculationDate || "";
     }
 
     this.state = {
       currentSkillInputValue: "",
       currentlySelectedSkill: null,
-      dateOfBirth: props.user ? props.user.birthDate : "",
+      dateOfBirth: props.account.person ? props.account.person.birthDate : "",
       immatriculationDate: immatriculationDate,
       exmatriculationDate: exmatriculationDate,
       mode: mode,
-      user: props.user
+      account: props.account
     };
 
     this._handleSkillInputChange = this._handleSkillInputChange.bind(this);
@@ -77,6 +79,7 @@ class UserForm extends React.Component {
   render() {
     const props = this.props;
 
+    console.log(props.isEmployee);
     return (
       <Form
         onSubmit={props.handleSubmit(
@@ -138,9 +141,17 @@ class UserForm extends React.Component {
                   formValidationUtilities.uniSiegenEmail
                 ]}
               />
-              <PasswordInput />
+              {this.mode === "add" && <PasswordInput />}
             </Grid.Column>
-            <Grid.Column width={6} />
+            <Grid.Column width={6}>
+              <Form.Group>
+                <Field
+                  name="accountIsAdminCheckbox"
+                  component={CheckboxField}
+                  label={"Admin"}
+                />
+              </Form.Group>
+            </Grid.Column>
           </Grid.Row>
 
           {
@@ -221,9 +232,7 @@ class UserForm extends React.Component {
             <Grid.Column width={6}>
               <StreetNameInput />
             </Grid.Column>
-            <Grid.Column width={6}>
-              <HouseNumberInput />
-            </Grid.Column>
+            <Grid.Column width={6} />
           </Grid.Row>
 
           {
@@ -297,18 +306,23 @@ class UserForm extends React.Component {
           {
             // StudentRole Inputs
           }
-          <Grid.Row columns={2}>
-            <Grid.Column width={6}>{<StudentIdInput />}</Grid.Column>
-            <Grid.Column width={6}>{<CourseOfStudyInput />}</Grid.Column>
-          </Grid.Row>
-          <Grid.Row columns={2}>
-            <Grid.Column textAlign="left" width={6}>
-              {this.renderImmatriculationDateInput()}
-            </Grid.Column>
-            <Grid.Column textAlign="left" width={6}>
-              {this.renderExmatericulationDateInput()}
-            </Grid.Column>
-          </Grid.Row>
+
+          {this.props.isStudent && (
+            <>
+              <Grid.Row columns={2}>
+                <Grid.Column width={6}>{<StudentIdInput />}</Grid.Column>
+                <Grid.Column width={6}>{<CourseOfStudyInput />}</Grid.Column>
+              </Grid.Row>
+              <Grid.Row columns={2}>
+                <Grid.Column textAlign="left" width={6}>
+                  {this.renderImmatriculationDateInput()}
+                </Grid.Column>
+                <Grid.Column textAlign="left" width={6}>
+                  {this.renderExmatericulationDateInput()}
+                </Grid.Column>
+              </Grid.Row>
+            </>
+          )}
 
           {
             // EmployeeStatus Checkbox
@@ -329,25 +343,36 @@ class UserForm extends React.Component {
           {
             // EmployeeStatus
           }
-          <Grid.Row columns={2}>
-            <Grid.Column width={6}>{this.renderRoomNameInput()}</Grid.Column>
-            <Grid.Column width={6}>
-              {this.renderAdditionalEmailInput()}
-            </Grid.Column>
-          </Grid.Row>
+          {this.props.isEmployee && (
+            <>
+              <Grid.Row columns={2}>
+                <Grid.Column width={6}>
+                  {this.renderRoomNameInput()}
+                </Grid.Column>
+                <Grid.Column width={6}>
+                  {this.renderAdditionalEmailInput()}
+                </Grid.Column>
+              </Grid.Row>
 
-          <Grid.Row columns={1}>
-            <Grid.Column width={12}>
-              {console.log(props.chairs)}
-              {props.chairs && props.chairs.length > 0 && (
-                <ChairRoleList
-                  userId={props.userId}
-                  items={props.user ? props.user.chairs : []}
-                  chairs={props.chairs}
-                />
-              )}
-            </Grid.Column>
-          </Grid.Row>
+              <Grid.Row columns={1}>
+                <Grid.Column width={12}>
+                  {console.log(props.chairs)}
+                  {props.chairs && props.chairs.length > 0 && (
+                    <ChairRoleList
+                      userId={props.userId}
+                      items={props.user ? props.user.chairs : []}
+                      chairs={props.chairs}
+                      onChange={personChairRelations => {
+                        this.setState({
+                          personChairRelations: personChairRelations
+                        });
+                      }}
+                    />
+                  )}
+                </Grid.Column>
+              </Grid.Row>
+            </>
+          )}
 
           {
             // Submit and Abort Buttons
@@ -462,35 +487,38 @@ class UserForm extends React.Component {
 
     // Values that are extracted from the various input fields, each field is either managed by redux form
     // or via the components state.
-    const profileValues = {
-      userId: this.props.userId,
-      title: values.title,
-      gender: values.gender || DEFAULT_GENDER_IF_UNSET,
-      firstName: values.firstName,
-      lastName: values.lastName,
-      birthDate: this.state.dateOfBirth || DEFAULT_DATE_IF_UNSET,
-      address: {
-        city: values.cityName,
-        postCode: values.postCode,
-        street: values.street,
-        room: values.roomName,
-        email: values.additional_email
-      },
-      studentStatus: {
-        matriculationNumber: values.studentId,
-        subect: values.courseOfStudy,
-        matriculationDate:
-          this.state.immatriculationDate || DEFAULT_DATE_IF_UNSET,
-        exmatriculationDate:
-          this.state.exmatriculationDate || DEFAULT_DATE_IF_UNSET
-      },
-      employeeStatus: null,
-      chairs: [values.chairs],
-      skills: skillsRatings
+    const accountValues = {
+      email: values.email,
+      admin: values.accountIsAdminCheckbox,
+      person: {
+        userId: this.props.userId,
+        title: values.title,
+        gender: values.gender || DEFAULT_GENDER_IF_UNSET,
+        firstName: values.firstName,
+        lastName: values.lastName,
+        birthDate: this.state.dateOfBirth || DEFAULT_DATE_IF_UNSET,
+        address: {
+          city: values.cityName,
+          postCode: values.postCode,
+          street: values.street,
+          room: values.roomName,
+          email: values.additional_email
+        },
+        studentStatus: {
+          matriculationNumber: values.studentId,
+          subect: values.courseOfStudy,
+          matriculationDate:
+            this.state.immatriculationDate || DEFAULT_DATE_IF_UNSET,
+          exmatriculationDate:
+            this.state.exmatriculationDate || DEFAULT_DATE_IF_UNSET
+        },
+        chairs: this.state.personChairRelations,
+        skills: skillsRatings
+      }
     };
 
     if (this.state.mode === "edit") {
-      this.props.dispatch(userActions.updateProfile(profileValues));
+      accountService.editAccount(accountValues, this.state.account.id);
       console.log("Editing a User");
     } else if (this.state.mode === "add") {
       console.log("Adding new User");
@@ -502,8 +530,8 @@ class UserForm extends React.Component {
 
       // If errors occur, update the profile of with values from the form.
       if (newAccountRequest.error == null && newAccountRequest.status === 200) {
-        profileValues.userId = newAccountRequest.user.id;
-        userService.updateProfile(profileValues);
+        accountValues.person.userId = newAccountRequest.data.person.id;
+        userService.updateProfile(accountValues.person);
       }
     }
   }
@@ -583,36 +611,83 @@ class UserForm extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  if (ownProps.user) {
-    const isEmployee = ownProps.user.chairs.length !== 0;
-    const gender = genderEnum[ownProps.user.gender];
+  console.log("Calling matpStateToProps");
 
-    return {
-      chairs: state.chair.chairs,
-      skillCatalogue: state.skillCatalogue,
+  let isStudent;
+  let isEmployee;
 
-      initialValues: {
-        title: ownProps.user.title || "",
-        gender: gender || 0,
-        firstName: ownProps.user.firstName || "",
-        lastName: ownProps.user.lastName || "",
-        cityName: ownProps.user.address ? ownProps.user.address.city : "",
-        postCode: ownProps.user.address ? ownProps.user.address.postCode : "",
-        street: ownProps.user.address ? ownProps.user.address.street : "",
-        email: ownProps.user.address ? ownProps.user.address.email : "",
-        isStudent: ownProps.user.studentStatus ? true : false,
-        courseOfStudy: ownProps.user.studentStatus
-          ? ownProps.user.studentStatus.subject
-          : "",
-        matriculatonNumber: ownProps.user.studentStatus
-          ? ownProps.user.studentStatus.matriculationNumber
-          : "",
-        isEmployee: isEmployee
-      }
-    };
+  if (
+    state.form &&
+    state.form.completeProfileForm &&
+    state.form.completeProfileForm.values
+  ) {
+    console.log("Setting values for isStudent and isEmployee");
+    isStudent = state.form.completeProfileForm.values.isStudent;
+    isEmployee = state.form.completeProfileForm.values.isEmployee;
+  }
+
+  // Initialize redux form with account values given in props
+  if (ownProps.account) {
+    if (ownProps.account.person) {
+      console.log("Account and person exist");
+      const gender = genderEnum[ownProps.account.person.gender];
+
+      return {
+        chairs: state.chair.chairs,
+        skillCatalogue: state.skillCatalogue,
+        isEmployee: isEmployee,
+        isStudent: isStudent,
+
+        initialValues: {
+          email: ownProps.account.email || "",
+          accountIsAdminCheckbox: ownProps.account.admin || false,
+
+          title: ownProps.account.person.title || "",
+          gender: gender || 0,
+          firstName: ownProps.account.person.firstName || "",
+          lastName: ownProps.account.person.lastName || "",
+          cityName: ownProps.account.person.address
+            ? ownProps.account.person.address.city
+            : "",
+          postCode: ownProps.account.person.address
+            ? ownProps.account.person.address.postCode
+            : "",
+          street: ownProps.account.person.address
+            ? ownProps.account.person.address.street
+            : "",
+          additional_email: ownProps.account.person.address
+            ? ownProps.account.person.address.email
+            : "",
+          isStudent: ownProps.account.person.studentStatus ? true : false,
+          courseOfStudy: ownProps.account.person.studentStatus
+            ? ownProps.account.person.studentStatus.subject
+            : "",
+          matriculatonNumber: ownProps.account.person.studentStatus
+            ? ownProps.account.person.studentStatus.matriculationNumber
+            : "",
+          isEmployee: ownProps.account.person.chairs.length !== 0
+        }
+      };
+    } else {
+      return {
+        chairs: state.chair.chairs,
+        skillCatalogue: state.skillCatalogue,
+        isEmployee: isEmployee,
+        isStudent: isStudent,
+
+        initialValues: {
+          email: ownProps.account.email || "",
+          accountIsAdminCheckbox: ownProps.account.admin || false,
+          isEmployee: false,
+          isStudent: false
+        }
+      };
+    }
   } else {
     return {
-      chairs: state.chair.chairs
+      chairs: state.chair.chairs,
+      isEmployee: isEmployee,
+      isStudent: isStudent
     };
   }
 };

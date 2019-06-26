@@ -17,6 +17,13 @@ function register({
   return async dispatch => {
     dispatch(request({ email }));
 
+    console.log(
+      email,
+      password,
+      consentToDataProcessingAgreement,
+      consentToDataProcessingAgreement
+    );
+
     const registrationResponse = await userService.signup(
       email,
       password,

@@ -6,16 +6,9 @@ import API_CONFIG from "../config/api_config";
  */
 const accountService = {
   getAllAccounts: async accessToken => {
-    const headers = {
-      Authorization: accessToken
-    };
-
     try {
       const getAllaccountsResponse = await apiClient.get(
-        API_CONFIG.ACCOUNT.GET_ALL_ACCOUNTS_URL,
-        {
-          headers: headers
-        }
+        API_CONFIG.ACCOUNT.GET_ALL_ACCOUNTS_URL
       );
       return getAllaccountsResponse;
     } catch (error) {
@@ -34,7 +27,8 @@ const accountService = {
       const editAccountRequestBody = {
         email: newAccountValues.email,
         password: newAccountValues.password,
-        admin: newAccountValues.admin
+        admin: newAccountValues.admin,
+        person: newAccountValues.person
       };
 
       // Perform the request

@@ -24,6 +24,7 @@ import {
 } from "semantic-ui-react";
 import Link from "redux-first-router-link";
 import LanguageSwitcher from "../02_molecules/LanguageSwitcher";
+import { SemanticToastContainer, toast } from "react-semantic-toasts";
 
 // Styles
 import "./Login.css";
@@ -31,6 +32,7 @@ import "./Login.css";
 //Actions
 import { navigationConstants } from "../redux/_constants";
 import { navigationActions } from "../redux/_actions";
+import ErrorMessage from "../01_atoms/ErrorMessage";
 
 /**
  * A Screen that allows a user to log in to the system.
@@ -39,9 +41,27 @@ class Login extends React.Component {
   constructor(props) {
     super(props);
     this._handleLoginSubmit = this._handleLoginSubmit.bind(this);
+    this.toggleErrorMessage = this.toggleErrorMessage.bind(this);
   }
 
   render() {
+    console.log(this.props.loginErrorStatus);
+
+    let hasError = false;
+    const errorMessageHeader = "Fehler";
+    let errorMessageBody = "";
+
+    if (this.props.loginErrorStatus) {
+      hasError = true;
+
+      if (this.props.loginErrorStatus === 400) {
+        errorMessageBody = "Ungültige Anfrage";
+      }
+      if (this.props.loginErrorStatus === 401) {
+        errorMessageBody = "Falsche Zugangsdaten";
+      }
+    }
+
     if (this.props.loggedIn) {
       // Redirect to Home
       this.props.dispatch(
@@ -99,6 +119,8 @@ class Login extends React.Component {
               <Link to="/signup">
                 <Trans i18nKey="login-message-call-to-action" />
               </Link>
+              {hasError &&
+                this.renderErrorMessage(errorMessageHeader, errorMessageBody)}
             </Grid.Column>
           </Grid>
         </Container>
@@ -117,12 +139,34 @@ class Login extends React.Component {
       userActions.login({ email: submittedEmail, password: submittedPassword })
     );
   }
+
+  renderErrorMessage(header, body) {
+    return <ErrorMessage header={header} body={body} />;
+  }
+
+  toggleErrorMessage(title, message) {
+    setTimeout(() => {
+      toast(
+        {
+          title: title,
+          description: <p>{message}</p>,
+          type: "error",
+          size: "mini",
+          animation: "fly left"
+        },
+        () => console.log("toast closed"),
+        () => console.log("toast clicked")
+      );
+    }, 1000);
+  }
 }
 
 const mapStateToProps = state => {
   return {
     loggedIn: state.login.loggedIn,
-    loginErorr: state.login.error
+    loginErrorStatus: state.login.error
+      ? state.login.error.error.response.status
+      : null
   };
 };
 

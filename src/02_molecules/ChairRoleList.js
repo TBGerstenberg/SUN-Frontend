@@ -111,15 +111,14 @@ class ChairRoleList extends React.Component {
     };
 
     mutatedPersonChairRelations.push(personChairRelation);
-
-    console.log(mutatedPersonChairRelations);
-
     this.setState({ personChairRelations: mutatedPersonChairRelations });
+    this.props.onChange(mutatedPersonChairRelations);
   }
 
   deleteListItem(index) {
     let mutatedPersonChairRelations = [...this.state.personChairRelations];
     mutatedPersonChairRelations.splice(index);
+    this.props.onChange(mutatedPersonChairRelations);
     this.setState({ personChairRelations: mutatedPersonChairRelations });
   }
 
