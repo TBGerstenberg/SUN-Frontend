@@ -159,7 +159,9 @@ class ChairForm extends React.Component {
 
           <Grid.Row columns={2}>
             <Grid.Column width={6}>
-              <PersonList persons={this.state.chair.persons} />
+              <PersonList
+                persons={this.state.chair ? this.state.chair.persons : []}
+              />
             </Grid.Column>
             <Grid.Column width={6} />
           </Grid.Row>

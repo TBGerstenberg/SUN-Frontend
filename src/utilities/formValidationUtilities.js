@@ -24,7 +24,7 @@ const formValidationUtilities = {
       : undefined,
   passwordStrength: value =>
     value && !/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/.test(value)
-      ? "Password muss mindestens einen Kleinbuchstaben, einen Großbuchstaben und eine Zahl enthalten, sowie mindestens 8 Zeichen lang sein."
+      ? "Passwort muss mindestens einen Kleinbuchstaben, einen Großbuchstaben und eine Zahl enthalten, sowie mindestens 8 Zeichen lang sein."
       : undefined,
   passwordNotJochen: value =>
     value && value.indexOf("Jochen") !== -1 && value.indexOf("jochen") !== -1
