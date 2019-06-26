@@ -25,6 +25,11 @@ const API_CONFIG = {
   },
   CHAIRS: {
     GET_ALL_CHAIRS_URL: BASEURL + "/chairs",
+
+    GET_SINGLE_CHAIR_URL: chairId => {
+      return BASEURL + "/chairs/"  + chairId;
+    },
+
     CREATE_CHAIR_URL: () => {
       return BASEURL + "/chairs";
     },
@@ -32,6 +37,7 @@ const API_CONFIG = {
       return BASEURL + "/chairs/" + chairId;
     },
     DELETE_CHAIR_URL: chairId => {
+
       return BASEURL + "/chairs/" + chairId;
     }
   }

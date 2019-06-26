@@ -22,7 +22,20 @@ const chairService = {
       return error;
     }
   },
-
+  
+  getSingleChair: async chairId => {
+    try {
+      const getAllChairsResponse = await apiClient.get(
+        API_CONFIG.CHAIRS.GET_SINGLE_CHAIR_URL(chairId)
+        
+      );
+      return getAllChairsResponse;
+  
+      } catch (error) {
+      return error;
+    }
+  },
+ 
   createChair: async chairBody => {
     try {
       const createChairResponse = await apiClient.post(
@@ -52,7 +65,7 @@ const chairService = {
       const deleteChairResponse = await apiClient.delete(
         API_CONFIG.CHAIRS.DELETE_CHAIR_URL(chairId)
       );
-      return deleteChairResponse;
+      return deleteChairResponse;  
     } catch (error) {
       return error;
     }

@@ -1,14 +1,15 @@
-function incrementCounter() {
-  return { type: "INCREMENT" };
+function addPost(post) {
+  return { type: "POST_ADD", post:post };
 }
 
-function addTodo(title) {
-  return { type: "TODO_ADD", title: title };
-}
+
+
 
 const jobPostActions = {
-  incrementCounter: incrementCounter,
-  addTodo: addTodo
+  
+  addPost: addPost,
+  
 };
 
 export default jobPostActions;
+

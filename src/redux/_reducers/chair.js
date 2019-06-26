@@ -4,6 +4,26 @@ const initialState = {};
 
 const chairReducer = (state = initialState, action) => {
   switch (action.type) {
+    case chairConstants.GET_CHAIR_REQUEST:
+      return {
+        ...state,
+        fetchingChairs: true
+
+      };
+      case chairConstants.GET_CHAIR_SUCCESS:
+        return {
+          ...state,
+          fetchingChairs: false,
+          chair: action.chair
+        }
+        case chairConstants.GET_CHAIR_FAILURE:
+          return {
+            ...state,
+            error: action.error
+          }
+
+
+
     case chairConstants.GET_CHAIRS_REQUEST:
       return {
         ...state,

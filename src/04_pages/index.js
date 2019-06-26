@@ -10,6 +10,7 @@ import LandingPage from "./LandingPage";
 import Job from "./Job";
 import ChairPage from "./ChairPage";
 import AdminPanel from "./AdminPanel";
+import AllChairs  from "./AllChairs";
 
 /**
  * This file exists to allow an import
@@ -28,5 +29,6 @@ export {
   LandingPage,
   Job,
   ChairPage,
-  AdminPanel
+  AdminPanel,
+  AllChairs
 };
