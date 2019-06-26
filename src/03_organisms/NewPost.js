@@ -1,91 +1,143 @@
 import React, { Component } from "react";
-import { Button, Icon, Modal, Form, TextArea } from "semantic-ui-react";
-
-class NewPostConfirmedModal extends Component {
-  state = { open: false };
-
-  open = () => this.setState({ open: true });
-  close = () => this.setState({ open: false });
-
-  render() {
-    const { open } = this.state;
-
-    return (
-      <Modal
-        open={open}
-        onOpen={this.open}
-        onClose={this.close}
-        size="small"
-        trigger={
-          <Button onClick={this.props.onNewPostButtonClicked} color="teal" icon>
-            Posten <Icon name="mail forward" />
-          </Button>
-        }
-      >
-        <Modal.Header />
-        <Modal.Content>
-          <p
-            style={{
-              fontFamily: "bold",
-              fontSize: "14pt"
-            }}
-          >
-            Der Beitrag wurde geposted
-          </p>
-        </Modal.Content>
-        <Modal.Actions>
-          <Button
-            positive
-            icon="checkmark"
-            labelPosition="right"
-            content="Alles klar"
-            onClick={this.close}
-          />
-        </Modal.Actions>
-      </Modal>
-    );
-  }
-}
+import {
+  Button,
+  Icon,
+  Modal,
+  Form,
+  TextArea,
+  Checkbox
+} from "semantic-ui-react";
 
 class NewPostModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      subject: ""
+      title: "",
+      content: "",
+      subject: "",
+      
     };
 
     this.updateInputTheme = this.updateInputTheme.bind(this);
+    this.handleContentInputChange = this.handleContentInputChange.bind(this);
+    this.handleCheckedJob = this.handleCheckedJob.bind(this);
+    this.handleCheckedEvent = this.handleCheckedEvent.bind(this);
+    this.handleCheckedOther = this.handleCheckedOther.bind(this);
+  
   }
 
   render() {
     return (
       <div>
-        <Modal trigger={<Button color="teal">Neuer Post</Button>}>
+        <Modal   open={this.props.open} >
           <Modal.Header>Neuer Post</Modal.Header>
           <Modal.Description>
             <Form>
               <TextArea
                 onChange={this.updateInputTheme}
-                placeholder="Job- oder Gründungsthema"
+                placeholder="Thema"
                 style={{ minHeight: 40 }}
               />
-              <TextArea placeholder="Beschreibung" style={{ minHeight: 400 }} />
+              <TextArea
+                placeholder="Beschreibung"
+                style={{ minHeight: 400 }}
+                onChange={this.handleContentInputChange}
+              />
             </Form>
-            {console.log("My input value is:" + this.state.subject)}
+            <Checkbox
+              defaultChecked={false}
+              onChange={this.handleCheckedJob}
+              label="Job"
+              checked={this.state.isCheckedJob}
+            />
+            <Checkbox
+              defaultChecked={false}
+              onChange={this.handleCheckedEvent}
+              label="Event"
+              checked={this.state.isCheckedEvent}
+            />
+            <Checkbox
+              defaultChecked={false}
+              onChange={this.handleCheckedOther}
+              label="Bachelorarbeit"
+              checked={this.state.isCheckedOther}
+            />
+            {console.log(this.state.isCheckedJob)}
+            {console.log(this.state.isCheckedEvent)}
+            {console.log(this.state.isCheckedOther)}
           </Modal.Description>
           <Modal.Actions>
-            <NewPostConfirmedModal onNewPostButtonClicked={() => {this.props.onNewPost(this.state.subject)}} />
+            <Button secondary onClick = {this.props.onAbortButtonClick}
+            > Abbrechen </Button>
+            <Button
+              onClick={() => {
+                const newPost = {
+                  title: this.state.title,
+                  content: this.state.content,
+                  subject: this.state.subject
+                };
+
+                
+{//* @ToDo: Hier wird die Server Anfrage reingeschickt 
+}
+
+
+
+
+                this.props.onNewPost(newPost);
+
+                this.setState({
+                  isCheckedJob: false,
+                  isCheckedEvent: false,
+                  isCheckedOther: false,
+                  title: "",
+                  content:""
+                  
+                });
+              }}
+              color="teal"
+              icon
+            >
+              Posten <Icon name="mail forward" />
+            </Button>
           </Modal.Actions>
         </Modal>
       </div>
     );
   }
 
-  updateInputTheme(event) {
+  handleCheckedJob() {
     this.setState({
-      subject: event.target.value
+      isCheckedJob: !this.state.isCheckedJob,
+      subject: "Jobpost"
     });
   }
+
+  handleCheckedEvent() {
+    this.setState({
+      isCheckedEvent: !this.state.isCheckedEvent,
+      subject: "Eventpost"
+    });
+  }
+  handleCheckedOther() {
+    this.setState({
+      isCheckedOther: !this.state.isCheckedOther,
+      subject: "Otherpost"
+    });
+  }
+
+  updateInputTheme(event) {
+    this.setState({
+      title: event.target.value
+    });
+  }
+
+  handleContentInputChange(event) {
+    this.setState({ content: event.target.value });
+  }
+
+
 }
+
 
 export default NewPostModal;

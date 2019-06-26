@@ -16,6 +16,8 @@ function getAllChairs() {
     }
   };
 
+
+
   /**
    * Redux action creator triggered when a FETCH-ALL-request for chairs is started
    */
@@ -40,8 +42,53 @@ function getAllChairs() {
   }
 }
 
+
+function getSingleChair(chairId) {
+  return async (dispatch, getState) => {
+   
+
+
+    dispatch(request());
+    const getSingleChairResponse = await chairService.getSingleChair(chairId);
+
+    if (getSingleChairResponse) {
+      dispatch(success(getSingleChairResponse.data));
+    } else {
+      dispatch(failure(getSingleChairResponse));
+    }
+  };
+
+  
+
+  /**
+   * Redux action creator triggered when a FETCH-ALL-request for chairs is started
+   */
+  function request() {
+    return { type: chairConstants.GET_CHAIR_REQUEST };
+  }
+
+  /**
+   * Redux action creator triggered when a FETCH-ALL-request succeeded
+   * @param {Array of objects } chairs - Chairs that have been fetched
+   */
+  function success(chair) {
+    return { type: chairConstants.GET_CHAIR_SUCCESS, chair: chair };
+  }
+
+  /**
+   * Redux action creator triggered when a FETCH-ALL-request failed
+   * @param {*} error - Error object thrown when creating the registration request
+   */
+  function failure(error) {
+    return { type: chairConstants.GET_CHAIR_FAILURE, error };
+  }
+}
+
 const chairActions = {
-  getAllChairs
+  getAllChairs,
+  getSingleChair
 };
 
 export default chairActions;
+
+
