@@ -181,7 +181,10 @@ function updateProfile(profileValues) {
     );
 
     console.log(updateProfileResponse);
-    if (updateProfileResponse.response.status === 200) {
+    if (
+      updateProfileResponse.response &&
+      updateProfileResponse.response.status === 200
+    ) {
       dispatch(success(updateProfileResponse.response.data));
     } else {
       dispatch(failure(updateProfileResponse.error));

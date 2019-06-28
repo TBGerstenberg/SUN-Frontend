@@ -13,15 +13,15 @@ const addressCard = props => {
       <Card.Content>
         <p>
           <Trans i18nKey="address-card-city-label" />
-          {props.city}
+          {" " + props.city}
         </p>
         <p>
           <Trans i18nKey="address-card-postCode-label" />
-          {props.postCode}
+          {" " + props.postCode}
         </p>
         <p>
           <Trans i18nKey="address-card-street-label" />
-          {props.street}
+          {" " + props.street}
         </p>
       </Card.Content>
     </Card>

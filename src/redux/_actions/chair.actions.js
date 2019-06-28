@@ -28,7 +28,10 @@ function getAllChairs() {
    * @param {Array of objects } chairs - Chairs that have been fetched
    */
   function success(chairs) {
-    return { type: chairConstants.GET_CHAIRS_SUCCESS, chairs: chairs };
+    return {
+      type: chairConstants.GET_CHAIRS_SUCCESS,
+      chairs: chairs
+    };
   }
 
   /**
@@ -49,6 +52,42 @@ function getSingleChair(chairId) {
       dispatch(success(getSingleChairResponse.data));
     } else {
       dispatch(failure(getSingleChairResponse));
+    }
+  };
+
+  /**
+   * Redux action creator triggered when a FETCH-ALL-request for chairs is started
+   */
+  function request() {
+    return { type: chairConstants.GET_CHAIR_REQUEST };
+  }
+
+  /**
+   * Redux action creator triggered when a FETCH-ALL-request succeeded
+   * @param {Array of objects } chairs - Chairs that have been fetched
+   */
+  function success(chair) {
+    return { type: chairConstants.GET_CHAIR_SUCCESS, chair: chair };
+  }
+
+  /**
+   * Redux action creator triggered when a FETCH-ALL-request failed
+   * @param {*} error - Error object thrown when creating the registration request
+   */
+  function failure(error) {
+    return { type: chairConstants.GET_CHAIR_FAILURE, error };
+  }
+}
+
+function getChairPosts(chairId) {
+  return async (dispatch, getState) => {
+    dispatch(request());
+    const getChairPostsResponse = await chairService.getSingleChair(chairId);
+
+    if (getChairPostsResponse && getChairPostsResponse.status === 200) {
+      dispatch(success(getChairPostsResponse.data));
+    } else {
+      dispatch(failure(getChairPostsResponse));
     }
   };
 

@@ -21,6 +21,13 @@ import { Container } from "semantic-ui-react";
 import Spinner from "./01_atoms/Spinner";
 import NavBar from "./03_organisms/NavBar";
 
+import i18next from "i18next";
+import moment from "moment-with-locales-es6";
+
+console.log(i18next.language);
+
+moment.locale(i18next.language.substr(0, 2));
+
 ReactDOM.render(
   <I18nextProvider i18n={i18n}>
     <ReduxStoreProvider store={store}>

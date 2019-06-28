@@ -2,8 +2,8 @@ import React from "react";
 import NavBar from "../03_organisms/NavBar";
 import { chairActions } from "../redux/_actions";
 import { connect } from "react-redux";
-import { Grid, Header, Icon, Card } from "semantic-ui-react";
-
+import { Grid, Header, Icon, Card, Container } from "semantic-ui-react";
+import ChairCard from "../03_organisms/ChairCard";
 class AllChairs extends React.Component {
   constructor(props) {
     super(props);
@@ -11,41 +11,39 @@ class AllChairs extends React.Component {
     this.state = { chairs: null };
   }
 
-  componentWillMount(){
-     this.props.getAllChairs()
+  componentWillMount() {
+    this.props.getAllChairs();
   }
 
   render() {
+    const props = this.props;
     return (
       <div>
         <NavBar />
-        
-        <HeaderAllChairsPage />
-        <Grid columns={2}>
-          <Grid.Row>
-            <Card>
-              <Card.Content>
-                <Card.Header />
-                <Card.Description />
-                <Card.Meta>
-                  <a>
-                    <Icon name="user" />
-                    Lehrstuhlname
-                  </a>
-                  
-                </Card.Meta>
-              </Card.Content>
-            </Card>
+        <Container>
+          <HeaderAllChairsPage />
+          <Grid columns={2} padded>
+            <Grid.Row>
+              {props.chairs &&
+                props.chairs.map((chair, index) => {
+                  return (
+                    <ChairCard
+                      chairId={chair.id}
+                      chairName={chair.name}
+                      chairAdress={chair.address}
+                    />
+                  );
+                })}
+            </Grid.Row>
+          </Grid>
 
-          </Grid.Row>
-        </Grid>
-
-        <Grid columns={2}>
-          <Grid.Row>
-            <Grid.Column textAlign="center" width={3} />
-            <Grid.Column width={8} />
-          </Grid.Row>
-        </Grid>
+          <Grid columns={2}>
+            <Grid.Row>
+              <Grid.Column textAlign="center" width={3} />
+              <Grid.Column width={8} />
+            </Grid.Row>
+          </Grid>
+        </Container>
       </div>
     );
   }
@@ -68,7 +66,7 @@ let chairContainer = connect(
 
 const HeaderAllChairsPage = () => {
   return (
-    <Header as="h1" color="blue" block>
+    <Header as="h1" color="blue">
       Alle Lehrstühle
     </Header>
   );

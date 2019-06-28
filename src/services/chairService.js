@@ -34,6 +34,17 @@ const chairService = {
     }
   },
 
+  getChairPosts: async chairId => {
+    try {
+      const getAllChairsResponse = await apiClient.get(
+        API_CONFIG.CHAIRS.GET_CHAIR_POSTS_URL(chairId)
+      );
+      return getAllChairsResponse;
+    } catch (error) {
+      return error;
+    }
+  },
+
   createChair: async chairBody => {
     try {
       const createChairResponse = await apiClient.post(

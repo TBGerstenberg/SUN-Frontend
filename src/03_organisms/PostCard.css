@@ -1,0 +1,8 @@
+.postCard-container {
+  word-wrap: break-word;
+}
+
+.postCard-meta {
+  display: flex;
+  justify-content: space-between;
+}

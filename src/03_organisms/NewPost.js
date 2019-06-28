@@ -1,12 +1,6 @@
 import React, { Component } from "react";
-import {
-  Button,
-  Icon,
-  Modal,
-  Form,
-  TextArea,
-  Checkbox
-} from "semantic-ui-react";
+import { Button, Icon, Modal, Form, TextArea, Radio } from "semantic-ui-react";
+import postTypeEnum from "../models/enumerations/postTypeEnum";
 
 class NewPostModal extends Component {
   constructor(props) {
@@ -14,17 +8,17 @@ class NewPostModal extends Component {
     this.state = {
       title: "",
       content: "",
-      subject: ""
+      type: 0,
+      value: ""
     };
 
     this.updateInputTheme = this.updateInputTheme.bind(this);
     this.handleContentInputChange = this.handleContentInputChange.bind(this);
-    this.handleCheckedJob = this.handleCheckedJob.bind(this);
-    this.handleCheckedEvent = this.handleCheckedEvent.bind(this);
-    this.handleCheckedOther = this.handleCheckedOther.bind(this);
+    this.handleRadioButtonsChecked = this.handleRadioButtonsChecked.bind(this);
   }
 
   render() {
+    console.log(this.state);
     return (
       <div>
         <Modal open={this.props.open}>
@@ -41,25 +35,30 @@ class NewPostModal extends Component {
                 style={{ minHeight: 400 }}
                 onChange={this.handleContentInputChange}
               />
+
+              <Form.Field>
+                <Radio
+                  id="job"
+                  label="Jobausschreibung"
+                  value="job"
+                  checked={this.state.value === "job"}
+                  onChange={(e, { value }) => {
+                    this.setState({ value });
+                  }}
+                />
+              </Form.Field>
+              <Form.Field>
+                <Radio
+                  id="thesis"
+                  label="Abschlussarbeit"
+                  value="thesis"
+                  checked={this.state.value === "thesis"}
+                  onChange={(e, { value }) => {
+                    this.setState({ value });
+                  }}
+                />
+              </Form.Field>
             </Form>
-            <Checkbox
-              defaultChecked={false}
-              onChange={this.handleCheckedJob}
-              label="Job"
-              checked={this.state.isCheckedJob}
-            />
-            <Checkbox
-              defaultChecked={false}
-              onChange={this.handleCheckedEvent}
-              label="Event"
-              checked={this.state.isCheckedEvent}
-            />
-            <Checkbox
-              defaultChecked={false}
-              onChange={this.handleCheckedOther}
-              label="Bachelorarbeit"
-              checked={this.state.isCheckedOther}
-            />
           </Modal.Description>
           <Modal.Actions>
             <Button secondary onClick={this.props.onAbortButtonClick}>
@@ -68,24 +67,25 @@ class NewPostModal extends Component {
             </Button>
             <Button
               onClick={() => {
+                let type = 0;
+                if (this.state.value === "job") {
+                  type = 1;
+                } else if (this.state.value === "thesis") {
+                  type = 3;
+                }
+
                 const newPost = {
                   title: this.state.title,
                   content: this.state.content,
-                  subject: this.state.subject
+                  type: type
                 };
-
-                {
-                  //* @ToDo: Hier wird die Server Anfrage reingeschickt
-                }
 
                 this.props.onNewPost(newPost);
 
                 this.setState({
-                  isCheckedJob: false,
-                  isCheckedEvent: false,
-                  isCheckedOther: false,
                   title: "",
-                  content: ""
+                  content: "",
+                  value: ""
                 });
               }}
               color="teal"
@@ -99,23 +99,9 @@ class NewPostModal extends Component {
     );
   }
 
-  handleCheckedJob() {
+  handleRadioButtonsChecked(event, { value }) {
     this.setState({
-      isCheckedJob: !this.state.isCheckedJob,
-      subject: "Jobpost"
-    });
-  }
-
-  handleCheckedEvent() {
-    this.setState({
-      isCheckedEvent: !this.state.isCheckedEvent,
-      subject: "Eventpost"
-    });
-  }
-  handleCheckedOther() {
-    this.setState({
-      isCheckedOther: !this.state.isCheckedOther,
-      subject: "Otherpost"
+      radioButtonValue: value
     });
   }
 

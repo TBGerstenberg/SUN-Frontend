@@ -40,88 +40,91 @@ class Profile extends React.Component {
   }
 
   render() {
-    console.log("Profile rendering");
-
     const props = this.props;
     const profileValuesExist = this.props.profileValues;
     return (
       <div>
         <NavBar />
-        <Grid columns={3} centered>
-          <Grid.Row columns={3}>
-            <Grid.Column textAlign="center" width={3}>
-              {profileValuesExist && (
-                <HeaderProfilePage firstName={props.profileValues.firstName} />
-              )}
+        <Container>
+          <Grid centered padded>
+            <Grid.Row>
+              <Grid.Column textAlign="center" width={16}>
+                {profileValuesExist && (
+                  <HeaderProfilePage
+                    firstName={props.profileValues.firstName}
+                  />
+                )}
+              </Grid.Column>
+            </Grid.Row>
 
-              <Avatar src={avatarSourcePath} />
-            </Grid.Column>
+            <Grid.Row columns={2}>
+              <Grid.Column width={10}>
+                <Grid centered>
+                  <Segment
+                    raised
+                    style={{ width: "98%", marginTop: "14px", height: "500px" }}
+                    textAlign="left"
+                  >
+                    <Grid.Row>
+                      <Grid.Column>
+                        <Label as="a" color="blue" ribbon size="big">
+                          <Trans i18nKey="profile-overview-label" />
+                        </Label>
 
-            <Grid.Column width={6}>
-              <Grid centered>
-                <Segment
-                  raised
-                  style={{ width: "98%", marginTop: "14px", height: "500px" }}
-                  textAlign="left"
-                >
-                  <Grid.Row>
-                    <Grid.Column>
-                      <Label as="a" color="blue" ribbon size="big">
-                        <Trans i18nKey="profile-overview-label" />
-                      </Label>
+                        <Grid padded>
+                          {profileValuesExist ? (
+                            <FirstProfileRow
+                              title={props.profileValues.title}
+                              birthDate={props.profileValues.birthDate}
+                              firstName={props.profileValues.firstName}
+                              lastName={props.profileValues.lastName}
+                              gender={props.profileValues.gender}
+                              subject={
+                                props.profileValues.studentStatus.subject
+                              }
+                              matriculationNumber={
+                                props.profileValues.studentStatus
+                                  .matriculationNumber
+                              }
+                            />
+                          ) : (
+                            <OneLinePlaceHolder />
+                          )}
+                        </Grid>
+                      </Grid.Column>
+                    </Grid.Row>
+                  </Segment>
+                </Grid>
+              </Grid.Column>
 
-                      <Grid padded>
-                        {profileValuesExist ? (
-                          <FirstProfileRow
-                            title={props.profileValues.title}
-                            birthDate={props.profileValues.birthDate}
-                            firstName={props.profileValues.firstName}
-                            lastName={props.profileValues.lastName}
-                            gender={props.profileValues.gender}
-                            subject={props.profileValues.subject}
-                          />
-                        ) : (
-                          <OneLinePlaceHolder />
-                        )}
-                      </Grid>
-                    </Grid.Column>
-                  </Grid.Row>
-                </Segment>
-              </Grid>
-            </Grid.Column>
+              <Grid.Column width={6}>
+                {profileValuesExist ? (
+                  <AddressCard
+                    city={props.profileValues.address.city}
+                    postCode={props.profileValues.address.postCode}
+                    street={props.profileValues.address.street}
+                  />
+                ) : (
+                  <OneLinePlaceHolder />
+                )}
 
-            <Grid.Column width={3}>
-              {profileValuesExist ? (
-                <AddressCard
-                  city={props.profileValues.address.city}
-                  postCode={props.profileValues.address.postCode}
-                  street={props.profileValues.address.street}
-                />
-              ) : (
-                <OneLinePlaceHolder />
-              )}
+                {profileValuesExist ? (
+                  <ContactCard
+                    email={props.profileValues.address.email}
+                    phoneNumber={props.profileValues.address.phoneNumber}
+                    phoneNumberMobile={
+                      props.profileValues.address.phoneNumberMobile
+                    }
+                  />
+                ) : (
+                  <OneLinePlaceHolder />
+                )}
 
-              {profileValuesExist ? (
-                <ContactCard
-                  email={props.profileValues.address.email}
-                  mobile={props.profileValues.address.mobile}
-                />
-              ) : (
-                <OneLinePlaceHolder />
-              )}
-
-              <SkillCatalog />
-            </Grid.Column>
-          </Grid.Row>
-
-          <Grid.Row columns={3}>
-            <Grid.Column textAlign="center" width={3}>
-              <Button primary>Profil bearbeiten</Button>
-            </Grid.Column>
-            <Grid.Column width={6} />
-            <Grid.Column width={3} />
-          </Grid.Row>
-        </Grid>
+                <Button color="teal">Profil bearbeiten</Button>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        </Container>
       </div>
     );
   }

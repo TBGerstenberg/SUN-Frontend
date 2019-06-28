@@ -2,7 +2,7 @@ import React from "react";
 import { Segment, Label, Header, Card } from "semantic-ui-react";
 import { withTranslation, Trans } from "react-i18next";
 
-const contactCard = props => {
+const ContactCard = props => {
   return (
     <Card color="blue">
       <Card.Content>
@@ -13,15 +13,19 @@ const contactCard = props => {
       <Card.Content>
         <p>
           <Trans i18nKey="contact-card-email-label" />
-          {props.email}
+          {" " + props.email}
+        </p>
+        <p>
+          <Trans i18nKey="contact-card-phone-label" />
+          {" " + props.phoneNumber}
         </p>
         <p>
           <Trans i18nKey="contact-card-mobile-label" />
-          {props.mobile}
+          {" " + props.phoneNumberMobile}
         </p>
       </Card.Content>
     </Card>
   );
 };
 
-export default withTranslation()(contactCard);
+export default withTranslation()(ContactCard);

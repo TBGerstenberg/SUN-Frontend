@@ -24,7 +24,6 @@ import CourseOfStudyInput from "../02_molecules/CourseOfStudyInput";
 import CityNameInput from "../02_molecules/CityNameInput";
 import StreetNameInput from "../02_molecules/StreetNameInput";
 import PostalCodeInput from "../02_molecules/PostalCodeInput";
-import HouseNumberInput from "../02_molecules/HouseNumberInput";
 import FirstNameInput from "../02_molecules/FirstNameInput";
 import LastNameInput from "../02_molecules/LastNameInput";
 import TitleDropdownSelector from "../02_molecules/TitleDropdownSelector";
@@ -33,6 +32,8 @@ import GenderDropdownSelector from "../02_molecules/GenderDropdownSelector";
 import Person from "../models/person";
 import { navigationConstants } from "../redux/_constants";
 import { navigationActions } from "../redux/_actions";
+import PhoneNumberInput from "../02_molecules/PhoneNumberInput";
+import EmailInput from "../02_molecules/EmailInput";
 
 class CompleteProfile extends React.Component {
   constructor(props) {
@@ -164,9 +165,39 @@ class CompleteProfile extends React.Component {
                 <Grid.Column width={6}>
                   <StreetNameInput />
                 </Grid.Column>
-                <Grid.Column width={6}>
-                  <HouseNumberInput />
+                <Grid.Column width={6} />
+              </Grid.Row>
+
+              <Grid.Row textAlign="left">
+                <Grid.Column width={6} textAlign="left">
+                  <Header as="h4" color="black" textAlign="left">
+                    <Trans i18nKey="complete-profile-contact-information-headline" />
+                  </Header>
                 </Grid.Column>
+                <Grid.Column width={6} />
+              </Grid.Row>
+
+              <Grid.Row columns={2}>
+                <Grid.Column width={6}>
+                  <PhoneNumberInput
+                    name="phoneNumber"
+                    label="Telefon"
+                    placeholder="Telefonnummer"
+                  />
+                </Grid.Column>
+                <Grid.Column width={6}>
+                  {this.renderAdditionalEmailInput()}
+                </Grid.Column>
+              </Grid.Row>
+              <Grid.Row>
+                <Grid.Column width={6}>
+                  <PhoneNumberInput
+                    name="phoneNumberMobile"
+                    label="Mobil"
+                    placeholder="Mobil"
+                  />
+                </Grid.Column>
+                <Grid.Column width={6} />
               </Grid.Row>
 
               {
@@ -410,7 +441,9 @@ class CompleteProfile extends React.Component {
         postCode: values.postCode,
         street: values.street,
         room: values.roomName,
-        email: values.additional_email
+        email: values.additional_email,
+        phoneNumber: values.phoneNumber,
+        phoneNumberMobile: values.phoneNumberMobile
       },
       studentStatus: {
         matriculationNumber: values.studentId,

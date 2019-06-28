@@ -20,7 +20,7 @@ import {
 } from "semantic-ui-react";
 
 import { connect } from "react-redux";
-import { jobPostActions } from "../redux/_actions";
+import { postActions } from "../redux/_actions";
 
 export class Job extends React.Component {
   constructor(props) {
@@ -89,7 +89,7 @@ let mapStateToProps = state => {
 };
 
 let mapDispatchToProps = {
-  addTodo: jobPostActions.addTodo
+  addTodo: postActions.addTodo
 };
 
 let TodoListContainer = connect(

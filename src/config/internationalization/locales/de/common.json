@@ -24,6 +24,7 @@
 
   "complete-your-profile-headline": "Vervollständige dein Profil",
   "complete-profile-personal-information-headline": "Persönliches",
+  "complete-profile-contact-information-headline": "Kontaktinformationen",
   "complete-profile-adress-information-headline": "Anschrift",
   "complete-profile-firstName-label": "Vorname",
   "complete-profile-firstName-placeholder": "Vorname",
@@ -88,12 +89,18 @@
 
   "contact-card-header": "Kontakt",
   "contact-card-email-label": "Email:",
+  "contact-card-phone-label": "Tel:",
   "contact-card-mobile-label": "Mobil:",
 
   "gender-enum-unset-option": "k.A",
   "gender-enum-male-option": "Männlich",
   "gender-enum-female-option": "Weiblich",
   "gender-enum-other-option": "Andere",
+
+  "postType-enum-default-option": "Allgemein",
+  "postType-enum-jobOffer-option": "Stellenausschreibung",
+  "postType-enum-event-option": "Veranstaltung",
+  "postType-enum-thesis-option": "Abschlussarbeit",
 
   "navbar-search-placeholder": "Suchen...",
   "navbar-logout-button-text": "Abmelden",
@@ -178,5 +185,11 @@
 
   "chairManagement-add-chair-button": "Lehrstuhl hinzufügen",
   "chairManagement-edit-chair-button": "Lehrstuhl bearbeiten",
-  "chairManagement-delete-chair-button": "Lehrstuhl löschen"
+  "chairManagement-delete-chair-button": "Lehrstuhl löschen",
+
+  "new-event-modal-startdate-label": "Beginn",
+  "new-event-modal-startdate-placeholder": "Beginn",
+
+  "new-event-modal-enddate-label": "Ende",
+  "new-event-modal-enddate-placeholder": "Ende"
 }
