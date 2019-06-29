@@ -29,6 +29,10 @@ class Post {
   static typeAsNumber(typeAsString) {
     return postTypeEnum[typeAsString];
   }
+
+  static getAuthorPageLink(pageId) {
+    return "/chair/" + pageId;
+  }
 }
 
 export default Post;

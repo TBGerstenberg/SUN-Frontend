@@ -48,6 +48,10 @@ class Person {
   hasAddress() {
     return this.address != null;
   }
+
+  static getProfileLinkForId(personId) {
+    return "/profile/" + personId;
+  }
 }
 
 export default Person;

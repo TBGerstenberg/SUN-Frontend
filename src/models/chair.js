@@ -7,6 +7,10 @@ class Chair {
     this.adress = new Adress(chairValues.address);
     this.persons = chairValues.persons;
   }
+
+  static getChairPageLinkForId(chairId) {
+    return "/chair/" + chairId;
+  }
 }
 
 export default Chair;

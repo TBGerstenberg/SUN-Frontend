@@ -70,6 +70,12 @@ const API_CONFIG = {
     DELETE_POST_URL: postId => {
       return BASEURL + "/posts/" + postId;
     }
+  },
+
+  SEARCH: {
+    GET_SEARCH_URL: query => {
+      return BASEURL + "/search?query=" + query;
+    }
   }
 };
 
