@@ -32,9 +32,7 @@ export const routesMap = {
   },
   NAVIGATE_TO_PROFILE: {
     path: "/profile/:userId",
-    thunk: (dispatch, getState, extra) => {
-      console.log("Firing route thunk");
-    },
+    thunk: (dispatch, getState, extra) => {},
     requiresAuth: true
   },
   NAVIGATE_TO_DATA_PROCESSING_AGREEMENT: {
@@ -71,7 +69,7 @@ export const routesMap = {
     path: "/allchairs",
     requiresAuth: true,
     role: ""
-  },
+  }
 };
 
 /**

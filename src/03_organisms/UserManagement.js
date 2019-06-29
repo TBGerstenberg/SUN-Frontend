@@ -14,12 +14,10 @@ class UserManagement extends React.Component {
     const accountRequest = await accountService.getAllAccounts();
 
     if (accountRequest.status === 200) {
-      console.log(accountRequest.data);
       this.setState({
         accounts: accountRequest.data
       });
     } else {
-      console.log(accountRequest.status);
     }
 
     this.props.dispatch(userActions.getAllUsers());
@@ -107,8 +105,6 @@ class UserManagement extends React.Component {
                 this.closeEditUserModal();
               }}
               onCompleteWithError={error => {
-                console.log(this.props);
-                console.log(this.props.toggleErrorMessage);
                 this.props.toggleErrorMessage("Fehler", error);
                 this.closeEditUserModal();
               }}
@@ -194,7 +190,7 @@ class UserManagement extends React.Component {
           {tableFormattingUtilities.stringOrEmpty(user.lastName)}
         </Table.Cell>
         <Table.Cell key="birthDate">
-          {tableFormattingUtilities.stringOrEmpty(user.birthDate)}
+          {tableFormattingUtilities.getFormattedDate(user.birthDate)}
         </Table.Cell>
         <Table.Cell key="city">
           {tableFormattingUtilities.stringOrEmpty(user.address.city)}

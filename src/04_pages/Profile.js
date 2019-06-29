@@ -251,8 +251,6 @@ const OneLinePlaceHolder = () => {
 };
 
 const mapStateToProps = state => {
-  console.log(state.user);
-
   return {
     userId: state.location.payload.userId,
     profileValues: state.user.currentlyViewedUser

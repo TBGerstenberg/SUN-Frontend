@@ -34,6 +34,7 @@ import { navigationConstants } from "../redux/_constants";
 import { navigationActions } from "../redux/_actions";
 import PhoneNumberInput from "../02_molecules/PhoneNumberInput";
 import EmailInput from "../02_molecules/EmailInput";
+import moment from "moment";
 
 class CompleteProfile extends React.Component {
   constructor(props) {
@@ -427,6 +428,16 @@ class CompleteProfile extends React.Component {
     const DEFAULT_DATE_IF_UNSET = "1990-01-01T00:00:00+01:00";
     const DEFAULT_GENDER_IF_UNSET = 0;
 
+    const birthDate = this.state.dateOfBirth
+      ? moment(this.state.dateOfBirth, "DD-MM-YYYY").format()
+      : DEFAULT_DATE_IF_UNSET;
+    const matriculationDate = this.state.matriculationDate
+      ? moment(this.state.matriculationDate, "DD-MM-YYYY").format()
+      : DEFAULT_DATE_IF_UNSET;
+    const exmatriculationDate = this.state.exmatriculationDate
+      ? moment(this.state.exmatriculationDate, "DD-MM-YYYY").format()
+      : DEFAULT_DATE_IF_UNSET;
+
     // Values that are extracted from the various input fields, each field is either managed by redux form
     // or via the components state.
     const profileValues = {
@@ -435,7 +446,7 @@ class CompleteProfile extends React.Component {
       gender: values.gender || DEFAULT_GENDER_IF_UNSET,
       firstName: values.firstName,
       lastName: values.lastName,
-      birthDate: this.state.dateOfBirth || DEFAULT_DATE_IF_UNSET,
+      birthDate: birthDate,
       address: {
         city: values.cityName,
         postCode: values.postCode,
@@ -447,11 +458,11 @@ class CompleteProfile extends React.Component {
       },
       studentStatus: {
         matriculationNumber: values.studentId,
-        subect: values.courseOfStudy,
-        matriculationDate:
-          this.state.immatriculationDate || DEFAULT_DATE_IF_UNSET,
-        exmatriculationDate:
-          this.state.exmatriculationDate || DEFAULT_DATE_IF_UNSET
+        subject: {
+          name: values.courseOfStudy
+        },
+        matriculationDate: matriculationDate,
+        exmatriculationDate: exmatriculationDate
       },
       employeeStatus: null,
       chairs: [values.chairs],
@@ -471,7 +482,7 @@ class CompleteProfile extends React.Component {
         value={this.state.dateOfBirth}
         iconPosition="left"
         onChange={this._handleDateOfBirthChange}
-        dateFormat=""
+        dateFormat="DD-MM-YYYY"
       />
     );
   }
@@ -487,7 +498,7 @@ class CompleteProfile extends React.Component {
         iconPosition="left"
         onChange={this._handleImmatriculationDateChange}
         label={i18next.t("complete-profile-immatriculationDate-label")}
-        dateFormat=""
+        dateFormat="DD-MM-YYYY"
       />
     );
   }
@@ -503,7 +514,7 @@ class CompleteProfile extends React.Component {
         iconPosition="left"
         onChange={this._handleExmatriculationDateChange}
         label={i18next.t("complete-profile-exmatriculationDate-label")}
-        dateFormat=""
+        dateFormat="DD-MM-YYYY"
       />
     );
   }

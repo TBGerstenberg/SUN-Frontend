@@ -20,6 +20,9 @@ const tableFormattingUtilities = {
     return i18next.t(`postType-enum-${postTypeEnum[postEnumValue]}-option`);
   },
   getFormattedDate: dateString => {
+    return moment(dateString).format("DD-MM-YYYY");
+  },
+  getTimeSinceCreated: dateString => {
     return moment(dateString).fromNow();
   }
 };

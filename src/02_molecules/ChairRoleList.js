@@ -35,7 +35,6 @@ class ChairRoleList extends React.Component {
   }
 
   render() {
-    console.log(this.state.currentlySelectedRole);
     return (
       <div className="chairRoleList-container">
         <Segment>

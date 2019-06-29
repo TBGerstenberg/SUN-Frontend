@@ -21,11 +21,9 @@ import PersonList from "./PersonList";
 class ChairForm extends React.Component {
   constructor(props) {
     super(props);
-    console.log(props.chair);
+
     const mode = props.chair ? "edit" : "add";
     const chair = props.chair ? new Chair(props.chair) : null;
-
-    console.log(chair);
 
     this.state = {
       mode: mode,
@@ -272,8 +270,6 @@ class ChairForm extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
   if (ownProps.chair) {
-    console.log(ownProps.chair.address);
-
     const initialValues = {
       chairName: ownProps.chair.name || "",
       cityName: ownProps.chair.address ? ownProps.chair.address.city : "",

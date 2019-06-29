@@ -28,6 +28,7 @@ import ChairRoleList from "../02_molecules/ChairRoleList";
 import genderEnum from "../models/enumerations/genderEnum";
 import Account from "../models/account";
 import { accountService } from "../services";
+import moment from "moment";
 
 class UserForm extends React.Component {
   constructor(props) {
@@ -35,37 +36,38 @@ class UserForm extends React.Component {
     const mode = props.account ? "edit" : "add";
     const account = props.account ? new Account(props.account) : null;
 
-    let immatriculationDate = "";
+    let matriculationDate = "";
     let exmatriculationDate = "";
+    let birthDate = "";
 
-    if (account && account.person && account.person.isStudent()) {
-      immatriculationDate =
-        account.person.studentStatus.matriculationDate || "";
-      exmatriculationDate =
-        account.person.studentStatus.exmatriculationDate || "";
+    if (account && account.person) {
+      birthDate = account.person.birthDate
+        ? moment(account.person.birthDate).format("DD-MM-YYYY")
+        : "";
+
+      if (account.person && account.person.isStudent()) {
+        matriculationDate = account.person.studentStatus.matriculationDate
+          ? moment(account.person.studentStatus.matriculationDate).format(
+              "DD-MM-YYYY"
+            )
+          : "";
+        exmatriculationDate = account.person.studentStatus.exmatriculationDate
+          ? moment(account.person.studentStatus.exmatriculationDate).format(
+              "DD-MM-YYYY"
+            )
+          : "";
+      }
     }
 
-    if (props.account && props.account.person) {
-      this.state = {
-        currentSkillInputValue: "",
-        currentlySelectedSkill: null,
-        dateOfBirth: props.account.person ? props.account.person.birthDate : "",
-        immatriculationDate: immatriculationDate,
-        exmatriculationDate: exmatriculationDate,
-        mode: mode,
-        account: props.account
-      };
-    } else {
-      this.state = {
-        currentSkillInputValue: "",
-        currentlySelectedSkill: null,
-        dateOfBirth: "",
-        immatriculationDate: immatriculationDate,
-        exmatriculationDate: exmatriculationDate,
-        mode: mode,
-        account: props.account
-      };
-    }
+    this.state = {
+      currentSkillInputValue: "",
+      currentlySelectedSkill: null,
+      dateOfBirth: birthDate,
+      matriculationDate: matriculationDate,
+      exmatriculationDate: exmatriculationDate,
+      mode: mode,
+      account: props.account
+    };
 
     this._handleSkillInputChange = this._handleSkillInputChange.bind(this);
     this._handleSkillSubmission = this._handleSkillSubmission.bind(this);
@@ -91,7 +93,6 @@ class UserForm extends React.Component {
   render() {
     const props = this.props;
 
-    console.log(props.isEmployee);
     return (
       <Form
         onSubmit={props.handleSubmit(
@@ -368,16 +369,15 @@ class UserForm extends React.Component {
 
               <Grid.Row columns={1}>
                 <Grid.Column width={12}>
-                  {console.log(props.chairs)}
                   {props.chairs && props.chairs.length > 0 && (
                     <ChairRoleList
                       userId={props.userId}
                       items={props.user ? props.user.chairs : []}
                       chairs={props.chairs}
                       onChange={personChairRelations => {
-                        /* this.setState({
+                        this.setState({
                           personChairRelations: personChairRelations
-                        }); */
+                        });
                       }}
                     />
                   )}
@@ -400,9 +400,9 @@ class UserForm extends React.Component {
               </Button>
             </Grid.Column>
             <Grid.Column width={3}>
-              <Button type="submit" primary>
+              <Form.Field control={Button} primary type="submit">
                 {i18next.t("complete-your-profile-continue-button")}
-              </Button>
+              </Form.Field>
             </Grid.Column>
           </Grid.Row>
         </Grid>
@@ -421,7 +421,7 @@ class UserForm extends React.Component {
    * Handles a change in the immatriculationDate-Picker input
    */
   _handleImmatriculationDateChange(event, { name, value }) {
-    this.setState({ immatriculationDate: value });
+    this.setState({ matriculationDate: value });
   }
 
   /**
@@ -482,7 +482,6 @@ class UserForm extends React.Component {
    * @param {} values
    */
   async _handleUpdateProfileSubmit(values) {
-    console.log("Triggered Submit");
     const skillCatalogue = this.props.skillCatalogue;
     let skillsRatings = [];
 
@@ -495,8 +494,18 @@ class UserForm extends React.Component {
       });
     }
 
-    const DEFAULT_DATE_IF_UNSET = "1990-01-01T00:00:00+01:00";
+    const DEFAULT_DATE_IF_UNSET = "1990-01-01T00:00:00";
     const DEFAULT_GENDER_IF_UNSET = 0;
+
+    const birthDate = this.state.dateOfBirth
+      ? moment(this.state.dateOfBirth, "DD-MM-YYYY").format()
+      : DEFAULT_DATE_IF_UNSET;
+    const matriculationDate = this.state.matriculationDate
+      ? moment(this.state.matriculationDate, "DD-MM-YYYY").format()
+      : DEFAULT_DATE_IF_UNSET;
+    const exmatriculationDate = this.state.exmatriculationDate
+      ? moment(this.state.exmatriculationDate, "DD-MM-YYYY").format()
+      : DEFAULT_DATE_IF_UNSET;
 
     // Values that are extracted from the various input fields, each field is either managed by redux form
     // or via the components state.
@@ -509,7 +518,7 @@ class UserForm extends React.Component {
         gender: values.gender || DEFAULT_GENDER_IF_UNSET,
         firstName: values.firstName,
         lastName: values.lastName,
-        birthDate: this.state.dateOfBirth || DEFAULT_DATE_IF_UNSET,
+        birthDate: birthDate,
         address: {
           city: values.cityName,
           postCode: values.postCode,
@@ -519,11 +528,11 @@ class UserForm extends React.Component {
         },
         studentStatus: {
           matriculationNumber: values.studentId,
-          subect: values.courseOfStudy,
-          matriculationDate:
-            this.state.immatriculationDate || DEFAULT_DATE_IF_UNSET,
-          exmatriculationDate:
-            this.state.exmatriculationDate || DEFAULT_DATE_IF_UNSET
+          subect: {
+            name: values.courseOfStudy
+          },
+          matriculationDate: matriculationDate,
+          exmatriculationDate: exmatriculationDate
         },
         chairs: this.state.personChairRelations,
         skills: skillsRatings
@@ -541,21 +550,15 @@ class UserForm extends React.Component {
       } else {
         this.props.onCompleteWithError();
       }
-      console.log("Editing a User");
     } else if (this.state.mode === "add") {
-      console.log("Adding new User");
-
       // Create a new Account
       const newAccountRequest = await userService.signup(
         values.email,
         values.password
       );
 
-      console.log(newAccountRequest);
-
       // If errors occur, update the profile of with values from the form.
       if (newAccountRequest.error == null && newAccountRequest.status === 200) {
-        console.log("Updating profile");
         accountValues.person.userId = newAccountRequest.user.person.id;
         const updateProfileRequest = userService.updateProfile(
           accountValues.person
@@ -579,7 +582,7 @@ class UserForm extends React.Component {
         iconPosition="left"
         onChange={this._handleDateOfBirthChange}
         label={i18next.t("complete-profile-dateOfBirth-label")}
-        dateFormat=""
+        dateFormat="DD-MM-YYYY"
       />
     );
   }
@@ -587,15 +590,15 @@ class UserForm extends React.Component {
   renderImmatriculationDateInput() {
     return (
       <DateInput
-        name="immatriculationDate"
+        name="matriculationDate"
         placeholder={i18next.t(
           "complete-profile-immatriculationDate-placeholder"
         )}
-        value={this.state.immatriculationDate}
+        value={this.state.matriculationDate}
         iconPosition="left"
         onChange={this._handleImmatriculationDateChange}
         label={i18next.t("complete-profile-immatriculationDate-label")}
-        dateFormat=""
+        dateFormat="DD-MM-YYYY"
       />
     );
   }
@@ -611,7 +614,7 @@ class UserForm extends React.Component {
         iconPosition="left"
         onChange={this._handleExmatriculationDateChange}
         label={i18next.t("complete-profile-exmatriculationDate-label")}
-        dateFormat=""
+        dateFormat="DD-MM-YYYY"
       />
     );
   }
@@ -645,8 +648,6 @@ class UserForm extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  console.log("Calling matpStateToProps");
-
   let isStudent;
   let isEmployee;
 
@@ -655,7 +656,6 @@ const mapStateToProps = (state, ownProps) => {
     state.form.completeProfileForm &&
     state.form.completeProfileForm.values
   ) {
-    console.log("Setting values for isStudent and isEmployee");
     isStudent = state.form.completeProfileForm.values.isStudent;
     isEmployee = state.form.completeProfileForm.values.isEmployee;
   }
@@ -663,7 +663,6 @@ const mapStateToProps = (state, ownProps) => {
   // Initialize redux form with account values given in props
   if (ownProps.account) {
     if (ownProps.account.person) {
-      console.log("Account and person exist");
       const gender = genderEnum[ownProps.account.person.gender];
 
       return {
@@ -693,9 +692,11 @@ const mapStateToProps = (state, ownProps) => {
             ? ownProps.account.person.address.email
             : "",
           isStudent: ownProps.account.person.studentStatus ? true : false,
-          courseOfStudy: ownProps.account.person.studentStatus
-            ? ownProps.account.person.studentStatus.subject
-            : "",
+          courseOfStudy:
+            ownProps.account.person.studentStatus &&
+            ownProps.account.person.studentStatus.subject
+              ? ownProps.account.person.studentStatus.subject.name
+              : "",
           matriculatonNumber: ownProps.account.person.studentStatus
             ? ownProps.account.person.studentStatus.matriculationNumber
             : "",

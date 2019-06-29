@@ -7,7 +7,7 @@ import "./PostCard.css";
 class PostCard extends React.Component {
   render() {
     const props = this.props;
-    console.log(postTypeEnum);
+
     return (
       <Card color="blue" fluid className="postCard-container">
         <Card.Content>
@@ -22,7 +22,7 @@ class PostCard extends React.Component {
               {tableFormattingUtilities.postTypeEnumToString(props.postType)}
             </span>
             <span>
-              {tableFormattingUtilities.getFormattedDate(props.createdAt)}
+              {tableFormattingUtilities.getTimeSinceCreated(props.createdAt)}
             </span>
           </Card.Meta>
         </Card.Content>

@@ -141,8 +141,6 @@ class Signup extends React.Component {
    * Calls a redux-action creator to start a registration attempt.
    */
   _handleRegistrationSubmit(values) {
-    console.log(values);
-
     if (!values.consentToDataProcessingAgreement) {
       this.setState({
         ToSCheckboxError: true

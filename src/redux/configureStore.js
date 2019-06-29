@@ -24,7 +24,6 @@ export default function configureStore() {
     persistedState = loadReduxState();
   }
 
-  console.log("Setting up Routesmap");
   let { reducer, middleware, enhancer } = connectRoutes(routesMap, options);
 
   const composeEnhancers = (...args) =>

@@ -24,8 +24,6 @@ import NavBar from "./03_organisms/NavBar";
 import i18next from "i18next";
 import moment from "moment-with-locales-es6";
 
-console.log(i18next.language);
-
 moment.locale(i18next.language.substr(0, 2));
 
 ReactDOM.render(

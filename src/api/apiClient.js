@@ -8,7 +8,6 @@ export function configureApiClient() {
 
     config.headers.Authorization = token;
 
-    console.log("Creating axios interceptor");
     return config;
   });
 }

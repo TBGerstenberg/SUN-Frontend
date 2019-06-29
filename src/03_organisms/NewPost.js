@@ -18,7 +18,6 @@ class NewPostModal extends Component {
   }
 
   render() {
-    console.log(this.state);
     return (
       <div>
         <Modal open={this.props.open}>

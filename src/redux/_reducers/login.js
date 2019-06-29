@@ -69,8 +69,6 @@ const loginReducer = (state = initialState, action) => {
         }
       );
 
-      console.log(userHasSubscribedToChair);
-
       if (!userHasSubscribedToChair) {
         let mutatedSubscriptions = [...state.user.person.subscriptions];
         mutatedSubscriptions.push(action.payload.subscription);
@@ -97,11 +95,7 @@ const loginReducer = (state = initialState, action) => {
         }
       );
 
-      console.log(indexOfChair);
-
       const userHasSubscribedToChair = indexOfChair !== -1;
-
-      console.log(userHasSubscribedToChair);
 
       if (userHasSubscribedToChair) {
         let mutatedSubscriptions = [...state.user.person.subscriptions];

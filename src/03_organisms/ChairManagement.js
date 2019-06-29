@@ -234,8 +234,6 @@ class ChairManagement extends React.Component {
       this.state.selectedEntry
     );
 
-    console.log(deletionResponse);
-
     if (deletionResponse.status === 200) {
       this.props.toggleSuccessMessage(
         i18next.t("chairManagement-delete-chair-success-title"),

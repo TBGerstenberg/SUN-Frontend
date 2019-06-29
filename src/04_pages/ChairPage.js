@@ -76,12 +76,9 @@ export class ChairPage extends React.Component {
       nextProps.getSingleChair(nextProps.chairId);
 
       const chair = nextProps.chairSubscriptions.find(element => {
-        console.log(typeof element.pageId);
-        console.log(typeof nextProps.chairId);
         return element.pageId == nextProps.chairId;
       });
 
-      console.log(chair);
       if (chair != null) {
         return {
           chairId: nextProps.chairId,
@@ -149,7 +146,6 @@ export class ChairPage extends React.Component {
   }
 
   renderPostsFragment() {
-    console.log(this.props.personCanPostForChair);
     return (
       <Grid>
         <Grid.Row columns={2} verticalAlign="middle">
@@ -200,7 +196,6 @@ export class ChairPage extends React.Component {
       );
 
       if (unsubscribeRequest.status === 200) {
-        console.log("setting subscribeModal Open");
         this.setState({
           userHasSubscribedToChair: false,
           unsubscribeModalOpen: true
@@ -214,7 +209,6 @@ export class ChairPage extends React.Component {
       );
 
       if (subscriptionRequest.status === 200) {
-        console.log("setting subscribeModal Open");
         this.setState({
           userHasSubscribedToChair: true,
           subscribeModalOpen: true
@@ -357,8 +351,6 @@ let mapStateToProps = state => {
       arrayElement,
       index
     ) {
-      console.log(arrayElement);
-      console.log(loggedInUserPersonId);
       return (
         arrayElement.personId === loggedInUserPersonId &&
         (arrayElement.role === 0 ||

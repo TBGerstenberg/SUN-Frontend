@@ -98,9 +98,6 @@ class NewEventModal extends Component {
             </Button>
             <Button
               onClick={() => {
-                console.log(moment(this.state.startDate));
-                console.log(moment(this.state.endDate));
-
                 const newPost = {
                   title: this.state.title,
                   content: this.state.content,

@@ -17,13 +17,6 @@ function register({
   return async dispatch => {
     dispatch(request({ email }));
 
-    console.log(
-      email,
-      password,
-      consentToDataProcessingAgreement,
-      consentToDataProcessingAgreement
-    );
-
     const registrationResponse = await userService.signup(
       email,
       password,
@@ -81,7 +74,6 @@ function login({ email, password }) {
     const loginResponse = await userService.login(email, password);
 
     if (loginResponse.status === 200) {
-      console.log(loginResponse);
       dispatch(success(loginResponse.user, loginResponse.authToken));
     } else {
       dispatch(failure(loginResponse));
@@ -180,7 +172,6 @@ function updateProfile(profileValues) {
       profileValues
     );
 
-    console.log(updateProfileResponse);
     if (
       updateProfileResponse.response &&
       updateProfileResponse.response.status === 200
@@ -204,8 +195,6 @@ function updateProfile(profileValues) {
    * @param {Object} user - user profile that has successfully been updated
    */
   function success(user) {
-    console.log(user);
-    console.log("Updated User");
     return {
       type: userConstants.UPDATE_USER_PROFILE_SUCCESS,
       payload: { user }
@@ -257,7 +246,6 @@ function getSingleUser(userId) {
   return async (dispatch, getState) => {
     dispatch(request());
 
-    console.log("Fetching user with id " + userId + "In action creator layer");
     const getSingleUserResponse = await userService.getSingleUser(userId);
 
     if (getSingleUserResponse && getSingleUserResponse.user) {

@@ -31,7 +31,6 @@ const userReducer = (state = initialState, action) => {
       };
 
     case userConstants.UPDATE_USER_PROFILE_SUCCESS:
-      console.log(action);
       return {
         ...state,
         updatingProfile: false,

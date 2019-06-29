@@ -6,7 +6,7 @@ import personChairRelationEnum from "../models/enumerations/personChairRelationE
 class PersonList extends Component {
   constructor(props) {
     super(props);
-    console.log(props);
+
     this.state = {
       persons: props.persons || []
     };
@@ -28,7 +28,6 @@ class PersonList extends Component {
 }
 
 const PersonListItem = props => {
-  console.log(props);
   return (
     <List.Item>
       <Image
