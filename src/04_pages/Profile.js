@@ -47,15 +47,7 @@ class Profile extends React.Component {
         <NavBar />
         <Container>
           <Grid centered padded>
-            <Grid.Row>
-              <Grid.Column textAlign="center" width={16}>
-                {profileValuesExist && (
-                  <HeaderProfilePage
-                    firstName={props.profileValues.firstName}
-                  />
-                )}
-              </Grid.Column>
-            </Grid.Row>
+            
 
             <Grid.Row columns={2}>
               <Grid.Column width={10}>

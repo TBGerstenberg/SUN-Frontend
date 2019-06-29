@@ -11,6 +11,7 @@ import Job from "./Job";
 import ChairPage from "./ChairPage";
 import AdminPanel from "./AdminPanel";
 import AllChairs  from "./AllChairs";
+import Search from "./Search";
 
 /**
  * This file exists to allow an import
@@ -30,5 +31,6 @@ export {
   Job,
   ChairPage,
   AdminPanel,
-  AllChairs
+  AllChairs,
+  Search
 };

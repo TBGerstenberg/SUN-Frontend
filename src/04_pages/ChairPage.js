@@ -7,6 +7,8 @@ import AvatarJob from "../assets/images/chair_avatar.png";
 import { withTranslation, Trans } from "react-i18next";
 import ContactCard from "../03_organisms/ContactCard";
 import App from "../App";
+import PersonList from "../03_organisms/PersonList";
+import universityImage from "../assets/images/universityImage.jpg";
 import {
   Button,
   Form,
@@ -22,7 +24,8 @@ import {
   Modal,
   Card,
   Tab,
-  GridRow
+  GridRow,
+  List
 } from "semantic-ui-react";
 
 import { connect } from "react-redux";
@@ -32,6 +35,7 @@ import { SemanticToastContainer, toast } from "react-semantic-toasts";
 import SubscribeButton from "../02_molecules/SubscribeButton";
 import PostCard from "../03_organisms/PostCard";
 import AdressCard from "../03_organisms/AdressCard";
+import { S_IXGRP } from "constants";
 
 export class ChairPage extends React.Component {
   constructor(props) {
@@ -67,7 +71,8 @@ export class ChairPage extends React.Component {
       subscribeModalOpen: false,
       unsubscribeModalOpen: false,
       userHasSubscribedToChair: false,
-      subscriptions: null
+      subscriptions: null,
+      persons: []
     };
   }
 
@@ -142,7 +147,17 @@ export class ChairPage extends React.Component {
   }
 
   renderEmployeeFragment() {
-    return <div>Placeholder</div>;
+    return (
+      <div>
+        <PersonList
+          persons={
+            this.props.currentlyViewedChair.persons
+              ? this.props.currentlyViewedChair.persons
+              : []
+          }
+        />
+      </div>
+    );
   }
 
   renderPostsFragment() {
@@ -243,12 +258,22 @@ export class ChairPage extends React.Component {
         postCode = this.props.currentlyViewedChair.address.postCode || "";
       }
     }
-
+    console.log(this.props);
     return (
       <div>
         <NavBar />
 
         <Container>
+          <Grid padded>
+            <Grid.Row columns={1}>
+              <Grid.Column width={16}>
+                <div>
+                  <Image rounded centered src={universityImage} fluid />
+                </div>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+
           <Grid columns={3} centered padded>
             <Grid.Row columns={3}>
               <Grid.Column width={11}>

@@ -4,6 +4,7 @@ import { chairActions } from "../redux/_actions";
 import { connect } from "react-redux";
 import { Grid, Header, Icon, Card, Container } from "semantic-ui-react";
 import ChairCard from "../03_organisms/ChairCard";
+
 class AllChairs extends React.Component {
   constructor(props) {
     super(props);

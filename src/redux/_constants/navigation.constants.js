@@ -16,7 +16,9 @@ const navigationConstants = {
   NAVIGATE_TO_ADMIN_PANEL: "NAVIGATE_TO_ADMIN_PANEL",
   NAVIGATE_TO_JOB_PAGE: "NAVIGATE_TO_JOB_PAGE",
   NAVIGATE_TO_CHAIR_PAGE: "NAVIGATE_TO_CHAIR_PAGE",
-  NAVIGATE_TO_ALLCHAIRS_PAGE: "NAVIGATE_TO_ALLCHAIRS_PAGE"
+  NAVIGATE_TO_ALLCHAIRS_PAGE: "NAVIGATE_TO_ALLCHAIRS_PAGE",
+  NAVIGATE_TO_SEARCH_PAGE: "NAVIGATE_TO_SEARCH_PAGE"
+
 };
 
 /**
@@ -69,6 +71,11 @@ export const routesMap = {
     path: "/allchairs",
     requiresAuth: true,
     role: ""
+  },
+  NAVIGATE_TO_SEARCH_PAGE: {
+    path: "/search",
+    requiresAuth: true,
+    role: ""
   }
 };
 
@@ -89,6 +96,7 @@ export const componentsMap = {
   NAVIGATE_TO_JOB_PAGE: "Job",
   NAVIGATE_TO_CHAIR_PAGE: "ChairPage",
   NAVIGATE_TO_ALLCHAIRS_PAGE: "AllChairs",
+  NAVIGATE_TO_SEARCH_PAGE: "Search",
 
   [NOT_FOUND]: "NotFound"
 };
