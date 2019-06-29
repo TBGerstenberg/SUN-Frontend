@@ -16,7 +16,7 @@ const ChairCard = props => {
         {props.chairAddress && props.chairAddress.email && (
           <p>
             <Trans i18nKey="chair-card-email-label" />
-            {" " + props.chairAddress.email}
+            {" " + props.chairsAddress.email}
           </p>
         )}
         {props.chairAddress && props.chairAddress.phoneNumber && (
