@@ -16,16 +16,7 @@ class Search extends React.Component {
     this.state = { chairs: null, users: [], posts: [] };
   }
 
-  componentWillMount() {
-    this.props.getAllChairs();
-    this.props.getAllUsers();
-    this.props.getAllPosts();
-  }
-
-  
-
   render() {
-    
     const props = this.props;
     return (
       <div>
@@ -43,12 +34,7 @@ class Search extends React.Component {
                 <Header>Personen:</Header>
                 {props.users &&
                   props.users.map((user, index) => {
-                      
-                    return (
-                      <PersonCard
-                        user = {user}
-                      />
-                    );
+                    return <PersonCard user={user} />;
                   })}
               </Grid.Column>
               <Grid.Column width={5}>
@@ -57,9 +43,9 @@ class Search extends React.Component {
                   props.chairs.map((chair, index) => {
                     return (
                       <ChairCard
-                      chairId={chair.id}
-                      chairName={chair.name}
-                      chairAddress={chair.address}
+                        chairId={chair.id}
+                        chairName={chair.name}
+                        chairAddress={chair.address}
                       />
                     );
                   })}
@@ -68,12 +54,7 @@ class Search extends React.Component {
                 <Header>Postings:</Header>
                 {props.posts &&
                   props.posts.map((post, index) => {
-                      
-                    return (
-                      <PostCard
-                        post = {post}
-                      />
-                    );
+                    return <PostCard post={post} />;
                   })}
               </Grid.Column>
             </Grid.Row>
@@ -81,16 +62,14 @@ class Search extends React.Component {
         </Container>
       </div>
     );
-
   }
-  
 }
 
 let mapStateToProps = state => {
   return {
-    chairs: state.chair.chairs,
-    users: state.user.users,
-    posts: state.post.posts
+    chairs: state.search.searchResults && state.search.searchResults.chairs,
+    users: state.search.searchResults && state.search.searchResults.persons,
+    posts: state.search.searchResults && state.search.searchResults.posts
   };
 };
 

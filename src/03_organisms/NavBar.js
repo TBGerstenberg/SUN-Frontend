@@ -195,12 +195,12 @@ class NavBar extends Component {
             onKeyDown={e => {
               if (e.key === "Enter") {
                 // TODO: Navigate to searchresult page - heres how to navigate to admin
-                /*   this.props
-                  .dispatch
-                 navigationActions.redirect(
-                    navigationConstants.NAVIGATE_TO_ADMIN_PANEL
-                  ) 
-                  (); */
+
+                this.props.dispatch(
+                  navigationActions.redirect(
+                    navigationConstants.NAVIGATE_TO_SEARCH_PAGE
+                  )
+                );
               }
             }}
           />
