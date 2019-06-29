@@ -17,6 +17,8 @@ class ChairRoleList extends React.Component {
       currentlySelectedChair: null
     };
 
+    console.log(props.items);
+
     this.handleAddRoleButtonClick = this.handleAddRoleButtonClick.bind(this);
     this.addListItem = this.addListItem.bind(this);
     this.deleteListItem = this.deleteListItem.bind(this);
@@ -104,7 +106,7 @@ class ChairRoleList extends React.Component {
     const personChairRelation = {
       personId: personChairRelationValues.personId,
       chairId: personChairRelationValues.chairId,
-      role: personChairRelationValues.role,
+      role: Number(personChairRelationValues.role),
       active: personChairRelationValues.active,
       chairAdmin: personChairRelationValues.chairAdmin
     };

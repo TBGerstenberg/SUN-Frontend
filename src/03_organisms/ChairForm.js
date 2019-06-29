@@ -246,23 +246,26 @@ class ChairForm extends React.Component {
     };
 
     if (this.state.mode === "edit") {
-      const response = await chairService.updateChair(
+      const updateChairRequest = await chairService.updateChair(
         this.state.chair.id,
         chairValues
       );
 
-      if (response.status === 200) {
+      if (updateChairRequest && updateChairRequest.status == 200) {
         this.props.onCompleteWithSuccess();
       } else {
-        this.props.onCompleteWithError(response.error);
+        this.props.onCompleteWithError(updateChairRequest.error);
       }
     } else if (this.state.mode === "add") {
-      const response = chairService.createChair(chairValues);
+      const createChairRequest = chairService.createChair(chairValues);
 
-      if (response.status === 200) {
+      if (
+        createChairRequest.response &&
+        createChairRequest.response.status === 200
+      ) {
         this.props.onCompleteWithSuccess();
       } else {
-        this.props.onCompleteWithError(response.error);
+        this.props.onCompleteWithError(createChairRequest.error);
       }
     }
   }

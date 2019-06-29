@@ -27,12 +27,13 @@ import ChairRoleList from "../02_molecules/ChairRoleList";
 
 import genderEnum from "../models/enumerations/genderEnum";
 import Account from "../models/account";
-import { accountService } from "../services";
+import { accountService, chairService } from "../services";
 import moment from "moment";
 
 class UserForm extends React.Component {
   constructor(props) {
     super(props);
+
     const mode = props.account ? "edit" : "add";
     const account = props.account ? new Account(props.account) : null;
 
@@ -59,12 +60,18 @@ class UserForm extends React.Component {
       }
     }
 
+    let personChairRelations = [];
+    if (props.account && props.account.person && props.account.person.chairs) {
+      personChairRelations = props.account.person.chairs;
+    }
+
     this.state = {
       currentSkillInputValue: "",
       currentlySelectedSkill: null,
       dateOfBirth: birthDate,
       matriculationDate: matriculationDate,
       exmatriculationDate: exmatriculationDate,
+      personChairRelations: personChairRelations,
       mode: mode,
       account: props.account
     };
@@ -372,7 +379,7 @@ class UserForm extends React.Component {
                   {props.chairs && props.chairs.length > 0 && (
                     <ChairRoleList
                       userId={props.userId}
-                      items={props.user ? props.user.chairs : []}
+                      items={this.state.personChairRelations}
                       chairs={props.chairs}
                       onChange={personChairRelations => {
                         this.setState({
@@ -545,7 +552,8 @@ class UserForm extends React.Component {
         this.state.account.id
       );
 
-      if (editAccountRequest.status === 200) {
+      if (editAccountRequest.response.status === 200) {
+        console.log("Completed with success");
         this.props.onCompleteWithSuccess();
       } else {
         this.props.onCompleteWithError();
@@ -687,6 +695,9 @@ const mapStateToProps = (state, ownProps) => {
             : "",
           street: ownProps.account.person.address
             ? ownProps.account.person.address.street
+            : "",
+          roomName: ownProps.account.person.address
+            ? ownProps.account.person.address.room
             : "",
           additional_email: ownProps.account.person.address
             ? ownProps.account.person.address.email

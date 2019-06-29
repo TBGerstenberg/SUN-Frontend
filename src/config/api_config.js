@@ -48,6 +48,9 @@ const API_CONFIG = {
     },
     UNSUBSCRIBE_FROM_CHAIR_URL: chairId => {
       return BASEURL + "/chairs/" + chairId + "/subscription";
+    },
+    CREATE_PERSON_CHAIR_RELATION_URL: chairId => {
+      return BASEURL + "/chairs/" + chairId + "/my-relation";
     }
   },
 

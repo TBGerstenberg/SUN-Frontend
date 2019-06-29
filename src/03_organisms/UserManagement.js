@@ -19,8 +19,6 @@ class UserManagement extends React.Component {
       });
     } else {
     }
-
-    this.props.dispatch(userActions.getAllUsers());
   }
 
   constructor(props) {
@@ -77,7 +75,7 @@ class UserManagement extends React.Component {
                 this.setState({ addUserModalOpen: false });
               }}
               onCompleteWithSuccess={() => {
-                this.props.toggleSuccessMessage("Erfolg", "Benutzer angelegt");
+                this.props.toggleSuccessMessage("Erfolg", "Benutzer editiert");
                 this.closeAddUserModal();
               }}
               onCompleteWithError={error => {
@@ -161,8 +159,7 @@ class UserManagement extends React.Component {
   }
 
   renderAccountsTableRow(account) {
-    const user = account.person;
-
+    console.log(account);
     return (
       <Table.Row
         key={"row" + account.id}
@@ -178,35 +175,41 @@ class UserManagement extends React.Component {
           {tableFormattingUtilities.stringOrEmpty(account.email)}
         </Table.Cell>
         <Table.Cell key="title">
-          {tableFormattingUtilities.stringOrEmpty(user.title)}
+          {tableFormattingUtilities.stringOrEmpty(account.person.title)}
         </Table.Cell>
         <Table.Cell key="gender">
-          {tableFormattingUtilities.genderEnumToString(user.gender)}
+          {tableFormattingUtilities.genderEnumToString(account.person.gender)}
         </Table.Cell>
         <Table.Cell key="firstName">
-          {tableFormattingUtilities.stringOrEmpty(user.firstName)}
+          {tableFormattingUtilities.stringOrEmpty(account.person.firstName)}
         </Table.Cell>
         <Table.Cell key="lastName">
-          {tableFormattingUtilities.stringOrEmpty(user.lastName)}
+          {tableFormattingUtilities.stringOrEmpty(account.person.lastName)}
         </Table.Cell>
         <Table.Cell key="birthDate">
-          {tableFormattingUtilities.getFormattedDate(user.birthDate)}
+          {tableFormattingUtilities.getFormattedDate(account.person.birthDate)}
         </Table.Cell>
         <Table.Cell key="city">
-          {tableFormattingUtilities.stringOrEmpty(user.address.city)}
+          {tableFormattingUtilities.stringOrEmpty(account.person.address.city)}
         </Table.Cell>
         <Table.Cell key="postCode">
-          {tableFormattingUtilities.stringOrEmpty(user.address.postCode)}
+          {tableFormattingUtilities.stringOrEmpty(
+            account.person.address.postCode
+          )}
         </Table.Cell>
         <Table.Cell key="street">
-          {tableFormattingUtilities.stringOrEmpty(user.address.street)}
+          {tableFormattingUtilities.stringOrEmpty(
+            account.person.address.street
+          )}
         </Table.Cell>
         <Table.Cell key="isStudent">
-          {tableFormattingUtilities.stringValueForBoolean(user.studentStatus)}
+          {tableFormattingUtilities.stringValueForBoolean(
+            account.person.studentStatus
+          )}
         </Table.Cell>
         <Table.Cell key="isEmployee">
           {tableFormattingUtilities.stringValueForBoolean(
-            user.chairs && user.chairs.length > 0
+            account.person.chairs && account.person.chairs.length > 0
           )}
         </Table.Cell>
       </Table.Row>

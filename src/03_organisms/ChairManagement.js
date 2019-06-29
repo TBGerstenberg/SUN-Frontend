@@ -74,7 +74,7 @@ class ChairManagement extends React.Component {
                 this.closeAddChairModal();
               }}
               onCompleteWithError={error => {
-                this.props.toggleErrorMessage("Fehler", "irgendwas");
+                this.props.toggleErrorMessage("Fehler", error);
                 this.closeAddChairModal();
               }}
             />

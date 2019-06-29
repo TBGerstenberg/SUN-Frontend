@@ -1,7 +1,18 @@
 import React from "react";
 import { connect } from "react-redux";
+import i18next from "i18next";
 import { Trans, withTranslation } from "react-i18next";
-import { Button, Icon, Menu, Segment, Sidebar, Grid } from "semantic-ui-react";
+import {
+  Button,
+  Icon,
+  Menu,
+  Segment,
+  Sidebar,
+  Grid,
+  Container,
+  Header,
+  List
+} from "semantic-ui-react";
 import "./AdminPanel.css";
 
 import NavBar from "../03_organisms/NavBar";

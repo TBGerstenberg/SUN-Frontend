@@ -106,6 +106,23 @@ const chairService = {
     } catch (error) {
       return error;
     }
+  },
+
+  createPersonChairRelation: async (
+    chairId,
+    personChairRelationRequestBody
+  ) => {
+    try {
+      const createPersonChairRelationRequestBody = {};
+
+      const createPersonChairRelationResposne = await apiClient.put(
+        API_CONFIG.CHAIRS.CREATE_PERSON_CHAIR_RELATION_URL(chairId),
+        personChairRelationRequestBody
+      );
+      return createPersonChairRelationResposne;
+    } catch (error) {
+      return error;
+    }
   }
 };
 
