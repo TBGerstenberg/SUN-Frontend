@@ -63,14 +63,37 @@ class NavBar extends Component {
   }
 
   handleSearchChange = (e, { value }) => {
-    console.log(e);
-    console.log(this.props);
-
     this.props.dispatch(searchActions.search(value));
   };
 
-  handleSearchResultSelect = (e, { result }) =>
-    this.setState({ value: result.title });
+  handleSearchResultSelect = (e, { result }) => {
+    console.log(result);
+    const resultObject = JSON.parse(result.description);
+
+    // Object is a person, redirect to profile page
+    if (
+      resultObject.hasOwnProperty("firstName") &&
+      resultObject.hasOwnProperty("lastName")
+    ) {
+      console.log("dispatching redirect to profile");
+      this.props.dispatch(
+        navigationActions.redirect(navigationConstants.NAVIGATE_TO_PROFILE, {
+          userId: resultObject.id
+        })
+      );
+
+      // Object is a chair or a post, redirect to chair page
+    } else if (
+      resultObject.hasOwnProperty("name") ||
+      resultObject.hasOwnProperty("authorId")
+    ) {
+      this.props.dispatch(
+        navigationActions.redirect(navigationConstants.NAVIGATE_TO_CHAIR_PAGE, {
+          chairId: resultObject.id
+        })
+      );
+    }
+  };
 
   dispatchLogout() {
     this.props.dispatch(userActions.logout());
@@ -158,16 +181,15 @@ class NavBar extends Component {
             onSearchChange={debounce(this.handleSearchChange, 500, {
               leading: true
             })}
+            onResultSelect={this.handleSearchResultSelect}
             results={this.props.searchResults}
             resultRenderer={resultRenderer}
             category={true}
             categoryRenderer={categoryRenderer}
             onFocus={() => {
-              console.log("Focused");
               this.setState({ searchBarFocused: true });
             }}
             onBlur={() => {
-              console.log("Unfocused");
               this.setState({ searchBarFocused: false });
             }}
             onKeyDown={e => {
@@ -213,7 +235,7 @@ const mapStateToProps = state => {
 
   personSearchResults = personSearchResults.map(person => {
     return {
-      title: person.firstName + person.lastName,
+      title: person.firstName + " " + person.lastName,
       description: JSON.stringify(person)
     };
   });
@@ -242,15 +264,15 @@ const mapStateToProps = state => {
 
   const searchResults = {
     users: {
-      name: "users",
+      name: i18next.t("searchbar-category-users-label"),
       results: personSearchResults
     },
     chairs: {
-      name: "chairs",
+      name: i18next.t("searchbar-category-chairs-label"),
       results: chairSearchResults
     },
     posts: {
-      name: "posts",
+      name: i18next.t("searchbar-category-posts-label"),
       results: postSearchResults
     }
   };
@@ -260,12 +282,6 @@ const mapStateToProps = state => {
     user: state.login.user,
     searchResults: searchResults,
     fetchingSearchResults: state.search.fetchingSearchResults
-  };
-};
-
-const mapDispatchToProps = state => {
-  return {
-    triggerSearchRequest: searchActions.search
   };
 };
 

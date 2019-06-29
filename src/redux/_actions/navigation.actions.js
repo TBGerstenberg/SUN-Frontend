@@ -1,9 +1,10 @@
 import { redirect as reduxFirstRouterRedirect } from "redux-first-router";
 
-function redirect(actionType) {
+function redirect(actionType, actionPayload) {
   return dispatch => {
     const navigationRedirect = reduxFirstRouterRedirect({
-      type: actionType
+      type: actionType,
+      payload: actionPayload
     });
 
     dispatch(navigationRedirect);

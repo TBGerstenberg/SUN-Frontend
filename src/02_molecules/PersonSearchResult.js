@@ -5,9 +5,6 @@ import Link from "redux-first-router-link";
 import { navigationConstants } from "../redux/_constants";
 
 const PersonSearchResult = props => {
-  console.log(
-    "personId of person given to search Result" + props.person.personId
-  );
   return (
     <Label>
       <Link

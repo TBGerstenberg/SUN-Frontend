@@ -110,6 +110,10 @@
   "navbar-logout-button-text": "Abmelden",
   "navbar-logged-in-as-text": "Angemeldet als ",
 
+  "searchbar-category-users-label": "Personen",
+  "searchbar-category-chairs-label": "Lehrstühle",
+  "searchbar-category-posts-label": "Beiträge",
+
   "landingpage-hero-text": "Siegener Uni Netzwerk",
   "landingpage-hero-subtext": "Das soziale Uni-Netz der nächsten Studenten-Generation",
   "landingpage-hero-call-to-action": "Los geht's",

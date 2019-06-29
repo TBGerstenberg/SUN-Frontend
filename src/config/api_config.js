@@ -74,7 +74,7 @@ const API_CONFIG = {
 
   SEARCH: {
     GET_SEARCH_URL: query => {
-      return BASEURL + "/search?query=" + query;
+      return query ? BASEURL + "/search?query=" + query : BASEURL + "/search";
     }
   }
 };

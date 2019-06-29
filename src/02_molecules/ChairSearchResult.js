@@ -5,7 +5,6 @@ import { navigationConstants } from "../redux/_constants";
 import Link from "redux-first-router-link";
 
 const ChairSearchResult = props => {
-  console.log(props);
   return (
     <Label>
       <Link
