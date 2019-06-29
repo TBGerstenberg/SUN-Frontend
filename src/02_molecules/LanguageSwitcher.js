@@ -5,7 +5,7 @@ import "./LanguageSwitcher.css";
 
 const ChangeLanguage = props => {
   return (
-    <div className={"languageSwitcher " + props.className}>
+    <div className={"languageSwitcher"}>
       <Button
         size="mini"
         onClick={() => props.i18n.changeLanguage("de")}

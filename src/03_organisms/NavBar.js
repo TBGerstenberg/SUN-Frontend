@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Grid } from "semantic-ui-react";
+import { Button, Grid, Search, Menu } from "semantic-ui-react";
 import LanguageSwitcher from "../02_molecules/LanguageSwitcher";
 import { withTranslation, Trans } from "react-i18next";
 import i18next from "i18next";
@@ -11,11 +11,19 @@ import { navigationConstants } from "../redux/_constants";
 import { navigationActions } from "../redux/_actions";
 import Link from "redux-first-router-link";
 
+// Styles
+import "./Navbar.css";
+
 class NavBar extends Component {
   constructor(props) {
     super(props);
     this.dispatchLogout = this.dispatchLogout.bind(this);
     this.redirectToLogin = this.redirectToLogin.bind(this);
+    this.handleNavitemClick = this.handleNavitemClick.bind(this);
+
+    this.state = {
+      searchBarLoading: false
+    };
   }
 
   dispatchLogout() {
@@ -28,79 +36,87 @@ class NavBar extends Component {
     );
   }
 
+  handleNavitemClick(e, { name }) {
+    this.setState({ activeItem: name });
+  }
+
   render() {
     if (!this.props.loggedIn) {
       this.redirectToLogin();
     }
     return (
-      <div className="ui blue large inverted segment">
-        <div className="ui large inverted secondary menu">
-          <div className="ui mini image">
-            {/*  <img src={logo} style={{ height: "100%" }} /> */}
-          </div>
-
+      <Menu
+        color="blue"
+        size="huge"
+        stackable
+        className="SUN_navbar"
+        inverted
+        secondary
+      >
+        <Menu.Item
+          name="home"
+          active={this.state.activeItem === "home"}
+          onClick={this.handleNavitemClick}
+        >
           <Link
-            className="item"
-            to={{
-              type: navigationConstants.NAVIGATE_TO_ALLCHAIRS_PAGE
-            }}
-          >
-            AllChairs
-          </Link>
-
-
-
-          <Link
-            className="item"
             to={{
               type: navigationConstants.NAVIGATE_TO_HOME
             }}
           >
             Home
           </Link>
+        </Menu.Item>
 
+        <Menu.Item
+          name="profile"
+          active={this.state.activeItem === "profile"}
+          onClick={this.handleNavitemClick}
+        >
           <Link
-            className="item"
             to={{
               type: navigationConstants.NAVIGATE_TO_PROFILE,
-              payload: { userId: this.props.user ? this.props.user.id : null }
+              payload: {
+                userId: this.props.user ? this.props.user.id : null
+              }
             }}
           >
             Profile
           </Link>
+        </Menu.Item>
 
-          {this.props.user && this.props.user.admin && (
+        {this.props.user && this.props.user.admin && (
+          <Menu.Item
+            name="admin"
+            active={this.state.activeItem === "admin"}
+            onClick={this.handleNavitemClick}
+          >
             <Link
-              className="item"
               to={{
                 type: navigationConstants.NAVIGATE_TO_ADMIN_PANEL
               }}
+              activeStyle={{ textDecoration: "underline" }}
             >
               Adminpanel
             </Link>
-          )}
+          </Menu.Item>
+        )}
 
-          <div className="right menu">
-            <div className="item">
-              <LanguageSwitcher />
-            </div>
+        <Menu.Menu position="right">
+          <Search loading={this.state.searchBarLoading} />
+        </Menu.Menu>
 
-            <div className="item">
-              <div>
-                <Trans i18nKey="navbar-logged-in-as-text" />
-                {this.props.user ? this.props.user.email : ""}
-              </div>
-            </div>
-
-            <div className="item">
-              <a href="#" className="ui item" onClick={this.dispatchLogout}>
-                <i className="sign-out icon" />
-                <Trans i18nKey="navbar-logout-button-text" />
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
+        <Menu.Menu position="right">
+          <LanguageSwitcher />
+          <Menu.Item>
+            <Trans i18nKey="navbar-logged-in-as-text" />
+            {this.props.user ? this.props.user.email : ""}
+            <a href="#" className="ui item" onClick={this.dispatchLogout}>
+              <i className="sign-out icon" />
+              <Trans i18nKey="navbar-logout-button-text" />
+            </a>
+          </Menu.Item>
+        </Menu.Menu>
+      </Menu>
     );
   }
 }
