@@ -30,7 +30,7 @@ class AllChairs extends React.Component {
                     <ChairCard
                       chairId={chair.id}
                       chairName={chair.name}
-                      chairAdress={chair.address}
+                      chairAddress={chair.address}
                     />
                   );
                 })}

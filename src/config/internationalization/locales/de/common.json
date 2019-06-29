@@ -82,6 +82,10 @@
 
   "profile-overview-label": "Allgemeines",
 
+  "chair-card-email-label": "Email: ",
+  "chair-card-phoneNumber-label": "Tel: ",
+  "chair-card-phoneNumberMobile-label": "Mobil: ",
+
   "address-card-header": "Adresse",
   "address-card-city-label": "Stadt:",
   "address-card-postCode-label": "PLZ:",

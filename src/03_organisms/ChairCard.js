@@ -3,6 +3,7 @@ import { Segment, Label, Header, Card } from "semantic-ui-react";
 import { withTranslation, Trans } from "react-i18next";
 
 const ChairCard = props => {
+  console.log(props);
   return (
     <Card color="blue">
       <Card.Content>
@@ -12,22 +13,22 @@ const ChairCard = props => {
         </Card.Header>
       </Card.Content>
       <Card.Content>
-        {props.address && props.address.email && (
+        {props.chairAddress && props.chairAddress.email && (
           <p>
             <Trans i18nKey="chair-card-email-label" />
-            {" " + props.email}
+            {" " + props.chairAddress.email}
           </p>
         )}
-        {props.address && props.address.phoneNumber && (
+        {props.chairAddress && props.chairAddress.phoneNumber && (
           <p>
-            <Trans i18nKey="chair-card-phone-label" />
-            {" " + props.phoneNumber}
+            <Trans i18nKey="chair-card-phoneNumber-label" />
+            {" " + props.chairAddress.phoneNumber}
           </p>
         )}
-        {props.address && props.address.phoneNumberMobile && (
+        {props.chairAddress && props.chairAddress.phoneNumberMobile && (
           <p>
-            <Trans i18nKey="chair-card-mobile-label" />
-            {" " + props.phoneNumberMobile}
+            <Trans i18nKey="chair-card-phoneNumberMobile-label" />
+            {" " + props.chairAddress.phoneNumberMobile}
           </p>
         )}
       </Card.Content>
