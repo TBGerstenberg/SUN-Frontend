@@ -101,8 +101,8 @@ export class ChairPage extends React.Component {
   renderEventFragment() {
     return (
       <Grid>
-        <Grid.Row columns={2}>
-          <Grid.Column width={10} verticalAlign="middle">
+        <Grid.Row columns={2} verticalAlign="middle">
+          <Grid.Column width={10}>
             <Header>Veranstaltungen</Header>
           </Grid.Column>
           <Grid.Column width={6} floated="right">
@@ -128,13 +128,7 @@ export class ChairPage extends React.Component {
               return (
                 <Grid.Row>
                   <Grid.Column>
-                    <PostCard
-                      title={post.title}
-                      content={post.content}
-                      authorId={post.authorId}
-                      postType={post.type}
-                      createdAt={post.createdAt}
-                    />
+                    <PostCard post={post} />
                   </Grid.Column>
                 </Grid.Row>
               );
@@ -148,15 +142,25 @@ export class ChairPage extends React.Component {
 
   renderEmployeeFragment() {
     return (
-      <div>
-        <PersonList
-          persons={
-            this.props.currentlyViewedChair.persons
-              ? this.props.currentlyViewedChair.persons
-              : []
-          }
-        />
-      </div>
+      <Grid>
+        <Grid.Row columns={2} verticalAlign="middle">
+          <Grid.Column width={10}>
+            <Header>Mitarbeiter</Header>
+          </Grid.Column>
+
+          <Grid.Row>
+            <Grid.Column>
+              <PersonList
+                persons={
+                  this.props.currentlyViewedChair.persons
+                    ? this.props.currentlyViewedChair.persons
+                    : []
+                }
+              />
+            </Grid.Column>
+          </Grid.Row>
+        </Grid.Row>
+      </Grid>
     );
   }
 
@@ -189,13 +193,7 @@ export class ChairPage extends React.Component {
             return (
               <Grid.Row>
                 <Grid.Column>
-                  <PostCard
-                    title={post.title}
-                    content={post.content}
-                    authorId={post.authorId}
-                    postType={post.type}
-                    createdAt={post.createdAt}
-                  />
+                  <PostCard post={post} />
                 </Grid.Column>
               </Grid.Row>
             );
@@ -258,7 +256,7 @@ export class ChairPage extends React.Component {
         postCode = this.props.currentlyViewedChair.address.postCode || "";
       }
     }
-    console.log(this.props);
+
     return (
       <div>
         <NavBar />

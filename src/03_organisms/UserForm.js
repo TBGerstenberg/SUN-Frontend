@@ -1,5 +1,12 @@
 import React from "react";
-import { Grid, Header, Button, Form, Divider } from "semantic-ui-react";
+import {
+  Grid,
+  Header,
+  Button,
+  Form,
+  Divider,
+  Message
+} from "semantic-ui-react";
 import { Field, reduxForm } from "redux-form";
 import { Trans, withTranslation } from "react-i18next";
 import { connect } from "react-redux";
@@ -74,7 +81,8 @@ class UserForm extends React.Component {
       exmatriculationDate: exmatriculationDate,
       personChairRelations: personChairRelations,
       mode: mode,
-      account: account
+      account: account,
+      errors: []
     };
 
     this._handleSkillInputChange = this._handleSkillInputChange.bind(this);
@@ -92,6 +100,7 @@ class UserForm extends React.Component {
     this._handleExmatriculationDateChange = this._handleExmatriculationDateChange.bind(
       this
     );
+    this.renderErrorMessages = this.renderErrorMessages.bind(this);
   }
 
   componentWillMount() {
@@ -403,8 +412,32 @@ class UserForm extends React.Component {
               </Form.Field>
             </Grid.Column>
           </Grid.Row>
+
+          {this.state.errors.length > 0 && (
+            <Grid.Row>
+              <Grid.Column width={12}>{this.renderErrorMessages()}</Grid.Column>
+            </Grid.Row>
+          )}
         </Grid>
       </Form>
+    );
+  }
+
+  renderErrorMessages() {
+    return (
+      <>
+        {this.state.errors.map((errorStatus, index) => {
+          return (
+            <Message negative key={index}>
+              <Message.Header>
+                {" "}
+                {i18next.t(`userForm-error-${errorStatus}-message`)}
+              </Message.Header>
+              <p> {i18next.t(`userForm-error-${errorStatus}-explanation`)}</p>
+            </Message>
+          );
+        })}
+      </>
     );
   }
 
@@ -535,6 +568,10 @@ class UserForm extends React.Component {
       }
     };
 
+    this.setState({
+      errors: []
+    });
+
     if (this.state.mode === "edit") {
       const editAccountRequest = await accountService.editAccount(
         accountValues,
@@ -545,8 +582,6 @@ class UserForm extends React.Component {
         editAccountRequest.response &&
         editAccountRequest.response.status === 200
       ) {
-        console.log("Completed with success");
-
         const editPersonChairRelationsRequest = await chairService.updatePersonChairRelations(
           this.state.personChairRelations
         );
@@ -560,7 +595,9 @@ class UserForm extends React.Component {
           this.props.onCompleteWithError();
         }
       } else {
-        this.props.onCompleteWithError();
+        this.setState({
+          errors: [...this.state.errors, editAccountRequest.error.status]
+        });
       }
     } else if (this.state.mode === "add") {
       // Create a new Account
@@ -583,6 +620,7 @@ class UserForm extends React.Component {
           element.personId = newAccountRequest.user.person.id;
         });
 
+        console.log(updateProfileRequest);
         if (
           updateProfileRequest.response &&
           updateProfileRequest.response.status === 200
@@ -592,15 +630,19 @@ class UserForm extends React.Component {
           );
 
           if (addChairRelationsRequest.status === 200) {
+            console.log("Reached final callback");
             this.props.onCompleteWithSuccess();
           } else {
             this.props.onCompleteWithError(addChairRelationsRequest.error);
           }
         } else {
-          this.props.onCompleteWithError(updateProfileRequest.error);
+          //this.props.onCompleteWithError(updateProfileRequest.error);
         }
       } else {
-        this.props.onCompleteWithError(newAccountRequest.error);
+        this.setState({
+          errors: [...this.state.errors, newAccountRequest.error]
+        });
+        //this.props.onCompleteWithError(newAccountRequest.error);
       }
     }
   }

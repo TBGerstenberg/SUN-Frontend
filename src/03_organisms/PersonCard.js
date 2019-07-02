@@ -15,7 +15,6 @@ import tom from "../assets/images/tom.jpg";
 import veronika from "../assets/images/veronika.jpg";
 
 const PersonCard = props => {
-  console.log(props);
   return (
     <Card color="blue">
       <Image src={christian} wrapped ui={false} />

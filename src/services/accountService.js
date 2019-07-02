@@ -38,7 +38,7 @@ const accountService = {
         };
       }
     } catch (error) {
-      return { response: null, error: error };
+      return { response: null, error: error.response };
     }
   },
 

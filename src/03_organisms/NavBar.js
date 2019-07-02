@@ -21,7 +21,9 @@ import ChairSearchResult from "../02_molecules/ChairSearchResult";
 import PostSearchResult from "../02_molecules/PostSearchResult";
 
 // Renders the categories that can be searched (persons, chairs, posts)
-const categoryRenderer = ({ name }) => <Label as="span" content={name} />;
+const categoryRenderer = ({ name }) => (
+  <Label as="span" color="blue" content={name} />
+);
 
 // Renders individual search results
 const resultRenderer = objectToBeRendered => {
@@ -67,7 +69,6 @@ class NavBar extends Component {
   };
 
   handleSearchResultSelect = (e, { result }) => {
-    console.log(result);
     const resultObject = JSON.parse(result.description);
 
     // Object is a person, redirect to profile page
@@ -75,7 +76,6 @@ class NavBar extends Component {
       resultObject.hasOwnProperty("firstName") &&
       resultObject.hasOwnProperty("lastName")
     ) {
-      console.log("dispatching redirect to profile");
       this.props.dispatch(
         navigationActions.redirect(navigationConstants.NAVIGATE_TO_PROFILE, {
           userId: resultObject.id

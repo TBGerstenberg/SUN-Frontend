@@ -1,10 +1,11 @@
 import React from "react";
 
 import NavBar from "../03_organisms/NavBar";
-import MySubsCard from "../03_organisms/MySubsCard";
+import SubscriptionList from "../03_organisms/SubscriptionList";
 import { login } from "../redux/_reducers";
 import { connect } from "react-redux";
-import { chairActions } from "../redux/_actions";
+import { chairActions, userActions } from "../redux/_actions";
+import PostCard from "../03_organisms/PostCard";
 import AllChairsCard from "../03_organisms/AllChairsCard";
 import {
   Segment,
@@ -19,12 +20,12 @@ import {
 class Home extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = { chairs: null, subs: [] };
   }
 
   componentWillMount() {
     this.props.getAllChairs();
+    this.props.getAllUsers();
   }
 
   render() {
@@ -54,17 +55,22 @@ class Home extends React.Component {
                   </Card.Content>
                 </Card>
               </Grid.Column>
-              <Grid.Column width={8} />
+              <Grid.Column width={8}>
+                {this.props.feedPosts &&
+                  this.props.feedPosts.length > 0 &&
+                  this.props.feedPosts.map((post, index) => {
+                    return <PostCard post={post} key={index} />;
+                  })}
+              </Grid.Column>
               <Grid.Column width={3} floated="right">
                 <Card color="blue">
                   <Card.Content>
                     <Card.Header>Meine Abonnements:</Card.Header>
                   </Card.Content>
                   <Card.Content>
-                    {props.subs &&
-                      props.subs.map((sub, index) => {
-                        return <MySubsCard sub={sub} />;
-                      })}
+                    {this.props.subs && (
+                      <SubscriptionList subscriptions={this.props.subs} />
+                    )}
                   </Card.Content>
                 </Card>
               </Grid.Column>
@@ -79,12 +85,28 @@ class Home extends React.Component {
 let mapStateToProps = state => {
   return {
     subs: state.login.user ? state.login.user.person.subscriptions : [],
-    chairs: state.chair.chairs
+    chairs: state.chair.chairs,
+    feedPosts: [
+      {
+        id: 4,
+        type: 0,
+        title: "Hallo Welt",
+        summary:
+          "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut l...",
+        content:
+          "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
+        pageId: 1,
+        authorId: 1,
+        createdAt: "2019-07-02T18:39:06.563803+02:00",
+        updatedAt: "2019-07-02T18:39:06.563809+02:00"
+      }
+    ]
   };
 };
 
 let mapDispatchToProps = {
-  getAllChairs: chairActions.getAllChairs
+  getAllChairs: chairActions.getAllChairs,
+  getAllUsers: userActions.getAllUsers
 };
 
 let HomeContainer = connect(

@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Button, Icon, Modal, Form, TextArea, Radio } from "semantic-ui-react";
 import postTypeEnum from "../models/enumerations/postTypeEnum";
+import DropdownSelector from "../01_atoms/DropdownSelector";
+import i18next from "i18next";
 
 class NewPostModal extends Component {
   constructor(props) {
@@ -9,8 +11,9 @@ class NewPostModal extends Component {
       title: "",
       content: "",
       type: 0,
-      value: "",
-      open: false
+
+      open: false,
+      selectedType: 0
     };
 
     this.updateInputTheme = this.updateInputTheme.bind(this);
@@ -20,9 +23,9 @@ class NewPostModal extends Component {
 
   static getDerivedStateFromProps(nextProps, prevState) {
     if (nextProps.open != prevState.open) {
-      console.log("Open state changed");
       return {
-        value: "",
+        jobChecked: false,
+        thesisChecked: true,
         open: nextProps.open
       };
     } else {
@@ -31,7 +34,6 @@ class NewPostModal extends Component {
   }
 
   render() {
-    console.log(this.state.value === "job");
     return (
       <div>
         <Modal open={this.props.open}>
@@ -49,28 +51,33 @@ class NewPostModal extends Component {
                 onChange={this.handleContentInputChange}
               />
 
-              <Form.Field>
-                <Radio
-                  id="job"
-                  label="Jobausschreibung"
-                  value="job"
-                  checked={this.state.value === "job"}
+              <Form.Field style={{ margin: "20px" }}>
+                <Form.Select
+                  defaultValue={0}
+                  label={"Art des Beitrags"}
+                  name={"PostTypeSelector"}
+                  onBlur={(e, { value }) => {}}
                   onChange={(e, { value }) => {
-                    console.log("Setting value to " + value);
-                    this.setState({ value });
+                    this.setState({ selectedType: value });
                   }}
-                />
-              </Form.Field>
-              <Form.Field>
-                <Radio
-                  id="thesis"
-                  label="Abschlussarbeit"
-                  value="thesis"
-                  checked={this.state.value === "thesis"}
-                  onChange={(e, { value }) => {
-                    console.log("Setting value to " + value);
-                    this.setState({ value });
-                  }}
+                  options={[
+                    {
+                      key: 0,
+                      text: i18next.t("posttype-dropdown-default-option-text"),
+                      value: 0
+                    },
+                    {
+                      key: 1,
+                      text: i18next.t("posttype-dropdown-jobOffer-option-text"),
+                      value: 1
+                    },
+                    {
+                      key: 3,
+                      text: i18next.t("posttype-dropdown-thesis-option-text"),
+                      value: 3
+                    }
+                  ]}
+                  placeholder={"Beitragsart wählen"}
                 />
               </Form.Field>
             </Form>
@@ -82,17 +89,10 @@ class NewPostModal extends Component {
             </Button>
             <Button
               onClick={() => {
-                let type = 0;
-                if (this.state.value === "job") {
-                  type = 1;
-                } else if (this.state.value === "thesis") {
-                  type = 3;
-                }
-
                 const newPost = {
                   title: this.state.title,
                   content: this.state.content,
-                  type: type
+                  type: this.state.selectedType
                 };
 
                 this.props.onNewPost(newPost);

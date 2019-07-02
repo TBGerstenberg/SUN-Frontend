@@ -6,3 +6,21 @@
   display: flex;
   justify-content: space-between;
 }
+
+.postCard-authorInfo-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.postCard-authorInfo-personInfo {
+  display: flex;
+  flex-direction: row;
+
+  font-size: "12px";
+  color: #ababab;
+}
+
+.postCard-authorInfo-link {
+  padding-left: 5px;
+}
