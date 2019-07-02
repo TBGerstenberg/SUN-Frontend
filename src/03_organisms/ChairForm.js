@@ -106,9 +106,7 @@ class ChairForm extends React.Component {
             <Grid.Column width={6}>
               <StreetNameInput />
             </Grid.Column>
-            <Grid.Column width={6}>
-              <HouseNumberInput />
-            </Grid.Column>
+            <Grid.Column width={6} />
           </Grid.Row>
 
           <Divider />

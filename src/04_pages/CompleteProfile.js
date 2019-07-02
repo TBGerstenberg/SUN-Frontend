@@ -458,9 +458,7 @@ class CompleteProfile extends React.Component {
       },
       studentStatus: {
         matriculationNumber: values.studentId,
-        subject: {
-          name: values.courseOfStudy
-        },
+        subject: values.courseOfStudy,
         matriculationDate: matriculationDate,
         exmatriculationDate: exmatriculationDate
       },

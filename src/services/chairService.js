@@ -4,8 +4,8 @@ import API_CONFIG from "../config/api_config";
 /**
  * Service that handles interaction with the <Chairs> API.
  */
-const chairService = {
-  getAllChairs: async accessToken => {
+class chairService {
+  static async getAllChairs(accessToken) {
     const headers = {
       Authorization: accessToken
     };
@@ -21,9 +21,9 @@ const chairService = {
     } catch (error) {
       return error;
     }
-  },
+  }
 
-  getSingleChair: async chairId => {
+  static async getSingleChair(chairId) {
     try {
       const getAllChairsResponse = await apiClient.get(
         API_CONFIG.CHAIRS.GET_SINGLE_CHAIR_URL(chairId)
@@ -32,9 +32,9 @@ const chairService = {
     } catch (error) {
       return error;
     }
-  },
+  }
 
-  getChairPosts: async chairId => {
+  static async getChairPosts(chairId) {
     try {
       const getAllChairsResponse = await apiClient.get(
         API_CONFIG.CHAIRS.GET_CHAIR_POSTS_URL(chairId)
@@ -43,9 +43,9 @@ const chairService = {
     } catch (error) {
       return error;
     }
-  },
+  }
 
-  createChair: async chairBody => {
+  static async createChair(chairBody) {
     try {
       const createChairResponse = await apiClient.post(
         API_CONFIG.CHAIRS.CREATE_CHAIR_URL(),
@@ -55,9 +55,9 @@ const chairService = {
     } catch (error) {
       return error;
     }
-  },
+  }
 
-  updateChair: async (chairId, updatedChairBody) => {
+  static async updateChair(chairId, updatedChairBody) {
     try {
       const editChairResponse = await apiClient.put(
         API_CONFIG.CHAIRS.EDIT_CHAIR_URL(chairId),
@@ -67,9 +67,9 @@ const chairService = {
     } catch (error) {
       return error;
     }
-  },
+  }
 
-  deleteChair: async chairId => {
+  static async deleteChair(chairId) {
     try {
       const deleteChairResponse = await apiClient.delete(
         API_CONFIG.CHAIRS.DELETE_CHAIR_URL(chairId)
@@ -78,9 +78,9 @@ const chairService = {
     } catch (error) {
       return error;
     }
-  },
+  }
 
-  subscribeToChair: async chairId => {
+  static async subscribeToChair(chairId) {
     try {
       const subscribeToChairRequestBody = {};
 
@@ -92,9 +92,9 @@ const chairService = {
     } catch (error) {
       return error;
     }
-  },
+  }
 
-  unsubscribeFromChair: async chairId => {
+  static async unsubscribeFromChair(chairId) {
     try {
       const subscribeToChairRequestBody = {};
 
@@ -106,24 +106,46 @@ const chairService = {
     } catch (error) {
       return error;
     }
-  },
+  }
 
-  createPersonChairRelation: async (
-    chairId,
-    personChairRelationRequestBody
-  ) => {
+  static async createPersonChairRelation(chairId, personChairRelation) {
     try {
       const createPersonChairRelationRequestBody = {};
 
-      const createPersonChairRelationResposne = await apiClient.put(
+      const createPersonChairRelationResponse = await apiClient.put(
         API_CONFIG.CHAIRS.CREATE_PERSON_CHAIR_RELATION_URL(chairId),
-        personChairRelationRequestBody
+        personChairRelation
       );
-      return createPersonChairRelationResposne;
+      return createPersonChairRelationResponse;
     } catch (error) {
       return error;
     }
   }
-};
+
+  static updatePersonChairRelation(personChairRelation) {
+    return apiClient.put(
+      API_CONFIG.CHAIRS.UPDATE_PERSON_CHAIR_RELATION_URL(
+        personChairRelation.chairId
+      ),
+      [personChairRelation]
+    );
+  }
+
+  static async updatePersonChairRelations(personChairRelations) {
+    console.log(personChairRelations);
+    const personChairRelationRequests = [];
+
+    personChairRelations.forEach(personChairRelation => {
+      const updatePersonChairRequestPromise = chairService.updatePersonChairRelation(
+        personChairRelation
+      );
+      personChairRelationRequests.push(updatePersonChairRequestPromise);
+    });
+
+    const response = await apiClient.all(personChairRelationRequests);
+
+    return response;
+  }
+}
 
 export default chairService;

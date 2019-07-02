@@ -9,7 +9,8 @@ class NewPostModal extends Component {
       title: "",
       content: "",
       type: 0,
-      value: ""
+      value: "",
+      open: false
     };
 
     this.updateInputTheme = this.updateInputTheme.bind(this);
@@ -17,7 +18,20 @@ class NewPostModal extends Component {
     this.handleRadioButtonsChecked = this.handleRadioButtonsChecked.bind(this);
   }
 
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.open != prevState.open) {
+      console.log("Open state changed");
+      return {
+        value: "",
+        open: nextProps.open
+      };
+    } else {
+      return prevState;
+    }
+  }
+
   render() {
+    console.log(this.state.value === "job");
     return (
       <div>
         <Modal open={this.props.open}>
@@ -42,6 +56,7 @@ class NewPostModal extends Component {
                   value="job"
                   checked={this.state.value === "job"}
                   onChange={(e, { value }) => {
+                    console.log("Setting value to " + value);
                     this.setState({ value });
                   }}
                 />
@@ -53,6 +68,7 @@ class NewPostModal extends Component {
                   value="thesis"
                   checked={this.state.value === "thesis"}
                   onChange={(e, { value }) => {
+                    console.log("Setting value to " + value);
                     this.setState({ value });
                   }}
                 />

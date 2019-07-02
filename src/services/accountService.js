@@ -23,18 +23,10 @@ const accountService = {
         Authorization: "SOMETOKEN"
       };
 
-      //Build request Body
-      const editAccountRequestBody = {
-        email: newAccountValues.email,
-        password: newAccountValues.password,
-        admin: newAccountValues.admin,
-        person: newAccountValues.person
-      };
-
       // Perform the request
       const updateProfileResponse = await apiClient.put(
         API_CONFIG.ACCOUNT.EDIT_ACCCOUNT_URL + accountId,
-        editAccountRequestBody,
+        newAccountValues,
         headers
       );
 

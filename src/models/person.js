@@ -5,6 +5,7 @@ import StudentStatus from "./studentStatus";
 class Person {
   constructor(profileValues) {
     this.userId = profileValues.userId;
+    this.id = profileValues.id;
     this.title = profileValues.title;
     this.gender = profileValues.gender;
     this.firstName = profileValues.firstName;

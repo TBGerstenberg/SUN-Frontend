@@ -51,6 +51,9 @@ const API_CONFIG = {
     },
     CREATE_PERSON_CHAIR_RELATION_URL: chairId => {
       return BASEURL + "/chairs/" + chairId + "/my-relation";
+    },
+    UPDATE_PERSON_CHAIR_RELATION_URL: chairId => {
+      return BASEURL + "/chairs/" + chairId + "/admin/person-relations";
     }
   },
 

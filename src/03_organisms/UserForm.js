@@ -29,6 +29,7 @@ import genderEnum from "../models/enumerations/genderEnum";
 import Account from "../models/account";
 import { accountService, chairService } from "../services";
 import moment from "moment";
+import apiClient from "../api/apiClient";
 
 class UserForm extends React.Component {
   constructor(props) {
@@ -73,7 +74,7 @@ class UserForm extends React.Component {
       exmatriculationDate: exmatriculationDate,
       personChairRelations: personChairRelations,
       mode: mode,
-      account: props.account
+      account: account
     };
 
     this._handleSkillInputChange = this._handleSkillInputChange.bind(this);
@@ -125,18 +126,6 @@ class UserForm extends React.Component {
                 <Trans i18nKey="usermanagement-add-user-headline" />
               )}
             </Header>
-          </Grid.Row>
-
-          {
-            // SubHeadline
-          }
-          <Grid.Row textAlign="left">
-            <Grid.Column width={6} textAlign="left">
-              <Header as="h4" color="black" textAlign="left">
-                <Trans i18nKey="usermanagement-edit-user-headline" />
-              </Header>
-            </Grid.Column>
-            <Grid.Column width={6} />
           </Grid.Row>
 
           {
@@ -378,7 +367,9 @@ class UserForm extends React.Component {
                 <Grid.Column width={12}>
                   {props.chairs && props.chairs.length > 0 && (
                     <ChairRoleList
-                      userId={props.userId}
+                      userId={
+                        this.state.account ? this.state.account.person.id : null
+                      }
                       items={this.state.personChairRelations}
                       chairs={props.chairs}
                       onChange={personChairRelations => {
@@ -403,7 +394,7 @@ class UserForm extends React.Component {
                 onClick={props.onAbortButtonClick}
                 type="button"
               >
-                {i18next.t("complete-your-profile-continue-button")}
+                {i18next.t("complete-your-profile-abort-button")}
               </Button>
             </Grid.Column>
             <Grid.Column width={3}>
@@ -517,7 +508,7 @@ class UserForm extends React.Component {
     // Values that are extracted from the various input fields, each field is either managed by redux form
     // or via the components state.
     const accountValues = {
-      email: values.email,
+      newEmail: values.email,
       admin: values.accountIsAdminCheckbox,
       person: {
         userId: this.props.userId,
@@ -535,13 +526,11 @@ class UserForm extends React.Component {
         },
         studentStatus: {
           matriculationNumber: values.studentId,
-          subect: {
-            name: values.courseOfStudy
-          },
+          subject: values.courseOfStudy,
           matriculationDate: matriculationDate,
           exmatriculationDate: exmatriculationDate
         },
-        chairs: this.state.personChairRelations,
+        //chairs: this.state.personChairRelations,
         skills: skillsRatings
       }
     };
@@ -552,9 +541,24 @@ class UserForm extends React.Component {
         this.state.account.id
       );
 
-      if (editAccountRequest.response.status === 200) {
+      if (
+        editAccountRequest.response &&
+        editAccountRequest.response.status === 200
+      ) {
         console.log("Completed with success");
-        this.props.onCompleteWithSuccess();
+
+        const editPersonChairRelationsRequest = await chairService.updatePersonChairRelations(
+          this.state.personChairRelations
+        );
+
+        if (
+          editPersonChairRelationsRequest.response &&
+          editPersonChairRelationsRequest.response.status === 200
+        ) {
+          this.props.onCompleteWithSuccess();
+        } else {
+          this.props.onCompleteWithError();
+        }
       } else {
         this.props.onCompleteWithError();
       }
@@ -568,15 +572,35 @@ class UserForm extends React.Component {
       // If errors occur, update the profile of with values from the form.
       if (newAccountRequest.error == null && newAccountRequest.status === 200) {
         accountValues.person.userId = newAccountRequest.user.person.id;
-        const updateProfileRequest = userService.updateProfile(
+        const updateProfileRequest = await userService.updateProfile(
           accountValues.person
         );
 
-        if (updateProfileRequest.status === 200) {
-          this.props.onCompleteWithSuccess();
+        let personChairRelations = [...this.state.personChairRelations];
+
+        // Add missing person id from create-account-response
+        personChairRelations.forEach(element => {
+          element.personId = newAccountRequest.user.person.id;
+        });
+
+        if (
+          updateProfileRequest.response &&
+          updateProfileRequest.response.status === 200
+        ) {
+          const addChairRelationsRequest = await chairService.updatePersonChairRelations(
+            personChairRelations
+          );
+
+          if (addChairRelationsRequest.status === 200) {
+            this.props.onCompleteWithSuccess();
+          } else {
+            this.props.onCompleteWithError(addChairRelationsRequest.error);
+          }
         } else {
-          this.props.onCompleteWithError();
+          this.props.onCompleteWithError(updateProfileRequest.error);
         }
+      } else {
+        this.props.onCompleteWithError(newAccountRequest.error);
       }
     }
   }
@@ -706,7 +730,7 @@ const mapStateToProps = (state, ownProps) => {
           courseOfStudy:
             ownProps.account.person.studentStatus &&
             ownProps.account.person.studentStatus.subject
-              ? ownProps.account.person.studentStatus.subject.name
+              ? ownProps.account.person.studentStatus.subject
               : "",
           matriculatonNumber: ownProps.account.person.studentStatus
             ? ownProps.account.person.studentStatus.matriculationNumber
