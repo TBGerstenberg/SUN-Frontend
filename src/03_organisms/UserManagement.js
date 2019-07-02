@@ -10,15 +10,10 @@ import onClickOutside from "react-onclickoutside";
 import { userService, accountService } from "../services";
 
 class UserManagement extends React.Component {
-  async componentWillMount() {
-    const accountRequest = await accountService.getAllAccounts();
+  /** React-component-lifecycle methods */
 
-    if (accountRequest.status === 200) {
-      this.setState({
-        accounts: accountRequest.data
-      });
-    } else {
-    }
+  async componentWillMount() {
+    this.fetchAllAccounts();
   }
 
   constructor(props) {
@@ -47,6 +42,9 @@ class UserManagement extends React.Component {
     this.openEditUserModal = this.openEditUserModal.bind(this);
     this.closeAddUserModal = this.closeAddUserModal.bind(this);
     this.closeEditUserModal = this.closeEditUserModal.bind(this);
+
+    // Service callers
+    this.fetchAllAccounts = this.fetchAllAccounts.bind(this);
   }
 
   render() {
@@ -76,6 +74,7 @@ class UserManagement extends React.Component {
               }}
               onCompleteWithSuccess={() => {
                 this.props.toggleSuccessMessage("Erfolg", "Benutzer editiert");
+                this.fetchAllAccounts();
                 this.closeAddUserModal();
               }}
               onCompleteWithError={error => {
@@ -100,6 +99,7 @@ class UserManagement extends React.Component {
               }}
               onCompleteWithSuccess={() => {
                 this.props.toggleSuccessMessage("Erfolg", "Benutzer angelegt");
+                this.fetchAllAccounts();
                 this.closeEditUserModal();
               }}
               onCompleteWithError={error => {
@@ -113,6 +113,8 @@ class UserManagement extends React.Component {
       </div>
     );
   }
+
+  /** Table rendering methods */
 
   renderAccountsTableHeader() {
     return (
@@ -159,7 +161,6 @@ class UserManagement extends React.Component {
   }
 
   renderAccountsTableRow(account) {
-    console.log(account);
     return (
       <Table.Row
         key={"row" + account.id}
@@ -260,6 +261,8 @@ class UserManagement extends React.Component {
     );
   }
 
+  /** Button click handlers */
+
   handleAddUserButtonClick() {
     this.openAddUserModal();
   }
@@ -282,6 +285,8 @@ class UserManagement extends React.Component {
       );
     }
   }
+
+  /** Modal controls */
 
   openEditUserModal() {
     return this.setState({
@@ -307,13 +312,32 @@ class UserManagement extends React.Component {
     });
   }
 
+  /** Utility Methods */
+
   handleClickOutside = evt => {
     this.setState({
       selectedEntry: null
     });
   };
+
+  /** Service call wrappers */
+
+  async fetchAllAccounts() {
+    const accountRequest = await accountService.getAllAccounts();
+
+    if (accountRequest.status === 200) {
+      this.setState({
+        accounts: accountRequest.data
+      });
+    } else {
+    }
+  }
 }
 
+/** Redux-standard methods that transfers (*maps*) values from the redux store to the component's props.
+ *  To learn more on props: see https://reactjs.org/docs/components-and-props.html
+ *  To learn about redux https://react-redux.js.org/using-react-redux/connect-mapstate
+ */
 const mapStateToProps = state => {
   return {
     users: state.user.users || []

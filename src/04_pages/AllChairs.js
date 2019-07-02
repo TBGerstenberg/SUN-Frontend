@@ -50,6 +50,10 @@ class AllChairs extends React.Component {
   }
 }
 
+/** Redux-standard methods that transfers (*maps*) values from the redux store to the component's props.
+ *  To learn more on props: see https://reactjs.org/docs/components-and-props.html
+ *  To learn about redux https://react-redux.js.org/using-react-redux/connect-mapstate
+ */
 let mapStateToProps = state => {
   return {
     chairs: state.chair.chairs

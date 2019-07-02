@@ -39,12 +39,17 @@ import moment from "moment";
 import apiClient from "../api/apiClient";
 
 class UserForm extends React.Component {
+  /** ES-6 JS-Class Methods  */
+
   constructor(props) {
     super(props);
 
+    // Depending on the "Mode" of this form, it either initializes values from a given Account
+    // Or initializes all input
     const mode = props.account ? "edit" : "add";
     const account = props.account ? new Account(props.account) : null;
 
+    // StudentStatus values
     let matriculationDate = "";
     let exmatriculationDate = "";
     let birthDate = "";
@@ -68,11 +73,13 @@ class UserForm extends React.Component {
       }
     }
 
+    // PersonChairRelations
     let personChairRelations = [];
     if (props.account && props.account.person && props.account.person.chairs) {
       personChairRelations = props.account.person.chairs;
     }
 
+    // Initialize Component state
     this.state = {
       currentSkillInputValue: "",
       currentlySelectedSkill: null,
@@ -85,6 +92,9 @@ class UserForm extends React.Component {
       errors: []
     };
 
+    /* Bind Methods */
+
+    // Input handlers
     this._handleSkillInputChange = this._handleSkillInputChange.bind(this);
     this._handleSkillSubmission = this._handleSkillSubmission.bind(this);
     this._handleSkillItemClick = this._handleSkillItemClick.bind(this);
@@ -94,14 +104,22 @@ class UserForm extends React.Component {
     this._handleImmatriculationDateChange = this._handleImmatriculationDateChange.bind(
       this
     );
-    this._handleUpdateProfileSubmit = this._handleUpdateProfileSubmit.bind(
-      this
-    );
     this._handleExmatriculationDateChange = this._handleExmatriculationDateChange.bind(
       this
     );
+    this._handleUpdateProfileSubmit = this._handleUpdateProfileSubmit.bind(
+      this
+    );
+
+    // Utility Methods
     this.renderErrorMessages = this.renderErrorMessages.bind(this);
+
+    // Service Methods
+    this.editUser = this.editUser.bind(this);
+    this.addUser = this.addUser.bind(this);
   }
+
+  /** React-Component Lifecycle Methods  */
 
   componentWillMount() {
     this.props.dispatch(chairActions.getAllChairs());
@@ -423,23 +441,7 @@ class UserForm extends React.Component {
     );
   }
 
-  renderErrorMessages() {
-    return (
-      <>
-        {this.state.errors.map((errorStatus, index) => {
-          return (
-            <Message negative key={index}>
-              <Message.Header>
-                {" "}
-                {i18next.t(`userForm-error-${errorStatus}-message`)}
-              </Message.Header>
-              <p> {i18next.t(`userForm-error-${errorStatus}-explanation`)}</p>
-            </Message>
-          );
-        })}
-      </>
-    );
-  }
+  /** Input-Changehandlers */
 
   /**
    * Handles a change in the dateOfBirth-Datepicker input
@@ -542,6 +544,7 @@ class UserForm extends React.Component {
     // or via the components state.
     const accountValues = {
       newEmail: values.email,
+      password: values.password,
       admin: values.accountIsAdminCheckbox,
       person: {
         userId: this.props.userId,
@@ -563,7 +566,6 @@ class UserForm extends React.Component {
           matriculationDate: matriculationDate,
           exmatriculationDate: exmatriculationDate
         },
-        //chairs: this.state.personChairRelations,
         skills: skillsRatings
       }
     };
@@ -573,80 +575,101 @@ class UserForm extends React.Component {
     });
 
     if (this.state.mode === "edit") {
-      const editAccountRequest = await accountService.editAccount(
-        accountValues,
-        this.state.account.id
-      );
-
-      if (
-        editAccountRequest.response &&
-        editAccountRequest.response.status === 200
-      ) {
-        const editPersonChairRelationsRequest = await chairService.updatePersonChairRelations(
-          this.state.personChairRelations
-        );
-
-        if (
-          editPersonChairRelationsRequest.response &&
-          editPersonChairRelationsRequest.response.status === 200
-        ) {
-          this.props.onCompleteWithSuccess();
-        } else {
-          this.props.onCompleteWithError();
-        }
-      } else {
-        this.setState({
-          errors: [...this.state.errors, editAccountRequest.error.status]
-        });
-      }
+      this.editUser(accountValues);
     } else if (this.state.mode === "add") {
-      // Create a new Account
-      const newAccountRequest = await userService.signup(
-        values.email,
-        values.password
-      );
-
-      // If errors occur, update the profile of with values from the form.
-      if (newAccountRequest.error == null && newAccountRequest.status === 200) {
-        accountValues.person.userId = newAccountRequest.user.person.id;
-        const updateProfileRequest = await userService.updateProfile(
-          accountValues.person
-        );
-
-        let personChairRelations = [...this.state.personChairRelations];
-
-        // Add missing person id from create-account-response
-        personChairRelations.forEach(element => {
-          element.personId = newAccountRequest.user.person.id;
-        });
-
-        console.log(updateProfileRequest);
-        if (
-          updateProfileRequest.response &&
-          updateProfileRequest.response.status === 200
-        ) {
-          const addChairRelationsRequest = await chairService.updatePersonChairRelations(
-            personChairRelations
-          );
-
-          if (addChairRelationsRequest.status === 200) {
-            console.log("Reached final callback");
-            this.props.onCompleteWithSuccess();
-          } else {
-            this.props.onCompleteWithError(addChairRelationsRequest.error);
-          }
-        } else {
-          //this.props.onCompleteWithError(updateProfileRequest.error);
-        }
-      } else {
-        this.setState({
-          errors: [...this.state.errors, newAccountRequest.error]
-        });
-        //this.props.onCompleteWithError(newAccountRequest.error);
-      }
+      this.addUser(accountValues);
     }
   }
 
+  /** Service calling-methods */
+
+  /** Calls the various services that ineract with the SUN-API to update
+   *  the entities touched by this form, including the Account-API, the Person-API and the Chairs-API
+   *  @param accountValues - Current input values of all the input fields in this form.
+   */
+  async editUser(accountValues) {
+    const editAccountRequest = await accountService.editAccount(
+      accountValues,
+      this.state.account.id
+    );
+
+    if (
+      editAccountRequest.response &&
+      editAccountRequest.response.status === 200
+    ) {
+      const editPersonChairRelationsRequest = await chairService.updatePersonChairRelations(
+        this.state.personChairRelations
+      );
+
+      if (
+        editPersonChairRelationsRequest.response &&
+        editPersonChairRelationsRequest.response.status === 200
+      ) {
+        this.props.onCompleteWithSuccess();
+      } else {
+        this.props.onCompleteWithError();
+      }
+    } else {
+      this.setState({
+        errors: [...this.state.errors, editAccountRequest.error.status]
+      });
+    }
+  }
+
+  /** Calls the various services that ineract with the SUN-API to create a new user
+   *  including the Account-API, the Person-API and the Chairs-API
+   *  @param accountValues - Current input values of all the input fields in this form.
+   */
+  async addUser(accountValues) {
+    // Create a new Account
+    const newAccountRequest = await userService.signup(
+      accountValues.newEmail,
+      accountValues.password
+    );
+
+    // If errors occur, update the profile of with values from the form.
+    if (newAccountRequest.error == null && newAccountRequest.status === 200) {
+      accountValues.person.userId = newAccountRequest.user.person.id;
+      const updateProfileRequest = await userService.updateProfile(
+        accountValues.person
+      );
+
+      let personChairRelations = [...this.state.personChairRelations];
+
+      // Add missing person id from create-account-response
+      personChairRelations.forEach(element => {
+        element.personId = newAccountRequest.user.person.id;
+      });
+
+      console.log(updateProfileRequest);
+      if (
+        updateProfileRequest.response &&
+        updateProfileRequest.response.status === 200
+      ) {
+        const addChairRelationsRequest = await chairService.updatePersonChairRelations(
+          personChairRelations
+        );
+
+        if (addChairRelationsRequest.status === 200) {
+          console.log("Reached final callback");
+          this.props.onCompleteWithSuccess();
+        } else {
+          this.props.onCompleteWithError(addChairRelationsRequest.error);
+        }
+      } else {
+        //this.props.onCompleteWithError(updateProfileRequest.error);
+      }
+    } else {
+      this.setState({
+        errors: [...this.state.errors, newAccountRequest.error]
+      });
+      //this.props.onCompleteWithError(newAccountRequest.error);
+    }
+  }
+
+  /** Component-rendering methods */
+
+  /** Renders a redux-form BirthDate-Input field */
   renderBirthDateInput() {
     return (
       <DateInput
@@ -661,6 +684,7 @@ class UserForm extends React.Component {
     );
   }
 
+  /** Renders a redux-Form input-field for the immatriculationdate of a student*/
   renderImmatriculationDateInput() {
     return (
       <DateInput
@@ -677,6 +701,7 @@ class UserForm extends React.Component {
     );
   }
 
+  /** Renders a redux-Form input-field for the exmatriculationdate of a student*/
   renderExmatericulationDateInput() {
     return (
       <DateInput
@@ -693,6 +718,7 @@ class UserForm extends React.Component {
     );
   }
 
+  /** Renders a redux-Form input-field for the room in which an employee can be met */
   renderRoomNameInput() {
     return (
       <Field
@@ -707,6 +733,7 @@ class UserForm extends React.Component {
     );
   }
 
+  /**  Renders a redux-Form input field for a publicly available email that may deviate from the one set in the creation of one's account*/
   renderAdditionalEmailInput() {
     return (
       <Field
@@ -719,8 +746,31 @@ class UserForm extends React.Component {
       />
     );
   }
+
+  /** Renders a set of error messages that may occur when performing one of the numerous API-requests from this form */
+  renderErrorMessages() {
+    return (
+      <>
+        {this.state.errors.map((errorStatus, index) => {
+          return (
+            <Message negative key={index}>
+              <Message.Header>
+                {" "}
+                {i18next.t(`userForm-error-${errorStatus}-message`)}
+              </Message.Header>
+              <p> {i18next.t(`userForm-error-${errorStatus}-explanation`)}</p>
+            </Message>
+          );
+        })}
+      </>
+    );
+  }
 }
 
+/** Redux-standard methods that transfers (*maps*) values from the redux store to the component's props.
+ *  To learn more on props: see https://reactjs.org/docs/components-and-props.html
+ *  To learn about redux https://react-redux.js.org/using-react-redux/connect-mapstate
+ */
 const mapStateToProps = (state, ownProps) => {
   let isStudent;
   let isEmployee;

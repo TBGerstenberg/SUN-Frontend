@@ -222,6 +222,10 @@ class NavBar extends Component {
   }
 }
 
+/** Redux-standard methods that transfers (*maps*) values from the redux store to the component's props.
+ *  To learn more on props: see https://reactjs.org/docs/components-and-props.html
+ *  To learn about redux https://react-redux.js.org/using-react-redux/connect-mapstate
+ */
 const mapStateToProps = state => {
   // NOTE: we are stringifying all our search-result objects  into a "description Prop"
   // here, since semantic-UIs Search bar has a very opinionated approach
