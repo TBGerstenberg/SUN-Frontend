@@ -136,7 +136,7 @@ class NavBar extends Component {
               type: navigationConstants.NAVIGATE_TO_HOME
             }}
           >
-            Home
+            {i18next.t("navbar-home-link-label")}
           </Link>
         </Menu.Item>
 
@@ -154,7 +154,7 @@ class NavBar extends Component {
               }
             }}
           >
-            Profile
+            {i18next.t("navbar-profile-link-label")}
           </Link>
         </Menu.Item>
 
@@ -170,7 +170,8 @@ class NavBar extends Component {
                 type: navigationConstants.NAVIGATE_TO_ADMIN_PANEL
               }}
             >
-              Adminpanel
+                {i18next.t("navbar-adminpanel-link-label")}
+
             </Link>
           </Menu.Item>
         )}

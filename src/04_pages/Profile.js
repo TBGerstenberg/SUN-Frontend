@@ -12,6 +12,7 @@ import tableFormattingUtilities from "../utilities/tableFormattingUtilities";
 import AddEntityModal from "../03_organisms/AddEntityModal";
 import UserForm from "../03_organisms/UserForm";
 import { SemanticToastContainer, toast } from "react-semantic-toasts";
+import i18next from "i18next";
 
 // Components from semantic ui and our own library
 import {
@@ -212,13 +213,13 @@ const FirstProfileRow = props => {
         <Grid.Row columns={2}>
           <Grid.Column width={6}>
             <Container>
-              <Header size="medium">Titel:</Header>
+              <Header size="medium"> {i18next.t("profile-title-label")}</Header>
               <BodyText>{props.title}</BodyText>
             </Container>
           </Grid.Column>
           <Grid.Column width={10}>
             <Container>
-              <Header size="medium">Geschlecht:</Header>
+              <Header size="medium">{i18next.t("profile-gender-label")}</Header>
               <BodyText>
                 {tableFormattingUtilities.genderEnumToString(props.gender)}
               </BodyText>
@@ -229,7 +230,9 @@ const FirstProfileRow = props => {
         <Grid.Row columns={2}>
           <Grid.Column width={6}>
             <Container>
-              <Header size="medium">Vorname:</Header>
+              <Header size="medium">
+                {i18next.t("profile-firstName-label")}
+              </Header>
               <BodyText>{props.firstName}</BodyText>
             </Container>
           </Grid.Column>
@@ -239,13 +242,17 @@ const FirstProfileRow = props => {
         <Grid.Row columns={2}>
           <Grid.Column width={6}>
             <Container>
-              <Header size="medium">Nachname:</Header>
+              <Header size="medium">
+                {i18next.t("profile-lastName-label")}
+              </Header>
               <BodyText>{props.lastName}</BodyText>
             </Container>
           </Grid.Column>
           <Grid.Column width={10}>
             <Container>
-              <Header size="medium">Geburtsdatum:</Header>
+              <Header size="medium">
+                {i18next.t("profile-birthDate-label")}
+              </Header>
               <BodyText>{moment(props.birthDate).format("L")}</BodyText>
             </Container>
           </Grid.Column>
@@ -254,13 +261,17 @@ const FirstProfileRow = props => {
         <Grid.Row columns={2}>
           <Grid.Column width={6}>
             <Container>
-              <Header size="medium">MatrikelNummer:</Header>
+              <Header size="medium">
+                {i18next.t("profile-matriculationNumber-label")}
+              </Header>
               <BodyText>{props.matriculationNumber}</BodyText>
             </Container>
           </Grid.Column>
           <Grid.Column width={10}>
             <Container>
-              <Header size="medium">Studiengang:</Header>
+              <Header size="medium">
+                {i18next.t("profile-courseOfStudy-label")}
+              </Header>
               <BodyText>{props.subject}</BodyText>
             </Container>
           </Grid.Column>
@@ -275,7 +286,7 @@ const ThirdProfileRow = props => {
     <Grid.Row columns={1} textAlign="left">
       <Grid.Column>
         <Label color="green" size={"big"}>
-          Studentenstatus
+          {i18next.t("profile-studentStatus-label")}
         </Label>
         <Label color="green" size={"massive"}>
           {props.subject}

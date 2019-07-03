@@ -121,6 +121,9 @@
 
   "postCard-written-by-label": "Geschrieben von",
 
+  "navbar-home-link-label": "Home",
+  "navbar-profile-link-label": "Profil",
+  "navbar-adminpanel-link-label": "Adminbereich",
   "navbar-search-placeholder": "Suchen...",
   "navbar-logout-button-text": "Abmelden",
   "navbar-logged-in-as-text": "Angemeldet als ",
