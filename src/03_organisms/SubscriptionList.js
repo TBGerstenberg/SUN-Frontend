@@ -66,7 +66,7 @@ const SubscriptionListItem = props => {
               }
             }}
           >
-            {props.subscription.chair.name}
+            {props.subscription.chair && props.subscription.chair.name}
           </Link>
         </List.Header>
       </List.Content>

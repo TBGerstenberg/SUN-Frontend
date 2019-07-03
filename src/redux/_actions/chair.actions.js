@@ -82,7 +82,7 @@ function getSingleChair(chairId) {
 function getChairPosts(chairId) {
   return async (dispatch, getState) => {
     dispatch(request());
-    const getChairPostsResponse = await chairService.getSingleChair(chairId);
+    const getChairPostsResponse = await chairService.getChairPosts(chairId);
 
     if (getChairPostsResponse && getChairPostsResponse.status === 200) {
       dispatch(success(getChairPostsResponse.data));
@@ -95,15 +95,15 @@ function getChairPosts(chairId) {
    * Redux action creator triggered when a FETCH-ALL-request for chairs is started
    */
   function request() {
-    return { type: chairConstants.GET_CHAIR_REQUEST };
+    return { type: chairConstants.GET_CHAIR_POSTS_REQUEST };
   }
 
   /**
    * Redux action creator triggered when a FETCH-ALL-request succeeded
    * @param {Array of objects } chairs - Chairs that have been fetched
    */
-  function success(chair) {
-    return { type: chairConstants.GET_CHAIR_SUCCESS, chair: chair };
+  function success(posts) {
+    return { type: chairConstants.GET_CHAIR_POSTS_SUCCESS, posts: posts };
   }
 
   /**
@@ -111,13 +111,14 @@ function getChairPosts(chairId) {
    * @param {*} error - Error object thrown when creating the registration request
    */
   function failure(error) {
-    return { type: chairConstants.GET_CHAIR_FAILURE, error };
+    return { type: chairConstants.GET_CHAIR_POSTS_FAILURE, error };
   }
 }
 
 const chairActions = {
   getAllChairs,
-  getSingleChair
+  getSingleChair,
+  getChairPosts
 };
 
 export default chairActions;

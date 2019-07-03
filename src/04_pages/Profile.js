@@ -281,21 +281,6 @@ const FirstProfileRow = props => {
   );
 };
 
-const ThirdProfileRow = props => {
-  return (
-    <Grid.Row columns={1} textAlign="left">
-      <Grid.Column>
-        <Label color="green" size={"big"}>
-          {i18next.t("profile-studentStatus-label")}
-        </Label>
-        <Label color="green" size={"massive"}>
-          {props.subject}
-        </Label>
-      </Grid.Column>
-    </Grid.Row>
-  );
-};
-
 const HeaderProfilePage = props => {
   return (
     <Header as="h1" color="blue">

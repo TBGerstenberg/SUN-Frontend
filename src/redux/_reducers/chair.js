@@ -44,7 +44,8 @@ const chairReducer = (state = initialState, action) => {
       };
     case chairConstants.GET_CHAIR_POSTS_SUCCESS:
       return {
-        ...state
+        ...state,
+        chairPosts: action.posts
       };
     case chairConstants.GET_CHAIR_POSTS_FAILURE:
       return {

@@ -6,6 +6,23 @@ const initialState = {
 
 const postReducer = (state = initialState, action) => {
   switch (action.type) {
+    case postConstants.GET_FEED_POSTS_REQUEST:
+      return {
+        ...state,
+        fetchingPosts: true
+      };
+    case postConstants.GET_FEED_POSTS_SUCCESS:
+      return {
+        ...state,
+        fetchingPosts: false,
+        feedPosts: action.posts
+      };
+    case postConstants.GET_FEED_POSTS_FAILURE:
+      return {
+        ...state,
+        error: action.error
+      };
+
     case postConstants.GET_POST_REQUEST:
       return {
         ...state,

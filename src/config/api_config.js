@@ -72,6 +72,9 @@ const API_CONFIG = {
     },
     DELETE_POST_URL: postId => {
       return BASEURL + "/posts/" + postId;
+    },
+    GET_FEED_POSTS_URL: () => {
+      return BASEURL + "/feed";
     }
   },
 

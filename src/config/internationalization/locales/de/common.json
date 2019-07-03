@@ -94,6 +94,13 @@
   "complete-your-profile-continue-button": "Abschließen",
 
   "profile-overview-label": "Allgemeines",
+  "profile-title-label": "Titel",
+  "profile-gender-label": "Geschlecht",
+  "profile-firstName-label": "Vorname",
+  "profile-lastName-label": "Nachname",
+  "profile-birthDate-label": "Geburtsdatum",
+  "profile-matriculationNumber-label": "Matrikelnummer",
+  "profile-courseOfStudy-label": "Studiengang",
 
   "chair-card-email-label": "Email: ",
   "chair-card-phoneNumber-label": "Tel: ",
@@ -217,5 +224,8 @@
   "new-event-modal-startdate-placeholder": "Beginn",
 
   "new-event-modal-enddate-label": "Ende",
-  "new-event-modal-enddate-placeholder": "Ende"
+  "new-event-modal-enddate-placeholder": "Ende",
+
+  "home-page-no-subscriptions-placeholder": "Du hast noch keine Lehrstühle abonniert",
+  "home-page-refresh-button-text": "Aktualisieren"
 }

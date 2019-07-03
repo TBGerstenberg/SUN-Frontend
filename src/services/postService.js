@@ -67,6 +67,17 @@ const postService = {
     } catch (error) {
       return error;
     }
+  },
+
+  getFeedPosts: async () => {
+    try {
+      const getFeedPostsResponse = await apiClient.get(
+        API_CONFIG.POSTS.GET_FEED_POSTS_URL()
+      );
+      return getFeedPostsResponse;
+    } catch (error) {
+      return error;
+    }
   }
 };
 

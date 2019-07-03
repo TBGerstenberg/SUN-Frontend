@@ -98,8 +98,14 @@ const loginReducer = (state = initialState, action) => {
       const userHasSubscribedToChair = indexOfChair !== -1;
 
       if (userHasSubscribedToChair) {
+        console.log(state.user.person.subscriptions);
+        console.log(indexOfChair);
+
         let mutatedSubscriptions = [...state.user.person.subscriptions];
-        mutatedSubscriptions.splice(indexOfChair);
+
+        mutatedSubscriptions.splice(indexOfChair, 1);
+
+        console.log(mutatedSubscriptions);
 
         return {
           ...state,

@@ -40,6 +40,42 @@ function getAllPosts() {
   }
 }
 
+function getFeedPosts() {
+  return async (dispatch, getState) => {
+    dispatch(request());
+    const getFeedPostsResponse = await postService.getFeedPosts();
+
+    if (getFeedPostsResponse && getFeedPostsResponse.status === 200) {
+      dispatch(success(getFeedPostsResponse.data));
+    } else {
+      dispatch(failure(getFeedPostsResponse));
+    }
+  };
+
+  /**
+   * Redux action creator triggered when a FETCH-ALL-request for posts is started
+   */
+  function request() {
+    return { type: postConstants.GET_FEED_POSTS_REQUEST };
+  }
+
+  /**
+   * Redux action creator triggered when a FETCH-ALL-request succeeded
+   * @param {Array of objects } posts - Posts that have been fetched
+   */
+  function success(posts) {
+    return { type: postConstants.GET_FEED_POSTS_SUCCESS, posts: posts };
+  }
+
+  /**
+   * Redux action creator triggered when a FETCH-ALL-request failed
+   * @param {*} error - Error object thrown when creating the registration request
+   */
+  function failure(error) {
+    return { type: postConstants.GET_FEED_POSTS_FAILURE, error };
+  }
+}
+
 function getSinglePost(postId) {
   return async (dispatch, getState) => {
     dispatch(request());
@@ -189,7 +225,8 @@ const postActions = {
   getSinglePost,
   createPost,
   updatePost,
-  removePost
+  removePost,
+  getFeedPosts
 };
 
 export default postActions;

@@ -79,6 +79,7 @@ export class ChairPage extends React.Component {
   static getDerivedStateFromProps(nextProps, prevState) {
     if (nextProps.chairId !== prevState.chairId) {
       nextProps.getSingleChair(nextProps.chairId);
+      nextProps.getChairPosts(nextProps.chairId);
 
       const chair = nextProps.chairSubscriptions.find(element => {
         return element.pageId == nextProps.chairId;
@@ -120,9 +121,8 @@ export class ChairPage extends React.Component {
           </Grid.Column>
         </Grid.Row>
 
-        {this.props.currentlyViewedChair &&
-          this.props.currentlyViewedChair.posts &&
-          this.props.currentlyViewedChair.posts.map(post => {
+        {this.props.chairPosts &&
+          this.props.chairPosts.map(post => {
             // 2  is type "event"
             if (post.type === 2) {
               return (
@@ -187,9 +187,8 @@ export class ChairPage extends React.Component {
           </Grid.Column>
         </Grid.Row>
 
-        {this.props.currentlyViewedChair &&
-          this.props.currentlyViewedChair.posts &&
-          this.props.currentlyViewedChair.posts.map(post => {
+        {this.props.chairPosts &&
+          this.props.chairPosts.map(post => {
             return (
               <Grid.Row>
                 <Grid.Column>
@@ -233,6 +232,19 @@ export class ChairPage extends React.Component {
   }
 
   render() {
+    if (
+      !this.props.users ||
+      (this.props.users && this.props.users.length === 0)
+    ) {
+      this.props.getAllUsers();
+    }
+    if (
+      !this.props.chairs ||
+      (this.props.chairs && this.props.chairs.length === 0)
+    ) {
+      this.props.getAllChairs();
+    }
+
     const chairName = this.props.currentlyViewedChair
       ? this.props.currentlyViewedChair.name
       : "";
@@ -266,7 +278,13 @@ export class ChairPage extends React.Component {
             <Grid.Row columns={1}>
               <Grid.Column width={16}>
                 <div>
-                  <Image rounded centered src={universityImage} fluid />
+                  <Image
+                    rounded
+                    centered
+                    src={universityImage}
+                    style={{ maxHeight: "300px" }}
+                    fluid
+                  />
                 </div>
               </Grid.Column>
             </Grid.Row>
@@ -367,25 +385,27 @@ let mapStateToProps = state => {
     ? state.login.user.person.id
     : null;
   var personCanPostForChair = false;
+  var personIsChairAdmin = false;
 
   if (currentlyViewedChair && loggedInUserPersonId) {
-    // 1. Finden ob der eingeloggte User eine der "persons" im "currentlyViewedChair" ist (e.g. das Recht hat zu Posten)
-    let person = currentlyViewedChair.persons.find(function(
-      arrayElement,
-      index
-    ) {
-      return (
-        arrayElement.personId === loggedInUserPersonId &&
-        (arrayElement.role === 0 ||
-          arrayElement.role === 1 ||
-          arrayElement.role === 2 ||
-          arrayElement.role === 3 ||
-          arrayElement.role === 4)
-      );
-    });
+    if (currentlyViewedChair.persons) {
+      // 1. Finden ob der eingeloggte User eine der "persons" im "currentlyViewedChair" ist (e.g. das Recht hat zu Posten)
+      let person = currentlyViewedChair.persons.find(function(
+        arrayElement,
+        index
+      ) {
+        return arrayElement.personId === loggedInUserPersonId;
+      });
 
-    if (person) {
-      personCanPostForChair = true;
+      if (person) {
+        personCanPostForChair = true;
+      }
+
+      if (person && person.role === 3) {
+        personIsChairAdmin = true;
+      }
+    } else {
+      personCanPostForChair = false;
     }
 
     // 2. Finden ob der eingeloggte User einer der Subscriber des "currentlyViewedChair" ist (e.g. der Abo-button )
@@ -394,10 +414,16 @@ let mapStateToProps = state => {
   return {
     chairId: state.location.payload.chairId,
     currentlyViewedChair: state.chair.currentlyViewedChair,
-    personCanPostForChair: personCanPostForChair,
+    chairPosts: state.chair.chairPosts,
+    users: state.user.users,
+    chairs: state.chair.chairs,
+
     chairSubscriptions: state.login.user
       ? state.login.user.person.subscriptions
-      : null
+      : null,
+
+    personCanPostForChair: personCanPostForChair,
+    personIsChairAdmin: personIsChairAdmin
   };
 };
 
@@ -406,7 +432,9 @@ let mapDispatchToProps = {
   getSingleChair: chairActions.getSingleChair,
   getChairPosts: chairActions.getChairPosts,
   addSubscription: userActions.addSubscription,
-  removeSubscription: userActions.removeSubscription
+  removeSubscription: userActions.removeSubscription,
+  getAllUsers: userActions.getAllUsers,
+  getAllChairs: chairActions.getAllChairs
 };
 
 let PostContainer = connect(

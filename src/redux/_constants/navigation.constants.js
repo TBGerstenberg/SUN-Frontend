@@ -18,7 +18,6 @@ const navigationConstants = {
   NAVIGATE_TO_CHAIR_PAGE: "NAVIGATE_TO_CHAIR_PAGE",
   NAVIGATE_TO_ALLCHAIRS_PAGE: "NAVIGATE_TO_ALLCHAIRS_PAGE",
   NAVIGATE_TO_SEARCH_PAGE: "NAVIGATE_TO_SEARCH_PAGE"
-
 };
 
 /**
@@ -34,7 +33,6 @@ export const routesMap = {
   },
   NAVIGATE_TO_PROFILE: {
     path: "/profile/:userId",
-    thunk: (dispatch, getState, extra) => {},
     requiresAuth: true
   },
   NAVIGATE_TO_DATA_PROCESSING_AGREEMENT: {
