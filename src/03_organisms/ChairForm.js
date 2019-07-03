@@ -1,21 +1,17 @@
+import i18next from "i18next";
 import React from "react";
-import { Grid, Header, Button, Form, Divider } from "semantic-ui-react";
-import { Field, reduxForm } from "redux-form";
 import { Trans, withTranslation } from "react-i18next";
 import { connect } from "react-redux";
-import { LabelInputField, CheckboxField } from "react-semantic-redux-form";
-import i18next from "i18next";
-import chairService from "../services/chairService";
-
-import formValidationUtilities from "../utilities/formValidationUtilities";
-
+import { LabelInputField } from "react-semantic-redux-form";
+import { Field, reduxForm } from "redux-form";
+import { Button, Divider, Form, Grid, Header } from "semantic-ui-react";
 import CityNameInput from "../02_molecules/CityNameInput";
-import StreetNameInput from "../02_molecules/StreetNameInput";
-import PostalCodeInput from "../02_molecules/PostalCodeInput";
-import HouseNumberInput from "../02_molecules/HouseNumberInput";
 import PhoneNumberInput from "../02_molecules/PhoneNumberInput";
-
+import PostalCodeInput from "../02_molecules/PostalCodeInput";
+import StreetNameInput from "../02_molecules/StreetNameInput";
 import Chair from "../models/chair";
+import chairService from "../services/chairService";
+import formValidationUtilities from "../utilities/formValidationUtilities";
 import PersonList from "./PersonList";
 
 class ChairForm extends React.Component {

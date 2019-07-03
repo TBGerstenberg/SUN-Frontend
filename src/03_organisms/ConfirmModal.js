@@ -1,5 +1,5 @@
-import { Button, Header, Icon, Modal } from "semantic-ui-react";
 import React, { Component } from "react";
+import { Button, Modal } from "semantic-ui-react";
 
 class ConfirmModal extends Component {
   render() {

@@ -1,10 +1,6 @@
+import i18next from "i18next";
 import React from "react";
 import { withTranslation } from "react-i18next";
-import { Field } from "redux-form";
-import { LabelInputField } from "react-semantic-redux-form";
-import i18next from "i18next";
-import formValidationUtilities from "../utilities/formValidationUtilities";
-import { Icon } from "semantic-ui-react";
 
 const Searchbar = props => {
   return (

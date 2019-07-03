@@ -1,13 +1,12 @@
 import React from "react";
-import { connect } from "react-redux";
 import { Trans, withTranslation } from "react-i18next";
-import { Button, Icon, Table, Modal } from "semantic-ui-react";
-import { userActions } from "../redux/_actions";
+import onClickOutside from "react-onclickoutside";
+import { connect } from "react-redux";
+import { Button, Icon, Table } from "semantic-ui-react";
+import UserForm from "../03_organisms/UserForm";
+import { accountService } from "../services";
 import tableFormattingUtilities from "../utilities/tableFormattingUtilities";
 import AddEntityModal from "./AddEntityModal";
-import UserForm from "../03_organisms/UserForm";
-import onClickOutside from "react-onclickoutside";
-import { userService, accountService } from "../services";
 
 class UserManagement extends React.Component {
   /** React-component-lifecycle methods */

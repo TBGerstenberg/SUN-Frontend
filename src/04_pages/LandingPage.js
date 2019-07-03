@@ -1,5 +1,7 @@
+import i18next from "i18next";
 import PropTypes from "prop-types";
 import React, { Component } from "react";
+import { Trans, withTranslation } from "react-i18next";
 import {
   Button,
   Container,
@@ -14,10 +16,7 @@ import {
   Sidebar,
   Visibility
 } from "semantic-ui-react";
-
 import LanguageSwitcher from "../02_molecules/LanguageSwitcher";
-import { withTranslation, Trans } from "react-i18next";
-import i18next from "i18next";
 import logo from "../assets/images/landingpage_01.jpg";
 import logo2 from "../assets/images/Logo_2.png";
 import profile_man from "../assets/images/profile_man.png";
@@ -33,27 +32,9 @@ const getWidth = () => {
 };
 
 /* eslint-disable react/no-multi-comp */
-/* Heads up! HomepageHeading uses inline styling, however it's not the best practice. Use CSS or styled components for
- * such things.
- */
 
-/*var sectionStyle = {
-  width: "1000px",
-  height: "1000px",
-  backgroundPosition: 'center',
-  backgroundSize: 'auto',
-  backgroundRepeat: 'no-repeat',
-  backgroundImage: "url("+ Background + ")"
-};*/
 const HomepageHeading = ({ mobile }) => (
   <Container text>
-    {/*<section 
-
-style={
-  sectionStyle}
-  ></section>
-*/}
-
     <Header
       as="h1"
       content={i18next.t("landingpage-hero-text")}
@@ -61,10 +42,8 @@ style={
       color="blue"
       style={{
         fontSize: mobile ? "2em" : "4em",
-        fontSize: "76px",
         fontWeight: "bold",
         marginTop: mobile ? "1.5em" : "3em",
-        marginTop: "1.3em",
         marginLeft: "2.5em"
       }}
     />
@@ -88,8 +67,7 @@ style={
       style={{
         fontSize: mobile ? "1.5em" : "1.7em",
         fontWeight: "normal",
-        marginTop: mobile ? "0.5em" : "1.5em",
-        marginTop: "0.5em"
+        marginTop: mobile ? "0.5em" : "1.5em"
       }}
     />
     <br />
@@ -370,6 +348,7 @@ const HomepageLayout = () => (
 
               <div className="ui blue image large label">
                 <img
+                  alt={"An avatar"}
                   className="ui right spaced avatar image"
                   src={profile_man}
                 />{" "}
@@ -385,6 +364,7 @@ const HomepageLayout = () => (
 
               <div className="ui blue image large label">
                 <img
+                  alt={"An avatar"}
                   className="ui right spaced avatar image"
                   src={profile_woman}
                 />{" "}

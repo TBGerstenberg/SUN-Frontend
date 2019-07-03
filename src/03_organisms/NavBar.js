@@ -1,24 +1,21 @@
-import React, { Component } from "react";
-import { Button, Grid, Search, Menu, Label } from "semantic-ui-react";
-import LanguageSwitcher from "../02_molecules/LanguageSwitcher";
-import { withTranslation, Trans } from "react-i18next";
 import i18next from "i18next";
 import { debounce } from "lodash";
-
-// Custom Components
-
-// Redux bindings & HOCs
+import React, { Component } from "react";
+import { Trans, withTranslation } from "react-i18next";
 import { connect } from "react-redux";
-import { userActions, searchActions } from "../redux/_actions";
-import { navigationConstants } from "../redux/_constants";
-import { navigationActions } from "../redux/_actions";
 import Link from "redux-first-router-link";
-
-// Styles
-import "./Navbar.css";
-import PersonSearchResult from "../02_molecules/PersonSearchResult";
+import { Button, Label, Menu, Search } from "semantic-ui-react";
 import ChairSearchResult from "../02_molecules/ChairSearchResult";
+import LanguageSwitcher from "../02_molecules/LanguageSwitcher";
+import PersonSearchResult from "../02_molecules/PersonSearchResult";
 import PostSearchResult from "../02_molecules/PostSearchResult";
+import {
+  navigationActions,
+  searchActions,
+  userActions
+} from "../redux/_actions";
+import { navigationConstants } from "../redux/_constants";
+import "./Navbar.css";
 
 // Renders the categories that can be searched (persons, chairs, posts)
 const categoryRenderer = ({ name }) => (
@@ -49,7 +46,6 @@ const resultRenderer = objectToBeRendered => {
 };
 
 const initialState = {
-  searchBarLoading: false,
   searchResults: {}
 };
 
@@ -114,8 +110,6 @@ class NavBar extends Component {
       this.redirectToLogin();
     }
 
-    const { searchBarLoading, value, searchResults } = this.state;
-
     return (
       <Menu
         color="blue"
@@ -170,8 +164,7 @@ class NavBar extends Component {
                 type: navigationConstants.NAVIGATE_TO_ADMIN_PANEL
               }}
             >
-                {i18next.t("navbar-adminpanel-link-label")}
-
+              {i18next.t("navbar-adminpanel-link-label")}
             </Link>
           </Menu.Item>
         )}
@@ -212,10 +205,11 @@ class NavBar extends Component {
           <Menu.Item>
             <Trans i18nKey="navbar-logged-in-as-text" />
             {this.props.user ? this.props.user.email : ""}
-            <a href="#" className="ui item" onClick={this.dispatchLogout}>
+
+            <Button href="#" className="ui item" onClick={this.dispatchLogout}>
               <i className="sign-out icon" />
               <Trans i18nKey="navbar-logout-button-text" />
-            </a>
+            </Button>
           </Menu.Item>
         </Menu.Menu>
       </Menu>

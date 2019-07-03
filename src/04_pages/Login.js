@@ -1,38 +1,31 @@
-import React from "react";
-
-// Redux bindings & HOCs
-import { connect } from "react-redux";
-import { userActions } from "../redux/_actions";
-
-// Redux-Form and Bindings Semantic-UI forms
-import { Field, reduxForm } from "redux-form";
-import { LabelInputField } from "react-semantic-redux-form";
-
 // Internationalization
 import i18next from "i18next";
+import React from "react";
 import { Trans, withTranslation } from "react-i18next";
-
+// Redux bindings & HOCs
+import { connect } from "react-redux";
+import { LabelInputField } from "react-semantic-redux-form";
+import { toast } from "react-semantic-toasts";
+import Link from "redux-first-router-link";
+// Redux-Form and Bindings Semantic-UI forms
+import { Field, reduxForm } from "redux-form";
 // Components from semantic ui and our own library
 import {
   Button,
+  Container,
   Form,
   Grid,
   Header,
-  Segment,
-  Container,
-  Icon
+  Icon,
+  Segment
 } from "semantic-ui-react";
-import Link from "redux-first-router-link";
+import ErrorMessage from "../01_atoms/ErrorMessage";
 import LanguageSwitcher from "../02_molecules/LanguageSwitcher";
-import { SemanticToastContainer, toast } from "react-semantic-toasts";
-
-// Styles
-import "./Login.css";
-
+import { navigationActions, userActions } from "../redux/_actions";
 //Actions
 import { navigationConstants } from "../redux/_constants";
-import { navigationActions } from "../redux/_actions";
-import ErrorMessage from "../01_atoms/ErrorMessage";
+// Styles
+import "./Login.css";
 
 /**
  * A Screen that allows a user to log in to the system.

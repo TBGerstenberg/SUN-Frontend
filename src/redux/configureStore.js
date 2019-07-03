@@ -1,21 +1,19 @@
 // configureStore.js
-import { combineReducers, createStore, compose, applyMiddleware } from "redux";
-import { connectRoutes } from "redux-first-router";
+import throttle from "lodash/throttle";
+import { applyMiddleware, combineReducers, compose, createStore } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension/logOnlyInProduction";
+import { connectRoutes } from "redux-first-router";
 import reduxThunk from "redux-thunk";
-
-import * as actionCreators from "./_actions";
-import * as reducers from "./_reducers";
-import options from "./storeOptions";
-import { routesMap } from "./_constants/navigation.constants";
+import { configureApiClient } from "../api/apiClient";
+import { FEATURE_CONFIG } from "../config/feature.config";
 import {
   loadReduxState,
   saveReduxState
 } from "../services/localStorageService";
-
-import { FEATURE_CONFIG } from "../config/feature.config";
-import throttle from "lodash/throttle";
-import { configureApiClient } from "../api/apiClient";
+import options from "./storeOptions";
+import * as actionCreators from "./_actions";
+import { routesMap } from "./_constants/navigation.constants";
+import * as reducers from "./_reducers";
 
 export default function configureStore() {
   // Load persisted state from local storage only if the feature switch is set to true.

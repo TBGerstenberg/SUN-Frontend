@@ -1,7 +1,7 @@
 import React from "react";
-import { Segment, Label, Header, Card, List } from "semantic-ui-react";
-import { withTranslation, Trans } from "react-i18next";
+import { withTranslation } from "react-i18next";
 import Link from "redux-first-router-link";
+import { List } from "semantic-ui-react";
 import { navigationConstants } from "../redux/_constants";
 
 const ChairCard = props => {

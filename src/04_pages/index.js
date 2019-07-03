@@ -1,17 +1,17 @@
-import Home from "./Home";
-import Profile from "./Profile";
-import CompleteProfile from "./CompleteProfile";
-import NotFound from "./NotFound";
-import Signup from "./Signup";
-import Login from "./Login";
-import DataProcessingAgreement from "./DataProcessingAgreement";
-import TermsOfService from "./TermsOfService";
-import LandingPage from "./LandingPage";
-import Job from "./Job";
-import ChairPage from "./ChairPage";
 import AdminPanel from "./AdminPanel";
-import AllChairs  from "./AllChairs";
+import AllChairs from "./AllChairs";
+import ChairPage from "./ChairPage";
+import CompleteProfile from "./CompleteProfile";
+import DataProcessingAgreement from "./DataProcessingAgreement";
+import Home from "./Home";
+import Job from "./Job";
+import LandingPage from "./LandingPage";
+import Login from "./Login";
+import NotFound from "./NotFound";
+import Profile from "./Profile";
 import Search from "./Search";
+import Signup from "./Signup";
+import TermsOfService from "./TermsOfService";
 
 /**
  * This file exists to allow an import

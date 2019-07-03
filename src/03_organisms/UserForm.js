@@ -1,42 +1,37 @@
+import i18next from "i18next";
+import moment from "moment";
 import React from "react";
-import {
-  Grid,
-  Header,
-  Button,
-  Form,
-  Divider,
-  Message
-} from "semantic-ui-react";
-import { Field, reduxForm } from "redux-form";
 import { Trans, withTranslation } from "react-i18next";
 import { connect } from "react-redux";
-import { LabelInputField, CheckboxField } from "react-semantic-redux-form";
-import i18next from "i18next";
+import { CheckboxField, LabelInputField } from "react-semantic-redux-form";
+import { Field, reduxForm } from "redux-form";
 import { DateInput } from "semantic-ui-calendar-react";
-import { userActions, skillCatalogueActions } from "../redux/_actions";
-import userService from "../services/userService";
-
-import formValidationUtilities from "../utilities/formValidationUtilities";
-import { chairActions } from "../redux/_actions";
-
-import StudentIdInput from "../02_molecules/StudentIdInput";
-import CourseOfStudyInput from "../02_molecules/CourseOfStudyInput";
-import CityNameInput from "../02_molecules/CityNameInput";
-import StreetNameInput from "../02_molecules/StreetNameInput";
-import PostalCodeInput from "../02_molecules/PostalCodeInput";
-import FirstNameInput from "../02_molecules/FirstNameInput";
-import LastNameInput from "../02_molecules/LastNameInput";
-import TitleDropdownSelector from "../02_molecules/TitleDropdownSelector";
-import GenderDropdownSelector from "../02_molecules/GenderDropdownSelector";
-import EmailInput from "../02_molecules/EmailInput";
-import PasswordInput from "../02_molecules/PasswordInput";
+import {
+  Button,
+  Divider,
+  Form,
+  Grid,
+  Header,
+  Message
+} from "semantic-ui-react";
 import ChairRoleList from "../02_molecules/ChairRoleList";
-
-import genderEnum from "../models/enumerations/genderEnum";
+import CityNameInput from "../02_molecules/CityNameInput";
+import CourseOfStudyInput from "../02_molecules/CourseOfStudyInput";
+import EmailInput from "../02_molecules/EmailInput";
+import FirstNameInput from "../02_molecules/FirstNameInput";
+import GenderDropdownSelector from "../02_molecules/GenderDropdownSelector";
+import LastNameInput from "../02_molecules/LastNameInput";
+import PasswordInput from "../02_molecules/PasswordInput";
+import PostalCodeInput from "../02_molecules/PostalCodeInput";
+import StreetNameInput from "../02_molecules/StreetNameInput";
+import StudentIdInput from "../02_molecules/StudentIdInput";
+import TitleDropdownSelector from "../02_molecules/TitleDropdownSelector";
 import Account from "../models/account";
+import genderEnum from "../models/enumerations/genderEnum";
+import { chairActions, skillCatalogueActions } from "../redux/_actions";
 import { accountService, chairService } from "../services";
-import moment from "moment";
-import apiClient from "../api/apiClient";
+import userService from "../services/userService";
+import formValidationUtilities from "../utilities/formValidationUtilities";
 
 class UserForm extends React.Component {
   /** ES-6 JS-Class Methods  */

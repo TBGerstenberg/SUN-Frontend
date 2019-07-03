@@ -1,6 +1,5 @@
-import { Button, Header, Icon, Modal, Card } from "semantic-ui-react";
 import React, { Component } from "react";
-import { List, Image } from "semantic-ui-react";
+import { Card, Image, List } from "semantic-ui-react";
 import personChairRelationEnum from "../models/enumerations/personChairRelationEnum";
 
 class PersonList extends Component {

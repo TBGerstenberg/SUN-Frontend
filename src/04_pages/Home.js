@@ -1,24 +1,12 @@
-import React from "react";
-
-import NavBar from "../03_organisms/NavBar";
-import SubscriptionList from "../03_organisms/SubscriptionList";
-import { login } from "../redux/_reducers";
-import { connect } from "react-redux";
-import { chairActions, userActions, postActions } from "../redux/_actions";
-import PostCard from "../03_organisms/PostCard";
-import AllChairsCard from "../03_organisms/AllChairsCard";
 import i18next from "i18next";
-import {
-  Segment,
-  Label,
-  Header,
-  Card,
-  List,
-  Grid,
-  Container,
-  Button,
-  Icon
-} from "semantic-ui-react";
+import React from "react";
+import { connect } from "react-redux";
+import { Button, Card, Container, Grid, Icon } from "semantic-ui-react";
+import AllChairsCard from "../03_organisms/AllChairsCard";
+import NavBar from "../03_organisms/NavBar";
+import PostCard from "../03_organisms/PostCard";
+import SubscriptionList from "../03_organisms/SubscriptionList";
+import { chairActions, postActions, userActions } from "../redux/_actions";
 
 class Home extends React.Component {
   constructor(props) {

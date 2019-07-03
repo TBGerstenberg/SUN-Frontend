@@ -1,33 +1,27 @@
-import React from "react";
-import { connect } from "react-redux";
-import NavBar from "../03_organisms/NavBar";
-import Avatar from "../02_molecules/Avatar";
-import avatarSourcePath from "../assets/images/profile_man.png";
-import BodyText from "../01_atoms/BodyText";
-import AddressCard from "../03_organisms/AdressCard";
-import ContactCard from "../03_organisms/ContactCard";
-import { withTranslation, Trans } from "react-i18next";
-import moment from "moment";
-import tableFormattingUtilities from "../utilities/tableFormattingUtilities";
-import AddEntityModal from "../03_organisms/AddEntityModal";
-import UserForm from "../03_organisms/UserForm";
-import { SemanticToastContainer, toast } from "react-semantic-toasts";
 import i18next from "i18next";
-
+import moment from "moment";
+import React from "react";
+import { Trans, withTranslation } from "react-i18next";
+import { connect } from "react-redux";
+import { SemanticToastContainer, toast } from "react-semantic-toasts";
 // Components from semantic ui and our own library
 import {
   Button,
+  Container,
   Grid,
   Header,
-  Segment,
-  Image,
   Label,
   Placeholder,
-  Responsive,
-  Container
+  Segment
 } from "semantic-ui-react";
-
+import BodyText from "../01_atoms/BodyText";
+import AddEntityModal from "../03_organisms/AddEntityModal";
+import AddressCard from "../03_organisms/AdressCard";
+import ContactCard from "../03_organisms/ContactCard";
+import NavBar from "../03_organisms/NavBar";
+import UserForm from "../03_organisms/UserForm";
 import { userActions } from "../redux/_actions";
+import tableFormattingUtilities from "../utilities/tableFormattingUtilities";
 
 class Profile extends React.Component {
   constructor(props) {

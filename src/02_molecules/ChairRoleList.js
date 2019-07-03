@@ -1,9 +1,9 @@
 import React from "react";
 import { withTranslation } from "react-i18next";
-import { List, Segment, Button, Grid } from "semantic-ui-react";
-import personChairRleationEnum from "../models/enumerations/personChairRelationEnum";
+import { Button, Grid, List, Segment } from "semantic-ui-react";
 import ChairSelectionDropdown from "../03_organisms/ChairSelectionDropdown";
 import RoleSelectionDropdown from "../03_organisms/RoleSelectionDropdown";
+import personChairRleationEnum from "../models/enumerations/personChairRelationEnum";
 
 class ChairRoleList extends React.Component {
   constructor(props) {

@@ -1,18 +1,7 @@
 import React from "react";
-import { Segment, Label, Header, Card, Image } from "semantic-ui-react";
-import { withTranslation, Trans } from "react-i18next";
+import { Trans, withTranslation } from "react-i18next";
+import { Card, Image } from "semantic-ui-react";
 import christian from "../assets/images/christian.jpg";
-import daniel from "../assets/images/daniel.jpg";
-import elliot from "../assets/images/elliot.jpg";
-import helen from "../assets/images/helen.jpg";
-import jenny from "../assets/images/jenny.jpg";
-import matt from "../assets/images/matt.jpg";
-import matthew from "../assets/images/matthew.png";
-import molly from "../assets/images/molly.png";
-import rachel from "../assets/images/rachel.png";
-import stevie from "../assets/images/stevie.jpg";
-import tom from "../assets/images/tom.jpg";
-import veronika from "../assets/images/veronika.jpg";
 
 const PersonCard = props => {
   return (

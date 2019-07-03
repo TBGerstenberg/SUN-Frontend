@@ -1,41 +1,18 @@
 import React from "react";
-import NavBar from "../03_organisms/NavBar";
-import NewPostModal from "../03_organisms/NewPost";
-import NewEventModal from "../03_organisms/NewEventModal";
-import ConfirmModal from "../03_organisms/ConfirmModal";
-import AvatarJob from "../assets/images/chair_avatar.png";
-import { withTranslation, Trans } from "react-i18next";
-import ContactCard from "../03_organisms/ContactCard";
-import App from "../App";
-import PersonList from "../03_organisms/PersonList";
-import universityImage from "../assets/images/universityImage.jpg";
-import {
-  Button,
-  Form,
-  Grid,
-  Header,
-  Segment,
-  Container,
-  Icon,
-  Image,
-  Label,
-  GridColumn,
-  Placeholder,
-  Modal,
-  Card,
-  Tab,
-  GridRow,
-  List
-} from "semantic-ui-react";
-
 import { connect } from "react-redux";
-import { postActions, chairActions, userActions } from "../redux/_actions";
-import { chairService } from "../services";
-import { SemanticToastContainer, toast } from "react-semantic-toasts";
+import { Button, Container, Grid, Header, Image, Tab } from "semantic-ui-react";
 import SubscribeButton from "../02_molecules/SubscribeButton";
-import PostCard from "../03_organisms/PostCard";
 import AdressCard from "../03_organisms/AdressCard";
-import { S_IXGRP } from "constants";
+import ConfirmModal from "../03_organisms/ConfirmModal";
+import ContactCard from "../03_organisms/ContactCard";
+import NavBar from "../03_organisms/NavBar";
+import NewEventModal from "../03_organisms/NewEventModal";
+import NewPostModal from "../03_organisms/NewPost";
+import PersonList from "../03_organisms/PersonList";
+import PostCard from "../03_organisms/PostCard";
+import universityImage from "../assets/images/universityImage.jpg";
+import { chairActions, postActions, userActions } from "../redux/_actions";
+import { chairService } from "../services";
 
 export class ChairPage extends React.Component {
   constructor(props) {
@@ -133,7 +110,7 @@ export class ChairPage extends React.Component {
                 </Grid.Row>
               );
             } else {
-              return;
+              return null;
             }
           })}
       </Grid>

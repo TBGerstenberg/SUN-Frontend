@@ -1,5 +1,5 @@
 import React from "react";
-import { Rating, List, Button } from "semantic-ui-react";
+import { Button, List, Rating } from "semantic-ui-react";
 import "./SkillCatalogueItem.css";
 
 const SkillCatalogueItem = props => {

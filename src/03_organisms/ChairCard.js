@@ -1,6 +1,6 @@
 import React from "react";
-import { Segment, Label, Header, Card } from "semantic-ui-react";
-import { withTranslation, Trans } from "react-i18next";
+import { Trans, withTranslation } from "react-i18next";
+import { Card } from "semantic-ui-react";
 
 const ChairCard = props => {
   console.log(props);

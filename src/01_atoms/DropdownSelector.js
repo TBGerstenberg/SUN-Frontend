@@ -1,7 +1,6 @@
 import React from "react";
 import { withTranslation } from "react-i18next";
 import { Form } from "semantic-ui-react";
-import i18next from "i18next";
 
 const DropdownSelector = props => {
   return (

@@ -1,25 +1,12 @@
 import React from "react";
-import { connect } from "react-redux";
-import i18next from "i18next";
 import { Trans, withTranslation } from "react-i18next";
-import {
-  Button,
-  Icon,
-  Menu,
-  Segment,
-  Sidebar,
-  Grid,
-  Container,
-  Header,
-  List
-} from "semantic-ui-react";
-import "./AdminPanel.css";
-
+import { connect } from "react-redux";
+import { SemanticToastContainer, toast } from "react-semantic-toasts";
+import { Button, Grid, Icon, Menu, Segment, Sidebar } from "semantic-ui-react";
+import ChairManagement from "../03_organisms/ChairManagement";
 import NavBar from "../03_organisms/NavBar";
 import UserManagement from "../03_organisms/UserManagement";
-import ChairManagement from "../03_organisms/ChairManagement";
-
-import { SemanticToastContainer, toast } from "react-semantic-toasts";
+import "./AdminPanel.css";
 
 class AdminPanel extends React.Component {
   state = {

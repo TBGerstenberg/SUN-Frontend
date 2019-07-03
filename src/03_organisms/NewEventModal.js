@@ -1,17 +1,9 @@
-import React, { Component } from "react";
-import {
-  Button,
-  Icon,
-  Modal,
-  Form,
-  TextArea,
-  Checkbox,
-  Grid
-} from "semantic-ui-react";
-import postTypeEnum from "../models/enumerations/postTypeEnum";
-import DateTimeInput from "../03_organisms/DateTimeInput";
 import i18next from "i18next";
 import moment from "moment";
+import React, { Component } from "react";
+import { Button, Form, Grid, Icon, Modal, TextArea } from "semantic-ui-react";
+import DateTimeInput from "../03_organisms/DateTimeInput";
+import postTypeEnum from "../models/enumerations/postTypeEnum";
 
 class NewEventModal extends Component {
   constructor(props) {

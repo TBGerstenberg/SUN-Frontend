@@ -1,5 +1,5 @@
-import React from "react";
 import i18next from "i18next";
+import React from "react";
 import { withTranslation } from "react-i18next";
 import { Form } from "semantic-ui-react";
 import personChairRelationEnum from "../models/enumerations/personChairRelationEnum";

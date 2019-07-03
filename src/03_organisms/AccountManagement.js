@@ -1,11 +1,10 @@
 import React from "react";
-import { connect } from "react-redux";
 import { Trans, withTranslation } from "react-i18next";
-import { Button, Icon, Table, Modal } from "semantic-ui-react";
-import { accountActions } from "../redux/_actions";
+import { connect } from "react-redux";
+import { Button, Icon, Table } from "semantic-ui-react";
+import UserForm from "../03_organisms/UserForm";
 import tableFormattingUtilities from "../utilities/tableFormattingUtilities";
 import AddEntityModal from "./AddEntityModal";
-import UserForm from "../03_organisms/UserForm";
 
 class AccountManagement extends React.Component {
   componentWillMount() {}

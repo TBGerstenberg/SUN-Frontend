@@ -1,9 +1,9 @@
 import React from "react";
+import { connect } from "react-redux";
+import { Container, Grid, Header } from "semantic-ui-react";
+import ChairCard from "../03_organisms/ChairCard";
 import NavBar from "../03_organisms/NavBar";
 import { chairActions } from "../redux/_actions";
-import { connect } from "react-redux";
-import { Grid, Header, Icon, Card, Container } from "semantic-ui-react";
-import ChairCard from "../03_organisms/ChairCard";
 
 class AllChairs extends React.Component {
   constructor(props) {

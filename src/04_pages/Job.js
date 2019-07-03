@@ -1,32 +1,12 @@
 import React from "react";
+import { connect } from "react-redux";
+import { Grid, Header, Image, Placeholder } from "semantic-ui-react";
 import NavBar from "../03_organisms/NavBar";
 import NewPostModal from "../03_organisms/NewPost";
-import ConFirmModal from "../03_organisms/ConfirmModal";
 import AvatarJob from "../assets/images/job.png";
-import App from "../App";
-import {
-  Button,
-  Form,
-  Grid,
-  Header,
-  Segment,
-  Container,
-  Icon,
-  Image,
-  Label,
-  GridColumn,
-  Placeholder,
-  Modal
-} from "semantic-ui-react";
-
-import { connect } from "react-redux";
 import { postActions } from "../redux/_actions";
 
 export class Job extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <div>

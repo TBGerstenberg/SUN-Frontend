@@ -1,7 +1,7 @@
 import React from "react";
-import SkillCatalogueItem from "./SkillCatalogueItem";
-import { List, Segment, Rating, Button } from "semantic-ui-react";
+import { List, Segment } from "semantic-ui-react";
 import "./SkillCatalogue.css";
+import SkillCatalogueItem from "./SkillCatalogueItem";
 
 /**
  * Renders a list of Skill-Items and attaches a clickhandler to each one of them

@@ -1,40 +1,39 @@
+import i18next from "i18next";
+import moment from "moment";
 import React from "react";
-import {
-  Container,
-  Grid,
-  Segment,
-  Header,
-  Button,
-  Form,
-  Divider
-} from "semantic-ui-react";
-import { Field, reduxForm } from "redux-form";
 import { Trans, withTranslation } from "react-i18next";
 import { connect } from "react-redux";
-import { LabelInputField, CheckboxField } from "react-semantic-redux-form";
-import i18next from "i18next";
+import { CheckboxField, LabelInputField } from "react-semantic-redux-form";
+import { Field, reduxForm } from "redux-form";
 import { DateInput } from "semantic-ui-calendar-react";
-import { userActions, skillCatalogueActions } from "../redux/_actions";
-import ChairSelectionDropdown from "../03_organisms/ChairSelectionDropdown";
-import SkillCatalogue from "../03_organisms/SkillCatalogue";
-import formValidationUtilities from "../utilities/formValidationUtilities";
-
-import StudentIdInput from "../02_molecules/StudentIdInput";
-import CourseOfStudyInput from "../02_molecules/CourseOfStudyInput";
+import {
+  Button,
+  Container,
+  Divider,
+  Form,
+  Grid,
+  Header,
+  Segment
+} from "semantic-ui-react";
 import CityNameInput from "../02_molecules/CityNameInput";
-import StreetNameInput from "../02_molecules/StreetNameInput";
-import PostalCodeInput from "../02_molecules/PostalCodeInput";
+import CourseOfStudyInput from "../02_molecules/CourseOfStudyInput";
 import FirstNameInput from "../02_molecules/FirstNameInput";
-import LastNameInput from "../02_molecules/LastNameInput";
-import TitleDropdownSelector from "../02_molecules/TitleDropdownSelector";
 import GenderDropdownSelector from "../02_molecules/GenderDropdownSelector";
-
-import Person from "../models/person";
-import { navigationConstants } from "../redux/_constants";
-import { navigationActions } from "../redux/_actions";
+import LastNameInput from "../02_molecules/LastNameInput";
 import PhoneNumberInput from "../02_molecules/PhoneNumberInput";
-import EmailInput from "../02_molecules/EmailInput";
-import moment from "moment";
+import PostalCodeInput from "../02_molecules/PostalCodeInput";
+import StreetNameInput from "../02_molecules/StreetNameInput";
+import StudentIdInput from "../02_molecules/StudentIdInput";
+import TitleDropdownSelector from "../02_molecules/TitleDropdownSelector";
+import SkillCatalogue from "../03_organisms/SkillCatalogue";
+import Person from "../models/person";
+import {
+  navigationActions,
+  skillCatalogueActions,
+  userActions
+} from "../redux/_actions";
+import { navigationConstants } from "../redux/_constants";
+import formValidationUtilities from "../utilities/formValidationUtilities";
 
 class CompleteProfile extends React.Component {
   constructor(props) {

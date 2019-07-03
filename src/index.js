@@ -1,28 +1,21 @@
 // React-speific packages
-import React, { Suspense } from "react";
-import ReactDOM from "react-dom";
-// Component specific packages
-import App from "./App";
-import * as serviceWorker from "./serviceWorker";
-// packages for internationalization
-import { I18nextProvider } from "react-i18next";
-import i18n from "./config/internationalization";
-// packages to configure redux
-import { Provider as ReduxStoreProvider } from "react-redux";
-
-import store from "./redux/store";
-
-// import the used UI Framework "Semantic UI"
-import "./semantic/dist/semantic.min.css";
-
-import { Container } from "semantic-ui-react";
-
-// custom components
-import Spinner from "./01_atoms/Spinner";
-import NavBar from "./03_organisms/NavBar";
-
 import i18next from "i18next";
 import moment from "moment-with-locales-es6";
+import React, { Suspense } from "react";
+import ReactDOM from "react-dom";
+// packages for internationalization
+import { I18nextProvider } from "react-i18next";
+// packages to configure redux
+import { Provider as ReduxStoreProvider } from "react-redux";
+// custom components
+import Spinner from "./01_atoms/Spinner";
+// Component specific packages
+import App from "./App";
+import i18n from "./config/internationalization";
+import store from "./redux/store";
+// import the used UI Framework "Semantic UI"
+import "./semantic/dist/semantic.min.css";
+import * as serviceWorker from "./serviceWorker";
 
 moment.locale(i18next.language.substr(0, 2));
 

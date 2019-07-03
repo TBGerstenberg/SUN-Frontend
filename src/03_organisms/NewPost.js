@@ -1,8 +1,6 @@
-import React, { Component } from "react";
-import { Button, Icon, Modal, Form, TextArea, Radio } from "semantic-ui-react";
-import postTypeEnum from "../models/enumerations/postTypeEnum";
-import DropdownSelector from "../01_atoms/DropdownSelector";
 import i18next from "i18next";
+import React, { Component } from "react";
+import { Button, Form, Icon, Modal, TextArea } from "semantic-ui-react";
 
 class NewPostModal extends Component {
   constructor(props) {

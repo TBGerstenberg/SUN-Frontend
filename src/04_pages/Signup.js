@@ -1,40 +1,27 @@
-import React from "react";
-
-// Redux bindings & HOCs
-import { connect } from "react-redux";
-import { userActions } from "../redux/_actions";
-import { navigationConstants } from "../redux/_constants";
-
-// Redux-Form and Bindings Semantic-UI forms
-import { Field, reduxForm } from "redux-form";
-import { LabelInputField, CheckboxField } from "react-semantic-redux-form";
-import { Message } from "semantic-ui-react";
-
-// Internationalization
 import i18next from "i18next";
+import React from "react";
 import { Trans, withTranslation } from "react-i18next";
-
-// Components from semantic ui and our own library
+import { connect } from "react-redux";
+import { CheckboxField } from "react-semantic-redux-form";
+import { redirect } from "redux-first-router";
+import Link from "redux-first-router-link";
+import { Field, reduxForm } from "redux-form";
 import {
   Button,
+  Container,
   Form,
   Grid,
   Header,
-  Segment,
-  Container,
-  Icon
+  Message,
+  Segment
 } from "semantic-ui-react";
-
-import Link from "redux-first-router-link";
+import EmailInput from "../02_molecules/EmailInput";
 import LanguageSwitcher from "../02_molecules/LanguageSwitcher";
 import PasswordInput from "../02_molecules/PasswordInput";
-import { redirect } from "redux-first-router";
-
+import { userActions } from "../redux/_actions";
+import { navigationConstants } from "../redux/_constants";
 import formValidationUtilities from "../utilities/formValidationUtilities";
-
-// Styles
 import "./Signup.css";
-import EmailInput from "../02_molecules/EmailInput";
 
 /**
  * A Screen that allows a user to log in to the system.

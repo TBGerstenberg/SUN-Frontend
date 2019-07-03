@@ -1,8 +1,8 @@
 import React from "react";
-import { Segment, Label, Header, Card, Icon } from "semantic-ui-react";
-import { withTranslation, Trans } from "react-i18next";
-import { navigationConstants } from "../redux/_constants";
+import { withTranslation } from "react-i18next";
 import Link from "redux-first-router-link";
+import { Icon } from "semantic-ui-react";
+import { navigationConstants } from "../redux/_constants";
 
 const ChairSearchResult = props => {
   return (

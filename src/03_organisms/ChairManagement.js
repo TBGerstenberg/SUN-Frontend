@@ -1,18 +1,14 @@
-import React from "react";
-import { connect } from "react-redux";
-import { Trans, withTranslation } from "react-i18next";
-import { Field, reduxForm } from "redux-form";
-import { chairActions } from "../redux/_actions";
-import { Button, Icon, Table, Modal, Grid } from "semantic-ui-react";
 import i18next from "i18next";
-import tableFormattingUtilities from "../utilities/tableFormattingUtilities";
-import { chairService } from "../services";
-
-import AddEntityModal from "./AddEntityModal";
-import ChairForm from "../03_organisms/ChairForm";
+import React from "react";
+import { Trans } from "react-i18next";
 import onClickOutside from "react-onclickoutside";
-import SuccessMessage from "../01_atoms/SuccessMessage";
-import ErrorMessage from "../01_atoms/ErrorMessage";
+import { connect } from "react-redux";
+import { Button, Icon, Table } from "semantic-ui-react";
+import ChairForm from "../03_organisms/ChairForm";
+import { chairActions } from "../redux/_actions";
+import { chairService } from "../services";
+import tableFormattingUtilities from "../utilities/tableFormattingUtilities";
+import AddEntityModal from "./AddEntityModal";
 
 class ChairManagement extends React.Component {
   componentWillMount() {

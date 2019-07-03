@@ -1,13 +1,11 @@
 import React from "react";
-import NavBar from "../03_organisms/NavBar";
+import { connect } from "react-redux";
+import { Container, Grid, Header } from "semantic-ui-react";
 import ChairCard from "../03_organisms/ChairCard";
+import NavBar from "../03_organisms/NavBar";
 import PersonCard from "../03_organisms/PersonCard";
 import PostCard from "../03_organisms/PostCard";
-
-import { chairActions, userActions, postActions } from "../redux/_actions";
-import { connect } from "react-redux";
-
-import { Grid, Header, Container } from "semantic-ui-react";
+import { chairActions, postActions, userActions } from "../redux/_actions";
 
 class Search extends React.Component {
   constructor(props) {

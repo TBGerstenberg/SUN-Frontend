@@ -1,7 +1,7 @@
-import React from "react";
 import i18next from "i18next";
-import { Form } from "semantic-ui-react";
+import React from "react";
 import { withTranslation } from "react-i18next";
+import { Form } from "semantic-ui-react";
 import { isArray } from "util";
 
 class ChairSelectionDropdown extends React.Component {

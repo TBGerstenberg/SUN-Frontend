@@ -1,10 +1,9 @@
-import React, { Component } from "react";
-import { Button, Icon, Card } from "semantic-ui-react";
-import postTypeEnum from "../models/enumerations/postTypeEnum";
+import i18next from "i18next";
+import React from "react";
+import { connect } from "react-redux";
+import { Card, Icon } from "semantic-ui-react";
 import tableFormattingUtilities from "../utilities/tableFormattingUtilities";
 import "./PostCard.css";
-import { connect } from "react-redux";
-import i18next from "i18next";
 
 class PostCard extends React.Component {
   constructor(props) {

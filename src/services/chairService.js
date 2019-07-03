@@ -110,8 +110,6 @@ class chairService {
 
   static async createPersonChairRelation(chairId, personChairRelation) {
     try {
-      const createPersonChairRelationRequestBody = {};
-
       const createPersonChairRelationResponse = await apiClient.put(
         API_CONFIG.CHAIRS.CREATE_PERSON_CHAIR_RELATION_URL(chairId),
         personChairRelation
