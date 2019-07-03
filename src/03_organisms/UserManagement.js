@@ -73,12 +73,12 @@ class UserManagement extends React.Component {
                 this.setState({ addUserModalOpen: false });
               }}
               onCompleteWithSuccess={() => {
-                this.props.toggleSuccessMessage("Erfolg", "Benutzer editiert");
+                this.toggleSuccessMessage("Erfolg", "Benutzer editiert");
                 this.fetchAllAccounts();
                 this.closeAddUserModal();
               }}
               onCompleteWithError={error => {
-                this.props.toggleErrorMessage("Fehler", error);
+                this.toggleErrorMessage("Fehler", error);
                 this.closeAddUserModal();
               }}
             />
@@ -98,7 +98,7 @@ class UserManagement extends React.Component {
                 this.setState({ editUserModalOpen: false });
               }}
               onCompleteWithSuccess={() => {
-                this.props.toggleSuccessMessage("Erfolg", "Benutzer angelegt");
+                this.props.toggleSuccessMessage("Erfolg", "Benutzer editiert");
                 this.fetchAllAccounts();
                 this.closeEditUserModal();
               }}
@@ -116,6 +116,7 @@ class UserManagement extends React.Component {
 
   /** Table rendering methods */
 
+  // Renders the header of the users-table
   renderAccountsTableHeader() {
     return (
       <Table.Row>
@@ -160,6 +161,7 @@ class UserManagement extends React.Component {
     );
   }
 
+  // Renders the body of the users-table
   renderAccountsTableRow(account) {
     return (
       <Table.Row
@@ -217,6 +219,7 @@ class UserManagement extends React.Component {
     );
   }
 
+  // Renders the footer of the users-table
   renderAccountsTableFooter() {
     return (
       <Table.Row>
@@ -263,14 +266,17 @@ class UserManagement extends React.Component {
 
   /** Button click handlers */
 
+  // Handles a click on the add-user Button
   handleAddUserButtonClick() {
     this.openAddUserModal();
   }
 
+  // Handles a click on the edit-user Button
   handleEditUserButtonClick() {
     this.openEditUserModal();
   }
 
+  // Handles a click on the delete-user Button
   async handleDeleteUserButtonClick() {
     const deleteAccountRequest = accountService.deleteAccount(
       this.state.selectedEntry
@@ -288,24 +294,28 @@ class UserManagement extends React.Component {
 
   /** Modal controls */
 
+  // Opens the modal to edit an existing user
   openEditUserModal() {
     return this.setState({
       editUserModalOpen: true
     });
   }
 
+  // Closes the modal to edit an existing user
   closeEditUserModal() {
     this.setState({
       editUserModalOpen: false
     });
   }
 
+  // Opens the modal to add a new user
   openAddUserModal() {
     return this.setState({
       addUserModalOpen: true
     });
   }
 
+  // Closes the modal to Add a new user
   closeAddUserModal() {
     this.setState({
       addUserModalOpen: false
@@ -314,6 +324,7 @@ class UserManagement extends React.Component {
 
   /** Utility Methods */
 
+  // Removes focus from the selected table row when clicking outside of the table
   handleClickOutside = evt => {
     this.setState({
       selectedEntry: null

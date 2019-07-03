@@ -249,18 +249,15 @@ class ChairForm extends React.Component {
         chairValues
       );
 
-      if (updateChairRequest && updateChairRequest.status == 200) {
+      if (updateChairRequest && updateChairRequest.status === 200) {
         this.props.onCompleteWithSuccess();
       } else {
         this.props.onCompleteWithError(updateChairRequest.error);
       }
     } else if (this.state.mode === "add") {
-      const createChairRequest = chairService.createChair(chairValues);
+      const createChairRequest = await chairService.createChair(chairValues);
 
-      if (
-        createChairRequest.response &&
-        createChairRequest.response.status === 200
-      ) {
+      if (createChairRequest && createChairRequest.status === 200) {
         this.props.onCompleteWithSuccess();
       } else {
         this.props.onCompleteWithError(createChairRequest.error);
@@ -276,8 +273,10 @@ const mapStateToProps = (state, ownProps) => {
       cityName: ownProps.chair.address ? ownProps.chair.address.city : "",
       postCode: ownProps.chair.address ? ownProps.chair.address.postCode : "",
       street: ownProps.chair.address ? ownProps.chair.address.street : "",
-      room: ownProps.chair.address ? ownProps.chair.address.room : "",
-      email: ownProps.chair.address ? ownProps.chair.address.email : "",
+      roomName: ownProps.chair.address ? ownProps.chair.address.room : "",
+      additional_email: ownProps.chair.address
+        ? ownProps.chair.address.email
+        : "",
       phoneNumber: ownProps.chair.address
         ? ownProps.chair.address.phoneNumber
         : "",

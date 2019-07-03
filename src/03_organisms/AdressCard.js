@@ -4,7 +4,7 @@ import { withTranslation, Trans } from "react-i18next";
 
 const addressCard = props => {
   return (
-    <Card color="blue">
+    <Card color="blue" fluid>
       <Card.Content>
         <Card.Header>
           <Trans i18nKey="address-card-header" />

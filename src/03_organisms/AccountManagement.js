@@ -54,6 +54,8 @@ class AccountManagement extends React.Component {
     );
   }
 
+  /**  Table-Rendering methods  */
+
   renderUsersTableHeader() {
     return (
       <Table.Row>

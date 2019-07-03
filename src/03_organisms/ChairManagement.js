@@ -72,6 +72,7 @@ class ChairManagement extends React.Component {
               onCompleteWithSuccess={() => {
                 this.props.toggleSuccessMessage("Erfolg", "Lehrstuhl angelegt");
                 this.closeAddChairModal();
+                this.props.dispatch(chairActions.getAllChairs());
               }}
               onCompleteWithError={error => {
                 this.props.toggleErrorMessage("Fehler", error);
@@ -94,9 +95,10 @@ class ChairManagement extends React.Component {
               onCompleteWithSuccess={() => {
                 this.props.toggleSuccessMessage("Erfolg", "Lehrstuhl editiert");
                 this.closeEditChairModal();
+                this.props.dispatch(chairActions.getAllChairs());
               }}
               onCompleteWithError={error => {
-                this.props.toggleErrorMessage("Fehler", "irgendwas");
+                this.props.toggleErrorMessage("Fehler", error);
                 this.closeEditChairModal();
               }}
             />

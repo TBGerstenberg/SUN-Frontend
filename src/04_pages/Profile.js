@@ -9,6 +9,9 @@ import ContactCard from "../03_organisms/ContactCard";
 import { withTranslation, Trans } from "react-i18next";
 import moment from "moment";
 import tableFormattingUtilities from "../utilities/tableFormattingUtilities";
+import AddEntityModal from "../03_organisms/AddEntityModal";
+import UserForm from "../03_organisms/UserForm";
+import { SemanticToastContainer, toast } from "react-semantic-toasts";
 
 // Components from semantic ui and our own library
 import {
@@ -28,7 +31,10 @@ import { userActions } from "../redux/_actions";
 class Profile extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { userId: null };
+    this.state = { userId: null, editUserModalOpen: false };
+
+    this.closeEditUserModal = this.closeEditUserModal.bind(this);
+    this.openEditUserModal = this.openEditUserModal.bind(this);
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -48,7 +54,7 @@ class Profile extends React.Component {
         <Container>
           <Grid centered padded>
             <Grid.Row columns={2}>
-              <Grid.Column width={10}>
+              <Grid.Column width={12}>
                 <Grid centered>
                   <Segment
                     raised
@@ -87,7 +93,7 @@ class Profile extends React.Component {
                 </Grid>
               </Grid.Column>
 
-              <Grid.Column width={6}>
+              <Grid.Column width={4}>
                 {profileValuesExist ? (
                   <AddressCard
                     city={props.profileValues.address.city}
@@ -110,13 +116,92 @@ class Profile extends React.Component {
                   <OneLinePlaceHolder />
                 )}
 
-                <Button color="teal">Profil bearbeiten</Button>
+                {/** Used to edit a user  */}
+                <AddEntityModal
+                  size="large"
+                  modalContent={
+                    <UserForm
+                      account={props.loggedInUsersAccount}
+                      onAbortButtonClick={() => {
+                        this.setState({ editUserModalOpen: false });
+                      }}
+                      onCompleteWithSuccess={() => {
+                        this.toggleSuccessMessage(
+                          "Erfolg",
+                          "Profil aktualisiert"
+                        );
+                        this.closeEditUserModal();
+                      }}
+                      onCompleteWithError={error => {
+                        this.toggleErrorMessage("Fehler", error);
+                        this.closeEditUserModal();
+                      }}
+                    />
+                  }
+                  open={this.state.editUserModalOpen}
+                />
+
+                {this.state.userId ==
+                  this.props.loggedInUsersAccount.person.id && (
+                  <Button color="teal" onClick={this.openEditUserModal}>
+                    Profil bearbeiten
+                  </Button>
+                )}
+                <div style={{ marginLeft: "5px", marginTop: "5px" }}>
+                  <SemanticToastContainer />
+                </div>
               </Grid.Column>
             </Grid.Row>
           </Grid>
         </Container>
       </div>
     );
+  }
+
+  toggleSuccessMessage(title, message) {
+    setTimeout(() => {
+      toast(
+        {
+          title: title,
+          description: <p>{message}</p>,
+          type: "success",
+          color: "green",
+          size: "mini",
+          animation: "fly left"
+        },
+        () => console.log("toast closed"),
+        () => console.log("toast clicked")
+      );
+    }, 1000);
+  }
+
+  toggleErrorMessage(title, message) {
+    setTimeout(() => {
+      toast(
+        {
+          title: title,
+          description: <p>{message}</p>,
+          type: "error",
+
+          size: "mini",
+          animation: "fly left"
+        },
+        () => console.log("toast closed"),
+        () => console.log("toast clicked")
+      );
+    }, 1000);
+  }
+
+  closeEditUserModal() {
+    this.setState({
+      editUserModalOpen: false
+    });
+  }
+
+  openEditUserModal() {
+    this.setState({
+      editUserModalOpen: true
+    });
   }
 }
 
@@ -247,7 +332,8 @@ const OneLinePlaceHolder = () => {
 const mapStateToProps = state => {
   return {
     userId: state.location.payload.userId,
-    profileValues: state.user.currentlyViewedUser
+    profileValues: state.user.currentlyViewedUser,
+    loggedInUsersAccount: state.login.user
   };
 };
 

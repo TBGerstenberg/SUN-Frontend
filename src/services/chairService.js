@@ -132,7 +132,6 @@ class chairService {
   }
 
   static async updatePersonChairRelations(personChairRelations) {
-    console.log(personChairRelations);
     const personChairRelationRequests = [];
 
     personChairRelations.forEach(personChairRelation => {

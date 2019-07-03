@@ -44,6 +44,8 @@ class UserForm extends React.Component {
   constructor(props) {
     super(props);
 
+    console.log(props);
+
     // Depending on the "Mode" of this form, it either initializes values from a given Account
     // Or initializes all input
     const mode = props.account ? "edit" : "add";
@@ -601,13 +603,15 @@ class UserForm extends React.Component {
         this.state.personChairRelations
       );
 
+      console.log(editPersonChairRelationsRequest);
+
       if (
-        editPersonChairRelationsRequest.response &&
-        editPersonChairRelationsRequest.response.status === 200
+        editPersonChairRelationsRequest[0] &&
+        editPersonChairRelationsRequest[0].status === 200
       ) {
         this.props.onCompleteWithSuccess();
       } else {
-        this.props.onCompleteWithError();
+        this.props.onCompleteWithError(editPersonChairRelationsRequest.error);
       }
     } else {
       this.setState({
@@ -627,43 +631,49 @@ class UserForm extends React.Component {
       accountValues.password
     );
 
-    // If errors occur, update the profile of with values from the form.
+    // If no errors occur, update the profile of with values from the form.
     if (newAccountRequest.error == null && newAccountRequest.status === 200) {
+      // Set the person Id returned from the BE to update the newly created profile with the valeus set in the from
       accountValues.person.userId = newAccountRequest.user.person.id;
       const updateProfileRequest = await userService.updateProfile(
         accountValues.person
       );
 
-      let personChairRelations = [...this.state.personChairRelations];
-
-      // Add missing person id from create-account-response
-      personChairRelations.forEach(element => {
-        element.personId = newAccountRequest.user.person.id;
-      });
-
-      console.log(updateProfileRequest);
+      // If no errors occur, update the personChair-relations from the form
       if (
         updateProfileRequest.response &&
         updateProfileRequest.response.status === 200
       ) {
+        let personChairRelations = [...this.state.personChairRelations];
+
+        // Add missing person id from create-account-response to person-Chair-relations
+        personChairRelations.forEach(element => {
+          element.personId = newAccountRequest.user.person.id;
+        });
+
         const addChairRelationsRequest = await chairService.updatePersonChairRelations(
           personChairRelations
         );
 
-        if (addChairRelationsRequest.status === 200) {
+        // If no errors occur in this stage, all values could be successfully updated. Call "onCompleteWithSuccess - giving control back to the contorlling component (UserManagement in this case)"
+        if (
+          addChairRelationsRequest[0] &&
+          addChairRelationsRequest[0].status === 200
+        ) {
           console.log("Reached final callback");
           this.props.onCompleteWithSuccess();
         } else {
           this.props.onCompleteWithError(addChairRelationsRequest.error);
         }
       } else {
-        //this.props.onCompleteWithError(updateProfileRequest.error);
+        this.setState({
+          errors: [...this.state.errors, updateProfileRequest.error]
+        });
       }
     } else {
       this.setState({
         errors: [...this.state.errors, newAccountRequest.error]
       });
-      //this.props.onCompleteWithError(newAccountRequest.error);
     }
   }
 
