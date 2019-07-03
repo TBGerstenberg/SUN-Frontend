@@ -4,11 +4,12 @@ import React, { Component } from "react";
 import { Trans, withTranslation } from "react-i18next";
 import { connect } from "react-redux";
 import Link from "redux-first-router-link";
-import { Button, Label, Menu, Search } from "semantic-ui-react";
+import { Button, Image, Label, Menu, Search } from "semantic-ui-react";
 import ChairSearchResult from "../02_molecules/ChairSearchResult";
 import LanguageSwitcher from "../02_molecules/LanguageSwitcher";
 import PersonSearchResult from "../02_molecules/PersonSearchResult";
 import PostSearchResult from "../02_molecules/PostSearchResult";
+import logoImageSource from "../assets/images/logo.png";
 import {
   navigationActions,
   searchActions,
@@ -111,108 +112,124 @@ class NavBar extends Component {
     }
 
     return (
-      <Menu
-        color="blue"
-        size="huge"
-        stackable
-        className="SUN_navbar"
-        inverted
-        secondary
-      >
-        <Menu.Item
-          as="p"
-          name="home"
-          active={this.state.activeItem === "home"}
-          onClick={this.handleNavitemClick}
+      <>
+        <Menu
+          color="blue"
+          size="huge"
+          stackable
+          className="SUN_navbar"
+          inverted
+          secondary
         >
-          <Link
-            to={{
-              type: navigationConstants.NAVIGATE_TO_HOME
-            }}
-          >
-            {i18next.t("navbar-home-link-label")}
-          </Link>
-        </Menu.Item>
-
-        <Menu.Item
-          as="p"
-          name="profile"
-          active={this.state.activeItem === "profile"}
-          onClick={this.handleNavitemClick}
-        >
-          <Link
-            to={{
-              type: navigationConstants.NAVIGATE_TO_PROFILE,
-              payload: {
-                userId: this.props.user ? this.props.user.id : null
-              }
-            }}
-          >
-            {i18next.t("navbar-profile-link-label")}
-          </Link>
-        </Menu.Item>
-
-        {this.props.user && this.props.user.admin && (
+          <Menu.Item>
+            <Link
+              to={{
+                type: navigationConstants.NAVIGATE_TO_HOME
+              }}
+            >
+              <Image width={80} height={80} src={logoImageSource} />
+            </Link>
+          </Menu.Item>
           <Menu.Item
             as="p"
-            name="admin"
-            active={this.state.activeItem === "admin"}
+            name="home"
+            active={this.state.activeItem === "home"}
             onClick={this.handleNavitemClick}
           >
             <Link
               to={{
-                type: navigationConstants.NAVIGATE_TO_ADMIN_PANEL
+                type: navigationConstants.NAVIGATE_TO_HOME
               }}
             >
-              {i18next.t("navbar-adminpanel-link-label")}
+              {i18next.t("navbar-home-link-label")}
             </Link>
           </Menu.Item>
-        )}
 
-        <Menu.Menu position="right">
-          <Search
-            loading={this.props.fetchingSearchResults}
-            onSearchChange={debounce(this.handleSearchChange, 500, {
-              leading: true
-            })}
-            onResultSelect={this.handleSearchResultSelect}
-            results={this.props.searchResults}
-            resultRenderer={resultRenderer}
-            category={true}
-            categoryRenderer={categoryRenderer}
-            onFocus={() => {
-              this.setState({ searchBarFocused: true });
-            }}
-            onBlur={() => {
-              this.setState({ searchBarFocused: false });
-            }}
-            onKeyDown={e => {
-              if (e.key === "Enter") {
-                // TODO: Navigate to searchresult page - heres how to navigate to admin
-
-                this.props.dispatch(
-                  navigationActions.redirect(
-                    navigationConstants.NAVIGATE_TO_SEARCH_PAGE
-                  )
-                );
-              }
-            }}
-          />
-        </Menu.Menu>
-
-        <Menu.Menu position="right">
-          <LanguageSwitcher />
-          <Menu.Item>
-            <Trans i18nKey="navbar-logged-in-as-text" />
-            {this.props.user ? this.props.user.email : ""}
-
-            <Button href="#" className="ui item" onClick={this.dispatchLogout}>
-              <i className="sign-out icon" />
-              <Trans i18nKey="navbar-logout-button-text" />
-            </Button>
+          <Menu.Item
+            as="p"
+            name="profile"
+            active={this.state.activeItem === "profile"}
+            onClick={this.handleNavitemClick}
+          >
+            <Link
+              to={{
+                type: navigationConstants.NAVIGATE_TO_PROFILE,
+                payload: {
+                  userId: this.props.user ? this.props.user.id : null
+                }
+              }}
+            >
+              {i18next.t("navbar-profile-link-label")}
+            </Link>
           </Menu.Item>
-        </Menu.Menu>
-      </Menu>
+
+          {this.props.user && this.props.user.admin && (
+            <Menu.Item
+              as="p"
+              name="admin"
+              active={this.state.activeItem === "admin"}
+              onClick={this.handleNavitemClick}
+            >
+              <Link
+                to={{
+                  type: navigationConstants.NAVIGATE_TO_ADMIN_PANEL
+                }}
+              >
+                {i18next.t("navbar-adminpanel-link-label")}
+              </Link>
+            </Menu.Item>
+          )}
+
+          <Menu.Menu position="right">
+            <Search
+              loading={this.props.fetchingSearchResults}
+              onSearchChange={debounce(this.handleSearchChange, 500, {
+                leading: true
+              })}
+              onResultSelect={this.handleSearchResultSelect}
+              results={this.props.searchResults}
+              resultRenderer={resultRenderer}
+              category={true}
+              categoryRenderer={categoryRenderer}
+              onFocus={() => {
+                this.setState({ searchBarFocused: true });
+              }}
+              onBlur={() => {
+                this.setState({ searchBarFocused: false });
+              }}
+              onKeyDown={e => {
+                if (e.key === "Enter") {
+                  // TODO: Navigate to searchresult page - heres how to navigate to admin
+
+                  this.props.dispatch(
+                    navigationActions.redirect(
+                      navigationConstants.NAVIGATE_TO_SEARCH_PAGE
+                    )
+                  );
+                }
+              }}
+            />
+          </Menu.Menu>
+
+          <Menu.Menu position="right">
+            <LanguageSwitcher />
+            <Menu.Item style={{ display: "flex", flexDirection: "column" }}>
+              {/*   <Trans i18nKey="navbar-logged-in-as-text" /> */}
+              {this.props.user ? this.props.user.email : ""}
+
+              <Button
+                href="#"
+                className="ui item"
+                onClick={this.dispatchLogout}
+                style={{ paddingTop: "10px", marginTop: "5px" }}
+              >
+                <i className="sign-out icon" />
+                <Trans i18nKey="navbar-logout-button-text" />
+              </Button>
+            </Menu.Item>
+          </Menu.Menu>
+        </Menu>
+      </>
     );
   }
 }

@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Button, Container, Grid, Header, Image, Tab } from "semantic-ui-react";
 import SubscribeButton from "../02_molecules/SubscribeButton";
 import AdressCard from "../03_organisms/AdressCard";
+import ApplyToChairModal from "../03_organisms/ApplyToChairModal";
 import ConfirmModal from "../03_organisms/ConfirmModal";
 import ContactCard from "../03_organisms/ContactCard";
 import NavBar from "../03_organisms/NavBar";
@@ -47,6 +48,8 @@ export class ChairPage extends React.Component {
       tabBarPanes: panes,
       subscribeModalOpen: false,
       unsubscribeModalOpen: false,
+      applyToChairModalOpen: false,
+      applyToChairConfirmedModalOpen: false,
       userHasSubscribedToChair: false,
       subscriptions: null,
       persons: []
@@ -122,20 +125,37 @@ export class ChairPage extends React.Component {
       <Grid>
         <Grid.Row columns={2} verticalAlign="middle">
           <Grid.Column width={10}>
+            {" "}
             <Header>Mitarbeiter</Header>
           </Grid.Column>
 
-          <Grid.Row>
-            <Grid.Column>
-              <PersonList
-                persons={
-                  this.props.currentlyViewedChair.persons
-                    ? this.props.currentlyViewedChair.persons
-                    : []
-                }
-              />
-            </Grid.Column>
-          </Grid.Row>
+          <Grid.Column width={6} floated="right">
+            {this.props.personCanApplyToChair && (
+              <Button
+                style={{ float: "right" }}
+                color="teal"
+                onClick={() => {
+                  this.setState({
+                    applyToChairModalOpen: true
+                  });
+                }}
+              >
+                Bewerben
+              </Button>
+            )}
+          </Grid.Column>
+        </Grid.Row>
+
+        <Grid.Row>
+          <Grid.Column>
+            <PersonList
+              persons={
+                this.props.currentlyViewedChair.persons
+                  ? this.props.currentlyViewedChair.persons
+                  : []
+              }
+            />
+          </Grid.Column>
         </Grid.Row>
       </Grid>
     );
@@ -293,6 +313,16 @@ export class ChairPage extends React.Component {
                     this.setState({ unsubscribeModalOpen: false });
                   }}
                 />
+
+                <ConfirmModal
+                  open={this.state.applyToChairConfirmedModalOpen}
+                  content={"Erfolgreich beworben"}
+                  onOpen={() => {}}
+                  onClose={() => {
+                    this.setState({ applyToChairConfirmedModalOpen: false });
+                  }}
+                />
+
                 <SubscribeButton
                   size="small"
                   onClick={this._handleSubscribeButtonClick}
@@ -322,6 +352,27 @@ export class ChairPage extends React.Component {
                     this.setState({ newEventModalOpen: false });
                   }}
                   open={this.state.newEventModalOpen}
+                />
+
+                <ApplyToChairModal
+                  chairId={
+                    this.props.chairId
+                   }
+                  chairName={chairName}
+                  onCompleteWithSuccess={newPersonChairRelation => {
+                    this.setState({
+                      applyToChairModalOpen: false,
+                      applyToChairConfirmedModalOpen: true
+                    });
+
+                  }}
+                  onAbortButtonClick={() => {
+                    this.setState({ applyToChairModalOpen: false });
+                  }}
+                  onCompleteWithError={() => {
+                    this.setState({ applyToChairModalOpen: false });
+                  }}
+                  open={this.state.applyToChairModalOpen}
                 />
 
                 <NewPostModal
@@ -363,6 +414,7 @@ let mapStateToProps = state => {
     : null;
   var personCanPostForChair = false;
   var personIsChairAdmin = false;
+  let personCanApplyToChair = true;
 
   if (currentlyViewedChair && loggedInUserPersonId) {
     if (currentlyViewedChair.persons) {
@@ -376,6 +428,7 @@ let mapStateToProps = state => {
 
       if (person) {
         personCanPostForChair = true;
+        personCanApplyToChair = false;
       }
 
       if (person && person.role === 3) {
@@ -400,6 +453,7 @@ let mapStateToProps = state => {
       : null,
 
     personCanPostForChair: personCanPostForChair,
+    personCanApplyToChair: personCanApplyToChair,
     personIsChairAdmin: personIsChairAdmin
   };
 };

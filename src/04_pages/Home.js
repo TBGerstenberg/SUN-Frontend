@@ -1,11 +1,12 @@
 import i18next from "i18next";
 import React from "react";
 import { connect } from "react-redux";
-import { Button, Card, Container, Grid, Icon } from "semantic-ui-react";
+import { Button, Card, Container, Grid, Icon, Image } from "semantic-ui-react";
 import AllChairsCard from "../03_organisms/AllChairsCard";
 import NavBar from "../03_organisms/NavBar";
 import PostCard from "../03_organisms/PostCard";
 import SubscriptionList from "../03_organisms/SubscriptionList";
+import logoImageSource from "../assets/images/logo_blue.png";
 import { chairActions, postActions, userActions } from "../redux/_actions";
 
 class Home extends React.Component {
@@ -83,10 +84,19 @@ class Home extends React.Component {
 
               {this.props.subs && this.props.subs.length === 0 && (
                 <Grid.Column width={8} textAlign="center">
-                  <Card fluid>
-                    <Card.Content>
+                  <Card fluid color="blue">
+                    <Card.Header
+                      textAlign="center"
+                      style={{ margin: "20px 0px" }}
+                    >
+                      <Image
+                        width={78}
+                        height={78}
+                        src={logoImageSource}
+                        centered
+                      />
                       {i18next.t("home-page-no-subscriptions-placeholder")}
-                    </Card.Content>
+                    </Card.Header>
                   </Card>
                 </Grid.Column>
               )}

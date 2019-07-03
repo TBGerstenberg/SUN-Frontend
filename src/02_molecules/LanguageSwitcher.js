@@ -1,16 +1,49 @@
 import React from "react";
 import { withTranslation } from "react-i18next";
-import { Button } from "semantic-ui-react";
+import { Button, Dropdown } from "semantic-ui-react";
 import "./LanguageSwitcher.css";
 
 const ChangeLanguage = props => {
   return (
-    <div className={"languageSwitcher"}>
+    <Dropdown item text="Sprache">
+      <Dropdown.Menu>
+        <Dropdown.Item>
+          {" "}
+          <Button
+            size="mini"
+            onClick={() => props.i18n.changeLanguage("de")}
+            style={{ backgroundColor: "rgba(0,0,0,0)", color: "black" }}
+            className="languageSwitcher-button"
+          >
+            de
+          </Button>
+        </Dropdown.Item>
+        <Dropdown.Item>
+          {" "}
+          <Button
+            size="mini"
+            onClick={() => props.i18n.changeLanguage("en")}
+            color="white"
+            style={{ backgroundColor: "rgba(0,0,0,0)", color: "black" }}
+            className="languageSwitcher-button"
+          >
+            en
+          </Button>
+        </Dropdown.Item>
+      </Dropdown.Menu>
+    </Dropdown>
+  );
+};
+
+// extended main view with translate hoc
+export default withTranslation()(ChangeLanguage);
+
+{
+  /* <div className={"languageSwitcher"}>
       <Button
         size="mini"
         onClick={() => props.i18n.changeLanguage("de")}
-        inverted
-        color="blue"
+        style={{ backgroundColor: "rgba(0,0,0,0)", color: "#FFF" }}
         className="languageSwitcher-button"
       >
         de
@@ -18,15 +51,11 @@ const ChangeLanguage = props => {
       <Button
         size="mini"
         onClick={() => props.i18n.changeLanguage("en")}
-        inverted
-        color="blue"
+        color="white"
+        style={{ backgroundColor: "rgba(0,0,0,0)", color: "#FFF" }}
         className="languageSwitcher-button"
       >
         en
       </Button>
-    </div>
-  );
-};
-
-// extended main view with translate hoc
-export default withTranslation()(ChangeLanguage);
+    </div> */
+}
