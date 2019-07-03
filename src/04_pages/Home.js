@@ -72,6 +72,7 @@ class Home extends React.Component {
                       props.chairs.map((chair, index) => {
                         return (
                           <AllChairsCard
+                            key={index}
                             chairId={chair.id}
                             chairName={chair.name}
                             chairAddress={chair.address}

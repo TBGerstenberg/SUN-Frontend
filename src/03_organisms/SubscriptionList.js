@@ -41,8 +41,8 @@ class SubscriptionList extends React.Component {
     return (
       <List relaxed>
         {this.state.subscriptions &&
-          this.state.subscriptions.map(sub => {
-            return <SubscriptionListItem subscription={sub} />;
+          this.state.subscriptions.map((sub, index) => {
+            return <SubscriptionListItem subscription={sub} key={index} />;
           })}
       </List>
     );
