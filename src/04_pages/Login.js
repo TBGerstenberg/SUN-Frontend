@@ -1,15 +1,11 @@
-// Internationalization
 import i18next from "i18next";
 import React from "react";
 import { Trans, withTranslation } from "react-i18next";
-// Redux bindings & HOCs
 import { connect } from "react-redux";
 import { LabelInputField } from "react-semantic-redux-form";
 import { toast } from "react-semantic-toasts";
 import Link from "redux-first-router-link";
-// Redux-Form and Bindings Semantic-UI forms
 import { Field, reduxForm } from "redux-form";
-// Components from semantic ui and our own library
 import {
   Button,
   Container,
@@ -22,9 +18,7 @@ import {
 import ErrorMessage from "../01_atoms/ErrorMessage";
 import LanguageSwitcher from "../02_molecules/LanguageSwitcher";
 import { navigationActions, userActions } from "../redux/_actions";
-//Actions
 import { navigationConstants } from "../redux/_constants";
-// Styles
 import "./Login.css";
 
 /**
@@ -70,51 +64,62 @@ class Login extends React.Component {
             style={{ height: "100%" }}
             verticalAlign="middle"
           >
-            <Grid.Column style={{ maxWidth: 400 }}>
-              <LanguageSwitcher />
-              <Segment stacked>
-                <Header as="h2" color="blue" textAlign="center">
-                  <Trans i18nKey="log-in-to-your-account-headline" />
-                </Header>
+            <Grid.Row>
+              <Grid.Column
+                style={{ maxWidth: 400, marginTop: "20px", float: "right" }}
+              >
+                <LanguageSwitcher style={{ float: "right" }} />
+              </Grid.Column>
+            </Grid.Row>
+            <Grid.Row>
+              <Grid.Column style={{ maxWidth: 400 }}>
+                <Segment stacked>
+                  <Header as="h2" color="blue" textAlign="center">
+                    <Trans i18nKey="log-in-to-your-account-headline" />
+                  </Header>
 
-                <Form
-                  onSubmit={this.props.handleSubmit(
-                    this._handleLoginSubmit.bind(this)
-                  )}
-                >
-                  <Field
-                    name="email"
-                    component={LabelInputField}
-                    label={{
-                      content: <Icon color="blue" name="user" size="small" />
-                    }}
-                    labelPosition="left"
-                    placeholder={i18next.t("login-email-input-placeholder")}
-                  />
+                  <Form
+                    onSubmit={this.props.handleSubmit(
+                      this._handleLoginSubmit.bind(this)
+                    )}
+                  >
+                    <Field
+                      name="email"
+                      component={LabelInputField}
+                      label={{
+                        content: <Icon color="blue" name="user" size="small" />
+                      }}
+                      labelPosition="left"
+                      placeholder={i18next.t("login-email-input-placeholder")}
+                    />
 
-                  <Field
-                    name="password"
-                    component={LabelInputField}
-                    type="password"
-                    label={{
-                      content: <Icon color="blue" name="lock" size="small" />
-                    }}
-                    labelPosition="left"
-                    placeholder={i18next.t("login-password-input-placeholder")}
-                  />
+                    <Field
+                      name="password"
+                      component={LabelInputField}
+                      type="password"
+                      label={{
+                        content: <Icon color="blue" name="lock" size="small" />
+                      }}
+                      labelPosition="left"
+                      placeholder={i18next.t(
+                        "login-password-input-placeholder"
+                      )}
+                    />
 
-                  <Form.Field control={Button} primary type="submit">
-                    {i18next.t("log-in-to-your-account-button")}
-                  </Form.Field>
-                </Form>
-              </Segment>
-              <Trans i18nKey="login-message-new-to-us" />
-              <Link to="/signup">
-                <Trans i18nKey="login-message-call-to-action" />
-              </Link>
-              {hasError &&
-                this.renderErrorMessage(errorMessageHeader, errorMessageBody)}
-            </Grid.Column>
+                    <Form.Field control={Button} primary type="submit">
+                      {i18next.t("log-in-to-your-account-button")}
+                    </Form.Field>
+                  </Form>
+                </Segment>
+                <Trans i18nKey="login-message-new-to-us" />
+                <Link to="/signup">
+                  <Trans i18nKey="login-message-call-to-action" />
+                </Link>
+
+                {hasError &&
+                  this.renderErrorMessage(errorMessageHeader, errorMessageBody)}
+              </Grid.Column>
+            </Grid.Row>
           </Grid>
         </Container>
       </div>

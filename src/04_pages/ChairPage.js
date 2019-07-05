@@ -1,3 +1,4 @@
+import i18next from "i18next";
 import React from "react";
 import { connect } from "react-redux";
 import { Button, Container, Grid, Header, Image, Tab } from "semantic-ui-react";
@@ -84,7 +85,7 @@ export class ChairPage extends React.Component {
       <Grid>
         <Grid.Row columns={2} verticalAlign="middle">
           <Grid.Column width={10}>
-            <Header>Veranstaltungen</Header>
+            <Header> {i18next.t("chairpage-events-fragment-headline")}</Header>
           </Grid.Column>
           <Grid.Column width={6} floated="right">
             {this.props.personCanPostForChair && (
@@ -95,7 +96,7 @@ export class ChairPage extends React.Component {
                   this.setState({ newEventModalOpen: true });
                 }}
               >
-                Neue Veranstaltung
+                {i18next.t("chairpage-new-event-button-label")}
               </Button>
             )}
           </Grid.Column>
@@ -126,7 +127,7 @@ export class ChairPage extends React.Component {
         <Grid.Row columns={2} verticalAlign="middle">
           <Grid.Column width={10}>
             {" "}
-            <Header>Mitarbeiter</Header>
+            <Header>{i18next.t("chairpage-employee-fragment-headline")}</Header>
           </Grid.Column>
 
           <Grid.Column width={6} floated="right">
@@ -140,7 +141,7 @@ export class ChairPage extends React.Component {
                   });
                 }}
               >
-                Bewerben
+                {i18next.t("chairpage-apply-to-chair-button-label")}
               </Button>
             )}
           </Grid.Column>
@@ -167,7 +168,7 @@ export class ChairPage extends React.Component {
         <Grid.Row columns={2} verticalAlign="middle">
           <Grid.Column width={10}>
             {" "}
-            <Header>Aktuelles</Header>
+            <Header> {i18next.t("chairpage-news-fragment-headline")}</Header>
           </Grid.Column>
           <Grid.Column width={6} floated="right">
             {this.props.personCanPostForChair && (
@@ -178,7 +179,7 @@ export class ChairPage extends React.Component {
                   this.setState({ newPostModalOpen: true });
                 }}
               >
-                Neuer Post
+                {i18next.t("chairpage-new-post-button-label")}
               </Button>
             )}
           </Grid.Column>
@@ -291,14 +292,16 @@ export class ChairPage extends React.Component {
             <Grid.Row columns={3}>
               <Grid.Column width={11}>
                 <Header as="h1" color="blue">
-                  {"Lehrstuhl " + chairName}
+                  {i18next.t("chairpage-chairName-headline") + " " + chairName}
                 </Header>
               </Grid.Column>
               <Grid.Column textAlign="center" width={1} />
               <Grid.Column width={4} textAlign="left">
                 <ConfirmModal
                   open={this.state.subscribeModalOpen}
-                  content={"Erfolgreich abonniert"}
+                  content={i18next.t(
+                    "chairpage-successfully-subscribed-message"
+                  )}
                   onOpen={() => {}}
                   onClose={() => {
                     this.setState({ subscribeModalOpen: false });
@@ -307,7 +310,9 @@ export class ChairPage extends React.Component {
 
                 <ConfirmModal
                   open={this.state.unsubscribeModalOpen}
-                  content={"Erfolgreich deabonniert"}
+                  content={i18next.t(
+                    "chairpage-successfully-unsubscribed-message"
+                  )}
                   onOpen={() => {}}
                   onClose={() => {
                     this.setState({ unsubscribeModalOpen: false });
@@ -316,7 +321,7 @@ export class ChairPage extends React.Component {
 
                 <ConfirmModal
                   open={this.state.applyToChairConfirmedModalOpen}
-                  content={"Erfolgreich beworben"}
+                  content={i18next.t("chairpage-successfully-applied-message")}
                   onOpen={() => {}}
                   onClose={() => {
                     this.setState({ applyToChairConfirmedModalOpen: false });
@@ -355,16 +360,13 @@ export class ChairPage extends React.Component {
                 />
 
                 <ApplyToChairModal
-                  chairId={
-                    this.props.chairId
-                   }
+                  chairId={this.props.chairId}
                   chairName={chairName}
                   onCompleteWithSuccess={newPersonChairRelation => {
                     this.setState({
                       applyToChairModalOpen: false,
                       applyToChairConfirmedModalOpen: true
                     });
-
                   }}
                   onAbortButtonClick={() => {
                     this.setState({ applyToChairModalOpen: false });
@@ -390,7 +392,9 @@ export class ChairPage extends React.Component {
                 />
               </Grid.Column>
               <Grid.Column width={4}>
-                <Header>Informationen</Header>
+                <Header>
+                  {i18next.t("chairpage-general-information-label")}
+                </Header>
                 <AdressCard city={city} postCode={postCode} street={street} />
                 <ContactCard
                   email={email}

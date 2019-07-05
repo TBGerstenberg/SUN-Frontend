@@ -1,3 +1,4 @@
+import i18next from "i18next";
 import React from "react";
 import { withTranslation } from "react-i18next";
 import { Button, Dropdown } from "semantic-ui-react";
@@ -5,7 +6,11 @@ import "./LanguageSwitcher.css";
 
 const ChangeLanguage = props => {
   return (
-    <Dropdown item text="Sprache">
+    <Dropdown
+      item
+      text={i18next.t("languageswitcher-label")}
+      style={props.style}
+    >
       <Dropdown.Menu>
         <Dropdown.Item>
           {" "}

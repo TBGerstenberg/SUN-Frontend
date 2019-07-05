@@ -227,5 +227,19 @@
   "new-event-modal-enddate-placeholder": "Ende",
 
   "home-page-no-subscriptions-placeholder": "Du hast noch keine Lehrstühle abonniert",
-  "home-page-refresh-button-text": "Aktualisieren"
+  "home-page-refresh-button-text": "Aktualisieren",
+
+  "languageswitcher-label": "Sprache",
+
+  "chairpage-news-fragment-headline": "Aktuelles",
+  "chairpage-employee-fragment-headline": "Mitarbeiter",
+  "chairpage-events-fragment-headline": "Aktuelles",
+  "chairpage-new-event-button-label": "Neue Veranstaltung",
+  "chairpage-apply-to-chair-button-label": "Bewerben",
+  "chairpage-new-post-button-label": "Neuer Post",
+  "chairpage-chairName-headline": "Lehrstuhl",
+  "chairpage-successfully-subscribed-message": "Erfolgreich abonniert",
+  "chairpage-successfully-unsubscribed-message": "Erfolgreich deabonniert",
+  "chairpage-successfully-applied-message": "Erfolgreich beworben",
+  "chairpage-general-information-label": ""
 }
