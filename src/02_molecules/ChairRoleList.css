@@ -1,0 +1,11 @@
+.chairRoleList-container {
+  background-color: white;
+}
+
+.chairRoleListItem {
+  min-height: 30px;
+  vertical-align: middle;
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+}

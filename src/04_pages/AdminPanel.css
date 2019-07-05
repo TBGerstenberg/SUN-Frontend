@@ -1,0 +1,27 @@
+html,
+body {
+  min-height: 100vh !important;
+  height: 100vh;
+}
+
+#root {
+  height: 100vh;
+}
+
+.pageWrapper {
+  height: 100vh;
+}
+
+.panelWrapper {
+  height: 100vh;
+}
+
+.adminPanel-buttonRow {
+  color: gray;
+  background-color: ghostwhite;
+  min-height: 100px;
+}
+
+.adminPanel-toastContainer {
+  z-index: 5;
+}

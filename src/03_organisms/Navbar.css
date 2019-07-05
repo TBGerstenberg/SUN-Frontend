@@ -1,0 +1,11 @@
+.SUN_navbar {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.navbar-centerfragment {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}

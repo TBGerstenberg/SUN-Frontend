@@ -1,26 +1,16 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+// App.js
+import React from "react";
+import { connect } from "react-redux";
+import * as components from "./04_pages";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App = ({ page }) => {
+  const Component = components[page];
+  return <Component />;
+};
 
-export default App;
+/** Redux-standard methods that transfers (*maps*) values from the redux store to the component's props.
+ *  To learn more on props: see https://reactjs.org/docs/components-and-props.html
+ *  To learn about redux https://react-redux.js.org/using-react-redux/connect-mapstate
+ */
+const mapStateToProps = ({ page }) => ({ page });
+export default connect(mapStateToProps)(App);

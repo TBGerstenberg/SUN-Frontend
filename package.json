@@ -3,14 +3,37 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "axios": "^0.18.0",
+    "history": "^4.9.0",
+    "i18next": "^15.0.9",
+    "i18next-browser-languagedetector": "^3.0.1",
+    "i18next-xhr-backend": "^2.0.1",
+    "lodash": "^4.17.11",
+    "moment": "^2.24.0",
+    "moment-with-locales-es6": "^1.0.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-scripts": "3.0.0"
+    "react-hot-loader": "^4.8.4",
+    "react-i18next": "^10.8.1",
+    "react-onclickoutside": "^6.8.0",
+    "react-redux": "^7.0.2",
+    "react-scripts": "2.1.8",
+    "react-semantic-redux-form": "^1.2.6",
+    "react-semantic-toasts": "^0.5.3",
+    "redux": "^4.0.1",
+    "redux-first-router": "^2.1.1",
+    "redux-first-router-link": "^2.1.1",
+    "redux-form": "^8.2.0",
+    "redux-thunk": "^2.3.0",
+    "semantic-ui-calendar-react": "^0.15.0",
+    "semantic-ui-react": "^0.86.0"
   },
   "scripts": {
+    "build-semantic": "cd src/semantic && gulp build-css build-assets",
+    "watch-semantic": "cd src/semantic && yarn run build-semantic && gulp watch",
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -27,5 +50,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "redux-devtools-extension": "^2.13.8",
+    "semantic-ui": "^2.4.2"
   }
 }

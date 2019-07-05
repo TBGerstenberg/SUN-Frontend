@@ -1,3 +1,29 @@
+# SUN-Frontend
+
+Frontend für das "Siegener Uni Netzwerk" (SUN) - ein System für die Lehrveranstaltung "Implementierung von Anwendungssystemen" der Universität Siegen.
+
+## Ausführen
+
+Falls notwendig - git kommandozeilentool herunterladen
+
+> > https://git-scm.com/downloads
+> > Windows: https://gitforwindows.org/
+
+Repository klonen mit
+
+`git clone https://github.com/TobiGe/SUN-Frontend.git`
+
+Node.js in Version 10.15.0 für die eigene Plattform herunterladen und installieren
+
+> > https://nodejs.org/download/release/v10.15.0/  
+> > Node kommt mit dem node-package-manager (NPM).
+
+Dann:
+
+1. In das Projektverzeichnis wechseln ( auf Kommandozeile (git bash) mit cd ~/<BENUTZERNAME>/<PFAD_ZUM_PROJEKT> )
+2. Abhängigkeiten installieren `npm install`
+3. Development Server starten `npm run start`
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
