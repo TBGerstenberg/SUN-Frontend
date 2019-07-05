@@ -6,8 +6,8 @@ Frontend für das "Siegener Uni Netzwerk" (SUN) - ein System für die Lehrverans
 
 Falls notwendig - git kommandozeilentool herunterladen
 
-> > https://git-scm.com/downloads
-> > Windows: https://gitforwindows.org/
+https://git-scm.com/downloads
+Windows: https://gitforwindows.org/
 
 Repository klonen mit
 
@@ -15,8 +15,8 @@ Repository klonen mit
 
 Node.js in Version 10.15.0 für die eigene Plattform herunterladen und installieren
 
-> > https://nodejs.org/download/release/v10.15.0/  
-> > Node kommt mit dem node-package-manager (NPM).
+https://nodejs.org/download/release/v10.15.0/  
+Node kommt mit dem node-package-manager (NPM).
 
 Dann:
 
