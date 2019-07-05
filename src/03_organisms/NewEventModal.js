@@ -63,7 +63,7 @@ class NewEventModal extends Component {
                       iconPosition="left"
                       onChange={this.handleStartDateChange}
                       label={i18next.t("new-event-modal-startdate-label")}
-                      dateFormat=""
+                      dateTimeFormat={"DD.MM.YYYY HH:mm"}
                     />
                   </Grid.Column>
                   <Grid.Column width={8}>
@@ -76,7 +76,7 @@ class NewEventModal extends Component {
                       iconPosition="left"
                       onChange={this.handleEndDateChange}
                       label={i18next.t("new-event-modal-enddate-label")}
-                      dateFormat=""
+                      dateTimeFormat={"DD.MM.YYYY HH:mm"}
                     />
                   </Grid.Column>
                 </Grid.Row>
@@ -96,11 +96,11 @@ class NewEventModal extends Component {
                   type: 2, // PostTypeEnum value for "event"
                   startDate: moment(
                     this.state.startDate,
-                    "YYYY-MM-DD h:mm"
+                    "DD.MM.YYYY HH:mm"
                   ).format(),
                   endDate: moment(
                     this.state.endDate,
-                    "YYYY-MM-DD h:mm"
+                    "DD.MM.YYYY HH:mm"
                   ).format(),
                   address: {
                     name: "Event Adresse"

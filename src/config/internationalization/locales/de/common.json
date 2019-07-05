@@ -127,6 +127,8 @@
   "postType-enum-thesis-option": "Abschlussarbeit",
 
   "postCard-written-by-label": "Geschrieben von",
+  "postCard-eventPost-startsAt-label": "Beginn: ",
+  "postCard-eventPost-endsAt-label": "Ende: ",
 
   "navbar-home-link-label": "Home",
   "navbar-profile-link-label": "Profil",

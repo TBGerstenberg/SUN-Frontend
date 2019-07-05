@@ -87,7 +87,6 @@ export class ChairPage extends React.Component {
         };
       }
     } else if (nextProps.currentlyViewedChair) {
-      console.log("Called");
       const applicants = nextProps.currentlyViewedChair.persons.filter(
         element => {
           return element.active === false;
@@ -133,11 +132,11 @@ export class ChairPage extends React.Component {
         </Grid.Row>
 
         {this.props.chairPosts &&
-          this.props.chairPosts.map(post => {
+          this.props.chairPosts.map((post, index) => {
             // 2  is type "event"
             if (post.type === 2) {
               return (
-                <Grid.Row>
+                <Grid.Row key={index}>
                   <Grid.Column>
                     <PostCard post={post} />
                   </Grid.Column>
@@ -306,9 +305,9 @@ export class ChairPage extends React.Component {
         </Grid.Row>
 
         {this.props.chairPosts &&
-          this.props.chairPosts.map(post => {
+          this.props.chairPosts.map((post, index) => {
             return (
-              <Grid.Row>
+              <Grid.Row key={index}>
                 <Grid.Column>
                   <PostCard post={post} />
                 </Grid.Column>
@@ -388,7 +387,6 @@ export class ChairPage extends React.Component {
       }
     }
 
-    console.log(this.state.employees);
     return (
       <div>
         <NavBar />
@@ -502,6 +500,7 @@ export class ChairPage extends React.Component {
                 <NewPostModal
                   onNewPost={newPost => {
                     this.setState({ newPostModalOpen: false });
+
                     this.props.createPost(this.props.chairId, newPost);
                   }}
                   onAbortButtonClick={() => {

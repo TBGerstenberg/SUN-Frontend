@@ -1,5 +1,6 @@
-import { postConstants } from "../_constants";
+import { chairActions } from ".";
 import { postService } from "../../services";
+import { postConstants } from "../_constants";
 
 function getAllPosts() {
   return async (dispatch, getState) => {
@@ -118,6 +119,8 @@ function createPost(pageId, postValues) {
     const createPostResponse = await postService.createPost(pageId, postValues);
 
     if (createPostResponse && createPostResponse.status === 200) {
+      dispatch(chairActions.getChairPosts(pageId));
+
       dispatch(success(createPostResponse.data));
     } else {
       dispatch(failure(createPostResponse));

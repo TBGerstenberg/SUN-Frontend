@@ -2,6 +2,18 @@
 
 Frontend für das "Siegener Uni Netzwerk" (SUN) - ein System für die Lehrveranstaltung "Implementierung von Anwendungssystemen" der Universität Siegen.
 
+## Ausführen
+
+Repository klonen mit
+
+`git clone https://github.com/TobiGe/SUN-Frontend.git`
+
+Dann:
+
+1. In das Projektverzeichnis wechseln
+2. Abhängigkeiten installieren `npm install`
+3. Development Server starten `npm run start`
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

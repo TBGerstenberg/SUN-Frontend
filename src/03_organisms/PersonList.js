@@ -60,7 +60,7 @@ class PersonList extends Component {
 
 const PersonListItem = props => {
   return (
-    <List.Item verticalAlign="middle" style={{ width: "100%" }}>
+    <List.Item style={{ width: "100%" }}>
       <List.Content floated="left">
         <Image
           avatar

@@ -13,7 +13,6 @@ const ChangeLanguage = props => {
     >
       <Dropdown.Menu>
         <Dropdown.Item>
-          {" "}
           <Button
             size="mini"
             onClick={() => props.i18n.changeLanguage("de")}
@@ -24,11 +23,9 @@ const ChangeLanguage = props => {
           </Button>
         </Dropdown.Item>
         <Dropdown.Item>
-          {" "}
           <Button
             size="mini"
             onClick={() => props.i18n.changeLanguage("en")}
-            color="white"
             style={{ backgroundColor: "rgba(0,0,0,0)", color: "black" }}
             className="languageSwitcher-button"
           >

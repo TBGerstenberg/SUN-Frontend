@@ -1,9 +1,11 @@
-import personChairRelationEnum from "./enumerations/personChairRelationEnum";
 import Adress from "./adress";
+import personChairRelationEnum from "./enumerations/personChairRelationEnum";
 import StudentStatus from "./studentStatus";
 
 class Person {
   constructor(profileValues) {
+    console.log(profileValues);
+
     this.userId = profileValues.userId;
     this.id = profileValues.id;
     this.title = profileValues.title;
@@ -14,7 +16,7 @@ class Person {
     this.address = new Adress(profileValues.address);
     this.studentStatus = new StudentStatus(profileValues.studentStatus);
     this.employeeStatus = profileValues.employeeStatus;
-    this.chairs = this.buildPersonChairRelations(profileValues.chairs);
+    this.chairs = profileValues.chairs;
     this.skills = profileValues.skills;
   }
 
