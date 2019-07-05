@@ -44,6 +44,9 @@ class UserManagement extends React.Component {
 
     // Service callers
     this.fetchAllAccounts = this.fetchAllAccounts.bind(this);
+
+    // Utilities
+    this.findSelectedAccount = this.findSelectedAccount.bind(this);
   }
 
   render() {
@@ -72,12 +75,12 @@ class UserManagement extends React.Component {
                 this.setState({ addUserModalOpen: false });
               }}
               onCompleteWithSuccess={() => {
-                this.toggleSuccessMessage("Erfolg", "Benutzer editiert");
+                this.props.toggleSuccessMessage("Erfolg", "Benutzer angelegt");
                 this.fetchAllAccounts();
                 this.closeAddUserModal();
               }}
               onCompleteWithError={error => {
-                this.toggleErrorMessage("Fehler", error);
+                this.props.toggleErrorMessage("Fehler", error);
                 this.closeAddUserModal();
               }}
             />
@@ -90,9 +93,7 @@ class UserManagement extends React.Component {
           size="large"
           modalContent={
             <UserForm
-              account={
-                this.state.accounts[this.state.selectedEntry - 1] || null
-              }
+              account={this.findSelectedAccount() || null}
               onAbortButtonClick={() => {
                 this.setState({ editUserModalOpen: false });
               }}
@@ -166,6 +167,7 @@ class UserManagement extends React.Component {
       <Table.Row
         key={"row" + account.id}
         onClick={() => {
+          console.log("Selected entry" + account.id);
           this.setState({ selectedEntry: account.id });
         }}
         active={this.state.selectedEntry === account.id}
@@ -263,6 +265,12 @@ class UserManagement extends React.Component {
     );
   }
 
+  findSelectedAccount() {
+    return this.state.accounts.find(account => {
+      return account.id === this.state.selectedEntry;
+    });
+  }
+
   /** Button click handlers */
 
   // Handles a click on the add-user Button
@@ -277,12 +285,14 @@ class UserManagement extends React.Component {
 
   // Handles a click on the delete-user Button
   async handleDeleteUserButtonClick() {
-    const deleteAccountRequest = accountService.deleteAccount(
+    const deleteAccountRequest = await accountService.deleteAccount(
       this.state.selectedEntry
     );
+    console.log(deleteAccountRequest);
 
     if (deleteAccountRequest.status === 200) {
       this.props.toggleSuccessMessage("Erfolg", "Benutzer gelöscht");
+      this.fetchAllAccounts();
     } else {
       this.props.toggleErrorMessage(
         "Fehler",

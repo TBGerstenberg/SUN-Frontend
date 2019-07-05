@@ -54,7 +54,8 @@ const API_CONFIG = {
     },
     UPDATE_PERSON_CHAIR_RELATION_URL: chairId => {
       return BASEURL + "/chairs/" + chairId + "/admin/person-relations";
-    }
+    },
+    UPDATE_ALL_PERSON_CHAIR_RELATIONS_URL: chairId => {}
   },
 
   POSTS: {

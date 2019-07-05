@@ -49,18 +49,9 @@ const accountService = {
       const deleteSingleAccountResponse = await apiClient.delete(
         API_CONFIG.ACCOUNT.DELETE_ACCOUNT_URL(accountId)
       );
-
-      console.log(deleteSingleAccountResponse);
-      // Handle the response
-      if (deleteSingleAccountResponse.status === 200) {
-        console.log("Deleting Account succeeded");
-        return {
-          user: deleteSingleAccountResponse.data,
-          error: null
-        };
-      }
+      return deleteSingleAccountResponse;
     } catch (error) {
-      return { users: null, error: error };
+      return error;
     }
   }
 };

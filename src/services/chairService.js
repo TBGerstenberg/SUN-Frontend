@@ -121,7 +121,7 @@ class chairService {
   }
 
   static updatePersonChairRelation(personChairRelation) {
-    return apiClient.put(
+    return apiClient.patch(
       API_CONFIG.CHAIRS.UPDATE_PERSON_CHAIR_RELATION_URL(
         personChairRelation.chairId
       ),
@@ -130,6 +130,9 @@ class chairService {
   }
 
   static async updatePersonChairRelations(personChairRelations) {
+    console.log("Called update in Service layer");
+    console.log(personChairRelations);
+
     const personChairRelationRequests = [];
 
     personChairRelations.forEach(personChairRelation => {
@@ -142,6 +145,21 @@ class chairService {
     const response = await apiClient.all(personChairRelationRequests);
 
     return response;
+  }
+
+  static async updateAllPersonChairRelationsForChair(
+    chairId,
+    personChairRelations
+  ) {
+    try {
+      const createPersonChairRelationResponse = await apiClient.put(
+        API_CONFIG.CHAIRS.UPDATE_PERSON_CHAIR_RELATION_URL(chairId),
+        personChairRelations
+      );
+      return createPersonChairRelationResponse;
+    } catch (error) {
+      return error;
+    }
   }
 }
 

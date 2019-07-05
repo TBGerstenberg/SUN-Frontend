@@ -26,24 +26,31 @@ export class ChairPage extends React.Component {
     this._handleSubscribeButtonClick = this._handleSubscribeButtonClick.bind(
       this
     );
+    this.updatePersonChairRelations = this.updatePersonChairRelations.bind(
+      this
+    );
+    this.handleApplicantAccepted = this.handleApplicantAccepted.bind(this);
+    this.handleApplicantDenied = this.handleApplicantDenied.bind(this);
+    this.handleEmployeeRemoved = this.handleEmployeeRemoved.bind(this);
 
     const panes = [
       {
-        menuItem: "Aktuelles",
+        menuItem: i18next.t("chairpage-news-fragment-headline"),
         render: this.renderPostsFragment
       },
       {
-        menuItem: "Mitarbeiter",
+        menuItem: i18next.t("chairpage-employee-fragment-headline"),
         render: this.renderEmployeeFragment
       },
       {
-        menuItem: "Veranstaltungen",
+        menuItem: i18next.t("chairpage-events-fragment-headline"),
         render: this.renderEventFragment
       }
     ];
 
     this.state = {
       chairId: null,
+      currentlyViewedChair: null,
       newPostModalOpen: false,
       newEventModalOpen: false,
       tabBarPanes: panes,
@@ -53,7 +60,9 @@ export class ChairPage extends React.Component {
       applyToChairConfirmedModalOpen: false,
       userHasSubscribedToChair: false,
       subscriptions: null,
-      persons: []
+      persons: [],
+      employees: [],
+      applicants: []
     };
   }
 
@@ -77,10 +86,31 @@ export class ChairPage extends React.Component {
           userHasSubscribedToChair: false
         };
       }
+    } else if (nextProps.currentlyViewedChair) {
+      console.log("Called");
+      const applicants = nextProps.currentlyViewedChair.persons.filter(
+        element => {
+          return element.active === false;
+        }
+      );
+
+      const employees = nextProps.currentlyViewedChair.persons.filter(
+        element => {
+          return element.active === true;
+        }
+      );
+
+      return {
+        ...prevState,
+        employees,
+        applicants
+      };
     } else return null;
   }
 
   renderEventFragment() {
+    const personCanPostForChair =
+      this.props.personIsEmployee || this.props.personIsSuperAdmin;
     return (
       <Grid>
         <Grid.Row columns={2} verticalAlign="middle">
@@ -88,10 +118,10 @@ export class ChairPage extends React.Component {
             <Header> {i18next.t("chairpage-events-fragment-headline")}</Header>
           </Grid.Column>
           <Grid.Column width={6} floated="right">
-            {this.props.personCanPostForChair && (
+            {personCanPostForChair && (
               <Button
                 style={{ float: "right" }}
-                color="teal"
+                color="blue"
                 onClick={() => {
                   this.setState({ newEventModalOpen: true });
                 }}
@@ -122,6 +152,19 @@ export class ChairPage extends React.Component {
   }
 
   renderEmployeeFragment() {
+    const chairHasEmployees =
+      this.props.currentlyViewedChair &&
+      this.props.currentlyViewedChair.persons &&
+      this.props.currentlyViewedChair.persons.length > 0;
+
+    const personCanApplyToChair =
+      !this.props.personIsEmployee && !this.props.personIsApplicant;
+
+    const personHasAlreadyApplied = this.props.personIsApplicant;
+
+    const personCanEditEmployees =
+      this.props.personIsChairAdmin || this.props.personIsSuperAdmin;
+
     return (
       <Grid>
         <Grid.Row columns={2} verticalAlign="middle">
@@ -131,10 +174,10 @@ export class ChairPage extends React.Component {
           </Grid.Column>
 
           <Grid.Column width={6} floated="right">
-            {this.props.personCanApplyToChair && (
+            {personCanApplyToChair && (
               <Button
                 style={{ float: "right" }}
-                color="teal"
+                color="blue"
                 onClick={() => {
                   this.setState({
                     applyToChairModalOpen: true
@@ -144,37 +187,114 @@ export class ChairPage extends React.Component {
                 {i18next.t("chairpage-apply-to-chair-button-label")}
               </Button>
             )}
+            {personHasAlreadyApplied && (
+              <Button style={{ float: "right" }} color="teal" disabled={true}>
+                {i18next.t("chairpage-already-applied-button-label")}
+              </Button>
+            )}
           </Grid.Column>
         </Grid.Row>
 
-        <Grid.Row>
-          <Grid.Column>
-            <PersonList
-              persons={
-                this.props.currentlyViewedChair.persons
-                  ? this.props.currentlyViewedChair.persons
-                  : []
-              }
-            />
-          </Grid.Column>
-        </Grid.Row>
+        {chairHasEmployees && (
+          <Grid.Row>
+            <Grid.Column>
+              <PersonList
+                itemsRemoveable={personCanEditEmployees}
+                itemsAcceptable={false}
+                persons={this.state.employees}
+                onItemAdded={() => {}}
+                onItemDeleted={this.handleEmployeeRemoved}
+              />
+            </Grid.Column>
+          </Grid.Row>
+        )}
+
+        {chairHasEmployees && personCanEditEmployees && (
+          <Grid.Row>
+            <Grid.Column>
+              <Header>
+                {i18next.t("chairpage-employee-fragment-applicants-headline")}
+              </Header>
+              <PersonList
+                itemsRemoveable={true}
+                itemsAcceptable={true}
+                onItemAdded={this.handleApplicantAccepted}
+                onItemDeleted={this.handleApplicantDenied}
+                persons={this.state.applicants}
+              />
+            </Grid.Column>
+          </Grid.Row>
+        )}
       </Grid>
     );
   }
 
+  handleEmployeeRemoved(alteredEmployeeList) {
+    this.setState({ employees: alteredEmployeeList });
+
+    this.updatePersonChairRelations([
+      ...alteredEmployeeList,
+      ...this.state.applicants
+    ]);
+  }
+
+  handleApplicantDenied(personChairRelations) {
+    this.setState({ applicants: personChairRelations });
+
+    this.updatePersonChairRelations([
+      ...this.state.employees,
+      ...personChairRelations
+    ]);
+  }
+
+  handleApplicantAccepted(personChairRelations) {
+    const acceptedApplicantIndex = personChairRelations.findIndex(applicant => {
+      return applicant.active === true;
+    });
+
+    let mutatedApplicants = [...this.state.applicants];
+    mutatedApplicants.splice(acceptedApplicantIndex, 1);
+
+    let mutatedEmployees = [...this.state.employees];
+    mutatedEmployees.push(personChairRelations[acceptedApplicantIndex]);
+
+    this.setState({
+      applicants: mutatedApplicants,
+      employees: mutatedEmployees
+    });
+
+    let mutatedPersonChairRelations = mutatedApplicants.concat(
+      mutatedEmployees
+    );
+
+    this.updatePersonChairRelations(mutatedPersonChairRelations);
+  }
+
+  async updatePersonChairRelations(personChairRelations) {
+    const updatedPersonChairRelations = await chairService.updateAllPersonChairRelationsForChair(
+      this.state.chairId,
+      personChairRelations
+    );
+
+    if (updatedPersonChairRelations.status === 200) {
+      this.props.getSingleChair(this.props.chairId);
+    }
+  }
+
   renderPostsFragment() {
+    const personCanPostForChair =
+      this.props.personIsEmployee || this.props.personIsSuperAdmin;
     return (
       <Grid>
         <Grid.Row columns={2} verticalAlign="middle">
           <Grid.Column width={10}>
-            {" "}
             <Header> {i18next.t("chairpage-news-fragment-headline")}</Header>
           </Grid.Column>
           <Grid.Column width={6} floated="right">
-            {this.props.personCanPostForChair && (
+            {personCanPostForChair && (
               <Button
                 style={{ float: "right" }}
-                color="teal"
+                color="blue"
                 onClick={() => {
                   this.setState({ newPostModalOpen: true });
                 }}
@@ -248,6 +368,7 @@ export class ChairPage extends React.Component {
       : "";
 
     var chairExists = this.props.currentlyViewedChair;
+
     let email;
     let phoneNumber;
     let phoneNumberMobile;
@@ -267,6 +388,7 @@ export class ChairPage extends React.Component {
       }
     }
 
+    console.log(this.state.employees);
     return (
       <div>
         <NavBar />
@@ -336,7 +458,6 @@ export class ChairPage extends React.Component {
                 />
               </Grid.Column>
             </Grid.Row>
-
             <Grid.Row columns={3}>
               <Grid.Column width={11}>
                 <Tab
@@ -363,6 +484,7 @@ export class ChairPage extends React.Component {
                   chairId={this.props.chairId}
                   chairName={chairName}
                   onCompleteWithSuccess={newPersonChairRelation => {
+                    this.props.getSingleChair(this.props.chairId);
                     this.setState({
                       applyToChairModalOpen: false,
                       applyToChairConfirmedModalOpen: true
@@ -412,53 +534,56 @@ export class ChairPage extends React.Component {
 
 //todo
 let mapStateToProps = state => {
-  const currentlyViewedChair = state.chair.currentlyViewedChair;
   const loggedInUserPersonId = state.login.user
     ? state.login.user.person.id
     : null;
-  var personCanPostForChair = false;
-  var personIsChairAdmin = false;
-  let personCanApplyToChair = true;
+  let personIsSuperAdmin = state.login.user ? state.login.user.admin : false;
+
+  const currentlyViewedChair = state.chair.currentlyViewedChair;
+  let personIsEmployee = false;
+  let personIsApplicant = false;
+  let personIsChairAdmin = false;
 
   if (currentlyViewedChair && loggedInUserPersonId) {
     if (currentlyViewedChair.persons) {
       // 1. Finden ob der eingeloggte User eine der "persons" im "currentlyViewedChair" ist (e.g. das Recht hat zu Posten)
-      let person = currentlyViewedChair.persons.find(function(
-        arrayElement,
-        index
+      let personChairRelation = currentlyViewedChair.persons.find(function(
+        personChairRelation
       ) {
-        return arrayElement.personId === loggedInUserPersonId;
+        return personChairRelation.personId === loggedInUserPersonId;
       });
 
-      if (person) {
-        personCanPostForChair = true;
-        personCanApplyToChair = false;
-      }
+      if (personChairRelation) {
+        if (personChairRelation.active === true) {
+          personIsEmployee = true;
+        } else {
+          personIsApplicant = true;
+        }
 
-      if (person && person.role === 3) {
-        personIsChairAdmin = true;
+        if (personChairRelation.chairAdmin) {
+          personIsChairAdmin = true;
+        }
       }
-    } else {
-      personCanPostForChair = false;
     }
-
-    // 2. Finden ob der eingeloggte User einer der Subscriber des "currentlyViewedChair" ist (e.g. der Abo-button )
   }
 
   return {
+    // Chair related info
     chairId: state.location.payload.chairId,
-    currentlyViewedChair: state.chair.currentlyViewedChair,
     chairPosts: state.chair.chairPosts,
+    currentlyViewedChair: state.chair.currentlyViewedChair,
     users: state.user.users,
     chairs: state.chair.chairs,
 
+    // Person related infos
     chairSubscriptions: state.login.user
       ? state.login.user.person.subscriptions
       : null,
 
-    personCanPostForChair: personCanPostForChair,
-    personCanApplyToChair: personCanApplyToChair,
-    personIsChairAdmin: personIsChairAdmin
+    personIsSuperAdmin: personIsSuperAdmin,
+    personIsChairAdmin: personIsChairAdmin,
+    personIsEmployee: personIsEmployee,
+    personIsApplicant: personIsApplicant
   };
 };
 

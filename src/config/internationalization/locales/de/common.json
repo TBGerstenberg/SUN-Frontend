@@ -233,7 +233,8 @@
 
   "chairpage-news-fragment-headline": "Aktuelles",
   "chairpage-employee-fragment-headline": "Mitarbeiter",
-  "chairpage-events-fragment-headline": "Aktuelles",
+  "chairpage-events-fragment-headline": "Veranstaltungen",
+
   "chairpage-new-event-button-label": "Neue Veranstaltung",
   "chairpage-apply-to-chair-button-label": "Bewerben",
   "chairpage-new-post-button-label": "Neuer Post",
@@ -241,5 +242,9 @@
   "chairpage-successfully-subscribed-message": "Erfolgreich abonniert",
   "chairpage-successfully-unsubscribed-message": "Erfolgreich deabonniert",
   "chairpage-successfully-applied-message": "Erfolgreich beworben",
-  "chairpage-general-information-label": ""
+  "chairpage-general-information-label": "Informationen",
+  "chairpage-employee-fragment-applicants-headline": "Bewerber",
+
+  "personList-no-items-placehodler": "Keine",
+  "chairpage-already-applied-button-label": "Bereits beworben"
 }
