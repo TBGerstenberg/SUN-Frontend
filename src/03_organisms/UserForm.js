@@ -87,8 +87,6 @@ class UserForm extends React.Component {
       errors: []
     };
 
-    console.log(this.state.editedByOwner);
-
     /* Bind Methods */
 
     // Input handlers
@@ -124,7 +122,6 @@ class UserForm extends React.Component {
 
   render() {
     const props = this.props;
-    console.log(props.editedByOwner);
 
     return (
       <Form
@@ -175,8 +172,13 @@ class UserForm extends React.Component {
                   formValidationUtilities.uniSiegenEmail
                 ]}
               />
-              {(this.state.mode === "add" || this.props.editedByOwner) && (
-                <PasswordInput />
+              {this.state.mode === "add" && (
+                <PasswordInput
+                  validators={[
+                    formValidationUtilities.passwordStrength,
+                    formValidationUtilities.requiredPassword
+                  ]}
+                />
               )}
             </Grid.Column>
 
@@ -349,8 +351,12 @@ class UserForm extends React.Component {
           {this.props.isStudent && (
             <>
               <Grid.Row columns={2}>
-                <Grid.Column width={6}>{<StudentIdInput />}</Grid.Column>
-                <Grid.Column width={6}>{<CourseOfStudyInput />}</Grid.Column>
+                <Grid.Column width={6}>
+                  <StudentIdInput />
+                </Grid.Column>
+                <Grid.Column width={6}>
+                  <CourseOfStudyInput />
+                </Grid.Column>
               </Grid.Row>
               <Grid.Row columns={2}>
                 <Grid.Column textAlign="left" width={6}>
@@ -547,7 +553,6 @@ class UserForm extends React.Component {
     // or via the components state.
     const accountValues = {
       newEmail: values.email,
-      password: values.password,
       admin: values.accountIsAdminCheckbox,
       person: {
         userId: this.props.userId,

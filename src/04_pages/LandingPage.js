@@ -17,8 +17,7 @@ import {
   Visibility
 } from "semantic-ui-react";
 import LanguageSwitcher from "../02_molecules/LanguageSwitcher";
-import logo from "../assets/images/landingpage_01.jpg";
-import logo2 from "../assets/images/Logo_2.png";
+import logo from "../assets/images/Logo.png";
 import profile_man from "../assets/images/profile_man.png";
 import profile_woman from "../assets/images/profile_woman.png";
 
@@ -49,7 +48,7 @@ const HomepageHeading = ({ mobile }) => (
     />
 
     <Image
-      src={logo2}
+      src={logo}
       height="175px"
       width="200px"
       style={{
@@ -63,7 +62,6 @@ const HomepageHeading = ({ mobile }) => (
       as="h2"
       content={i18next.t("landingpage-hero-subtext")}
       inverted
-      color="teal"
       style={{
         fontSize: mobile ? "1.5em" : "1.7em",
         fontWeight: "normal",
@@ -72,7 +70,7 @@ const HomepageHeading = ({ mobile }) => (
     />
     <br />
     <br />
-    <Button color="blue" inverted size="massive" href="/signup">
+    <Button color="blue" inverted size="big" href="/signup">
       {i18next.t("landingpage-hero-call-to-action")}
       <Icon name="angle double right" />
     </Button>
@@ -274,10 +272,10 @@ const HomepageLayout = () => (
       </Segment>
       <Segment style={{ padding: "0em" }} vertical>
         <Grid celled="internally" columns="equal" stackable>
-          <Grid.Row textAlign="center">
+          <Grid.Row textAlign="center" columns={5}>
             <Grid.Column style={{ paddingBottom: "2em", paddingTop: "2em" }}>
-              <Icon name="handshake outline" size="massive" color="blue" />
-              <Header as="h3" style={{ fontSize: "2em" }}>
+              <Icon name="handshake outline" size="big" color="blue" />
+              <Header as="h3" style={{ fontSize: "1em" }}>
                 <p style={{ fontSize: "1.33em" }}> Austausch</p>
               </Header>
               <p style={{ fontSize: "1.5em", color: "teal" }}>
@@ -287,12 +285,8 @@ const HomepageLayout = () => (
             </Grid.Column>
 
             <Grid.Column style={{ paddingBottom: "2em", paddingTop: "2em" }}>
-              <Icon
-                name="calendar alternate outline"
-                size="massive"
-                color="blue"
-              />
-              <Header as="h3" style={{ fontSize: "2em" }}>
+              <Icon name="calendar alternate outline" size="big" color="blue" />
+              <Header as="h3" style={{ fontSize: "1em" }}>
                 <p style={{ fontSize: "1.33em" }}> Events</p>
               </Header>
               <p style={{ fontSize: "1.5em", color: "teal" }}>
@@ -302,8 +296,8 @@ const HomepageLayout = () => (
             </Grid.Column>
 
             <Grid.Column style={{ paddingBottom: "2em", paddingTop: "2em" }}>
-              <Icon name="graduation cap" size="massive" color="blue" />
-              <Header as="h3" style={{ fontSize: "2em" }}>
+              <Icon name="graduation cap" size="big" color="blue" />
+              <Header as="h3" style={{ fontSize: "1em" }}>
                 <p style={{ fontSize: "1.33em" }}> Abschlussarbeiten </p>
               </Header>
               <p style={{ fontSize: "1.5em", color: "teal" }}>
@@ -313,8 +307,8 @@ const HomepageLayout = () => (
             </Grid.Column>
 
             <Grid.Column style={{ paddingBottom: "2em", paddingTop: "2em" }}>
-              <Icon name="rocket" size="massive" color="blue" />
-              <Header as="h3" style={{ fontSize: "2em" }}>
+              <Icon name="rocket" size="big" color="blue" />
+              <Header as="h3" style={{ fontSize: "1em" }}>
                 <p style={{ fontSize: "1.33em" }}> Start Up</p>
               </Header>
               <p style={{ fontSize: "1.5em", color: "teal" }}>
@@ -324,8 +318,8 @@ const HomepageLayout = () => (
             </Grid.Column>
 
             <Grid.Column style={{ paddingBottom: "2em", paddingTop: "2em" }}>
-              <Icon name="react" size="massive" color="blue" />
-              <Header as="h3" style={{ fontSize: "2em" }}>
+              <Icon name="react" size="big" color="blue" />
+              <Header as="h3" style={{ fontSize: "1em" }}>
                 <p style={{ fontSize: "1.33em" }}> Job</p>
               </Header>
               <p style={{ fontSize: "1.5em", color: "teal" }}>
@@ -342,7 +336,7 @@ const HomepageLayout = () => (
 
           <Grid.Row textAlign="center">
             <Grid.Column style={{ paddingBottom: "5em", paddingTop: "5em" }}>
-              <Header as="h3" style={{ fontSize: "2em", color: "teal" }}>
+              <Header as="h3" style={{ fontSize: "1em", color: "teal" }}>
                 {i18next.t("landingpage-testimonials-text-0")}
               </Header>
 
@@ -358,7 +352,7 @@ const HomepageLayout = () => (
             </Grid.Column>
 
             <Grid.Column style={{ paddingBottom: "5em", paddingTop: "5em" }}>
-              <Header as="h3" style={{ fontSize: "2em", color: "teal" }}>
+              <Header as="h3" style={{ fontSize: "1em", color: "teal" }}>
                 {i18next.t("landingpage-testimonials-text-1")}
               </Header>
 

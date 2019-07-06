@@ -4,7 +4,6 @@ import { withTranslation } from "react-i18next";
 import { LabelInputField } from "react-semantic-redux-form";
 import { Field } from "redux-form";
 import { Icon } from "semantic-ui-react";
-import formValidationUtilities from "../utilities/formValidationUtilities";
 
 const PasswordInput = props => {
   return (
@@ -17,11 +16,7 @@ const PasswordInput = props => {
       }}
       labelPosition="left"
       placeholder={i18next.t("signup-password-input-placeholder")}
-      validate={[
-        formValidationUtilities.requiredPassword,
-        formValidationUtilities.passwordStrength,
-        formValidationUtilities.passwordNotJochen
-      ]}
+      validate={props.validators}
     />
   );
 };

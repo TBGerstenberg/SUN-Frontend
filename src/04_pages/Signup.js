@@ -79,7 +79,13 @@ class Signup extends React.Component {
                     ]}
                   />
 
-                  <PasswordInput />
+                  <PasswordInput
+                    validators={[
+                      formValidationUtilities.requiredPassword,
+                      formValidationUtilities.passwordStrength,
+                      formValidationUtilities.passwordNotJochen
+                    ]}
+                  />
 
                   <Form.Group>
                     <Field
