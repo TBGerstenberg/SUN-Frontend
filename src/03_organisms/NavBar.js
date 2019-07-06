@@ -9,7 +9,7 @@ import ChairSearchResult from "../02_molecules/ChairSearchResult";
 import LanguageSwitcher from "../02_molecules/LanguageSwitcher";
 import PersonSearchResult from "../02_molecules/PersonSearchResult";
 import PostSearchResult from "../02_molecules/PostSearchResult";
-import logoImageSource from "../assets/images/logo.png";
+import logoImageSource from "../assets/images/Logo.png";
 import {
   navigationActions,
   searchActions,

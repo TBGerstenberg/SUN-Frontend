@@ -34,12 +34,8 @@ import userService from "../services/userService";
 import formValidationUtilities from "../utilities/formValidationUtilities";
 
 class UserForm extends React.Component {
-  /** ES-6 JS-Class Methods  */
-
   constructor(props) {
     super(props);
-
-    console.log(props);
 
     // Depending on the "Mode" of this form, it either initializes values from a given Account
     // Or initializes all input
@@ -83,11 +79,15 @@ class UserForm extends React.Component {
       dateOfBirth: birthDate,
       matriculationDate: matriculationDate,
       exmatriculationDate: exmatriculationDate,
+
       personChairRelations: personChairRelations,
       mode: mode,
       account: account,
+
       errors: []
     };
+
+    console.log(this.state.editedByOwner);
 
     /* Bind Methods */
 
@@ -124,6 +124,7 @@ class UserForm extends React.Component {
 
   render() {
     const props = this.props;
+    console.log(props.editedByOwner);
 
     return (
       <Form
@@ -174,16 +175,21 @@ class UserForm extends React.Component {
                   formValidationUtilities.uniSiegenEmail
                 ]}
               />
-              {this.state.mode === "add" && <PasswordInput />}
+              {(this.state.mode === "add" || this.props.editedByOwner) && (
+                <PasswordInput />
+              )}
             </Grid.Column>
+
             <Grid.Column width={6}>
-              <Form.Group>
-                <Field
-                  name="accountIsAdminCheckbox"
-                  component={CheckboxField}
-                  label={"Admin"}
-                />
-              </Form.Group>
+              {!this.props.editedByOwner && (
+                <Form.Group>
+                  <Field
+                    name="accountIsAdminCheckbox"
+                    component={CheckboxField}
+                    label={"Admin"}
+                  />
+                </Form.Group>
+              )}
             </Grid.Column>
           </Grid.Row>
 
@@ -377,23 +383,25 @@ class UserForm extends React.Component {
             // EmployeeStatus
           }
           {this.props.isEmployee && (
-            <>
-              <Grid.Row columns={2}>
-                <Grid.Column width={6}>
-                  {this.renderRoomNameInput()}
-                </Grid.Column>
-                <Grid.Column width={6}>
-                  {this.renderAdditionalEmailInput()}
-                </Grid.Column>
-              </Grid.Row>
+            <Grid.Row columns={2}>
+              <Grid.Column width={6}>{this.renderRoomNameInput()}</Grid.Column>
+              <Grid.Column width={6}>
+                {this.renderAdditionalEmailInput()}
+              </Grid.Column>
+            </Grid.Row>
+          )}
 
-              <Grid.Row columns={1}>
-                <Grid.Column width={12}>
-                  {props.chairs && props.chairs.length > 0 && (
+          {!props.editedByOwner &&
+            props.chairs &&
+            props.chairs.length >
+              0(
+                <Grid.Row columns={1}>
+                  <Grid.Column width={12}>
                     <ChairRoleList
                       userId={
                         this.state.account ? this.state.account.person.id : null
                       }
+                      itemsAddable={!props.editedByOwner}
                       items={this.state.personChairRelations}
                       chairs={props.chairs}
                       onChange={personChairRelations => {
@@ -402,11 +410,9 @@ class UserForm extends React.Component {
                         });
                       }}
                     />
-                  )}
-                </Grid.Column>
-              </Grid.Row>
-            </>
-          )}
+                  </Grid.Column>
+                </Grid.Row>
+              )}
 
           {
             // Submit and Abort Buttons
@@ -594,19 +600,24 @@ class UserForm extends React.Component {
       editAccountRequest.response &&
       editAccountRequest.response.status === 200
     ) {
-      const editPersonChairRelationsRequest = await chairService.updatePersonChairRelations(
-        this.state.personChairRelations
-      );
-
-      console.log(editPersonChairRelationsRequest);
-
-      if (
-        editPersonChairRelationsRequest[0] &&
-        editPersonChairRelationsRequest[0].status === 200
-      ) {
+      // The owner of the account cant update his personChairRelations himself
+      if (this.props.editedByOwner) {
         this.props.onCompleteWithSuccess();
       } else {
-        this.props.onCompleteWithError(editPersonChairRelationsRequest.error);
+        const editPersonChairRelationsRequest = await chairService.updatePersonChairRelations(
+          this.state.personChairRelations
+        );
+
+        console.log(editPersonChairRelationsRequest);
+
+        if (
+          editPersonChairRelationsRequest[0] &&
+          editPersonChairRelationsRequest[0].status === 200
+        ) {
+          this.props.onCompleteWithSuccess();
+        } else {
+          this.props.onCompleteWithError(editPersonChairRelationsRequest.error);
+        }
       }
     } else {
       this.setState({
@@ -799,6 +810,8 @@ const mapStateToProps = (state, ownProps) => {
         skillCatalogue: state.skillCatalogue,
         isEmployee: isEmployee,
         isStudent: isStudent,
+        editedByOwner:
+          state.login.user.person.id === ownProps.account.person.id,
 
         initialValues: {
           email: ownProps.account.email || "",
@@ -841,6 +854,7 @@ const mapStateToProps = (state, ownProps) => {
         skillCatalogue: state.skillCatalogue,
         isEmployee: isEmployee,
         isStudent: isStudent,
+        loggedInUsersAccount: state.login.user,
 
         initialValues: {
           email: ownProps.account.email || "",
@@ -854,7 +868,8 @@ const mapStateToProps = (state, ownProps) => {
     return {
       chairs: state.chair.chairs,
       isEmployee: isEmployee,
-      isStudent: isStudent
+      isStudent: isStudent,
+      loggedInUsersAccount: state.login.user
     };
   }
 };

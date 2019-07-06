@@ -46,28 +46,31 @@ class ChairRoleList extends React.Component {
                 </List>
               </Grid.Column>
             </Grid.Row>
-            <Grid.Row columns={3} verticalAlign="bottom" textAlign="left">
-              <Grid.Column width={6}>
-                <RoleSelectionDropdown
-                  onChange={role => {
-                    this.setState({ currentlySelectedRole: role });
-                  }}
-                />
-              </Grid.Column>
-              <Grid.Column width={6}>
-                <ChairSelectionDropdown
-                  chairs={this.props.chairs}
-                  onChange={chair => {
-                    this.setState({ currentlySelectedChair: chair });
-                  }}
-                />
-              </Grid.Column>
-              <Grid.Column width={3} floated="right">
-                <Button onClick={this.handleAddRoleButtonClick} type="button">
-                  Hinzufügen
-                </Button>
-              </Grid.Column>
-            </Grid.Row>
+
+            {this.props.itemsAddable && (
+              <Grid.Row columns={3} verticalAlign="bottom" textAlign="left">
+                <Grid.Column width={6}>
+                  <RoleSelectionDropdown
+                    onChange={role => {
+                      this.setState({ currentlySelectedRole: role });
+                    }}
+                  />
+                </Grid.Column>
+                <Grid.Column width={6}>
+                  <ChairSelectionDropdown
+                    chairs={this.props.chairs}
+                    onChange={chair => {
+                      this.setState({ currentlySelectedChair: chair });
+                    }}
+                  />
+                </Grid.Column>
+                <Grid.Column width={3} floated="right">
+                  <Button onClick={this.handleAddRoleButtonClick} type="button">
+                    Hinzufügen
+                  </Button>
+                </Grid.Column>
+              </Grid.Row>
+            )}
           </Grid>
         </Segment>
       </div>
