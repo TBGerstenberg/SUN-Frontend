@@ -32,7 +32,7 @@ class NewEventModal extends Component {
           <Modal.Header>Neuer Post</Modal.Header>
           <Modal.Description>
             <Form>
-              <Grid fluid>
+              <Grid>
                 <Grid.Row width={16}>
                   <Grid.Column width={16}>
                     <TextArea

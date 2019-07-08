@@ -249,8 +249,14 @@
   "chairpage-general-information-label": "Informationen",
   "chairpage-employee-fragment-applicants-headline": "Bewerber",
 
+  "chairRoleList-add-role-button-label": "Hinzufügen",
+  "chairRoleList-no-items-placeholder": "Keine Lehrstuhlzugehörigkeit angegeben",
   "personList-no-items-placehodler": "Keine",
+  "chairRoleList-chair-does-not-exist-label": "Lehrstuhl nicht vorhanden",
   "chairpage-already-applied-button-label": "Bereits beworben",
+
+  "subscribeButton-active-label": "abonniert ✓",
+  "subscribeButton-unsubscribed-label": "abonnieren",
 
   "404-Page-Text": "404 - Wir konnten nicht finden wonach du suchst"
 }

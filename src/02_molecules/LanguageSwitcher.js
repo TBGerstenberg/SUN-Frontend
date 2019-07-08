@@ -39,25 +39,3 @@ const ChangeLanguage = props => {
 
 // extended main view with translate hoc
 export default withTranslation()(ChangeLanguage);
-
-{
-  /* <div className={"languageSwitcher"}>
-      <Button
-        size="mini"
-        onClick={() => props.i18n.changeLanguage("de")}
-        style={{ backgroundColor: "rgba(0,0,0,0)", color: "#FFF" }}
-        className="languageSwitcher-button"
-      >
-        de
-      </Button>
-      <Button
-        size="mini"
-        onClick={() => props.i18n.changeLanguage("en")}
-        color="white"
-        style={{ backgroundColor: "rgba(0,0,0,0)", color: "#FFF" }}
-        className="languageSwitcher-button"
-      >
-        en
-      </Button>
-    </div> */
-}

@@ -1,3 +1,4 @@
+import i18next from "i18next";
 import React from "react";
 import { withTranslation } from "react-i18next";
 import { Button, Grid, List, Segment } from "semantic-ui-react";
@@ -66,7 +67,7 @@ class ChairRoleList extends React.Component {
                 </Grid.Column>
                 <Grid.Column width={3} floated="right">
                   <Button onClick={this.handleAddRoleButtonClick} type="button">
-                    Hinzufügen
+                    {i18next.t("chairRoleList-add-role-button-label")}
                   </Button>
                 </Grid.Column>
               </Grid.Row>
@@ -80,7 +81,7 @@ class ChairRoleList extends React.Component {
   renderListItems(items) {
     if (Array.isArray(items)) {
       if (items.length === 0) {
-        return <span> Keine Lehrstuhlzugehörigkeit angegeben. </span>;
+        return <span> {i18next.t("chairRoleList-no-items-placeholder")} </span>;
       }
 
       let renderedListItems = items.map((personChairRelation, index) => {
@@ -93,7 +94,11 @@ class ChairRoleList extends React.Component {
             }}
             key={index}
             role={personChairRleationEnum[personChairRelation.role]}
-            chair={chairWithId ? chairWithId.name : "Lehrstuhl nicht vorhanden"}
+            chair={
+              chairWithId
+                ? chairWithId.name
+                : i18next.t("chairRoleList-chair-does-not-exist-label")
+            }
           />
         );
       });

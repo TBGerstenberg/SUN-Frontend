@@ -13,16 +13,26 @@ class PostCard extends React.Component {
       chairs: [],
       users: [],
       author: null,
-      authorChair: null,
+      chairWhichAuthoredPost: null,
       postToBeRendered: props.post
     };
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    let chairWhichAuthoredPost = null;
-    let userWhoAuthoredPost = null;
+    let userWhoAuthoredPost = prevState.author;
+    let chairWhichAuthoredPost = prevState.chairWhichAuthoredPost;
+    let chairs = prevState.chairs;
+    let postToBeRendered = prevState.postToBeRendered;
 
-    if (nextProps.chairs) {
+    console.log(prevState.postToBeRendered);
+    console.log(prevState.chairWhichAuthoredPost);
+
+    if (
+      (chairWhichAuthoredPost &&
+        postToBeRendered &&
+        chairWhichAuthoredPost.id != postToBeRendered.pageId) ||
+      !chairWhichAuthoredPost
+    ) {
       // Find chair with ID of props.post.pageId
       chairWhichAuthoredPost = nextProps.chairs.find(chair => {
         return chair.id === prevState.postToBeRendered.pageId;
@@ -36,10 +46,16 @@ class PostCard extends React.Component {
       });
     }
 
+    if (nextProps.chairs && nextProps.chairs != prevState.chairs) {
+      chairs = nextProps.chairs;
+    }
+
     return {
+      ...prevState,
       author: userWhoAuthoredPost,
-      authorChair: chairWhichAuthoredPost,
-      postToBeRendered: nextProps.post
+      chairWhichAuthoredPost: chairWhichAuthoredPost,
+      postToBeRendered: nextProps.post,
+      chairs: chairs
     };
   }
 
@@ -71,7 +87,7 @@ class PostCard extends React.Component {
           <Button
             icon
             size="tiny"
-            color="gray"
+            color="grey"
             circular
             onClick={() => {}}
             floated="right"
@@ -84,6 +100,7 @@ class PostCard extends React.Component {
   }
 
   renderStandardPost(props) {
+    console.log(this.state);
     return (
       <Card color="blue" fluid className="postCard-container">
         <Card.Content>
@@ -91,9 +108,11 @@ class PostCard extends React.Component {
             {this.state.author && (
               <div className="postCard-authorInfo-container">
                 <span>
-                  {" "}
                   <Icon name="university" />{" "}
-                  {this.state.authorChair && this.state.authorChair.name}
+                  <a href={"/chair/" + props.post.pageId}>
+                    {this.state.chairWhichAuthoredPost &&
+                      this.state.chairWhichAuthoredPost.name}
+                  </a>
                 </span>
                 <span className="postCard-authorInfo-personInfo">
                   {i18next.t("postCard-written-by-label")}
@@ -115,7 +134,9 @@ class PostCard extends React.Component {
         </Card.Content>
         <Card.Content>
           <Card.Header>{props.post.title}</Card.Header>
-          <Card.Description style={{ minHeight: "100px" }}>
+          <Card.Description
+            style={{ minHeight: "100px", paddingBottom: "20px" }}
+          >
             {props.post.content}
           </Card.Description>
           <Card.Meta className="postCard-meta">
@@ -143,12 +164,14 @@ class PostCard extends React.Component {
       <Card color="blue" fluid className="postCard-container">
         <Card.Content>
           <Card.Content>
-            {this.state.author && (
+            {this.state.author && this.state.chairWhichAuthoredPost && (
               <div className="postCard-authorInfo-container">
                 <span>
-                  {" "}
                   <Icon name="university" />{" "}
-                  {this.state.authorChair && this.state.authorChair.name}
+                  <a href={"/chair/" + props.post.pageId}>
+                    {" "}
+                    {this.state.authorChair && this.state.authorChair.name}
+                  </a>
                 </span>
                 <span className="postCard-authorInfo-personInfo">
                   {i18next.t("postCard-written-by-label")}
@@ -170,7 +193,9 @@ class PostCard extends React.Component {
         </Card.Content>
         <Card.Content>
           <Card.Header>{props.post.title}</Card.Header>
-          <Card.Description style={{ minHeight: "100px" }}>
+          <Card.Description
+            style={{ minHeight: "100px", paddingBottom: "20px" }}
+          >
             {props.post.content}
           </Card.Description>
           <Card.Content
