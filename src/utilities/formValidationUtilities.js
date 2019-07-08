@@ -22,7 +22,7 @@ const formValidationUtilities = {
       ? "Ungültige Email Adresse"
       : undefined,
   uniSiegenEmail: value =>
-    value && !/.+@uni-siegen\.de/.test(value)
+    value && !/.+@(student\.)?uni-siegen\.de/.test(value)
       ? "Dies ist keine gültige Uni Siegen Email"
       : undefined,
   passwordStrength: value =>
