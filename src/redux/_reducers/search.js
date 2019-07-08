@@ -1,6 +1,6 @@
 import { searchConstants } from "../_constants";
 
-const initialState = { serachResults: {} };
+const initialState = { serchResults: {} };
 
 const searchReducer = (state = initialState, action) => {
   switch (action.type) {

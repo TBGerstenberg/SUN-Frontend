@@ -41,7 +41,8 @@ const loginReducer = (state = initialState, action) => {
         loggingIn: false,
         loggedIn: true,
         user: attachRolesToUser(action.payload.user, action.payload.user.admin),
-        accessToken: action.payload.token
+        accessToken: action.payload.token,
+        error: null
       };
     case userConstants.LOGIN_FAILURE:
       return {
@@ -59,8 +60,15 @@ const loginReducer = (state = initialState, action) => {
         user: null,
         loggedIn: false
       };
+
     case userConstants.LOGOUT_FAILURE:
-      return { ...state, loggingOut: false };
+      return {
+        ...state,
+        loggingOut: false,
+        accessToken: null,
+        user: null,
+        loggedIn: false
+      };
 
     case userConstants.ADD_SUBSCRIPTION: {
       const userHasSubscribedToChair = state.user.person.subscriptions.find(

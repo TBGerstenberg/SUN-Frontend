@@ -93,6 +93,8 @@ class NewPostModal extends Component {
                   type: this.state.selectedType
                 };
 
+                console.log(this.state.selectedType);
+
                 this.props.onNewPost(newPost);
 
                 this.setState({

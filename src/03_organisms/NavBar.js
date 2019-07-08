@@ -32,15 +32,17 @@ const resultRenderer = objectToBeRendered => {
     resultObject.hasOwnProperty("firstName") &&
     resultObject.hasOwnProperty("lastName")
   ) {
-    return <PersonSearchResult person={resultObject} />;
+    return (
+      <PersonSearchResult person={resultObject} key={resultObject.title} />
+    );
 
     // Object is a chair
   } else if (resultObject.hasOwnProperty("name")) {
-    return <ChairSearchResult chair={resultObject} />;
+    return <ChairSearchResult chair={resultObject} key={resultObject.title} />;
 
     // Object is a post
   } else if (resultObject.hasOwnProperty("authorId")) {
-    return <PostSearchResult post={resultObject} />;
+    return <PostSearchResult post={resultObject} key={resultObject.title} />;
   } else {
     return null;
   }
@@ -61,10 +63,12 @@ class NavBar extends Component {
     this.state = initialState;
   }
 
+  /** Handles an input change in the searchbar, triggers a search request at the search API  */
   handleSearchChange = (e, { value }) => {
     this.props.dispatch(searchActions.search(value));
   };
 
+  /** Handles a click or keyboard seleciton on a search-result */
   handleSearchResultSelect = (e, { result }) => {
     const resultObject = JSON.parse(result.description);
 
@@ -79,14 +83,18 @@ class NavBar extends Component {
         })
       );
 
-      // Object is a chair or a post, redirect to chair page
-    } else if (
-      resultObject.hasOwnProperty("name") ||
-      resultObject.hasOwnProperty("authorId")
-    ) {
+      // Object is a chair ,redirect to chair page
+    } else if (resultObject.hasOwnProperty("name")) {
       this.props.dispatch(
         navigationActions.redirect(navigationConstants.NAVIGATE_TO_CHAIR_PAGE, {
           chairId: resultObject.id
+        })
+      );
+      // Object is a post, redirect to chair page where the post was published
+    } else {
+      this.props.dispatch(
+        navigationActions.redirect(navigationConstants.NAVIGATE_TO_CHAIR_PAGE, {
+          chairId: resultObject.pageId
         })
       );
     }
@@ -199,8 +207,6 @@ class NavBar extends Component {
               }}
               onKeyDown={e => {
                 if (e.key === "Enter") {
-                  // TODO: Navigate to searchresult page - heres how to navigate to admin
-
                   this.props.dispatch(
                     navigationActions.redirect(
                       navigationConstants.NAVIGATE_TO_SEARCH_PAGE
@@ -252,7 +258,8 @@ const mapStateToProps = state => {
   personSearchResults = personSearchResults.map(person => {
     return {
       title: person.firstName + " " + person.lastName,
-      description: JSON.stringify(person)
+      description: JSON.stringify(person),
+      key: "person" + person.id
     };
   });
 
@@ -263,7 +270,8 @@ const mapStateToProps = state => {
   chairSearchResults = chairSearchResults.map(chair => {
     return {
       title: chair.name,
-      description: JSON.stringify(chair)
+      description: JSON.stringify(chair),
+      key: "chair" + chair.id
     };
   });
 
@@ -274,7 +282,8 @@ const mapStateToProps = state => {
   postSearchResults = postSearchResults.map(post => {
     return {
       title: post.title,
-      description: JSON.stringify(post)
+      description: JSON.stringify(post),
+      key: "Post" + post.createdAt
     };
   });
 

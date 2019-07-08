@@ -22,6 +22,7 @@ import FirstNameInput from "../02_molecules/FirstNameInput";
 import GenderDropdownSelector from "../02_molecules/GenderDropdownSelector";
 import LastNameInput from "../02_molecules/LastNameInput";
 import PasswordInput from "../02_molecules/PasswordInput";
+import PhoneNumberInput from "../02_molecules/PhoneNumberInput";
 import PostalCodeInput from "../02_molecules/PostalCodeInput";
 import StreetNameInput from "../02_molecules/StreetNameInput";
 import StudentIdInput from "../02_molecules/StudentIdInput";
@@ -276,6 +277,39 @@ class UserForm extends React.Component {
             <Grid.Column width={6} />
           </Grid.Row>
 
+          <Grid.Row textAlign="left">
+            <Grid.Column width={6} textAlign="left">
+              <Header as="h4" color="black" textAlign="left">
+                <Trans i18nKey="complete-profile-contact-information-headline" />
+              </Header>
+            </Grid.Column>
+            <Grid.Column width={6} />
+          </Grid.Row>
+
+          <Grid.Row columns={2}>
+            <Grid.Column width={6}>
+              {this.renderAdditionalEmailInput()}
+            </Grid.Column>
+            <Grid.Column width={6} />
+          </Grid.Row>
+
+          <Grid.Row columns={2}>
+            <Grid.Column width={6}>
+              <PhoneNumberInput
+                name="phoneNumber"
+                label="Telefon"
+                placeholder="Telefonnummer"
+              />
+            </Grid.Column>
+            <Grid.Column width={6}>
+              <PhoneNumberInput
+                name="phoneNumberMobile"
+                label="Mobil"
+                placeholder="Mobil"
+              />
+            </Grid.Column>
+          </Grid.Row>
+
           {
             // Skill-Catalogue
           }
@@ -391,34 +425,29 @@ class UserForm extends React.Component {
           {this.props.isEmployee && (
             <Grid.Row columns={2}>
               <Grid.Column width={6}>{this.renderRoomNameInput()}</Grid.Column>
-              <Grid.Column width={6}>
-                {this.renderAdditionalEmailInput()}
-              </Grid.Column>
+              <Grid.Column width={6} />
             </Grid.Row>
           )}
 
-          {!props.editedByOwner &&
-            props.chairs &&
-            props.chairs.length >
-              0(
-                <Grid.Row columns={1}>
-                  <Grid.Column width={12}>
-                    <ChairRoleList
-                      userId={
-                        this.state.account ? this.state.account.person.id : null
-                      }
-                      itemsAddable={!props.editedByOwner}
-                      items={this.state.personChairRelations}
-                      chairs={props.chairs}
-                      onChange={personChairRelations => {
-                        this.setState({
-                          personChairRelations: personChairRelations
-                        });
-                      }}
-                    />
-                  </Grid.Column>
-                </Grid.Row>
-              )}
+          {!props.editedByOwner && props.chairs && props.chairs.length > 0 && (
+            <Grid.Row columns={1}>
+              <Grid.Column width={12}>
+                <ChairRoleList
+                  userId={
+                    this.state.account ? this.state.account.person.id : null
+                  }
+                  itemsAddable={!props.editedByOwner}
+                  items={this.state.personChairRelations}
+                  chairs={props.chairs}
+                  onChange={personChairRelations => {
+                    this.setState({
+                      personChairRelations: personChairRelations
+                    });
+                  }}
+                />
+              </Grid.Column>
+            </Grid.Row>
+          )}
 
           {
             // Submit and Abort Buttons
@@ -524,7 +553,9 @@ class UserForm extends React.Component {
    * @param {} values
    */
   async _handleUpdateProfileSubmit(values) {
-    const skillCatalogue = this.props.skillCatalogue;
+    /*  
+   // SKILLS currently disabled 
+   const skillCatalogue = this.props.skillCatalogue;
     let skillsRatings = [];
 
     if (skillCatalogue) {
@@ -534,7 +565,7 @@ class UserForm extends React.Component {
           rating: skillCatalogue.ratings[index]
         });
       });
-    }
+    } */
 
     const DEFAULT_DATE_IF_UNSET = "1990-01-01T00:00:00";
     const DEFAULT_GENDER_IF_UNSET = 0;
@@ -553,7 +584,6 @@ class UserForm extends React.Component {
     // or via the components state.
     const accountValues = {
       newEmail: values.email,
-      admin: values.accountIsAdminCheckbox,
       person: {
         userId: this.props.userId,
         title: values.title,
@@ -566,17 +596,24 @@ class UserForm extends React.Component {
           postCode: values.postCode,
           street: values.street,
           room: values.roomName,
-          email: values.additional_email
+          email: values.additional_email,
+          phoneNumber: values.phoneNumber,
+          phoneNumberMobile: values.phoneNumberMobile
         },
         studentStatus: {
           matriculationNumber: values.studentId,
           subject: values.courseOfStudy,
           matriculationDate: matriculationDate,
           exmatriculationDate: exmatriculationDate
-        },
-        skills: skillsRatings
+        }
+        // skills: skillsRatings
       }
     };
+
+    // Temporary workaround, since the BE responds with a 400 when including the admin field
+    if (!this.props.editedByOwner) {
+      accountValues.admin = values.accountIsAdminCheckbox;
+    }
 
     this.setState({
       errors: []
@@ -834,6 +871,12 @@ const mapStateToProps = (state, ownProps) => {
             : "",
           street: ownProps.account.person.address
             ? ownProps.account.person.address.street
+            : "",
+          phoneNumber: ownProps.account.person.address
+            ? ownProps.account.person.address.phoneNumber
+            : "",
+          phoneNumberMobile: ownProps.account.person.address
+            ? ownProps.account.person.address.phoneNumberMobile
             : "",
           roomName: ownProps.account.person.address
             ? ownProps.account.person.address.room

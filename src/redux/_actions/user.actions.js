@@ -1,5 +1,5 @@
-import { userConstants } from "../_constants";
 import { userService } from "../../services";
+import { userConstants } from "../_constants";
 
 /**
  * Isses a Registration request, tracking its progress and status in the redux store by dispatching actions
@@ -264,7 +264,7 @@ function getSingleUser(userId) {
   }
 
   function failure(error) {
-    return { type: userConstants.UPDATE_USER_PROFILE_FAILURE, error };
+    return { type: userConstants.GET_SINGLE_USER_FAILURE, error };
   }
 }
 

@@ -21,7 +21,8 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         fetchingUser: false,
-        ownProfileFetchError: action.error
+        userFetchError: action.error,
+        userFetchStatus: action.error.error.response.status
       };
 
     case userConstants.UPDATE_USER_PROFILE_REQUEST:

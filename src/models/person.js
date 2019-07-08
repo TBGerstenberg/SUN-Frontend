@@ -4,8 +4,6 @@ import StudentStatus from "./studentStatus";
 
 class Person {
   constructor(profileValues) {
-    console.log(profileValues);
-
     this.userId = profileValues.userId;
     this.id = profileValues.id;
     this.title = profileValues.title;
@@ -42,6 +40,14 @@ class Person {
 
   isEmployee() {
     return this.chairs.length !== 0;
+  }
+
+  static isEmployee(person) {
+    const personActivelyWorksForChair = person.chairs.find(chairRelation => {
+      return chairRelation.active === true;
+    });
+
+    return person.chairs.length > 0 && personActivelyWorksForChair;
   }
 
   isStudent() {

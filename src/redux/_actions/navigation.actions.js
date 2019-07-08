@@ -1,4 +1,7 @@
-import { redirect as reduxFirstRouterRedirect } from "redux-first-router";
+import {
+  NOT_FOUND,
+  redirect as reduxFirstRouterRedirect
+} from "redux-first-router";
 
 function redirect(actionType, actionPayload) {
   return dispatch => {
@@ -11,6 +14,13 @@ function redirect(actionType, actionPayload) {
   };
 }
 
+function redirectToNotFound() {
+  return dispatch => {
+    return dispatch(redirect(NOT_FOUND));
+  };
+}
+
 export default {
-  redirect: redirect
+  redirect: redirect,
+  redirectToNotFound: redirectToNotFound
 };

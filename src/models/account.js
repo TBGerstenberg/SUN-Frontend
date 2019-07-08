@@ -8,19 +8,26 @@ class Account {
     this.person = new Person(accountValues.person);
   }
 
+  /** Checks wether or not an account is super-admin for the system  */
   isSuperAdmin() {
     return this.admin;
   }
 
+  /** Checks wether of not a person is employed at a chair */
   isEmployeeForChair(chairId) {
-    console.log(this.person);
-    console.log(chairId);
-
     return this.person.chairs.find(chair => {
-      return chair.chairId === chairId;
+      return chair.chairId === chairId && chair.isActive === true;
     });
   }
 
+  /** Checks wether of not a person is employed at a chair, without having to instantiate an account-object  */
+  static isEmployeeForChair(person, chairId) {
+    return person.chairs.find(chair => {
+      return chair.chairId === chairId && chair.isActive === true;
+    });
+  }
+
+  /** Checks wether or not a person is author of a post */
   isAuthorOfPost(post) {
     return post.authorId === this.person.id;
   }

@@ -18,7 +18,8 @@ const chairReducer = (state = initialState, action) => {
     case chairConstants.GET_CHAIR_FAILURE:
       return {
         ...state,
-        error: action.error
+        error: action.error,
+        fetchChairStatus: action.error.response.status
       };
 
     case chairConstants.GET_CHAIRS_REQUEST:

@@ -13,7 +13,12 @@ import NewPostModal from "../03_organisms/NewPost";
 import PersonList from "../03_organisms/PersonList";
 import PostCard from "../03_organisms/PostCard";
 import universityImage from "../assets/images/universityImage.jpg";
-import { chairActions, postActions, userActions } from "../redux/_actions";
+import {
+  chairActions,
+  navigationActions,
+  postActions,
+  userActions
+} from "../redux/_actions";
 import { chairService } from "../services";
 
 export class ChairPage extends React.Component {
@@ -251,9 +256,21 @@ export class ChairPage extends React.Component {
       return applicant.active === true;
     });
 
+    // Remove the applicant from the "applicants" list
     let mutatedApplicants = [...this.state.applicants];
     mutatedApplicants.splice(acceptedApplicantIndex, 1);
 
+    // Make the applicant a chairAdmin when his role qualifies
+    const appliedRole = personChairRelations[acceptedApplicantIndex].role;
+
+    const roleShouldBeChairAdmin =
+      appliedRole === 0 || appliedRole === 2 || appliedRole === 3;
+
+    personChairRelations[
+      acceptedApplicantIndex
+    ].chairAdmin = roleShouldBeChairAdmin;
+
+    // Push him to the list of employees
     let mutatedEmployees = [...this.state.employees];
     mutatedEmployees.push(personChairRelations[acceptedApplicantIndex]);
 
@@ -266,6 +283,7 @@ export class ChairPage extends React.Component {
       mutatedEmployees
     );
 
+    // Synchronize with BE
     this.updatePersonChairRelations(mutatedPersonChairRelations);
   }
 
@@ -309,7 +327,7 @@ export class ChairPage extends React.Component {
             return (
               <Grid.Row key={index}>
                 <Grid.Column>
-                  <PostCard post={post} />
+                  <PostCard post={post} key={index} />
                 </Grid.Column>
               </Grid.Row>
             );
@@ -349,6 +367,10 @@ export class ChairPage extends React.Component {
   }
 
   render() {
+    if (this.props.fetchChairStatus && this.props.fetchChairStatus === 404) {
+      this.props.redirectToNotFound();
+    }
+
     if (
       !this.props.users ||
       (this.props.users && this.props.users.length === 0)
@@ -531,7 +553,6 @@ export class ChairPage extends React.Component {
   }
 }
 
-//todo
 let mapStateToProps = state => {
   const loggedInUserPersonId = state.login.user
     ? state.login.user.person.id
@@ -582,7 +603,8 @@ let mapStateToProps = state => {
     personIsSuperAdmin: personIsSuperAdmin,
     personIsChairAdmin: personIsChairAdmin,
     personIsEmployee: personIsEmployee,
-    personIsApplicant: personIsApplicant
+    personIsApplicant: personIsApplicant,
+    fetchChairStatus: state.chair.fetchChairStatus
   };
 };
 
@@ -593,7 +615,9 @@ let mapDispatchToProps = {
   addSubscription: userActions.addSubscription,
   removeSubscription: userActions.removeSubscription,
   getAllUsers: userActions.getAllUsers,
-  getAllChairs: chairActions.getAllChairs
+  getAllChairs: chairActions.getAllChairs,
+  redirect: navigationActions.redirect,
+  redirectToNotFound: navigationActions.redirectToNotFound
 };
 
 let PostContainer = connect(

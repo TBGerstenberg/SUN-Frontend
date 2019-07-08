@@ -37,7 +37,7 @@
 
   "complete-your-profile-headline": "Vervollständige dein Profil",
   "complete-profile-personal-information-headline": "Persönliches",
-  "complete-profile-contact-information-headline": "Kontaktinformationen",
+  "complete-profile-contact-information-headline": "Kontakt",
   "complete-profile-adress-information-headline": "Anschrift",
   "complete-profile-firstName-label": "Vorname",
   "complete-profile-firstName-placeholder": "Vorname",
@@ -101,6 +101,8 @@
   "profile-birthDate-label": "Geburtsdatum",
   "profile-matriculationNumber-label": "Matrikelnummer",
   "profile-courseOfStudy-label": "Studiengang",
+  "profile-matriculationDate-label": "Einschreibungsdatum",
+  "profile-exmatriculationDate-label": "Exmatrikulationsdatum",
 
   "chair-card-email-label": "Email: ",
   "chair-card-phoneNumber-label": "Tel: ",
@@ -248,5 +250,7 @@
   "chairpage-employee-fragment-applicants-headline": "Bewerber",
 
   "personList-no-items-placehodler": "Keine",
-  "chairpage-already-applied-button-label": "Bereits beworben"
+  "chairpage-already-applied-button-label": "Bereits beworben",
+
+  "404-Page-Text": "404 - Wir konnten nicht finden wonach du suchst"
 }

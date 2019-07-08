@@ -1,9 +1,9 @@
 import i18next from "i18next";
-import moment from "moment";
 import React from "react";
 import { Trans, withTranslation } from "react-i18next";
 import { connect } from "react-redux";
 import { SemanticToastContainer, toast } from "react-semantic-toasts";
+import { NOT_FOUND } from "redux-first-router";
 // Components from semantic ui and our own library
 import {
   Button,
@@ -20,7 +20,7 @@ import AddressCard from "../03_organisms/AdressCard";
 import ContactCard from "../03_organisms/ContactCard";
 import NavBar from "../03_organisms/NavBar";
 import UserForm from "../03_organisms/UserForm";
-import { userActions } from "../redux/_actions";
+import { navigationActions, userActions } from "../redux/_actions";
 import tableFormattingUtilities from "../utilities/tableFormattingUtilities";
 
 class Profile extends React.Component {
@@ -43,6 +43,17 @@ class Profile extends React.Component {
   render() {
     const props = this.props;
     const profileValuesExist = this.props.profileValues;
+    let userCanEditProfile = false;
+
+    if (props.profileFetchStatus && props.profileFetchStatus === 404) {
+      this.props.dispatch(navigationActions.redirect(NOT_FOUND));
+    }
+
+    if (this.props.loggedInUsersAccount) {
+      userCanEditProfile =
+        this.state.userId == this.props.loggedInUsersAccount.person.id;
+    }
+
     return (
       <div>
         <NavBar />
@@ -58,7 +69,7 @@ class Profile extends React.Component {
                   >
                     <Grid.Row>
                       <Grid.Column>
-                        <Label as="a" color="blue" ribbon size="big">
+                        <Label as="p" color="blue" ribbon size="big">
                           <Trans i18nKey="profile-overview-label" />
                         </Label>
 
@@ -76,6 +87,14 @@ class Profile extends React.Component {
                               matriculationNumber={
                                 props.profileValues.studentStatus
                                   .matriculationNumber
+                              }
+                              matriculationDate={
+                                props.profileValues.studentStatus
+                                  .matriculationDate
+                              }
+                              exmatriculationDate={
+                                props.profileValues.studentStatus
+                                  .exmatriculationDate
                               }
                             />
                           ) : (
@@ -136,8 +155,7 @@ class Profile extends React.Component {
                   open={this.state.editUserModalOpen}
                 />
 
-                {this.state.userId ==
-                  this.props.loggedInUsersAccount.person.id && (
+                {userCanEditProfile && (
                   <Button color="teal" onClick={this.openEditUserModal}>
                     Profil bearbeiten
                   </Button>
@@ -205,13 +223,15 @@ const FirstProfileRow = props => {
     <Grid.Row>
       <Grid columns={2}>
         <Grid.Row columns={2}>
-          <Grid.Column width={6}>
+          <Grid.Column width={8}>
             <Container>
               <Header size="medium"> {i18next.t("profile-title-label")}</Header>
-              <BodyText>{props.title}</BodyText>
+              <BodyText>
+                {tableFormattingUtilities.stringOrEmpty(props.title)}
+              </BodyText>
             </Container>
           </Grid.Column>
-          <Grid.Column width={10}>
+          <Grid.Column width={8}>
             <Container>
               <Header size="medium">{i18next.t("profile-gender-label")}</Header>
               <BodyText>
@@ -222,51 +242,94 @@ const FirstProfileRow = props => {
         </Grid.Row>
 
         <Grid.Row columns={2}>
-          <Grid.Column width={6}>
+          <Grid.Column width={8}>
             <Container>
               <Header size="medium">
                 {i18next.t("profile-firstName-label")}
               </Header>
-              <BodyText>{props.firstName}</BodyText>
+              <BodyText>
+                {" "}
+                {tableFormattingUtilities.stringOrEmpty(props.firstName)}
+              </BodyText>
             </Container>
           </Grid.Column>
-          <Grid.Column width={10} />
+          <Grid.Column width={8} />
         </Grid.Row>
 
         <Grid.Row columns={2}>
-          <Grid.Column width={6}>
+          <Grid.Column width={8}>
             <Container>
               <Header size="medium">
                 {i18next.t("profile-lastName-label")}
               </Header>
-              <BodyText>{props.lastName}</BodyText>
+              <BodyText>
+                {" "}
+                {tableFormattingUtilities.stringOrEmpty(props.lastName)}
+              </BodyText>
             </Container>
           </Grid.Column>
-          <Grid.Column width={10}>
+          <Grid.Column width={8}>
             <Container>
               <Header size="medium">
                 {i18next.t("profile-birthDate-label")}
               </Header>
-              <BodyText>{moment(props.birthDate).format("L")}</BodyText>
+              <BodyText>
+                {tableFormattingUtilities.getFormattedDate(props.birthDate)}
+              </BodyText>
             </Container>
           </Grid.Column>
         </Grid.Row>
 
         <Grid.Row columns={2}>
-          <Grid.Column width={6}>
+          <Grid.Column width={8}>
             <Container>
               <Header size="medium">
                 {i18next.t("profile-matriculationNumber-label")}
               </Header>
-              <BodyText>{props.matriculationNumber}</BodyText>
+              <BodyText>
+                {" "}
+                {tableFormattingUtilities.stringOrEmpty(
+                  props.matriculationNumber
+                )}
+              </BodyText>
             </Container>
           </Grid.Column>
-          <Grid.Column width={10}>
+          <Grid.Column width={8}>
             <Container>
               <Header size="medium">
                 {i18next.t("profile-courseOfStudy-label")}
               </Header>
-              <BodyText>{props.subject}</BodyText>
+              <BodyText>
+                {" "}
+                {tableFormattingUtilities.stringOrEmpty(props.subject)}
+              </BodyText>
+            </Container>
+          </Grid.Column>
+        </Grid.Row>
+
+        <Grid.Row columns={2}>
+          <Grid.Column width={8}>
+            <Container>
+              <Header size="medium">
+                {i18next.t("profile-matriculationDate-label")}
+              </Header>
+              <BodyText>
+                {tableFormattingUtilities.getFormattedDate(
+                  props.matriculationDate
+                )}
+              </BodyText>
+            </Container>
+          </Grid.Column>
+          <Grid.Column width={8}>
+            <Container>
+              <Header size="medium">
+                {i18next.t("profile-exmatriculationDate-label")}
+              </Header>
+              <BodyText>
+                {tableFormattingUtilities.getFormattedDate(
+                  props.exmatriculationDate
+                )}
+              </BodyText>
             </Container>
           </Grid.Column>
         </Grid.Row>
@@ -323,7 +386,8 @@ const mapStateToProps = state => {
   return {
     userId: state.location.payload.userId,
     profileValues: state.user.currentlyViewedUser,
-    loggedInUsersAccount: state.login.user
+    loggedInUsersAccount: state.login.user,
+    profileFetchStatus: state.user.userFetchStatus
   };
 };
 

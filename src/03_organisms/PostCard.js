@@ -22,7 +22,7 @@ class PostCard extends React.Component {
     let chairWhichAuthoredPost = null;
     let userWhoAuthoredPost = null;
 
-    if (nextProps.chairs != prevState.chairs) {
+    if (nextProps.chairs) {
       // Find chair with ID of props.post.pageId
       chairWhichAuthoredPost = nextProps.chairs.find(chair => {
         return chair.id === prevState.postToBeRendered.pageId;
@@ -38,7 +38,8 @@ class PostCard extends React.Component {
 
     return {
       author: userWhoAuthoredPost,
-      authorChair: chairWhichAuthoredPost
+      authorChair: chairWhichAuthoredPost,
+      postToBeRendered: nextProps.post
     };
   }
 
@@ -114,7 +115,9 @@ class PostCard extends React.Component {
         </Card.Content>
         <Card.Content>
           <Card.Header>{props.post.title}</Card.Header>
-          <Card.Description>{props.post.content}</Card.Description>
+          <Card.Description style={{ minHeight: "100px" }}>
+            {props.post.content}
+          </Card.Description>
           <Card.Meta className="postCard-meta">
             <span>
               <Icon name="info" />
@@ -167,7 +170,9 @@ class PostCard extends React.Component {
         </Card.Content>
         <Card.Content>
           <Card.Header>{props.post.title}</Card.Header>
-          <Card.Description>{props.post.content}</Card.Description>
+          <Card.Description style={{ minHeight: "100px" }}>
+            {props.post.content}
+          </Card.Description>
           <Card.Content
             style={{
               display: "flex",
@@ -229,13 +234,9 @@ let mapStateToProps = (state, ownProps) => {
       loggedInUser.isSuperAdmin() ||
       loggedInUser.isEmployeeForChair(ownProps.post.pageId)
     ) {
-      console.log("Setting canDeletePost to true");
       userCanDeletePost = true;
     }
   }
-
-  console.log(userCanDeletePost);
-  console.log(loggedInUser.isEmployeeForChair(ownProps.post.pageId));
 
   return {
     userCanDeletePost: userCanDeletePost,

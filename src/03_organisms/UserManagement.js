@@ -4,13 +4,12 @@ import onClickOutside from "react-onclickoutside";
 import { connect } from "react-redux";
 import { Button, Icon, Table } from "semantic-ui-react";
 import UserForm from "../03_organisms/UserForm";
+import Person from "../models/person";
 import { accountService } from "../services";
 import tableFormattingUtilities from "../utilities/tableFormattingUtilities";
 import AddEntityModal from "./AddEntityModal";
 
 class UserManagement extends React.Component {
-  /** React-component-lifecycle methods */
-
   async componentWillMount() {
     this.fetchAllAccounts();
   }
@@ -213,7 +212,7 @@ class UserManagement extends React.Component {
         </Table.Cell>
         <Table.Cell key="isEmployee">
           {tableFormattingUtilities.stringValueForBoolean(
-            account.person.chairs && account.person.chairs.length > 0
+            Person.isEmployee(account.person)
           )}
         </Table.Cell>
       </Table.Row>

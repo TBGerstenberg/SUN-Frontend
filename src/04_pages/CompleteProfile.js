@@ -427,11 +427,15 @@ class CompleteProfile extends React.Component {
     const DEFAULT_DATE_IF_UNSET = "1990-01-01T00:00:00+01:00";
     const DEFAULT_GENDER_IF_UNSET = 0;
 
+    console.log(this.state.dateOfBirth);
+    console.log(this.state.immatriculationDate);
+    console.log(this.state.exmatriculationDate);
+
     const birthDate = this.state.dateOfBirth
       ? moment(this.state.dateOfBirth, "DD-MM-YYYY").format()
       : DEFAULT_DATE_IF_UNSET;
-    const matriculationDate = this.state.matriculationDate
-      ? moment(this.state.matriculationDate, "DD-MM-YYYY").format()
+    const matriculationDate = this.state.immatriculationDate
+      ? moment(this.state.immatriculationDate, "DD-MM-YYYY").format()
       : DEFAULT_DATE_IF_UNSET;
     const exmatriculationDate = this.state.exmatriculationDate
       ? moment(this.state.exmatriculationDate, "DD-MM-YYYY").format()

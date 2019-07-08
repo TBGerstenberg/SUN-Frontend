@@ -32,8 +32,6 @@ class Login extends React.Component {
   }
 
   render() {
-    console.log(this.props.loginErrorStatus);
-
     let hasError = false;
     const errorMessageHeader = "Fehler";
     let errorMessageBody = "";
