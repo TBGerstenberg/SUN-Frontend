@@ -18,6 +18,7 @@ import {
 } from "semantic-ui-react";
 import LanguageSwitcher from "../02_molecules/LanguageSwitcher";
 import logo from "../assets/images/Logo.png";
+import landingPageImage from "../assets/images/landingpage_01.jpg"
 import profile_man from "../assets/images/profile_man.png";
 import profile_woman from "../assets/images/profile_woman.png";
 
@@ -240,7 +241,7 @@ const HomepageLayout = () => (
         <Grid container stackable verticalAlign="middle">
           <Grid.Row>
             <div width="750px" height="750px">
-              <Image src={logo} height="350px" width="500px" />
+              <Image src={landingPageImage} height="350px" width="500px" />
             </div>
 
             <Grid.Column width={8}>
