@@ -240,6 +240,7 @@ const userService = {
         console.log("Request succeeded");
         return {
           user: getSingleUserResponse.data,
+          status: getSingleUserResponse.status,
           error: null
         };
       }
