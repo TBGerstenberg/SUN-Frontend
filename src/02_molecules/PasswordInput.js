@@ -1,4 +1,3 @@
-import i18next from "i18next";
 import React from "react";
 import { withTranslation } from "react-i18next";
 import { LabelInputField } from "react-semantic-redux-form";
@@ -8,14 +7,14 @@ import { Icon } from "semantic-ui-react";
 const PasswordInput = props => {
   return (
     <Field
-      name="password"
+      name={props.name}
       component={LabelInputField}
       type="password"
       label={{
         content: <Icon color="blue" name="lock" size="small" />
       }}
       labelPosition="left"
-      placeholder={i18next.t("signup-password-input-placeholder")}
+      placeholder={props.placeholder}
       validate={props.validators}
     />
   );

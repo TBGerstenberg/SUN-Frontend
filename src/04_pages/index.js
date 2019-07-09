@@ -1,3 +1,4 @@
+import AccountManagement from "./AccountManagement";
 import AdminPanel from "./AdminPanel";
 import AllChairs from "./AllChairs";
 import ChairPage from "./ChairPage";
@@ -32,5 +33,6 @@ export {
   ChairPage,
   AdminPanel,
   AllChairs,
-  Search
+  Search,
+  AccountManagement
 };

@@ -60,7 +60,6 @@ const loginReducer = (state = initialState, action) => {
         user: null,
         loggedIn: false
       };
-
     case userConstants.LOGOUT_FAILURE:
       return {
         ...state,
@@ -68,6 +67,22 @@ const loginReducer = (state = initialState, action) => {
         accessToken: null,
         user: null,
         loggedIn: false
+      };
+
+    case userConstants.DELETE_ACCOUNT_REQUEST:
+      return { ...state, requestingAccountDeletion: true };
+    case userConstants.DELETE_ACCOUNT_SUCCESS:
+      return {
+        ...state,
+        requestingAccountDeletion: false,
+        accessToken: null,
+        user: null,
+        loggedIn: false
+      };
+    case userConstants.DELETE_ACCOUNT_FAILURE:
+      return {
+        ...state,
+        deleteAccountRequestStatus: action.status
       };
 
     case userConstants.ADD_SUBSCRIPTION: {
@@ -106,14 +121,8 @@ const loginReducer = (state = initialState, action) => {
       const userHasSubscribedToChair = indexOfChair !== -1;
 
       if (userHasSubscribedToChair) {
-        console.log(state.user.person.subscriptions);
-        console.log(indexOfChair);
-
         let mutatedSubscriptions = [...state.user.person.subscriptions];
-
         mutatedSubscriptions.splice(indexOfChair, 1);
-
-        console.log(mutatedSubscriptions);
 
         return {
           ...state,

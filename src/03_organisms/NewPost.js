@@ -35,7 +35,7 @@ class NewPostModal extends Component {
     return (
       <div>
         <Modal open={this.props.open}>
-          <Modal.Header>Neuer Post</Modal.Header>
+          <Modal.Header>{i18next.t("new-post-modal-headline")}</Modal.Header>
           <Modal.Description>
             <Form>
               <TextArea
@@ -75,15 +75,16 @@ class NewPostModal extends Component {
                       value: 3
                     }
                   ]}
-                  placeholder={"Beitragsart wählen"}
+                  placeholder={i18next.t(
+                    "new-post-modal-postType-dropdown-placeholder"
+                  )}
                 />
               </Form.Field>
             </Form>
           </Modal.Description>
           <Modal.Actions>
             <Button secondary onClick={this.props.onAbortButtonClick}>
-              {" "}
-              Abbrechen{" "}
+              {i18next.t("new-post-modal-abort-button-label")}
             </Button>
             <Button
               onClick={() => {
@@ -106,7 +107,8 @@ class NewPostModal extends Component {
               color="teal"
               icon
             >
-              Posten <Icon name="mail forward" />
+              {i18next.t("new-post-modal-post-button-label")}
+              <Icon name="mail forward" />
             </Button>
           </Modal.Actions>
         </Modal>

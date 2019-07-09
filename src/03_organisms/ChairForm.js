@@ -167,6 +167,7 @@ class ChairForm extends React.Component {
                 control={Button}
                 secondary
                 onClick={props.onAbortButtonClick}
+                type="button"
               >
                 {i18next.t("complete-your-profile-abort-button")}
               </Form.Field>

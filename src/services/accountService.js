@@ -24,17 +24,18 @@ const accountService = {
       };
 
       // Perform the request
-      const updateProfileResponse = await apiClient.put(
+      const updateAccountResponse = await apiClient.put(
         API_CONFIG.ACCOUNT.EDIT_ACCCOUNT_URL + accountId,
         newAccountValues,
         headers
       );
 
       // Handle the response
-      if (updateProfileResponse.status === 200) {
+      if (updateAccountResponse.status === 200) {
         return {
-          response: updateProfileResponse,
-          error: null
+          response: updateAccountResponse,
+          error: null,
+          updateAccountStatus: updateAccountResponse.status
         };
       }
     } catch (error) {

@@ -104,6 +104,34 @@
   "profile-matriculationDate-label": "Einschreibungsdatum",
   "profile-exmatriculationDate-label": "Exmatrikulationsdatum",
 
+  "accountManagement-edit-email-button-label": "Email ändern",
+  "accountManagement-edit-password-button-label": "Passwort ändern",
+  "accountManagement-delete-account-button-label": "Account löschen",
+
+  "accountManagement-delete-account-confirmation-modal-confirm-button-label": "Ich bin sicher, Account löschen",
+  "accountManagement-delete-account-confirmation-modal-cancel-button-label": "Abbrechen",
+  "accountManagement-delete-account-confirmation-modal-content": "Sind Sie sicher, dass Sie ihren Account beim Siegener Uni Netzwerk löschen wollen? Diese Aktion führt dazu, dass ihr Account samt ihrer Beiträge und Lehrstuhlzugehörigkeiten unwiederbringlich gelöscht wird. Sie werden unverzüglich abgemeldet und benötigen einen neuen Benutzeraccount, um sich wieder anzumelden.",
+  "accountManagement-confirm-account-deletion-headline": "Löschen ihres Accounts bestätigen?",
+
+  "accountManagement-edit-password-headline": "Passwort ändern",
+  "edit-password-modal-old-password-input-placeholder": "Altes Passwort",
+  "edit-password-modal-new-password-input-placeholder": "Neues Passwort",
+  "edit-password-form-success-message-title": "Erfolg",
+  "edit-password-form-success-message-message": "Passwort aktualisiert",
+  "edit-password-form-error-message-title": "Fehler",
+  "edit-password-form-error-message-message": "Password konnte nicht aktualisiert werden",
+
+  "accountManagement-edit-email-headline": "Account-Email bearbeiten",
+  "edit-private-email-modal-oldEmail-placeholder": "Alte Email",
+  "edit-private-email-modal-newEmail-placeholder": "Neue Email",
+  "edit-private-email-form-success-message-title": "Erfolg",
+  "edit-private-email-form-success-message-message": "Email aktualisiert",
+  "edit-private-email-form-error-message-title": "Fehler",
+  "edit-private-email-form-error-message-message": "Email konnte nicht aktualisiert werden",
+
+  "account-card-header": "Mein Account",
+  "account-card-email-label": "Private Email: ",
+
   "chair-card-email-label": "Email: ",
   "chair-card-phoneNumber-label": "Tel: ",
   "chair-card-phoneNumberMobile-label": "Mobil: ",
@@ -112,6 +140,7 @@
   "address-card-city-label": "Stadt:",
   "address-card-postCode-label": "PLZ:",
   "address-card-street-label": "Straße:",
+  "address-card-room-label": "Raum:",
 
   "contact-card-header": "Kontakt",
   "contact-card-email-label": "Email:",
@@ -226,9 +255,15 @@
 
   "new-event-modal-startdate-label": "Beginn",
   "new-event-modal-startdate-placeholder": "Beginn",
-
   "new-event-modal-enddate-label": "Ende",
   "new-event-modal-enddate-placeholder": "Ende",
+
+  "new-post-modal-post-button-label": "Posten",
+  "new-post-modal-abort-button-label": "Abbrechen",
+  "new-post-modal-headline": "Neuer Post",
+  "new-post-modal-postType-dropdown-placeholder": "Beitragsart wählen",
+
+  "confirmModal-accept-button-text": "Alles klar",
 
   "home-page-no-subscriptions-placeholder": "Du hast noch keine Lehrstühle abonniert",
   "home-page-refresh-button-text": "Aktualisieren",
@@ -248,6 +283,7 @@
   "chairpage-successfully-applied-message": "Erfolgreich beworben",
   "chairpage-general-information-label": "Informationen",
   "chairpage-employee-fragment-applicants-headline": "Bewerber",
+  "chairpage-edit-chair-button-label": "Lehrstuhl bearbeiten",
 
   "chairRoleList-add-role-button-label": "Hinzufügen",
   "chairRoleList-no-items-placeholder": "Keine Lehrstuhlzugehörigkeit angegeben",

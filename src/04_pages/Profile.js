@@ -113,6 +113,7 @@ class Profile extends React.Component {
                     city={props.profileValues.address.city}
                     postCode={props.profileValues.address.postCode}
                     street={props.profileValues.address.street}
+                    room={props.profileValues.address.room}
                   />
                 ) : (
                   <OneLinePlaceHolder />

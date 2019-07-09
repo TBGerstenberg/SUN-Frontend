@@ -221,7 +221,14 @@ class NavBar extends Component {
             <LanguageSwitcher />
             <Menu.Item style={{ display: "flex", flexDirection: "column" }}>
               {/*   <Trans i18nKey="navbar-logged-in-as-text" /> */}
-              {this.props.user ? this.props.user.email : ""}
+
+              <Link
+                to={{
+                  type: navigationConstants.NAVIGATE_TO_ACCOUNT_MANAGEMENT
+                }}
+              >
+                {this.props.user ? this.props.user.email : ""}
+              </Link>
 
               <Button
                 href="#"

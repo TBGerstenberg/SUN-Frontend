@@ -268,6 +268,35 @@ function getSingleUser(userId) {
   }
 }
 
+/**
+ * Requests to the delete the account with "accountId".
+ */
+function deleteAccount(accountId) {
+  return async (dispatch, getState) => {
+    dispatch(request());
+
+    const deleteAccountRequest = await userService.deleteAccount(accountId);
+
+    if (deleteAccountRequest && deleteAccountRequest.status === 200) {
+      dispatch(success());
+    } else {
+      dispatch(failure(deleteAccountRequest.error));
+    }
+  };
+
+  function request() {
+    return { type: userConstants.DELETE_ACCOUNT_REQUEST };
+  }
+
+  function success(user) {
+    return { type: userConstants.DELETE_ACCOUNT_SUCCESS, user };
+  }
+
+  function failure(error) {
+    return { type: userConstants.DELETE_ACCOUNT_FAILURE, error };
+  }
+}
+
 function addSubscription(subscription) {
   return {
     type: userConstants.ADD_SUBSCRIPTION,
@@ -290,7 +319,8 @@ const userActions = {
   getSingleUser,
   updateProfile,
   addSubscription,
-  removeSubscription
+  removeSubscription,
+  deleteAccount
 };
 
 export default userActions;

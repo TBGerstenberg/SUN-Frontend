@@ -72,6 +72,8 @@ class Signup extends React.Component {
                   )}
                 >
                   <EmailInput
+                    name="email"
+                    placeholder={i18next.t("signup-email-input-placeholder")}
                     validate={[
                       formValidationUtilities.requiredEmail,
                       formValidationUtilities.email,
@@ -80,6 +82,8 @@ class Signup extends React.Component {
                   />
 
                   <PasswordInput
+                    name="password"
+                    placeholder={i18next.t("signup-password-input-placeholder")}
                     validators={[
                       formValidationUtilities.requiredPassword,
                       formValidationUtilities.passwordStrength,

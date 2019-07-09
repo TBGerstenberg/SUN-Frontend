@@ -155,46 +155,54 @@ class UserForm extends React.Component {
             // Email and Password
           }
 
-          <Grid.Row textAlign="left">
-            <Grid.Column width={6} textAlign="left">
-              <Header as="h4" color="black" textAlign="left">
-                <Trans i18nKey="complete-profile-account-information-headline" />
-              </Header>
-            </Grid.Column>
-            <Grid.Column width={6} />
-          </Grid.Row>
+          {!this.props.editedByOwner && (
+            <>
+              <Grid.Row textAlign="left">
+                <Grid.Column width={6} textAlign="left">
+                  <Header as="h4" color="black" textAlign="left">
+                    <Trans i18nKey="complete-profile-account-information-headline" />
+                  </Header>
+                </Grid.Column>
+                <Grid.Column width={6} />
+              </Grid.Row>
 
-          <Grid.Row textAlign="left">
-            <Grid.Column width={6} textAlign="left">
-              <EmailInput
-                validate={[
-                  formValidationUtilities.requiredEmail,
-                  formValidationUtilities.email,
-                  formValidationUtilities.uniSiegenEmail
-                ]}
-              />
-              {this.state.mode === "add" && (
-                <PasswordInput
-                  validators={[
-                    formValidationUtilities.passwordStrength,
-                    formValidationUtilities.requiredPassword
-                  ]}
-                />
-              )}
-            </Grid.Column>
-
-            <Grid.Column width={6}>
-              {!this.props.editedByOwner && (
-                <Form.Group>
-                  <Field
-                    name="accountIsAdminCheckbox"
-                    component={CheckboxField}
-                    label={"Admin"}
+              <Grid.Row textAlign="left">
+                <Grid.Column width={6} textAlign="left">
+                  <EmailInput
+                    name="email"
+                    placeholder={i18next.t("signup-email-input-placeholder")}
+                    validate={[
+                      formValidationUtilities.requiredEmail,
+                      formValidationUtilities.email,
+                      formValidationUtilities.uniSiegenEmail
+                    ]}
                   />
-                </Form.Group>
-              )}
-            </Grid.Column>
-          </Grid.Row>
+                  {this.state.mode === "add" && (
+                    <PasswordInput
+                      placeholder={i18next.t(
+                        "signup-password-input-placeholder"
+                      )}
+                      name="password"
+                      validators={[
+                        formValidationUtilities.passwordStrength,
+                        formValidationUtilities.requiredPassword
+                      ]}
+                    />
+                  )}
+                </Grid.Column>
+
+                <Grid.Column width={6}>
+                  <Form.Group>
+                    <Field
+                      name="accountIsAdminCheckbox"
+                      component={CheckboxField}
+                      label={"Admin"}
+                    />
+                  </Form.Group>
+                </Grid.Column>
+              </Grid.Row>
+            </>
+          )}
 
           {
             // SubHeadline
@@ -583,7 +591,6 @@ class UserForm extends React.Component {
     // Values that are extracted from the various input fields, each field is either managed by redux form
     // or via the components state.
     const accountValues = {
-      newEmail: values.email,
       person: {
         userId: this.props.userId,
         title: values.title,
@@ -613,6 +620,7 @@ class UserForm extends React.Component {
     // Temporary workaround, since the BE responds with a 400 when including the admin field
     if (!this.props.editedByOwner) {
       accountValues.admin = values.accountIsAdminCheckbox;
+      accountValues["newEmail"] = values.email;
     }
 
     this.setState({
@@ -649,8 +657,6 @@ class UserForm extends React.Component {
         const editPersonChairRelationsRequest = await chairService.updatePersonChairRelations(
           this.state.personChairRelations
         );
-
-        console.log(editPersonChairRelationsRequest);
 
         if (
           editPersonChairRelationsRequest[0] &&
@@ -708,7 +714,6 @@ class UserForm extends React.Component {
           addChairRelationsRequest[0] &&
           addChairRelationsRequest[0].status === 200
         ) {
-          console.log("Reached final callback");
           this.props.onCompleteWithSuccess();
         } else {
           this.props.onCompleteWithError(addChairRelationsRequest.error);
