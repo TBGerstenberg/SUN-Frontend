@@ -258,5 +258,7 @@
   "subscribeButton-active-label": "abonniert ✓",
   "subscribeButton-unsubscribed-label": "abonnieren",
 
+  "personList-chairAdmin-checkbox-label": "Lehrstuhladministrator",
+
   "404-Page-Text": "404 - Wir konnten nicht finden wonach du suchst"
 }

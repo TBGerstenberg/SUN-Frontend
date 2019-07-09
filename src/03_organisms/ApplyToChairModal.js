@@ -61,8 +61,6 @@ class ApplyToChairModal extends Component {
   }
 
   async handleApplicationSubmit() {
-    console.log(this.state);
-
     const newPersonChairRelationValues = {
       personId: this.props.personId,
       chairId: this.props.chairId,

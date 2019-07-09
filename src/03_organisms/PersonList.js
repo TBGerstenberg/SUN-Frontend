@@ -1,6 +1,6 @@
 import i18next from "i18next";
 import React, { Component } from "react";
-import { Button, Card, Icon, Image, List } from "semantic-ui-react";
+import { Button, Card, Checkbox, Icon, Image, List } from "semantic-ui-react";
 import personChairRelationEnum from "../models/enumerations/personChairRelationEnum";
 
 class PersonList extends Component {
@@ -8,6 +8,7 @@ class PersonList extends Component {
     super(props);
     this.deleteListItem = this.deleteListItem.bind(this);
     this.acceptListItem = this.acceptListItem.bind(this);
+    this.changeListItem = this.changeListItem.bind(this);
   }
 
   render() {
@@ -25,6 +26,8 @@ class PersonList extends Component {
                       <PersonListItem
                         acceptable={this.props.itemsAcceptable}
                         removeable={this.props.itemsRemoveable}
+                        changeable={this.props.itemsChangeable}
+                        defaultChecked={item.chairAdmin}
                         item={item}
                         key={index}
                         itemId={index}
@@ -33,6 +36,9 @@ class PersonList extends Component {
                         }}
                         onDelete={index => {
                           this.deleteListItem(index);
+                        }}
+                        onChange={index => {
+                          this.changeListItem(index);
                         }}
                       />
                     );
@@ -55,6 +61,14 @@ class PersonList extends Component {
     let mutatedPersonChairRelations = [...this.props.persons];
     mutatedPersonChairRelations.splice(index, 1);
     this.props.onItemDeleted(mutatedPersonChairRelations);
+  }
+
+  changeListItem(index) {
+    let mutatedPersonChairRelations = [...this.props.persons];
+    mutatedPersonChairRelations[
+      index
+    ].chairAdmin = !mutatedPersonChairRelations[index].chairAdmin;
+    this.props.onItemChanged(mutatedPersonChairRelations);
   }
 }
 
@@ -80,7 +94,29 @@ const PersonListItem = props => {
             {props.item.person.address ? props.item.person.address.email : ""}
           </List.Content>
         </List.Content>
-        <List.Content floated="right" style={{ marginTop: "0px" }}>
+
+        <List.Content
+          floated="right"
+          style={{ marginTop: "0px" }}
+          verticalAlign="middle"
+        >
+          {props.changeable && (
+            <span
+              style={{
+                marginRight: "20px"
+              }}
+            >
+              <Checkbox
+                label={i18next.t("personList-chairAdmin-checkbox-label")}
+                onClick={() => {}}
+                onChange={(e, { value }) => {
+                  props.onChange(props.itemId, value);
+                }}
+                defaultChecked={props.defaultChecked}
+              />
+            </span>
+          )}
+
           {props.removeable && (
             <Button
               icon

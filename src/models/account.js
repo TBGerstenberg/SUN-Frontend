@@ -40,6 +40,8 @@ class Account {
       }
     );
 
+    console.log(personChairRelationExists);
+
     return (
       personChairRelationExists && personChairRelationExists.chairAdmin === true
     );

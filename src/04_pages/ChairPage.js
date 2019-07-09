@@ -37,6 +37,7 @@ export class ChairPage extends React.Component {
     this.handleApplicantAccepted = this.handleApplicantAccepted.bind(this);
     this.handleApplicantDenied = this.handleApplicantDenied.bind(this);
     this.handleEmployeeRemoved = this.handleEmployeeRemoved.bind(this);
+    this.handleEmployeeChanged = this.handleEmployeeChanged.bind(this);
 
     const panes = [
       {
@@ -169,6 +170,12 @@ export class ChairPage extends React.Component {
     const personCanEditEmployees =
       this.props.personIsChairAdmin || this.props.personIsSuperAdmin;
 
+    const personCanManageChairAdmins =
+      this.props.personIsSuperAdmin || this.props.personIsChairAdmin;
+
+    console.log(this.props.personIsSuperAdmin);
+    console.log(this.props.personIsChairAdmin);
+
     return (
       <Grid>
         <Grid.Row columns={2} verticalAlign="middle">
@@ -205,9 +212,11 @@ export class ChairPage extends React.Component {
               <PersonList
                 itemsRemoveable={personCanEditEmployees}
                 itemsAcceptable={false}
+                itemsChangeable={personCanManageChairAdmins}
                 persons={this.state.employees}
                 onItemAdded={() => {}}
                 onItemDeleted={this.handleEmployeeRemoved}
+                onItemChanged={this.handleEmployeeChanged}
               />
             </Grid.Column>
           </Grid.Row>
@@ -220,10 +229,12 @@ export class ChairPage extends React.Component {
                 {i18next.t("chairpage-employee-fragment-applicants-headline")}
               </Header>
               <PersonList
-                itemsRemoveable={true}
-                itemsAcceptable={true}
+                itemsRemoveable={personCanEditEmployees}
+                itemsAcceptable={personCanEditEmployees}
+                itemsChangeable={false}
                 onItemAdded={this.handleApplicantAccepted}
                 onItemDeleted={this.handleApplicantDenied}
+                onItemChanged={() => {}}
                 persons={this.state.applicants}
               />
             </Grid.Column>
@@ -233,6 +244,23 @@ export class ChairPage extends React.Component {
     );
   }
 
+  /**
+   * Called when data about the relation between an employee and the chair changes,
+   * e.g. when someone is appointed to be chairAdmin or no longer granted that role
+   */
+  handleEmployeeChanged(alteredEmployeeList) {
+    this.setState({ employees: alteredEmployeeList });
+
+    this.updatePersonChairRelations([
+      ...alteredEmployeeList,
+      ...this.state.applicants
+    ]);
+  }
+
+  /**
+   * Called when an Item from the list of employees is removed
+   * e.g. when an employee is no longer granted to be chairAdmin
+   */
   handleEmployeeRemoved(alteredEmployeeList) {
     this.setState({ employees: alteredEmployeeList });
 
@@ -301,6 +329,7 @@ export class ChairPage extends React.Component {
   renderPostsFragment() {
     const personCanPostForChair =
       this.props.personIsEmployee || this.props.personIsSuperAdmin;
+
     return (
       <Grid>
         <Grid.Row columns={2} verticalAlign="middle">
@@ -580,12 +609,15 @@ let mapStateToProps = state => {
           personIsApplicant = true;
         }
 
-        if (personChairRelation.chairAdmin) {
+        console.log(personChairRelation);
+        if (personChairRelation.chairAdmin === true) {
           personIsChairAdmin = true;
         }
       }
     }
   }
+
+  console.log(personIsChairAdmin);
 
   return {
     // Chair related info
