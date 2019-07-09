@@ -266,7 +266,7 @@ let mapStateToProps = (state, ownProps) => {
     if (
       loggedInUser.isAuthorOfPost(ownProps.post) ||
       loggedInUser.isSuperAdmin() ||
-      loggedInUser.isEmployeeForChair(ownProps.post.pageId)
+      loggedInUser.isChairAdmin(ownProps.post.pageId)
     ) {
       userCanDeletePost = true;
     }
@@ -274,7 +274,6 @@ let mapStateToProps = (state, ownProps) => {
 
   return {
     userCanDeletePost: userCanDeletePost,
-
     chairs: state.chair.chairs || [],
     users: state.user.users || []
   };

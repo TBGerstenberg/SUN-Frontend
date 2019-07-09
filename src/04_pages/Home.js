@@ -51,7 +51,7 @@ class Home extends React.Component {
             </Grid.Row>
 
             <Grid.Row columns={3}>
-              <Grid.Column width={3} floated="left">
+              <Grid.Column width={4} floated="left">
                 <Card color="blue">
                   <Card.Content>
                     <Card.Header>Alle Lehrstühle:</Card.Header>
@@ -100,7 +100,7 @@ class Home extends React.Component {
                   </Card>
                 </Grid.Column>
               )}
-              <Grid.Column width={3} floated="right">
+              <Grid.Column width={4} floated="right">
                 <Card color="blue">
                   <Card.Content>
                     <Card.Header>Meine Abonnements:</Card.Header>

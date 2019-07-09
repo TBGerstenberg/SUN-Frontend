@@ -31,6 +31,19 @@ class Account {
   isAuthorOfPost(post) {
     return post.authorId === this.person.id;
   }
+
+  /** Checks wether or not a person is admin of a chair */
+  isChairAdmin(chairId) {
+    const personChairRelationExists = this.person.chairs.find(
+      personChairRelation => {
+        return (personChairRelation.chairId = chairId);
+      }
+    );
+
+    return (
+      personChairRelationExists && personChairRelationExists.chairAdmin === true
+    );
+  }
 }
 
 export default Account;

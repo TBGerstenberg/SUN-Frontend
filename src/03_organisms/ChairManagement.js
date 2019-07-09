@@ -42,6 +42,8 @@ class ChairManagement extends React.Component {
     // Modal opening methods
     this.openAddChairModal = this.openAddChairModal.bind(this);
     this.openEditChairModal = this.openEditChairModal.bind(this);
+    this.closeAddChairModal = this.closeAddChairModal.bind(this);
+    this.closeEditChairModal = this.closeEditChairModal.bind(this);
   }
 
   render() {

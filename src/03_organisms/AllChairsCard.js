@@ -3,6 +3,7 @@ import { withTranslation } from "react-i18next";
 import Link from "redux-first-router-link";
 import { List } from "semantic-ui-react";
 import { navigationConstants } from "../redux/_constants";
+import "./allChairsCard.css";
 
 const ChairCard = props => {
   return (
@@ -13,7 +14,7 @@ const ChairCard = props => {
           <List.Header>
             {" "}
             <Link
-              className="item"
+              className="item chairLink"
               to={{
                 type: navigationConstants.NAVIGATE_TO_CHAIR_PAGE,
                 payload: { chairId: props.chairId ? props.chairId : null }
