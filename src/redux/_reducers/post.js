@@ -95,12 +95,6 @@ const postReducer = (state = initialState, action) => {
         ...state
       };
     }
-    case postConstants.REMOVE_POST_SUCCESS: {
-      return {
-        ...state
-        // TODO: find and delete POST
-      };
-    }
 
     default:
       return state;

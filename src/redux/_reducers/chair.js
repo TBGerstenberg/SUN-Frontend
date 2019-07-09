@@ -1,4 +1,4 @@
-import { chairConstants } from "../_constants";
+import { chairConstants, postConstants } from "../_constants";
 
 const initialState = {};
 
@@ -53,6 +53,27 @@ const chairReducer = (state = initialState, action) => {
         ...state,
         error: action.error
       };
+
+    case postConstants.REMOVE_POST_REQUEST:
+      return { ...state };
+
+    case postConstants.REMOVE_POST_SUCCESS:
+      let mutatedChairPosts = [...state.chairPosts];
+      const indexOfDeletedChair = mutatedChairPosts.findIndex(post => {
+        return (post.id = action.removedPostId);
+      });
+      mutatedChairPosts.splice(indexOfDeletedChair, 1);
+
+      return {
+        ...state,
+        chairPosts: mutatedChairPosts
+      };
+
+    case postConstants.REMOVE_POST_FAILURE:
+      return {
+        deletePostFailureStatus: action.error.error.status
+      };
+
     default:
       return state;
   }

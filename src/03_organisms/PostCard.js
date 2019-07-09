@@ -3,6 +3,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Button, Card, Icon } from "semantic-ui-react";
 import Account from "../models/account";
+import { postActions } from "../redux/_actions";
 import tableFormattingUtilities from "../utilities/tableFormattingUtilities";
 import "./PostCard.css";
 
@@ -16,6 +17,10 @@ class PostCard extends React.Component {
       chairWhichAuthoredPost: null,
       postToBeRendered: props.post
     };
+
+    this.handlePostDeleteButtonClick = this.handlePostDeleteButtonClick.bind(
+      this
+    );
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -23,9 +28,6 @@ class PostCard extends React.Component {
     let chairWhichAuthoredPost = prevState.chairWhichAuthoredPost;
     let chairs = prevState.chairs;
     let postToBeRendered = prevState.postToBeRendered;
-
-    console.log(prevState.postToBeRendered);
-    console.log(prevState.chairWhichAuthoredPost);
 
     if (
       (chairWhichAuthoredPost &&
@@ -39,7 +41,7 @@ class PostCard extends React.Component {
       });
     }
 
-    if (nextProps.users != prevState.users) {
+    if (nextProps.users != prevState.users && prevState.postToBeRendered) {
       // find user with ID of props.post.authorId
       userWhoAuthoredPost = nextProps.users.find(user => {
         return user.id === prevState.postToBeRendered.authorId;
@@ -89,7 +91,7 @@ class PostCard extends React.Component {
             size="tiny"
             color="grey"
             circular
-            onClick={() => {}}
+            onClick={this.handlePostDeleteButtonClick}
             floated="right"
           >
             <Icon name="trash" />
@@ -241,6 +243,13 @@ class PostCard extends React.Component {
 
   renderJobPost() {
     return null;
+  }
+
+  /**
+   * Handles a click on the delete-button displayed on each psot
+   */
+  async handlePostDeleteButtonClick() {
+    this.props.dispatch(postActions.deletePost(this.state.postToBeRendered.id));
   }
 }
 

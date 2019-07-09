@@ -187,13 +187,13 @@ function updatePost(postId, postValues) {
   }
 }
 
-function removePost(postId) {
+function deletePost(postId) {
   return async (dispatch, getState) => {
     dispatch(request());
     const removePostResponse = await postService.deletePost(postId);
 
     if (removePostResponse && removePostResponse.status === 200) {
-      dispatch(success(removePostResponse.data));
+      dispatch(success(postId));
     } else {
       dispatch(failure(removePostResponse));
     }
@@ -210,8 +210,8 @@ function removePost(postId) {
    * Redux action creator triggered when a FETCH-ALL-request succeeded
    * @param {Array of objects } posts - Posts that have been fetched
    */
-  function success(post) {
-    return { type: postConstants.REMOVE_POST_SUCCESS, post: post };
+  function success(postId) {
+    return { type: postConstants.REMOVE_POST_SUCCESS, removedPostId: postId };
   }
 
   /**
@@ -228,7 +228,7 @@ const postActions = {
   getSinglePost,
   createPost,
   updatePost,
-  removePost,
+  deletePost,
   getFeedPosts
 };
 
