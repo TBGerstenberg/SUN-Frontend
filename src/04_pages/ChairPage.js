@@ -644,14 +644,19 @@ export class ChairPage extends React.Component {
                       }}
                       onCompleteWithSuccess={() => {
                         this.toggleSuccessMessage(
-                          "Erfolg",
-                          "Lehrstuhl editiert"
+                          i18next.t("chairManagement-edit-chair-success-title"),
+                          i18next.t(
+                            "chairManagement-edit-chair-success-message"
+                          )
                         );
                         this.setState({ editChairModalOpen: false });
                         this.props.getSingleChair(this.props.chairId);
                       }}
                       onCompleteWithError={error => {
-                        this.toggleErrorMessage("Fehler", error);
+                        this.toggleErrorMessage(
+                          i18next.t("chairManagement-edit-chair-error-title"),
+                          error
+                        );
                         this.setState({ editChairModalOpen: false });
                       }}
                     />

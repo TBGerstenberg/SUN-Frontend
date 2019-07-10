@@ -103,6 +103,8 @@
   "profile-courseOfStudy-label": "Studiengang",
   "profile-matriculationDate-label": "Einschreibungsdatum",
   "profile-exmatriculationDate-label": "Exmatrikulationsdatum",
+  "profile-update-success-title": "Erfolg",
+  "profile-update-success-message": "Profil aktualisiert",
 
   "accountManagement-edit-email-button-label": "Email ändern",
   "accountManagement-edit-password-button-label": "Passwort ändern",
@@ -207,8 +209,21 @@
   "adminpanel-menu-group-management-label": "Gruppenverwaltung",
   "adminpanel-menu-chair-management-label": "Lehrstuhlverwaltung",
 
-  "usermanagement-edit-user-headline": "Benutzer bearbeiten",
   "usermanagement-add-user-headline": "Neuen Benutzer anlegen",
+  "userManagement-create-user-success-title": "Erfolg",
+  "userManagement-create-user-success-message": "Benutzer angelegt",
+  "userManagement-create-user-error-title": "Fehler",
+
+  "usermanagement-edit-user-headline": "Benutzer bearbeiten",
+  "userManagement-edit-user-success-title": "Erfolg",
+  "userManagement-edit-user-success-message": "Benutzer editiert",
+  "userManagement-edit-user-error-title": "Fehler",
+
+  "userManagement-delete-user-success-title": "Erfolg",
+  "userManagement-delete-user-success-message": "Benutzer gelöscht",
+  "userManagement-delete-user-error-title": "Fehler",
+  "userManagement-delete-user-error-message": "Benutzer konnte nicht gelöscht werden",
+
   "complete-profile-account-information-headline": "Accountinformation",
 
   "usermanagement-tableheader-id": "BenutzerId",
@@ -282,6 +297,13 @@
 
   "home-page-no-subscriptions-placeholder": "Du hast noch keine Lehrstühle abonniert",
   "home-page-refresh-button-text": "Aktualisieren",
+  "homePage-all-chairs-card-headline": "Alle Lehrstühle",
+  "homePage-my-subscriptions-card-headline": "Meine Abonnements",
+
+  "searchResultPage-searchResult-list-header": "Suchergebnisse: ",
+  "searchResultPage-person-list-header": "Personen: ",
+  "searchResultPage-chair-list-header": "Lehrstühle: ",
+  "searchResultPage-post-list-header": "Beiträge: ",
 
   "languageswitcher-label": "Sprache",
 

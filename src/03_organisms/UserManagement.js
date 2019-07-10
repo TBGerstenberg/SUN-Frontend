@@ -1,3 +1,4 @@
+import i18next from "i18next";
 import React from "react";
 import { Trans, withTranslation } from "react-i18next";
 import onClickOutside from "react-onclickoutside";
@@ -74,12 +75,18 @@ class UserManagement extends React.Component {
                 this.setState({ addUserModalOpen: false });
               }}
               onCompleteWithSuccess={() => {
-                this.props.toggleSuccessMessage("Erfolg", "Benutzer angelegt");
+                this.props.toggleSuccessMessage(
+                  i18next.t("userManagement-create-user-success-title"),
+                  i18next.t("userManagement-create-user-success-message")
+                );
                 this.fetchAllAccounts();
                 this.closeAddUserModal();
               }}
               onCompleteWithError={error => {
-                this.props.toggleErrorMessage("Fehler", error);
+                this.props.toggleErrorMessage(
+                  i18next.t("userManagement-create-user-error-title"),
+                  error
+                );
                 this.closeAddUserModal();
               }}
             />
@@ -97,12 +104,18 @@ class UserManagement extends React.Component {
                 this.setState({ editUserModalOpen: false });
               }}
               onCompleteWithSuccess={() => {
-                this.props.toggleSuccessMessage("Erfolg", "Benutzer editiert");
+                this.props.toggleSuccessMessage(
+                  i18next.t("userManagement-edit-user-success-title"),
+                  i18next.t("userManagement-edit-user-success-message")
+                );
                 this.fetchAllAccounts();
                 this.closeEditUserModal();
               }}
               onCompleteWithError={error => {
-                this.props.toggleErrorMessage("Fehler", error);
+                this.props.toggleErrorMessage(
+                  i18next.t("userManagement-edit-user-error-title"),
+                  error
+                );
                 this.closeEditUserModal();
               }}
             />
@@ -290,12 +303,15 @@ class UserManagement extends React.Component {
     console.log(deleteAccountRequest);
 
     if (deleteAccountRequest.status === 200) {
-      this.props.toggleSuccessMessage("Erfolg", "Benutzer gelöscht");
+      this.props.toggleSuccessMessage(
+        i18next.t("userManagement-delete-user-success-title"),
+        i18next.t("userManagement-delete-user-success-message")
+      );
       this.fetchAllAccounts();
     } else {
       this.props.toggleErrorMessage(
-        "Fehler",
-        "Benutzer konnte nicht gelöscht werden"
+        i18next.t("userManagement-delete-user-error-title"),
+        i18next.t("userManagement-delete-user-error-message")
       );
     }
   }

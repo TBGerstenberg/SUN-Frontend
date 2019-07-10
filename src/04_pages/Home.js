@@ -1,5 +1,6 @@
 import i18next from "i18next";
 import React from "react";
+import { Trans, withTranslation } from "react-i18next";
 import { connect } from "react-redux";
 import { Button, Card, Container, Grid, Icon, Image } from "semantic-ui-react";
 import AllChairsCard from "../03_organisms/AllChairsCard";
@@ -54,7 +55,9 @@ class Home extends React.Component {
               <Grid.Column width={4} floated="left">
                 <Card color="blue">
                   <Card.Content>
-                    <Card.Header>Alle Lehrstühle:</Card.Header>
+                    <Card.Header>
+                      <Trans i18nKey="homePage-all-chairs-card-headline" />
+                    </Card.Header>
                   </Card.Content>
                   <Card.Content>
                     {props.chairs &&
@@ -103,7 +106,9 @@ class Home extends React.Component {
               <Grid.Column width={4} floated="right">
                 <Card color="blue">
                   <Card.Content>
-                    <Card.Header>Meine Abonnements:</Card.Header>
+                    <Card.Header>
+                      <Trans i18nKey="homePage-my-subscriptions-card-headline" />
+                    </Card.Header>
                   </Card.Content>
                   <Card.Content>
                     {this.props.subs && (
@@ -139,9 +144,11 @@ let mapDispatchToProps = {
   getFeedPosts: postActions.getFeedPosts
 };
 
-let HomeContainer = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Home);
+let HomeContainer = withTranslation()(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(Home)
+);
 
 export default HomeContainer;

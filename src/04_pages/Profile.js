@@ -141,10 +141,14 @@ class Profile extends React.Component {
                         this.setState({ editUserModalOpen: false });
                       }}
                       onCompleteWithSuccess={() => {
-                        this.toggleSuccessMessage(
-                          "Erfolg",
-                          "Profil aktualisiert"
+                        this.props.dispatch(
+                          userActions.getSingleUser(this.props.userId)
                         );
+                        this.toggleSuccessMessage(
+                          i18next.t("profile-update-success-title"),
+                          i18next.t("profile-update-success-message")
+                        );
+
                         this.closeEditUserModal();
                       }}
                       onCompleteWithError={error => {
@@ -347,6 +351,9 @@ const HeaderProfilePage = props => {
   );
 };
 
+/**
+ * Skills ommited
+ */
 const SkillCatalog = () => {
   return (
     <div>

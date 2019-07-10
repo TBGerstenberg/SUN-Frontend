@@ -591,6 +591,7 @@ class UserForm extends React.Component {
     // Values that are extracted from the various input fields, each field is either managed by redux form
     // or via the components state.
     const accountValues = {
+      admin: values.accountIsAdminCheckbox,
       person: {
         userId: this.props.userId,
         title: values.title,
@@ -619,7 +620,6 @@ class UserForm extends React.Component {
 
     // Temporary workaround, since the BE responds with a 400 when including the admin field
     if (!this.props.editedByOwner) {
-      accountValues.admin = values.accountIsAdminCheckbox;
       accountValues["newEmail"] = values.email;
     }
 
