@@ -161,6 +161,8 @@
   "postCard-eventPost-startsAt-label": "Beginn: ",
   "postCard-eventPost-endsAt-label": "Ende: ",
 
+  "postCard-jobPost-hoursPerWeek-label": "Wochenstunden: ",
+
   "navbar-home-link-label": "Home",
   "navbar-profile-link-label": "Profil",
   "navbar-adminpanel-link-label": "Adminbereich",
@@ -270,6 +272,11 @@
   "new-post-modal-abort-button-label": "Abbrechen",
   "new-post-modal-headline": "Neuer Post",
   "new-post-modal-postType-dropdown-placeholder": "Beitragsart wählen",
+  "new-post-modal-topic-textArea-placeholder": "Thema",
+  "new-post-modal-content-textArea-placeholder": "Beschreibung",
+  "new-post-modal-hoursPerWeekInput-label": "Arbeitsstunden pro Woche",
+  "new-post-modal-hoursPerWeekInput-placeholder": "Arbeitsstunden pro Woche",
+  "new-post-modal-hoursPerWeekInput-metric-label": "Wochenstunden",
 
   "confirmModal-accept-button-text": "Alles klar",
 

@@ -11,54 +11,12 @@ class PostCard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      chairs: [],
-      users: [],
-      author: null,
-      chairWhichAuthoredPost: null,
       postToBeRendered: props.post
     };
 
     this.handlePostDeleteButtonClick = this.handlePostDeleteButtonClick.bind(
       this
     );
-  }
-
-  static getDerivedStateFromProps(nextProps, prevState) {
-    let userWhoAuthoredPost = prevState.author;
-    let chairWhichAuthoredPost = prevState.chairWhichAuthoredPost;
-    let chairs = prevState.chairs;
-    let postToBeRendered = prevState.postToBeRendered;
-
-    if (
-      (chairWhichAuthoredPost &&
-        postToBeRendered &&
-        chairWhichAuthoredPost.id != postToBeRendered.pageId) ||
-      !chairWhichAuthoredPost
-    ) {
-      // Find chair with ID of props.post.pageId
-      chairWhichAuthoredPost = nextProps.chairs.find(chair => {
-        return chair.id === prevState.postToBeRendered.pageId;
-      });
-    }
-
-    if (nextProps.users != prevState.users && prevState.postToBeRendered) {
-      // find user with ID of props.post.authorId
-      userWhoAuthoredPost = nextProps.users.find(user => {
-        return user.id === prevState.postToBeRendered.authorId;
-      });
-    }
-
-    if (nextProps.chairs && nextProps.chairs != prevState.chairs) {
-      chairs = nextProps.chairs;
-    }
-
-    return {
-      ...prevState,
-      author: userWhoAuthoredPost,
-      chairWhichAuthoredPost: chairWhichAuthoredPost,
-      postToBeRendered: nextProps.post,
-      chairs: chairs
-    };
   }
 
   render() {
@@ -102,18 +60,16 @@ class PostCard extends React.Component {
   }
 
   renderStandardPost(props) {
-    console.log(this.state);
     return (
       <Card color="blue" fluid className="postCard-container">
         <Card.Content>
           <Card.Content>
-            {this.state.author && (
+            {props.post.authorName && props.post.pageName && (
               <div className="postCard-authorInfo-container">
                 <span>
                   <Icon name="university" />{" "}
                   <a href={"/chair/" + props.post.pageId}>
-                    {this.state.chairWhichAuthoredPost &&
-                      this.state.chairWhichAuthoredPost.name}
+                    {props.post.pageName}
                   </a>
                 </span>
                 <span className="postCard-authorInfo-personInfo">
@@ -122,9 +78,7 @@ class PostCard extends React.Component {
                     className="postCard-authorInfo-link"
                     href={"/profile/" + props.post.authorId}
                   >
-                    {this.state.author.firstName +
-                      " " +
-                      this.state.author.lastName}
+                    {props.post.authorName}
                   </a>
                 </span>
                 <span>
@@ -166,13 +120,13 @@ class PostCard extends React.Component {
       <Card color="blue" fluid className="postCard-container">
         <Card.Content>
           <Card.Content>
-            {this.state.author && this.state.chairWhichAuthoredPost && (
+            {props.post.authorName && props.post.pageName && (
               <div className="postCard-authorInfo-container">
                 <span>
                   <Icon name="university" />{" "}
                   <a href={"/chair/" + props.post.pageId}>
                     {" "}
-                    {this.state.authorChair && this.state.authorChair.name}
+                    {props.post.pageName}
                   </a>
                 </span>
                 <span className="postCard-authorInfo-personInfo">
@@ -181,9 +135,7 @@ class PostCard extends React.Component {
                     className="postCard-authorInfo-link"
                     href={"/profile/" + props.post.authorId}
                   >
-                    {this.state.author.firstName +
-                      " " +
-                      this.state.author.lastName}
+                    {props.post.authorName}
                   </a>
                 </span>
                 <span>
@@ -241,8 +193,70 @@ class PostCard extends React.Component {
     );
   }
 
-  renderJobPost() {
-    return null;
+  renderJobPost(props) {
+    return (
+      <Card color="blue" fluid className="postCard-container">
+        <Card.Content>
+          <Card.Content>
+            {props.post.authorName && props.post.pageName && (
+              <div className="postCard-authorInfo-container">
+                <span>
+                  <Icon name="university" />{" "}
+                  <a href={"/chair/" + props.post.pageId}>
+                    {props.post.chairName}
+                  </a>
+                </span>
+                <span className="postCard-authorInfo-personInfo">
+                  {i18next.t("postCard-written-by-label")}
+                  <a
+                    className="postCard-authorInfo-link"
+                    href={"/profile/" + props.post.authorId}
+                  >
+                    {props.post.authorName}
+                  </a>
+                </span>
+                <span>
+                  {this.renderDeletePostButton(props.userCanDeletePost)}
+                </span>
+              </div>
+            )}
+          </Card.Content>
+        </Card.Content>
+        <Card.Content>
+          <Card.Header>{props.post.title}</Card.Header>
+          <Card.Description
+            style={{ minHeight: "100px", paddingBottom: "20px" }}
+          >
+            {props.post.content}
+          </Card.Description>
+          <Card.Content
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              padding: "10px 0px"
+            }}
+          >
+            <Card.Content>
+              <span style={{ fontWeight: "bold" }}>
+                {i18next.t("postCard-jobPost-hoursPerWeek-label") + " "}
+              </span>
+              {props.post.hoursPerWeek}
+            </Card.Content>
+          </Card.Content>
+          <Card.Meta className="postCard-meta">
+            <span>
+              <Icon name="info" />
+              {tableFormattingUtilities.postTypeEnumToString(props.post.type)}
+            </span>
+            <span>
+              {tableFormattingUtilities.getTimeSinceCreated(
+                props.post.createdAt
+              )}
+            </span>
+          </Card.Meta>
+        </Card.Content>
+      </Card>
+    );
   }
 
   /**

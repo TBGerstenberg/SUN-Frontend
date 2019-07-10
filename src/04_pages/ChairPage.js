@@ -77,15 +77,23 @@ export class ChairPage extends React.Component {
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
+    console.log(prevState);
+
+    // As soon as the chairId of the chair that shall be viewed is available from redux
     if (nextProps.chairId !== prevState.chairId) {
+      // Fetch the data for it
       nextProps.getSingleChair(nextProps.chairId);
       nextProps.getChairPosts(nextProps.chairId);
 
-      const chair = nextProps.chairSubscriptions.find(element => {
-        return element.pageId == nextProps.chairId;
-      });
+      // Check if the user has subscribed to the chair that is being viewed
+      const chairIsInUsersSubscriptions = nextProps.chairSubscriptions.find(
+        element => {
+          return element.pageId == nextProps.chairId;
+        }
+      );
 
-      if (chair != null) {
+      // If so, save it in the componens state
+      if (chairIsInUsersSubscriptions != null) {
         return {
           chairId: nextProps.chairId,
           userHasSubscribedToChair: true
@@ -96,7 +104,10 @@ export class ChairPage extends React.Component {
           userHasSubscribedToChair: false
         };
       }
+
+      // As soon as the chair that shall be displayed arrives
     } else if (nextProps.currentlyViewedChair) {
+      // Filter applicants and employees
       const applicants = nextProps.currentlyViewedChair.persons.filter(
         element => {
           return element.active === false;
@@ -701,7 +712,6 @@ let mapStateToProps = state => {
   let personIsEmployee = false;
   let personIsApplicant = false;
   let personIsChairAdmin = false;
-  let chairHasEmployees = false;
 
   // Rechte für die aktuelle Seite berechnen
   if (currentlyViewedChair && loggedInUserPersonId) {
