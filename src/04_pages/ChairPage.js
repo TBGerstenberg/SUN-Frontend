@@ -23,6 +23,7 @@ import {
   userActions
 } from "../redux/_actions";
 import { chairService } from "../services";
+import tableFormattingUtilities from "../utilities/tableFormattingUtilities";
 
 export class ChairPage extends React.Component {
   constructor(props) {
@@ -77,8 +78,6 @@ export class ChairPage extends React.Component {
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    console.log(prevState);
-
     // As soon as the chairId of the chair that shall be viewed is available from redux
     if (nextProps.chairId !== prevState.chairId) {
       // Fetch the data for it
@@ -190,7 +189,6 @@ export class ChairPage extends React.Component {
       <Grid>
         <Grid.Row columns={2} verticalAlign="middle">
           <Grid.Column width={10}>
-            {" "}
             <Header>{i18next.t("chairpage-employee-fragment-headline")}</Header>
           </Grid.Column>
 
@@ -466,36 +464,26 @@ export class ChairPage extends React.Component {
       this.props.redirectToNotFound();
     }
 
-    //  Fetch all users if the site was navigated to by directly manipulating urls, used to populate the author-field of chairposts with an actual user instead of a profile link, so his name can be displayed on the posts
-    if (
-      !this.props.users ||
-      (this.props.users && this.props.users.length === 0)
-    ) {
-      this.props.getAllUsers();
-    }
-
-    // Fetch all chairs if the site was navigated to by directly manipuating urls, used to populate the chair-field on each post
-    if (
-      !this.props.chairs ||
-      (this.props.chairs && this.props.chairs.length === 0)
-    ) {
-      this.props.getAllChairs();
-    }
-
-    // Once the chair is loaded, display its name in the top-heading
-    const chairName = this.props.currentlyViewedChair
-      ? this.props.currentlyViewedChair.name
-      : "";
-
     var chairExists = this.props.currentlyViewedChair;
 
     // Populate information about the chair if it exists
-    let email, phoneNumber, phoneNumberMobile, city, street, postCode, room;
+    let chairName,
+      email,
+      phoneNumber,
+      phoneNumberMobile,
+      city,
+      street,
+      postCode,
+      room,
+      facultyEnumValue;
 
     const personCanEditChairInfo =
       this.props.personIsChairAdmin || this.props.personIsSuperAdmin;
 
     if (chairExists) {
+      chairName = this.props.currentlyViewedChair.name;
+      facultyEnumValue = this.props.currentlyViewedChair.faculty;
+
       if (this.props.currentlyViewedChair.address) {
         email = this.props.currentlyViewedChair.address.email || "";
         phoneNumber = this.props.currentlyViewedChair.address.phoneNumber || "";
@@ -533,7 +521,15 @@ export class ChairPage extends React.Component {
             <Grid.Row columns={3}>
               <Grid.Column width={11}>
                 <Header as="h1" color="blue">
-                  {i18next.t("chairpage-chairName-headline") + " " + chairName}
+                  {i18next.t("chairpage-chairName-headline") +
+                    " " +
+                    chairName +
+                    " - " +
+                    i18next.t("chairpage-faculty-headline") +
+                    " " +
+                    tableFormattingUtilities.facultyEnumToString(
+                      facultyEnumValue
+                    )}
                 </Header>
               </Grid.Column>
               <Grid.Column textAlign="center" width={1} />

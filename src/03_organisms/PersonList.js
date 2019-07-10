@@ -1,20 +1,40 @@
 import i18next from "i18next";
 import React, { Component } from "react";
-import { Button, Card, Checkbox, Icon, Image, List } from "semantic-ui-react";
+import {
+  Button,
+  Card,
+  Checkbox,
+  Confirm,
+  Icon,
+  Image,
+  List
+} from "semantic-ui-react";
+import unsetGenderAvatarImageSource from "../assets/images/chair_avatar.png";
+import maleAvatarImageSource from "../assets/images/christian.jpg";
+import otherAvatarImageSource from "../assets/images/matt.jpg";
+import femaleAvatarImageSource from "../assets/images/rachel.png";
 import personChairRelationEnum from "../models/enumerations/personChairRelationEnum";
 
 class PersonList extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      confirmModalOpen: false,
+      indexOfAppointedChairAdmin: null
+    };
     this.deleteListItem = this.deleteListItem.bind(this);
     this.acceptListItem = this.acceptListItem.bind(this);
     this.changeListItem = this.changeListItem.bind(this);
+    this.handleItemChangeConfirmed = this.handleItemChangeConfirmed.bind(this);
+    this.handleItemChangeAborted = this.handleItemChangeAborted.bind(this);
+    this.openConfirmModal = this.openConfirmModal.bind(this);
+    this.closeConfirmModal = this.closeConfirmModal.bind(this);
+    this.renderConfirmModalContent = this.renderConfirmModalContent.bind(this);
   }
 
   render() {
     const shallRenderPersons = this.props.persons;
 
-    console.log("Rerendering personlist");
     return (
       <>
         <Card color="blue" fluid>
@@ -38,7 +58,7 @@ class PersonList extends Component {
                           this.deleteListItem(index);
                         }}
                         onChange={index => {
-                          this.changeListItem(index);
+                          this.openConfirmModal(index);
                         }}
                       />
                     );
@@ -47,8 +67,58 @@ class PersonList extends Component {
             </List>
           </Card.Content>
         </Card>
+
+        <Confirm
+          onConfirm={this.handleItemChangeConfirmed}
+          onCancel={this.handleItemChangeAborted}
+          onClose={this.handleItemChangeAborted}
+          confirmButton={i18next.t(
+            "personList-confirm-chairAdmin-change-button-label"
+          )}
+          cancelButton={i18next.t(
+            "personList-cancel-chairAdmin-change-button-label"
+          )}
+          content={this.renderConfirmModalContent()}
+          open={this.state.confirmModalOpen}
+        />
       </>
     );
+  }
+
+  openConfirmModal(indexOfAppointedChairAdmin) {
+    this.setState({
+      confirmModalOpen: true,
+      indexOfAppointedChairAdmin: indexOfAppointedChairAdmin
+    });
+  }
+
+  closeConfirmModal() {
+    this.setState({ confirmModalOpen: false });
+  }
+
+  handleItemChangeConfirmed(index) {
+    this.changeListItem(index);
+    this.closeConfirmModal();
+  }
+
+  handleItemChangeAborted() {
+    this.closeConfirmModal();
+  }
+
+  renderConfirmModalContent() {
+    if (
+      this.props.persons &&
+      this.props.persons.length > 0 &&
+      this.state.indexOfAppointedChairAdmin
+    ) {
+      return (
+        i18next.t("personList-confirm-chairAdmin-content-1") +
+        this.props.persons[this.state.indexOfAppointedChairAdmin].name +
+        i18next.t("personList-confirm-chairAdmin-content-2")
+      );
+    } else {
+      return null;
+    }
   }
 
   acceptListItem(index) {
@@ -73,13 +143,34 @@ class PersonList extends Component {
 }
 
 const PersonListItem = props => {
+  console.log(props.item);
   return (
     <List.Item style={{ width: "100%" }}>
       <List.Content floated="left">
-        <Image
-          avatar
-          src="https://react.semantic-ui.com/images/avatar/small/rachel.png"
-        />
+        {
+          // Person has not set its gender, render a placeholder
+        }
+        {props.item.person.gender && props.item.person.gender === 0 && (
+          <Image avatar src={unsetGenderAvatarImageSource} />
+        )}
+        {
+          // Person is male, display a male avatar
+        }
+        {props.item.person.gender && props.item.person.gender === 1 && (
+          <Image avatar src={maleAvatarImageSource} />
+        )}
+        {
+          // Person is male, display a female avater
+        }
+        {props.item.person.gender && props.item.person.gender === 2 && (
+          <Image avatar src={femaleAvatarImageSource} />
+        )}
+        {
+          // Person has selected "other" as his / her gender, display a more neutral avatar
+        }
+        {props.item.person.gender && props.item.person.gender === 3 && (
+          <Image avatar src={otherAvatarImageSource} />
+        )}
       </List.Content>
 
       <List.Content verticalAlign="middle">

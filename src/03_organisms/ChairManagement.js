@@ -131,6 +131,9 @@ class ChairManagement extends React.Component {
           <Trans i18nKey="chairManagement-tableheader-name" />
         </Table.HeaderCell>
         <Table.HeaderCell>
+          <Trans i18nKey="chairManagement-tableheader-faculty" />
+        </Table.HeaderCell>
+        <Table.HeaderCell>
           <Trans i18nKey="chairManagement-tableheader-city" />
         </Table.HeaderCell>
         <Table.HeaderCell>
@@ -166,6 +169,9 @@ class ChairManagement extends React.Component {
         </Table.Cell>
         <Table.Cell key="name">
           {tableFormattingUtilities.numberOrEmpty(chair.name)}
+        </Table.Cell>
+        <Table.Cell key="faculty">
+          {tableFormattingUtilities.facultyEnumToString(chair.name)}
         </Table.Cell>
         <Table.Cell key="city">
           {tableFormattingUtilities.stringOrEmpty(chair.address.city)}

@@ -1,5 +1,6 @@
 import i18next from "i18next";
 import moment from "moment-with-locales-es6";
+import facultyEnum from "../models/enumerations/facultyEnum";
 import genderEnum from "../models/enumerations/genderEnum";
 import postTypeEnum from "../models/enumerations/postTypeEnum";
 
@@ -27,6 +28,9 @@ const tableFormattingUtilities = {
   },
   getTimeSinceCreated: dateString => {
     return moment(dateString).fromNow();
+  },
+  facultyEnumToString: facultyEnumValue => {
+    return i18next.t(`faculty-enum-${facultyEnum[facultyEnumValue]}-option`);
   }
 };
 

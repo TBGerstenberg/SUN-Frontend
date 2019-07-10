@@ -35,6 +35,14 @@
   "posttype-dropdown-jobOffer-option-text": "Stellenausschreibung",
   "posttype-dropdown-thesis-option-text": "Abschlussarbeit",
 
+  "faculty-dropdown-label": "Fakultät",
+  "faculty-enum-unset-option": "Keine Angabe",
+  "faculty-enum-PHIL-option": "PHIL - Philosophische Fakultät",
+  "faculty-enum-BAK-option": "BAK - Bildung - Architektur - Künste",
+  "faculty-enum-WIWI-option": "WIWI - Wirtschaftswissenschaften, Wirtschaftsinformatik und Wirtschaftsrecht",
+  "faculty-enum-NT-option": "NT - Naturwissenschaften und Technik",
+  "faculty-enum-LWF-option": "LWF - Lebenswissenschaftliche Fakultät",
+
   "complete-your-profile-headline": "Vervollständige dein Profil",
   "complete-profile-personal-information-headline": "Persönliches",
   "complete-profile-contact-information-headline": "Kontakt",
@@ -247,6 +255,7 @@
 
   "chairManagement-tableheader-id": "LehrstuhlId",
   "chairManagement-tableheader-name": "Name",
+  "chairManagement-tableheader-faculty": "Fakultät",
   "chairManagement-tableheader-city": "Stadt",
   "chairManagement-tableheader-postCode": "Postleitzahl",
   "chairManagement-tableheader-street": "Straße",
@@ -315,6 +324,7 @@
   "chairpage-apply-to-chair-button-label": "Bewerben",
   "chairpage-new-post-button-label": "Neuer Post",
   "chairpage-chairName-headline": "Lehrstuhl",
+  "chairpage-faculty-headline": "",
   "chairpage-successfully-subscribed-message": "Erfolgreich abonniert",
   "chairpage-successfully-unsubscribed-message": "Erfolgreich deabonniert",
   "chairpage-successfully-applied-message": "Erfolgreich beworben",
@@ -332,6 +342,10 @@
   "subscribeButton-unsubscribed-label": "abonnieren",
 
   "personList-chairAdmin-checkbox-label": "Lehrstuhladministrator",
+  "personList-confirm-chairAdmin-change-button-label": "Bestätigen",
+  "personList-confirm-chairAdmin-content-1": "Sie sie sicher, dass sie",
+  "personList-confirm-chairAdmin-content-2": "zum Lehrstuhladministrator ernennen wollen? Sie wird dadurch in der Lage sein die Stammdaten des Lehrstuhls zu verwalten, Beiträge und Veranstaltungen im Namen des Lehrstuhls zu erstellen und zu löschen, sowie die Rechte anderer Mitarbeiter des Lehrstuhls zu verwalten",
+  "personList-cancel-chairAdmin-change-button-label": "Abbrechen",
 
   "404-Page-Text": "404 - Wir konnten nicht finden wonach du suchst"
 }
