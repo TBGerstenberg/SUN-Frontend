@@ -144,7 +144,7 @@
   "edit-password-form-success-message-title": "Erfolg",
   "edit-password-form-success-message-message": "Passwort aktualisiert",
   "edit-password-form-error-message-title": "Fehler",
-  "edit-password-form-error-message-message": "Password konnte nicht aktualisiert werden",
+  "edit-password-form-error-message-message": "Passwort konnte nicht aktualisiert werden",
 
   "accountManagement-edit-email-headline": "Account-Email bearbeiten",
   "edit-private-email-modal-oldEmail-placeholder": "Alte Email",
@@ -318,7 +318,7 @@
   "chairManagement-delete-chair-button": "Lehrstuhl löschen",
 
   "new-event-modal-headline": "Neue Veranstaltung",
-  "new-event-modal-abort-button-label": "Neue Veranstaltung",
+  "new-event-modal-abort-button-label": "Abbrechen",
   "new-event-modal-submit-button-label": "Posten",
 
   "new-event-modal-startdate-label": "Beginn",
