@@ -162,7 +162,7 @@ class Profile extends React.Component {
 
                 {userCanEditProfile && (
                   <Button color="teal" onClick={this.openEditUserModal}>
-                    Profil bearbeiten
+                    {i18next.t("edit-profile-button-label")}
                   </Button>
                 )}
                 <div style={{ marginLeft: "5px", marginTop: "5px" }}>

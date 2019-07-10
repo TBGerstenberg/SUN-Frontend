@@ -111,7 +111,6 @@
   "complete-profile-skills-headline": "Fähigkeiten",
   "complete-profile-skill-input-placeholder": "Fähigkeit",
   "complete-your-profile-add-skill-button": "Hinzufügen",
-
   "complete-your-profile-abort-button": "Abbrechen",
   "complete-your-profile-continue-button": "Abschließen",
 
@@ -125,6 +124,7 @@
   "profile-courseOfStudy-label": "Studiengang",
   "profile-matriculationDate-label": "Einschreibungsdatum",
   "profile-exmatriculationDate-label": "Exmatrikulationsdatum",
+  "edit-profile-button-label": "Profil bearbeiten",
   "profile-update-success-title": "Erfolg",
   "profile-update-success-message": "Profil aktualisiert",
 
@@ -359,8 +359,14 @@
 
   "personList-chairAdmin-checkbox-label": "Lehrstuhladministrator",
   "personList-confirm-chairAdmin-change-button-label": "Bestätigen",
-  "personList-confirm-chairAdmin-content-1": "Sie sie sicher, dass sie",
-  "personList-confirm-chairAdmin-content-2": "zum Lehrstuhladministrator ernennen wollen? Sie wird dadurch in der Lage sein die Stammdaten des Lehrstuhls zu verwalten, Beiträge und Veranstaltungen im Namen des Lehrstuhls zu erstellen und zu löschen, sowie die Rechte anderer Mitarbeiter des Lehrstuhls zu verwalten",
+  "personList-confirm-chairAdmin-appointed-content-1": "Sie sie sicher, dass sie ",
+  "personList-confirm-chairAdmin-appointed-content-2": " zum Lehrstuhladministrator ernennen wollen?",
+  "personList-confirm-chairAdmin-appointed-content-3": "Er/Sie wird dadurch in der Lage sein die Stammdaten des Lehrstuhls zu verwalten, Beiträge und Veranstaltungen im Namen des Lehrstuhls zu erstellen und zu löschen, sowie die Rechte anderer Mitarbeiter des Lehrstuhls zu verwalten",
+
+  "personList-confirm-chairAdmin-removed-content-1": "Sie sie sicher, dass sie ",
+  "personList-confirm-chairAdmin-removed-content-2": "die Rolle als Lehrstuhladministrator entziehen wollen?",
+  "personList-confirm-chairAdmin-removed-content-3": "Er/Sie wird dadurch nicht mehr in der Lage sein die Stammdaten des Lehrstuhls oder seine Mitarbeiter zu verwalten.",
+
   "personList-cancel-chairAdmin-change-button-label": "Abbrechen",
 
   "404-Page-Text": "404 - Wir konnten nicht finden wonach du suchst"

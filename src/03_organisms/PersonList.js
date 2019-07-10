@@ -15,6 +15,9 @@ import otherAvatarImageSource from "../assets/images/matt.jpg";
 import femaleAvatarImageSource from "../assets/images/rachel.png";
 import personChairRelationEnum from "../models/enumerations/personChairRelationEnum";
 
+/**
+ * A list of Persons that are currently employed or have applied to a chair.
+ */
 class PersonList extends Component {
   constructor(props) {
     super(props);
@@ -38,6 +41,7 @@ class PersonList extends Component {
     this.handleItemChangeAborted = this.handleItemChangeAborted.bind(this);
     this.openConfirmModal = this.openConfirmModal.bind(this);
     this.closeConfirmModal = this.closeConfirmModal.bind(this);
+    this.renderConfirmModalHeader = this.renderConfirmModalHeader.bind(this);
     this.renderConfirmModalContent = this.renderConfirmModalContent.bind(this);
   }
 
@@ -69,8 +73,12 @@ class PersonList extends Component {
                         onDelete={index => {
                           this.deleteListItem(index);
                         }}
-                        onChange={index => {
+                        onChange={(index, confirmationCallback) => {
                           this.openConfirmModal(index);
+                          this.setState({
+                            indexOfItemWaitingForChangeConfirmation: index,
+                            currentConfirmationCallback: confirmationCallback
+                          });
                         }}
                       />
                     );
@@ -90,6 +98,7 @@ class PersonList extends Component {
           cancelButton={i18next.t(
             "personList-cancel-chairAdmin-change-button-label"
           )}
+          header={this.renderConfirmModalHeader()}
           content={this.renderConfirmModalContent()}
           open={this.state.confirmModalOpen}
         />
@@ -97,6 +106,11 @@ class PersonList extends Component {
     );
   }
 
+  /**
+   * Opens a confirm modal to confirm the the change of checkbox on each Person in this list
+   * Currently this component is being used to control chair-administration rights, which have
+   * to be confirmed when changed.
+   */
   openConfirmModal(indexOfAppointedChairAdmin) {
     this.setState({
       confirmModalOpen: true,
@@ -104,47 +118,121 @@ class PersonList extends Component {
     });
   }
 
+  /**
+   * Closes the modal to confirm the appointment or removal of chairAdmin Status
+   * on a person.
+   */
   closeConfirmModal() {
     this.setState({ confirmModalOpen: false });
   }
 
-  handleItemChangeConfirmed(index) {
-    this.changeListItem(index);
+  /**
+   * Fired when the confirmModal finishes with a positive result
+   */
+  handleItemChangeConfirmed() {
+    const changingItemConfirmed = true;
+    this.state.currentConfirmationCallback(changingItemConfirmed);
+    this.changeListItem(this.state.indexOfAppointedChairAdmin);
     this.closeConfirmModal();
   }
 
+  /**
+   * Fired when the confirmModal finishes with a negative result
+   */
   handleItemChangeAborted() {
     this.closeConfirmModal();
   }
 
-  renderConfirmModalContent() {
+  /**
+   * Renders the header of the modal that asks for confirmation before appointing someone to be chairAdmin.
+   */
+  renderConfirmModalHeader() {
     if (
       this.props.persons &&
       this.props.persons.length > 0 &&
-      this.state.indexOfAppointedChairAdmin
+      this.state.indexOfAppointedChairAdmin != null
     ) {
-      return (
-        i18next.t("personList-confirm-chairAdmin-content-1") +
-        this.props.persons[this.state.indexOfAppointedChairAdmin].name +
-        i18next.t("personList-confirm-chairAdmin-content-2")
-      );
+      const personWasChairAdminBeforeBeingChanged = this.props.persons[
+        this.state.indexOfAppointedChairAdmin
+      ].chairAdmin;
+
+      if (!personWasChairAdminBeforeBeingChanged) {
+        return (
+          i18next.t("personList-confirm-chairAdmin-appointed-content-1") +
+          this.props.persons[this.state.indexOfAppointedChairAdmin].person
+            .firstName +
+          " " +
+          this.props.persons[this.state.indexOfAppointedChairAdmin].person
+            .lastName +
+          " " +
+          i18next.t("personList-confirm-chairAdmin-appointed-content-2")
+        );
+      } else {
+        return (
+          i18next.t("personList-confirm-chairAdmin-removed-content-1") +
+          this.props.persons[this.state.indexOfAppointedChairAdmin].person
+            .firstName +
+          " " +
+          this.props.persons[this.state.indexOfAppointedChairAdmin].person
+            .lastName +
+          " " +
+          i18next.t("personList-confirm-chairAdmin-removed-content-2")
+        );
+      }
     } else {
       return null;
     }
   }
 
+  /**
+   * Renders personalized content for each inidividual that is being granted
+   * chairAdmin rights. This notice contains messages to explain the ramifications
+   * of appointing someone to be a chairAdmin.
+   */
+  renderConfirmModalContent() {
+    if (
+      this.props.persons &&
+      this.props.persons.length > 0 &&
+      this.state.indexOfAppointedChairAdmin != null
+    ) {
+      const personWasChairAdminBeforeBeingChanged = this.props.persons[
+        this.state.indexOfAppointedChairAdmin
+      ].chairAdmin;
+      if (!personWasChairAdminBeforeBeingChanged) {
+        return i18next.t("personList-confirm-chairAdmin-appointed-content-3");
+      } else {
+        return i18next.t("personList-confirm-chairAdmin-removed-content-3");
+      }
+    } else {
+      return null;
+    }
+  }
+
+  /**
+   * Fired when an person in this list is "accepted" - currently used to "accept" a person as an employee.
+   * @param {*} index - index of the person that was accepted within this list
+   */
   acceptListItem(index) {
     let mutatedPersonChairRelations = [...this.props.persons];
     mutatedPersonChairRelations[index].active = true;
     this.props.onItemAdded(mutatedPersonChairRelations);
   }
 
+  /**
+   * Fired when an person in this list is "rejected" - currently used to "reject" a person as an applicant or remove employee-rights.
+   * @param {*} index - index of the person that was rejected within this list
+   */
   deleteListItem(index) {
     let mutatedPersonChairRelations = [...this.props.persons];
     mutatedPersonChairRelations.splice(index, 1);
     this.props.onItemDeleted(mutatedPersonChairRelations);
   }
 
+  /**
+   * Fired when an item in this list was confirmed to be modified. Currently used to set a chairAdmin
+   * status on a person in this list.
+   * @param {*} index - index of the person that was rejected within this list
+   */
   changeListItem(index) {
     let mutatedPersonChairRelations = [...this.props.persons];
     mutatedPersonChairRelations[
@@ -154,7 +242,18 @@ class PersonList extends Component {
   }
 }
 
+/**
+ * An Listitem representating a person that is employed or has applied to a chair.
+ */
 class PersonListItem extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      checkboxChecked: props.defaultChecked
+    };
+  }
+
   render() {
     const props = this.props;
     return (
@@ -191,11 +290,16 @@ class PersonListItem extends React.Component {
               >
                 <Checkbox
                   label={i18next.t("personList-chairAdmin-checkbox-label")}
-                  onClick={() => {}}
-                  onChange={(e, { value }) => {
-                    props.onChange(props.itemId, value);
+                  onClick={() => {
+                    console.log(props.itemId);
+                    props.onChange(props.itemId, () => {
+                      this.setState({
+                        checkboxChecked: !this.state.checkboxChecked
+                      });
+                    });
                   }}
-                  defaultChecked={props.defaultChecked}
+                  onChange={(e, { value }) => {}}
+                  checked={this.state.checkboxChecked}
                 />
               </span>
             )}
