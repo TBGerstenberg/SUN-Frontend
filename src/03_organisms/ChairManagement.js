@@ -49,7 +49,7 @@ class ChairManagement extends React.Component {
   render() {
     return (
       <div className="adminpanel-fragment-wrapper">
-        {this.props.chairs.length > 0 && (
+        {this.props.chairs && (
           <Table
             celled
             selectable
@@ -68,12 +68,18 @@ class ChairManagement extends React.Component {
               chair={null}
               onAbortButtonClick={this.closeAddChairModal}
               onCompleteWithSuccess={() => {
-                this.props.toggleSuccessMessage("Erfolg", "Lehrstuhl angelegt");
+                this.props.toggleSuccessMessage(
+                  i18next.t("chairManagement-create-chair-success-title"),
+                  i18next.t("chairManagement-create-chair-success-message")
+                );
                 this.closeAddChairModal();
                 this.props.dispatch(chairActions.getAllChairs());
               }}
               onCompleteWithError={error => {
-                this.props.toggleErrorMessage("Fehler", error);
+                this.props.toggleErrorMessage(
+                  i18next.t("chairManagement-create-chair-error-title"),
+                  error
+                );
                 this.closeAddChairModal();
               }}
             />
@@ -86,17 +92,25 @@ class ChairManagement extends React.Component {
           size="large"
           modalContent={
             <ChairForm
-              chair={this.props.chairs[this.state.selectedEntry - 1] || null}
+              chair={this.props.chairs.find(chair => {
+                return chair.id === this.state.selectedEntry;
+              })}
               onAbortButtonClick={() => {
                 this.setState({ editChairModalOpen: false });
               }}
               onCompleteWithSuccess={() => {
-                this.props.toggleSuccessMessage("Erfolg", "Lehrstuhl editiert");
+                this.props.toggleSuccessMessage(
+                  i18next.t("chairManagement-edit-chair-success-title"),
+                  i18next.t("chairManagement-edit-chair-success-message")
+                );
                 this.closeEditChairModal();
                 this.props.dispatch(chairActions.getAllChairs());
               }}
               onCompleteWithError={error => {
-                this.props.toggleErrorMessage("Fehler", error);
+                this.props.toggleErrorMessage(
+                  i18next.t("chairManagement-edit-chair-error-title"),
+                  error
+                );
                 this.closeEditChairModal();
               }}
             />

@@ -241,7 +241,15 @@
   "chairmanagement-add-chair-headline": "Lehrstuhl hinzufügen",
   "chairmanagement-edit-chair-headline": "Lehrstuhl bearbeiten",
 
-  "chairManagement-delete-chair-success-title": "",
+  "chairManagement-create-chair-success-title": "Erfolg",
+  "chairManagement-create-chair-success-message": "Lehrstuhl angelegt",
+  "chairManagement-create-chair-error-title": "Fehler",
+
+  "chairManagement-edit-chair-success-title": "Erfolg",
+  "chairManagement-edit-chair-success-message": "Lehrstuhl editiert",
+  "chairManagement-edit-chair-error-title": "Fehler",
+
+  "chairManagement-delete-chair-success-title": "Erfolg",
   "chairManagement-delete-chair-success-message": "Lehrstuhl gelöscht",
 
   "chairForm-add-chair-core-data-headline": "Stammdaten",
