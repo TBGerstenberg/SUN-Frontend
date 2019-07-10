@@ -1,4 +1,5 @@
 import i18next from "i18next";
+import moment from "moment";
 import React, { Component } from "react";
 import {
   Button,
@@ -10,6 +11,7 @@ import {
   Modal,
   TextArea
 } from "semantic-ui-react";
+import DateInput from "../03_organisms/DateInput";
 
 class NewPostModal extends Component {
   constructor(props) {
@@ -20,7 +22,9 @@ class NewPostModal extends Component {
       type: 0,
       hoursPerWeek: "",
       open: false,
-      selectedType: 0
+      selectedType: 0,
+      startDate: "",
+      endDate: ""
     };
 
     this.updateInputTheme = this.updateInputTheme.bind(this);
@@ -104,11 +108,11 @@ class NewPostModal extends Component {
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
-                <Grid.Row>
-                  <Grid.Column width={16}>
-                    {this.state.selectedType === 1 &&
-                      this.renderHoursPerWeekInput()}
-                  </Grid.Column>
+                <Grid.Row style={{ margin: "20px" }}>
+                  {this.state.selectedType === 1 &&
+                    this.renderHoursPerWeekInput()}
+
+                  {this.state.selectedType === 3 && this.renderDateInputs()}
                 </Grid.Row>
               </Grid>
             </Form>
@@ -131,6 +135,14 @@ class NewPostModal extends Component {
                   newPost.hoursPerWeek = this.state.hoursPerWeek;
                   // This post is a thesis-anouncement, include type specific fields in the post
                 } else if (this.state.selectedType === 3) {
+                  newPost.startDate = moment(
+                    this.state.startDate,
+                    "DD.MM.YYYY"
+                  ).format();
+                  newPost.endDate = moment(
+                    this.state.endDate,
+                    "DD.MM.YYYY"
+                  ).format();
                 }
 
                 this.props.onNewPost(newPost);
@@ -139,7 +151,9 @@ class NewPostModal extends Component {
                   title: "",
                   content: "",
                   value: "",
-                  hoursPerWeek: ""
+                  hoursPerWeek: "",
+                  startDate: "",
+                  endDate: ""
                 });
               }}
               color="teal"
@@ -170,23 +184,60 @@ class NewPostModal extends Component {
     this.setState({ content: event.target.value });
   }
 
+  renderDateInputs() {
+    return (
+      <>
+        <Grid.Column width={8}>
+          <DateInput
+            name="startDate"
+            placeholder={i18next.t("new-event-modal-startdate-placeholder")}
+            value={this.state.startDate}
+            iconPosition="left"
+            onChange={(e, { value }) => {
+              this.setState({ startDate: value });
+            }}
+            label={i18next.t("new-event-modal-startdate-label")}
+            dateTimeFormat={"DD.MM.YYYY"}
+          />
+        </Grid.Column>
+        <Grid.Column width={8}>
+          <DateInput
+            name="endDate"
+            placeholder={i18next.t("new-event-modal-enddate-placeholder")}
+            value={this.state.endDate}
+            iconPosition="left"
+            onChange={(e, { value }) => {
+              this.setState({ endDate: value });
+            }}
+            label={i18next.t("new-event-modal-enddate-label")}
+            dateTimeFormat={"DD.MM.YYYY"}
+          />
+        </Grid.Column>
+      </>
+    );
+  }
+
   renderHoursPerWeekInput() {
     return (
-      <Input
-        value={this.state.hoursPerWeek}
-        onChange={(e, { value }) => {
-          this.setState({
-            hoursPerWeek: value
-          });
-        }}
-        style={{ marginLeft: "20px", marginBottom: "20px" }}
-        placeholder={i18next.t("new-post-modal-hoursPerWeekInput-placeholder")}
-      >
-        <input type="number" />
-        <Label basic>
-          {i18next.t("new-post-modal-hoursPerWeekInput-metric-label")}
-        </Label>
-      </Input>
+      <Grid.Column width={16}>
+        <Input
+          value={this.state.hoursPerWeek}
+          onChange={(e, { value }) => {
+            this.setState({
+              hoursPerWeek: value
+            });
+          }}
+          style={{ marginLeft: "20px", marginBottom: "20px" }}
+          placeholder={i18next.t(
+            "new-post-modal-hoursPerWeekInput-placeholder"
+          )}
+        >
+          <input type="number" />
+          <Label basic>
+            {i18next.t("new-post-modal-hoursPerWeekInput-metric-label")}
+          </Label>
+        </Input>
+      </Grid.Column>
     );
   }
 }

@@ -202,7 +202,7 @@
   "searchbar-category-chairs-label": "Chairs",
   "searchbar-category-posts-label": "Posts",
 
-  "landingpage-hero-text": "SUN",
+  "landingpage-hero-text": "SUN-Network",
   "landingpage-hero-subtext": "The next generation social network for your university.",
   "landingpage-hero-call-to-action": "Let's go",
   "landingpage-login-button-text": "Sign in",
@@ -230,7 +230,7 @@
 
   "landingpage-testimonials-text-1": "'Since we are using SUN, our student's contentment has increased significantly, even entrepreneurial acitivities have grown!",
   "landingpage-testimonials-author-1-role": "Dean",
-  "landingpage-testimonials-author-1-name": "Volker W.",
+  "landingpage-testimonials-author-1-name": "Prof. Dr. Stefanie Erberas",
 
   "landingpage-footer-faq": "FAQ",
   "landingpage-footer-contact": "Contact",
@@ -327,7 +327,7 @@
   "new-event-modal-enddate-label": "End",
   "new-event-modal-enddate-placeholder": "End",
 
-  "new-post-modal-post-button-label": "Post",
+  "new-post-modal-post-button-label": "Post ",
   "new-post-modal-abort-button-label": "Cancel",
   "new-post-modal-headline": "New Post",
   "new-post-modal-postType-dropdown-placeholder": "Choose posttype",
