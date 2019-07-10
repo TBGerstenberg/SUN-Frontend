@@ -1,15 +1,15 @@
 import React from "react";
 import { Trans, withTranslation } from "react-i18next";
-import { Card, Label } from "semantic-ui-react";
+import { Card } from "semantic-ui-react";
 import tableFormattingUtilities from "../utilities/tableFormattingUtilities";
 
 const ContactCard = props => {
   return (
     <Card color="blue" fluid>
       <Card.Content>
-        <Label as="p" color="blue" ribbon size="large">
+        <Card.Header>
           <Trans i18nKey="contact-card-header" />
-        </Label>
+        </Card.Header>
       </Card.Content>
       <Card.Content>
         <p>

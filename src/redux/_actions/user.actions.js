@@ -311,6 +311,13 @@ function removeSubscription(subscription) {
   };
 }
 
+function updateAccountEmail(updatedEmail) {
+  return {
+    type: userConstants.UPDATE_ACCOUNT_EMAIL,
+    payload: { updatedEmail: updatedEmail }
+  };
+}
+
 const userActions = {
   register,
   login,
@@ -320,7 +327,8 @@ const userActions = {
   updateProfile,
   addSubscription,
   removeSubscription,
-  deleteAccount
+  deleteAccount,
+  updateAccountEmail
 };
 
 export default userActions;

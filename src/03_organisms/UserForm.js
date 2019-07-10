@@ -221,11 +221,7 @@ class UserForm extends React.Component {
           }
           <Grid.Row columns={2}>
             <Grid.Column width={6} textAlign="left">
-              <TitleDropdownSelector
-                defaultValue={
-                  props.initialValues ? props.initialValues.title : null
-                }
-              />
+              <TitleDropdownSelector />
             </Grid.Column>
             <Grid.Column width={6} textAlign="left">
               <GenderDropdownSelector />
@@ -864,7 +860,7 @@ const mapStateToProps = (state, ownProps) => {
           email: ownProps.account.email || "",
           accountIsAdminCheckbox: ownProps.account.admin || false,
 
-          title: ownProps.account.person.title || "",
+          title: ownProps.account.person.title,
           gender: gender || 0,
           firstName: ownProps.account.person.firstName || "",
           lastName: ownProps.account.person.lastName || "",

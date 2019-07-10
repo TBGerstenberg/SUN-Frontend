@@ -521,11 +521,11 @@ export class ChairPage extends React.Component {
             <Grid.Row columns={3}>
               <Grid.Column width={11}>
                 <Header as="h1" color="blue">
-                  {i18next.t("chairpage-chairName-headline") +
-                    " " +
-                    chairName +
-                    " - " +
-                    i18next.t("chairpage-faculty-headline") +
+                  {i18next.t("chairpage-chairName-headline") + " " + chairName}
+                </Header>
+
+                <Header color="black" sub>
+                  {i18next.t("chairpage-faculty-headline") +
                     " " +
                     tableFormattingUtilities.facultyEnumToString(
                       facultyEnumValue
@@ -661,9 +661,6 @@ export class ChairPage extends React.Component {
                 />
               </Grid.Column>
               <Grid.Column width={4}>
-                <Header>
-                  {i18next.t("chairpage-general-information-label")}
-                </Header>
                 <AdressCard
                   city={city}
                   postCode={postCode}
@@ -678,7 +675,7 @@ export class ChairPage extends React.Component {
                 {personCanEditChairInfo && (
                   <Button
                     style={{ float: "left" }}
-                    color="teal"
+                    color="blue"
                     onClick={() => {
                       this.setState({ editChairModalOpen: true });
                     }}

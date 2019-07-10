@@ -66,7 +66,7 @@ class AccountManagement extends React.Component {
                   modalContent={
                     <EditEmailForm
                       onAbortButtonClick={this.closeEditEmailModal}
-                      onCompleteWithSuccess={() => {
+                      onCompleteWithSuccess={updatedEmail => {
                         this.closeEditEmailModal();
                         this.toggleSuccessMessage(
                           i18next.t(
@@ -76,17 +76,29 @@ class AccountManagement extends React.Component {
                             "edit-private-email-form-success-message-message"
                           )
                         );
-                      }}
-                      onCompleteWithError={() => {
-                        this.closeEditEmailModal();
-                        this.toggleErrorMessage(
-                          i18next.t(
-                            "edit-private-email-form-error-message-title"
-                          ),
-                          i18next.t(
-                            "edit-private-email-form-error-message-message"
-                          )
+
+                        this.props.dispatch(
+                          userActions.updateAccountEmail(updatedEmail)
                         );
+                      }}
+                      onCompleteWithError={updateEmailRequest => {
+                        this.closeEditEmailModal();
+
+                        if (updateEmailRequest.error.status === 409) {
+                          this.toggleErrorMessage(
+                            i18next.t(
+                              "edit-private-email-form-error-409-title"
+                            ),
+                            i18next.t(
+                              "edit-private-email-form-error-409-message"
+                            )
+                          );
+                        } else {
+                          this.toggleErrorMessage(
+                            i18next.t("edit-private-email-form-error-title"),
+                            i18next.t("edit-private-email-form-error-message")
+                          );
+                        }
                       }}
                     />
                   }

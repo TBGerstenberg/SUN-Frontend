@@ -10,8 +10,14 @@
   "signup-a-new-account-call-to-action-button": "Registrieren",
   "signup-message-already-have-an-account": "Bereits registriert? ",
   "signup-message-already-have-an-account-call-to-action": "Anmelden",
+
+  "signup-error-409-message": "Konflikt",
+  "signup-error-409-explanation": "Die von ihnen gewählte Email ist bereits vergeben.",
   "signup-error-500-message": "Oops, da ist etwas schiefgelaufen",
   "signup-error-500-explanation": "Wir können die Anfrage aufgrund technischer Probleme aktuell nicht beantworten. Bitte versuchen Sie es später erneut.",
+
+  "login-error-400-explanation": "Ungültige Anfrage",
+  "login-error-401-explanation": "Falsche Zugangsdaten oder Account nicht vorhanden",
 
   "userForm-error-401-message": "Fehler - Unbefugt",
   "userForm-error-401-explanation": "Die Anfrage konnte nicht beendet werden, da Sie nicht über ausreichende Berechtigungen verfügen",
@@ -36,12 +42,20 @@
   "posttype-dropdown-thesis-option-text": "Abschlussarbeit",
 
   "faculty-dropdown-label": "Fakultät",
+  "faculty-enum-undefined-option": "Nicht definiert",
   "faculty-enum-unset-option": "Keine Angabe",
   "faculty-enum-PHIL-option": "PHIL - Philosophische Fakultät",
   "faculty-enum-BAK-option": "BAK - Bildung - Architektur - Künste",
   "faculty-enum-WIWI-option": "WIWI - Wirtschaftswissenschaften, Wirtschaftsinformatik und Wirtschaftsrecht",
   "faculty-enum-NT-option": "NT - Naturwissenschaften und Technik",
   "faculty-enum-LWF-option": "LWF - Lebenswissenschaftliche Fakultät",
+
+  "title-enum-undefined-option": "k.A",
+  "title-enum-0-option": "k.A",
+  "title-enum-1-option": "Bachelor",
+  "title-enum-2-option": "Master",
+  "title-enum-3-option": "Prof.",
+  "title-enum-4-option": "Prof. Dr.",
 
   "complete-your-profile-headline": "Vervollständige dein Profil",
   "complete-profile-personal-information-headline": "Persönliches",
@@ -136,8 +150,10 @@
   "edit-private-email-modal-newEmail-placeholder": "Neue Email",
   "edit-private-email-form-success-message-title": "Erfolg",
   "edit-private-email-form-success-message-message": "Email aktualisiert",
-  "edit-private-email-form-error-message-title": "Fehler",
-  "edit-private-email-form-error-message-message": "Email konnte nicht aktualisiert werden",
+  "edit-private-email-form-error-title": "Fehler",
+  "edit-private-email-form-error-message": "Email konnte nicht aktualisiert werden",
+  "edit-private-email-form-error-409-title": "Konflikt",
+  "edit-private-email-form-error-409-message": "Email bereits vergeben",
 
   "account-card-header": "Mein Account",
   "account-card-email-label": "Private Email: ",

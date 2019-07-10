@@ -237,6 +237,7 @@ class ChairForm extends React.Component {
     // or via the components state.
     const chairValues = {
       name: values.chairName,
+      faculty: values.faculty,
       address: {
         city: values.cityName,
         postCode: values.postCode,
@@ -275,6 +276,7 @@ const mapStateToProps = (state, ownProps) => {
   if (ownProps.chair) {
     const initialValues = {
       chairName: ownProps.chair.name || "",
+      faculty: ownProps.chair.faculty || 0,
       cityName: ownProps.chair.address ? ownProps.chair.address.city : "",
       postCode: ownProps.chair.address ? ownProps.chair.address.postCode : "",
       street: ownProps.chair.address ? ownProps.chair.address.street : "",

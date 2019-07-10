@@ -125,7 +125,6 @@ class PostCard extends React.Component {
                 <span>
                   <Icon name="university" />{" "}
                   <a href={"/chair/" + props.post.pageId}>
-                    {" "}
                     {props.post.pageName}
                   </a>
                 </span>
@@ -203,7 +202,7 @@ class PostCard extends React.Component {
                 <span>
                   <Icon name="university" />{" "}
                   <a href={"/chair/" + props.post.pageId}>
-                    {props.post.chairName}
+                    {props.post.pageName}
                   </a>
                 </span>
                 <span className="postCard-authorInfo-personInfo">

@@ -19,7 +19,6 @@ class ApplyToChairModal extends Component {
   }
 
   handleDropdownChange(role) {
-    console.log("Selected role" + role);
     this.setState({ selectedRole: role });
   }
 
@@ -78,7 +77,6 @@ class ApplyToChairModal extends Component {
       newPersonChairRelation
     );
 
-    console.log(createPersonChairRelationRequest);
     if (
       createPersonChairRelationRequest &&
       createPersonChairRelationRequest.status === 200

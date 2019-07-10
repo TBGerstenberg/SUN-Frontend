@@ -91,7 +91,7 @@ class EditEmailForm extends React.Component {
       updateEmailRequest.response &&
       updateEmailRequest.response.status === 200
     ) {
-      this.props.onCompleteWithSuccess();
+      this.props.onCompleteWithSuccess(updateAccountEmailRequestBody.newEmail);
     } else {
       this.props.onCompleteWithError(updateEmailRequest);
     }

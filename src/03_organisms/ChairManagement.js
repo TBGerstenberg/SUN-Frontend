@@ -171,7 +171,7 @@ class ChairManagement extends React.Component {
           {tableFormattingUtilities.numberOrEmpty(chair.name)}
         </Table.Cell>
         <Table.Cell key="faculty">
-          {tableFormattingUtilities.facultyEnumToString(chair.name)}
+          {tableFormattingUtilities.facultyEnumToString(chair.faculty)}
         </Table.Cell>
         <Table.Cell key="city">
           {tableFormattingUtilities.stringOrEmpty(chair.address.city)}

@@ -85,6 +85,15 @@ const loginReducer = (state = initialState, action) => {
         deleteAccountRequestStatus: action.status
       };
 
+    case userConstants.UPDATE_ACCOUNT_EMAIL:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          email: action.payload.updatedEmail
+        }
+      };
+
     case userConstants.ADD_SUBSCRIPTION: {
       const userHasSubscribedToChair = state.user.person.subscriptions.find(
         element => {

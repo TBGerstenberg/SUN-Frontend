@@ -179,7 +179,6 @@ class UserManagement extends React.Component {
       <Table.Row
         key={"row" + account.id}
         onClick={() => {
-          console.log("Selected entry" + account.id);
           this.setState({ selectedEntry: account.id });
         }}
         active={this.state.selectedEntry === account.id}
@@ -300,7 +299,6 @@ class UserManagement extends React.Component {
     const deleteAccountRequest = await accountService.deleteAccount(
       this.state.selectedEntry
     );
-    console.log(deleteAccountRequest);
 
     if (deleteAccountRequest.status === 200) {
       this.props.toggleSuccessMessage(

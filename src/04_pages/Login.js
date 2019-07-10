@@ -38,13 +38,9 @@ class Login extends React.Component {
 
     if (this.props.loginErrorStatus) {
       hasError = true;
-
-      if (this.props.loginErrorStatus === 400) {
-        errorMessageBody = "Ungültige Anfrage";
-      }
-      if (this.props.loginErrorStatus === 401) {
-        errorMessageBody = "Falsche Zugangsdaten";
-      }
+      errorMessageBody = i18next.t(
+        `login-error-${this.props.loginErrorStatus}-explanation`
+      );
     }
 
     if (this.props.loggedIn) {

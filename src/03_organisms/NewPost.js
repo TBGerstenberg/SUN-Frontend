@@ -175,8 +175,6 @@ class NewPostModal extends Component {
       <Input
         value={this.state.hoursPerWeek}
         onChange={(e, { value }) => {
-          console.log(e);
-          console.log(value);
           this.setState({
             hoursPerWeek: value
           });
