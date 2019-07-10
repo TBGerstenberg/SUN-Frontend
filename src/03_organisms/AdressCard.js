@@ -25,10 +25,13 @@ const addressCard = props => {
           <Trans i18nKey="address-card-street-label" />
           {" " + tableFormattingUtilities.stringOrEmpty(props.street)}
         </p>
-        <p>
-          <Trans i18nKey="address-card-room-label" />
-          {" " + tableFormattingUtilities.stringOrEmpty(props.room)}
-        </p>
+
+        {props.room && (
+          <p>
+            <Trans i18nKey="address-card-room-label" />
+            {" " + tableFormattingUtilities.stringOrEmpty(props.room)}
+          </p>
+        )}
       </Card.Content>
     </Card>
   );

@@ -54,6 +54,7 @@ class Profile extends React.Component {
         this.state.userId == this.props.loggedInUsersAccount.person.id;
     }
 
+    console.log(this.props.loggedInUsersAccount);
     return (
       <div>
         <NavBar />
@@ -136,7 +137,7 @@ class Profile extends React.Component {
                   size="large"
                   modalContent={
                     <UserForm
-                      account={props.loggedInUsersAccount}
+                      account={this.props.loggedInUsersAccount}
                       onAbortButtonClick={() => {
                         this.setState({ editUserModalOpen: false });
                       }}
@@ -286,30 +287,39 @@ const FirstProfileRow = props => {
         </Grid.Row>
 
         <Grid.Row columns={2}>
-          <Grid.Column width={8}>
-            <Container>
-              <Header size="medium">
-                {i18next.t("profile-matriculationNumber-label")}
-              </Header>
-              <BodyText>
-                {" "}
-                {tableFormattingUtilities.stringOrEmpty(
-                  props.matriculationNumber
-                )}
-              </BodyText>
-            </Container>
-          </Grid.Column>
-          <Grid.Column width={8}>
-            <Container>
-              <Header size="medium">
-                {i18next.t("profile-courseOfStudy-label")}
-              </Header>
-              <BodyText>
-                {" "}
-                {tableFormattingUtilities.stringOrEmpty(props.subject)}
-              </BodyText>
-            </Container>
-          </Grid.Column>
+          {props.matriculationNumber ? (
+            <Grid.Column width={8}>
+              <Container>
+                <Header size="medium">
+                  {i18next.t("profile-matriculationNumber-label")}
+                </Header>
+                <BodyText>
+                  {" "}
+                  {tableFormattingUtilities.stringOrEmpty(
+                    props.matriculationNumber
+                  )}
+                </BodyText>
+              </Container>
+            </Grid.Column>
+          ) : (
+            <Grid.Column width={8} />
+          )}
+
+          {props.subject ? (
+            <Grid.Column width={8}>
+              <Container>
+                <Header size="medium">
+                  {i18next.t("profile-courseOfStudy-label")}
+                </Header>
+                <BodyText>
+                  {" "}
+                  {tableFormattingUtilities.stringOrEmpty(props.subject)}
+                </BodyText>
+              </Container>
+            </Grid.Column>
+          ) : (
+            <Grid.Column width={8} />
+          )}
         </Grid.Row>
 
         <Grid.Row columns={2}>

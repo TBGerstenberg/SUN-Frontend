@@ -131,7 +131,10 @@ class Home extends React.Component {
  */
 let mapStateToProps = state => {
   return {
-    subs: state.login.user ? state.login.user.person.subscriptions : [],
+    subs:
+      state.login.user && state.login.user.person
+        ? state.login.user.person.subscriptions
+        : [],
     chairs: state.chair.chairs,
     feedPosts: state.post.feedPosts,
     feedLoading: state.post.fetchingPosts

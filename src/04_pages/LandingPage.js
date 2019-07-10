@@ -253,7 +253,7 @@ const HomepageLayout = () => (
                   color: "teal"
                 }}
               >
-                Wer wir sind
+                {i18next.t("landingpage-who-we-are-headline")}
               </Header>
 
               <Header as="h3" style={{ fontSize: "2em" }}>
@@ -276,63 +276,64 @@ const HomepageLayout = () => (
             <Grid.Column style={{ paddingBottom: "2em", paddingTop: "2em" }}>
               <Icon name="handshake outline" size="big" color="blue" />
               <Header as="h3" style={{ fontSize: "1em" }}>
-                <p style={{ fontSize: "1.33em" }}> Austausch</p>
+                <p style={{ fontSize: "1.33em" }}>
+                  {i18next.t("landingpage-valueprop-0-header")}
+                </p>
               </Header>
               <p style={{ fontSize: "1.5em", color: "teal" }}>
-                Tausche dich mit deinen Kommolitonen aus und eröffne
-                Lerngruppen!
+                {i18next.t("landingpage-valueprop-0-description")}
               </p>
             </Grid.Column>
 
             <Grid.Column style={{ paddingBottom: "2em", paddingTop: "2em" }}>
               <Icon name="calendar alternate outline" size="big" color="blue" />
               <Header as="h3" style={{ fontSize: "1em" }}>
-                <p style={{ fontSize: "1.33em" }}> Events</p>
+                <p style={{ fontSize: "1.33em" }}>
+                  {i18next.t("landingpage-valueprop-1-header")}
+                </p>
               </Header>
               <p style={{ fontSize: "1.5em", color: "teal" }}>
-                Informiere dich über die nächsten interessanten Events in deiner
-                Nähe!
+                {i18next.t("landingpage-valueprop-1-description")}
               </p>
             </Grid.Column>
 
             <Grid.Column style={{ paddingBottom: "2em", paddingTop: "2em" }}>
               <Icon name="graduation cap" size="big" color="blue" />
               <Header as="h3" style={{ fontSize: "1em" }}>
-                <p style={{ fontSize: "1.33em" }}> Abschlussarbeiten </p>
+                <p style={{ fontSize: "1.33em" }}>
+                  {i18next.t("landingpage-valueprop-2-header")}
+                </p>
               </Header>
               <p style={{ fontSize: "1.5em", color: "teal" }}>
-                Informiere dich über die neusten Abschlussarbeitsthemen direkt
-                im Netzwerk!
+                {i18next.t("landingpage-valueprop-2-description")}
               </p>
             </Grid.Column>
 
             <Grid.Column style={{ paddingBottom: "2em", paddingTop: "2em" }}>
               <Icon name="rocket" size="big" color="blue" />
               <Header as="h3" style={{ fontSize: "1em" }}>
-                <p style={{ fontSize: "1.33em" }}> Start Up</p>
+                <p style={{ fontSize: "1.33em" }}>
+                  {" "}
+                  {i18next.t("landingpage-valueprop-3-header")}
+                </p>
               </Header>
               <p style={{ fontSize: "1.5em", color: "teal" }}>
-                Du hast eine richtig gute Gründungsidee, aber niemand der Lust
-                hat mitzumachen? Dann vernetze dich hier mit gleichgesinnten!
+                {i18next.t("landingpage-valueprop-3-description")}
               </p>
             </Grid.Column>
 
             <Grid.Column style={{ paddingBottom: "2em", paddingTop: "2em" }}>
               <Icon name="react" size="big" color="blue" />
               <Header as="h3" style={{ fontSize: "1em" }}>
-                <p style={{ fontSize: "1.33em" }}> Job</p>
+                <p style={{ fontSize: "1.33em" }}>
+                  {i18next.t("landingpage-valueprop-4-header")}
+                </p>
               </Header>
               <p style={{ fontSize: "1.5em", color: "teal" }}>
-                Du suchst noch einen passenden Job für dich? Dann besuch unsere
-                Job-Seite!
+                {i18next.t("landingpage-valueprop-4-description")}
               </p>
             </Grid.Column>
           </Grid.Row>
-
-          <p>
-            <br />
-            <br />
-          </p>
 
           <Grid.Row textAlign="center">
             <Grid.Column style={{ paddingBottom: "5em", paddingTop: "5em" }}>
@@ -346,8 +347,11 @@ const HomepageLayout = () => (
                   className="ui right spaced avatar image"
                   src={profile_man}
                 />{" "}
-                Peter B.
-                <div className="detail">Student</div>
+                {i18next.t("landingpage-testimonials-author-0-role")}
+                <div className="detail">
+                  {" "}
+                  {i18next.t("landingpage-testimonials-author-0-name")}
+                </div>
               </div>
             </Grid.Column>
 
@@ -362,8 +366,10 @@ const HomepageLayout = () => (
                   className="ui right spaced avatar image"
                   src={profile_woman}
                 />{" "}
-                Prof.Sarah Schmitz
-                <div className="detail">Dekanin</div>
+                {i18next.t("landingpage-testimonials-author-1-role")}
+                <div className="detail">
+                  {i18next.t("landingpage-testimonials-author-1-name")}
+                </div>
               </div>
             </Grid.Column>
           </Grid.Row>

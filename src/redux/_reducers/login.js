@@ -148,8 +148,47 @@ const loginReducer = (state = initialState, action) => {
       }
     }
 
-    default:
+    /**
+     * When a  user is fetched from the backed, and its the one which is logged in, synchronize with the state managed by
+     * the login reducer.
+     */
+    case userConstants.GET_SINGLE_USER_SUCCESS: {
+      console.log(action);
+      if (action.user.id === state.user.id) {
+        return {
+          ...state,
+          user: {
+            ...state.user,
+            person: action.user
+          }
+        };
+      } else {
+        return state;
+      }
+    }
+
+    /**
+     * When a user is updated, and its the one which is logged in, synchronize with the state managed by
+     * the login reducer.
+     */
+    case userConstants.UPDATE_USER_PROFILE_SUCCESS: {
+      console.log(action);
+      if (action.payload.user.id === state.user.id) {
+        return {
+          ...state,
+          user: {
+            ...state.user,
+            person: action.payload.user
+          }
+        };
+      } else {
+        return state;
+      }
+    }
+
+    default: {
       return state;
+    }
   }
 };
 

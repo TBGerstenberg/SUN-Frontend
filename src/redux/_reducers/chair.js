@@ -71,7 +71,7 @@ const chairReducer = (state = initialState, action) => {
 
     case postConstants.REMOVE_POST_FAILURE:
       return {
-        deletePostFailureStatus: action.error.error.status
+        deletePostFailureStatus: action.error.status
       };
 
     default:
