@@ -110,6 +110,7 @@
   "complete-profile-role-headline": "Rolle an der Universität",
   "complete-profile-skills-headline": "Fähigkeiten",
   "complete-profile-skill-input-placeholder": "Fähigkeit",
+  "complete-profile-skill-input-no-skills-yet": "Noch keine Fähigkeiten gelistet.",
   "complete-your-profile-add-skill-button": "Hinzufügen",
   "complete-your-profile-abort-button": "Abbrechen",
   "complete-your-profile-continue-button": "Abschließen",
@@ -316,6 +317,10 @@
   "chairManagement-edit-chair-button": "Lehrstuhl bearbeiten",
   "chairManagement-delete-chair-button": "Lehrstuhl löschen",
 
+  "new-event-modal-headline": "Neue Veranstaltung",
+  "new-event-modal-abort-button-label": "Neue Veranstaltung",
+  "new-event-modal-submit-button-label": "Posten",
+
   "new-event-modal-startdate-label": "Beginn",
   "new-event-modal-startdate-placeholder": "Beginn",
   "new-event-modal-enddate-label": "Ende",
@@ -361,7 +366,14 @@
   "chairpage-employee-fragment-applicants-headline": "Bewerber",
   "chairpage-edit-chair-button-label": "Lehrstuhl bearbeiten",
 
+  "chairpage-apply-to-chair-modal-header": "Neue Bewerbung am Lehrstuhl ",
+  "chairpage-apply-to-chair-modal-error-headline": "Fehler",
+  "chairpage-apply-to-chair-modal-error-body": "Bewerbung konnte nicht abgeschickt werden, bitte versuchen Sie es später erneut",
+  "chairpage-apply-to-chair-modal-abort-button-label": "Abbrechen",
+  "chairpage-apply-to-chair-modal-submit-button-label": "Bewerbung abschicken",
+
   "chairRoleList-add-role-button-label": "Hinzufügen",
+  "chairRoleList-for-chair-label": "bei Lehrstuhl",
   "chairRoleList-no-items-placeholder": "Keine Lehrstuhlzugehörigkeit angegeben",
   "personList-no-items-placehodler": "Keine",
   "chairRoleList-chair-does-not-exist-label": "Lehrstuhl nicht vorhanden",

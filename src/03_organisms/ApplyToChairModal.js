@@ -1,3 +1,4 @@
+import i18next from "i18next";
 import React, { Component } from "react";
 import { Button, Form, Icon, Modal } from "semantic-ui-react";
 import ErrorMessage from "../01_atoms/ErrorMessage";
@@ -27,8 +28,8 @@ class ApplyToChairModal extends Component {
       <div>
         <Modal open={this.props.open}>
           <Modal.Header>
-            {" "}
-            {"Neue Bewerbung am Lehrstuhl " + this.props.chairName}{" "}
+            {i18next.t("chairpage-apply-to-chair-modal-header") +
+              this.props.chairName}
           </Modal.Header>
           <Modal.Description>
             <Form>
@@ -38,20 +39,20 @@ class ApplyToChairModal extends Component {
             </Form>
             {this.state.errorMessageShown && (
               <ErrorMessage
-                header={"Fehler"}
-                body={
-                  "Bewerbung konnte nicht abgeschickt werden, bitte versuchen Sie es später erneut"
-                }
+                header={i18next.t(
+                  "chairpage-apply-to-chair-modal-error-headline"
+                )}
+                body={i18next.t("chairpage-apply-to-chair-modal-error-body")}
               />
             )}
           </Modal.Description>
           <Modal.Actions>
             <Button secondary onClick={this.props.onAbortButtonClick}>
-              {" "}
-              Abbrechen{" "}
+              {i18next.t("chairpage-apply-to-chair-modal-abort-button-label")}
             </Button>
             <Button onClick={this.handleApplicationSubmit} color="teal" icon>
-              Bewerbung abschicken <Icon name="mail forward" />
+              {i18next.t("chairpage-apply-to-chair-modal-submit-button-label")}
+              <Icon name="mail forward" />
             </Button>
           </Modal.Actions>
         </Modal>

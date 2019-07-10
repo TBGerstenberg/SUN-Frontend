@@ -65,6 +65,7 @@ class Login extends React.Component {
                 <LanguageSwitcher style={{ float: "right" }} />
               </Grid.Column>
             </Grid.Row>
+
             <Grid.Row>
               <Grid.Column style={{ maxWidth: 400 }}>
                 <Segment stacked>

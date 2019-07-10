@@ -143,7 +143,7 @@ const ChairRoleListItem = props => {
       <List.Content floated="left">
         <div className="chairRoleList-container">
           <span>{props.role}</span>
-          <span> bei Lehrstuhl </span>
+          <span> {i18next.t("chairRoleList-for-chair-label")} </span>
         </div>
       </List.Content>
       <List.Content floated="left">

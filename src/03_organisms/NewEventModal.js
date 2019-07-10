@@ -29,7 +29,7 @@ class NewEventModal extends Component {
     return (
       <div>
         <Modal open={this.props.open}>
-          <Modal.Header>Neuer Post</Modal.Header>
+          <Modal.Header>{i18next.t("new-event-modal-headline")}</Modal.Header>
           <Modal.Description>
             <Form>
               <Grid>
@@ -85,8 +85,7 @@ class NewEventModal extends Component {
           </Modal.Description>
           <Modal.Actions>
             <Button secondary onClick={this.props.onAbortButtonClick}>
-              {" "}
-              Abbrechen{" "}
+              {i18next.t("new-event-modal-abort-button-label")}
             </Button>
             <Button
               onClick={() => {
@@ -122,7 +121,8 @@ class NewEventModal extends Component {
               color="teal"
               icon
             >
-              Posten <Icon name="mail forward" />
+              {i18next.t("new-event-modal-submit-button-label")}
+              <Icon name="mail forward" />
             </Button>
           </Modal.Actions>
         </Modal>

@@ -1,3 +1,4 @@
+import i18next from "i18next";
 import React from "react";
 import { List, Segment } from "semantic-ui-react";
 import "./SkillCatalogue.css";
@@ -16,7 +17,9 @@ const renderListItems = (
 ) => {
   if (Array.isArray(skills)) {
     if (skills.length === 0) {
-      return <span>Noch keine Fähigkeiten gelistet.</span>;
+      return (
+        <span> {i18next.t("complete-profile-skill-input-no-skills-yet")}</span>
+      );
     }
 
     let renderedListItems = skills.map((skill, index) => {

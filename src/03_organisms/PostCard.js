@@ -159,7 +159,6 @@ class PostCard extends React.Component {
             }}
           >
             <Card.Content>
-              {" "}
               {i18next.t("postCard-eventPost-startsAt-label") +
                 " " +
                 tableFormattingUtilities.getFormattedDateTime(
@@ -168,7 +167,6 @@ class PostCard extends React.Component {
             </Card.Content>
 
             <Card.Content>
-              {" "}
               {i18next.t("postCard-eventPost-endsAt-label") +
                 " " +
                 tableFormattingUtilities.getFormattedDateTime(

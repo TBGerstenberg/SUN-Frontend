@@ -132,6 +132,7 @@ class AccountManagement extends React.Component {
                   open={this.state.editPasswordModalOpen}
                 />
 
+                {/** Modal to confirm the deletion of the users account */}
                 <AddEntityModal
                   size="small"
                   modalContent={

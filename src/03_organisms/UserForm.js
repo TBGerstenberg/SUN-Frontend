@@ -6,14 +6,7 @@ import { connect } from "react-redux";
 import { CheckboxField, LabelInputField } from "react-semantic-redux-form";
 import { Field, reduxForm } from "redux-form";
 import { DateInput } from "semantic-ui-calendar-react";
-import {
-  Button,
-  Divider,
-  Form,
-  Grid,
-  Header,
-  Message
-} from "semantic-ui-react";
+import { Button, Divider, Form, Grid, Header, Message } from "semantic-ui-react";
 import ChairRoleList from "../02_molecules/ChairRoleList";
 import CityNameInput from "../02_molecules/CityNameInput";
 import CourseOfStudyInput from "../02_molecules/CourseOfStudyInput";
@@ -50,18 +43,18 @@ class UserForm extends React.Component {
 
     if (account && account.person) {
       birthDate = account.person.birthDate
-        ? moment(account.person.birthDate).format("DD-MM-YYYY")
+        ? moment(account.person.birthDate).format("DD.MM.YYYY")
         : "";
 
       if (account.person && account.person.isStudent()) {
         matriculationDate = account.person.studentStatus.matriculationDate
           ? moment(account.person.studentStatus.matriculationDate).format(
-              "DD-MM-YYYY"
+              "DD.MM.YYYY"
             )
           : "";
         exmatriculationDate = account.person.studentStatus.exmatriculationDate
           ? moment(account.person.studentStatus.exmatriculationDate).format(
-              "DD-MM-YYYY"
+              "DD.MM.YYYY"
             )
           : "";
       }
@@ -575,13 +568,13 @@ class UserForm extends React.Component {
     const DEFAULT_GENDER_IF_UNSET = 0;
 
     const birthDate = this.state.dateOfBirth
-      ? moment(this.state.dateOfBirth, "DD-MM-YYYY").format()
+      ? moment(this.state.dateOfBirth, "DD.MM.YYYY").format()
       : DEFAULT_DATE_IF_UNSET;
     const matriculationDate = this.state.matriculationDate
-      ? moment(this.state.matriculationDate, "DD-MM-YYYY").format()
+      ? moment(this.state.matriculationDate, "DD.MM.YYYY").format()
       : DEFAULT_DATE_IF_UNSET;
     const exmatriculationDate = this.state.exmatriculationDate
-      ? moment(this.state.exmatriculationDate, "DD-MM-YYYY").format()
+      ? moment(this.state.exmatriculationDate, "DD.MM.YYYY").format()
       : DEFAULT_DATE_IF_UNSET;
 
     // Values that are extracted from the various input fields, each field is either managed by redux form
@@ -738,7 +731,7 @@ class UserForm extends React.Component {
         iconPosition="left"
         onChange={this._handleDateOfBirthChange}
         label={i18next.t("complete-profile-dateOfBirth-label")}
-        dateFormat="DD-MM-YYYY"
+        dateFormat="DD.MM.YYYY"
       />
     );
   }
@@ -755,7 +748,7 @@ class UserForm extends React.Component {
         iconPosition="left"
         onChange={this._handleImmatriculationDateChange}
         label={i18next.t("complete-profile-immatriculationDate-label")}
-        dateFormat="DD-MM-YYYY"
+        dateFormat="DD.MM.YYYY"
       />
     );
   }
@@ -772,7 +765,7 @@ class UserForm extends React.Component {
         iconPosition="left"
         onChange={this._handleExmatriculationDateChange}
         label={i18next.t("complete-profile-exmatriculationDate-label")}
-        dateFormat="DD-MM-YYYY"
+        dateFormat="DD.MM.YYYY"
       />
     );
   }

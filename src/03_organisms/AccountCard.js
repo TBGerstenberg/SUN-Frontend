@@ -13,7 +13,6 @@ const addressCard = props => {
       </Card.Content>
       <Card.Content>
         <p style={{ fontWeight: "bold" }}>
-          {" "}
           <Trans i18nKey="account-card-email-label" />
         </p>
         {" " + tableFormattingUtilities.stringOrEmpty(props.email)}
