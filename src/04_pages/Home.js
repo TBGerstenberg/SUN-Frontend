@@ -10,6 +10,10 @@ import SubscriptionList from "../03_organisms/SubscriptionList";
 import logoImageSource from "../assets/images/logo_blue.png";
 import { chairActions, postActions, userActions } from "../redux/_actions";
 
+/**
+ * Home page of the system - capable of displaying a list of posts in the news-feed,
+ * the chairs a user has subscribed to and a list of all chairs that are currently represented within the system.
+ */
 class Home extends React.Component {
   constructor(props) {
     super(props);

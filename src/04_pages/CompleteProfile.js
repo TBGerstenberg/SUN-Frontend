@@ -35,6 +35,10 @@ import {
 import { navigationConstants } from "../redux/_constants";
 import formValidationUtilities from "../utilities/formValidationUtilities";
 
+/**
+ *  Page that contains a form that lets users update their basic profile information
+ *  Currently displayed right after a succesful signup.
+ */
 class CompleteProfile extends React.Component {
   constructor(props) {
     super(props);
@@ -470,6 +474,8 @@ class CompleteProfile extends React.Component {
 
     this.props.dispatch(userActions.updateProfile(profile));
   }
+
+  // Field rendering methods
 
   renderBirthDateInput() {
     return (

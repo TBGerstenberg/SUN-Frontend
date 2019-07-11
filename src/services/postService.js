@@ -3,6 +3,8 @@ import API_CONFIG from "../config/api_config";
 
 /**
  * Service that handles interaction with the <Posts> API.
+ * Method names describe the purpose of the methods in this service
+ * without needing further documentation - right?
  */
 const postService = {
   getAllPosts: async accessToken => {

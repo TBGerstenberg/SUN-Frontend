@@ -8,6 +8,10 @@ import NavBar from "../03_organisms/NavBar";
 import UserManagement from "../03_organisms/UserManagement";
 import "./AdminPanel.css";
 
+/**
+ * Aminpanel capable of displaying content fragments
+ * used for the management of the various entities in the system, like accounts, persons and chairs.
+ */
 class AdminPanel extends React.Component {
   state = {
     visible: false,
@@ -104,6 +108,12 @@ class AdminPanel extends React.Component {
     );
   }
 
+  /**
+   * Toggles an animated "toast" message to display success of an issued request from
+   * one of the fragments of the admin panel.
+   * @param {string} title - Title of the messagge
+   * @param {string} message - content/explanation of the message.
+   */
   toggleSuccessMessage(title, message) {
     setTimeout(() => {
       toast(
@@ -121,6 +131,12 @@ class AdminPanel extends React.Component {
     }, 1000);
   }
 
+  /**
+   * Toggles an animated "toast" message to display an error stemming from the failure of an issued request from
+   * one of the fragments of the admin panel.
+   * @param {string} title - Title of the messagge
+   * @param {string} message - content/explanation of the message.
+   */
   toggleErrorMessage(title, message) {
     console.log(title, message);
     setTimeout(() => {

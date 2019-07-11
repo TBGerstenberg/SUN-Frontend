@@ -1,5 +1,7 @@
 /**
  * Constants used as action types in ../_actions/user.actions.js
+ * These constants will be the labels used by reducers that determine
+ * how the application state shall be altered in reaction to an event.
  */
 const userConstants = {
   ADD_SUBSCRIPTION: "ADD_SUBSCRIPTION",

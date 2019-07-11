@@ -291,7 +291,6 @@ class PersonListItem extends React.Component {
                 <Checkbox
                   label={i18next.t("personList-chairAdmin-checkbox-label")}
                   onClick={() => {
-                    console.log(props.itemId);
                     props.onChange(props.itemId, () => {
                       this.setState({
                         checkboxChecked: !this.state.checkboxChecked

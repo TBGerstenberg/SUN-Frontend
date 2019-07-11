@@ -15,6 +15,12 @@ import * as actionCreators from "./_actions";
 import { routesMap } from "./_constants/navigation.constants";
 import * as reducers from "./_reducers";
 
+/**
+ * Configures the redux store, how it is initialized and which middlewares
+ * shall be used within it.
+ * To learn more about redux-middlewares, enhancers, thunks and such,
+ * refer to the official documentation : https://redux.js.org/recipes/configuring-your-store
+ */
 export default function configureStore() {
   // Load persisted state from local storage only if the feature switch is set to true.
   let persistedState = {};

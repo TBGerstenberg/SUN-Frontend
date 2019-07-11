@@ -2,6 +2,15 @@ import { chairActions } from ".";
 import { postService } from "../../services";
 import { postConstants } from "../_constants";
 
+/** ************************************************************************************
+ *  Post-related action creators that dispatch actions like network requests
+ *  to the SUN-API and track their progress within redux, so that various components
+ *  in the component tree can react to events regarding these operations.
+ ****************************************************************************************/
+
+/**
+ * Fetches a list resource of posts and tracks progress, success or failure within redux
+ */
 function getAllPosts() {
   return async (dispatch, getState) => {
     const state = getState();
@@ -41,6 +50,11 @@ function getAllPosts() {
   }
 }
 
+/**
+ * Fetches posts from the users feed
+ * NOTE: The user is identified by his session token which is attached in the gloabl
+ * apiClient config @see config/api/apiClient
+ */
 function getFeedPosts() {
   return async (dispatch, getState) => {
     dispatch(request());
@@ -77,6 +91,9 @@ function getFeedPosts() {
   }
 }
 
+/**
+ * Fetches a single post identified by its unique postId and tracks progress, success or failure within redux
+ */
 function getSinglePost(postId) {
   return async (dispatch, getState) => {
     dispatch(request());
@@ -90,15 +107,15 @@ function getSinglePost(postId) {
   };
 
   /**
-   * Redux action creator triggered when a FETCH-ALL-request for posts is started
+   * Redux action creator triggered when a FETCH-SINGLE-request for posts is started
    */
   function request() {
     return { type: postConstants.GET_POST_REQUEST };
   }
 
   /**
-   * Redux action creator triggered when a FETCH-ALL-request succeeded
-   * @param {Array of objects } posts - Posts that have been fetched
+   * Redux action creator triggered when a FETCH-SINGLE-request succeeded
+   * @param {object } post - Posts that have been fetched
    */
   function success(post) {
     return { type: postConstants.GET_POST_SUCCESS, post: post };
@@ -113,6 +130,11 @@ function getSinglePost(postId) {
   }
 }
 
+/**
+ * Creates a post that is associated with a page (chair, group, ...)
+ * @param {Number} pageId - Identifier of the page that this post was created in
+ * @param {Object} postValues - values as in @see /src/models/post.js
+ */
 function createPost(pageId, postValues) {
   return async (dispatch, getState) => {
     dispatch(request());
@@ -128,22 +150,22 @@ function createPost(pageId, postValues) {
   };
 
   /**
-   * Redux action creator triggered when a FETCH-ALL-request for posts is started
+   * Redux action creator triggered when a CREATE-request for posts is started
    */
   function request() {
     return { type: postConstants.ADD_POST_REQUEST };
   }
 
   /**
-   * Redux action creator triggered when a FETCH-ALL-request succeeded
-   * @param {Array of objects } posts - Posts that have been fetched
+   * Redux action creator triggered when a CREATE-request succeeded
+   * @param {object } post - Post that was created
    */
   function success(post) {
     return { type: postConstants.ADD_POST_SUCCESS, post: post };
   }
 
   /**
-   * Redux action creator triggered when a FETCH-ALL-request failed
+   * Redux action creator triggered when a CREATE-request failed
    * @param {*} error - Error object thrown when creating the registration request
    */
   function failure(error) {
@@ -151,6 +173,11 @@ function createPost(pageId, postValues) {
   }
 }
 
+/**
+ * Updates an existing post identified by its postId and tracks progress, success or failure within redux
+ * @param {Number} postId - unique id of the post that shall be edited
+ * @param {Object} postValues - post object as in @see models/post
+ */
 function updatePost(postId, postValues) {
   return async (dispatch, getState) => {
     dispatch(request());
@@ -164,22 +191,22 @@ function updatePost(postId, postValues) {
   };
 
   /**
-   * Redux action creator triggered when a FETCH-ALL-request for posts is started
+   * Redux action creator triggered when an EDIT-request for a post is started
    */
   function request() {
     return { type: postConstants.EDIT_POST_REQUEST };
   }
 
   /**
-   * Redux action creator triggered when a FETCH-ALL-request succeeded
-   * @param {Array of objects } posts - Posts that have been fetched
+   * Redux action creator triggered when an EDIT-request succeeded
+   * @param {object } post - Post that was created
    */
   function success(post) {
     return { type: postConstants.EDIT_POST_SUCCESS, post: post };
   }
 
   /**
-   * Redux action creator triggered when a FETCH-ALL-request failed
+   * Redux action creator triggered when a  EDIT-POST-request failed
    * @param {*} error - Error object thrown when creating the registration request
    */
   function failure(error) {
@@ -187,6 +214,10 @@ function updatePost(postId, postValues) {
   }
 }
 
+/**
+ * Deletes an existing post identified by its postId and tracks progress, success or failure within redux
+ * @param {Number} postId - unique id of the post that shall be edited
+ */
 function deletePost(postId) {
   return async (dispatch, getState) => {
     dispatch(request());
@@ -200,22 +231,22 @@ function deletePost(postId) {
   };
 
   /**
-   * Redux action creator triggered when a FETCH-ALL-request for posts is started
+   * Redux action creator triggered when a DELETE-request for  a post is started
    */
   function request() {
     return { type: postConstants.REMOVE_POST_REQUEST };
   }
 
   /**
-   * Redux action creator triggered when a FETCH-ALL-request succeeded
-   * @param {Array of objects } posts - Posts that have been fetched
+   * Redux action creator triggered when a DELETE-POST-request succeeded
+   * @param {Number} postId - Id of the Post that has been removed
    */
   function success(postId) {
     return { type: postConstants.REMOVE_POST_SUCCESS, removedPostId: postId };
   }
 
   /**
-   * Redux action creator triggered when a FETCH-ALL-request failed
+   * Redux action creator triggered when a DELETE-POST-request failed
    * @param {*} error - Error object thrown when creating the registration request
    */
   function failure(error) {

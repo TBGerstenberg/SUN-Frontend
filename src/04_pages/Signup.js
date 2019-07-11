@@ -40,6 +40,9 @@ class Signup extends React.Component {
     );
   }
 
+  /**
+   * Triggers a redirect to the complete-profile page
+   */
   redirectToCompleteProfilePage() {
     const action = redirect({
       type: navigationConstants.NAVIGATE_TO_COMPLETE_PROFILE
@@ -129,6 +132,11 @@ class Signup extends React.Component {
     );
   }
 
+  /**
+   * Renders a snippet that explains that a user has to comply to
+   * the terms of service and data-processing agreement
+   * in order to sign up.
+   */
   _renderToSAgreementSnippet() {
     const tos_snippet = (
       <label>
@@ -176,6 +184,10 @@ class Signup extends React.Component {
     );
   }
 
+  /**
+   * Renders signup-errors localized to the users language.
+   * @param {Number} status - HTTP Statuscode of the error.
+   */
   renderErrorMessage(status) {
     return (
       <Message negative>

@@ -10,6 +10,9 @@ import { chairService } from "../services";
 import tableFormattingUtilities from "../utilities/tableFormattingUtilities";
 import AddEntityModal from "./AddEntityModal";
 
+/**
+ * Component that allows to manage  (read, create, update, delete) chair-entities.
+ */
 class ChairManagement extends React.Component {
   componentWillMount() {
     this.props.dispatch(chairActions.getAllChairs());
@@ -251,14 +254,23 @@ class ChairManagement extends React.Component {
     );
   }
 
+  /**
+   * Handles a click onto the add-chair button
+   */
   handleAddChairButtonClick() {
     this.openAddChairModal();
   }
 
+  /**
+   * Handles a click onto the edit-chair button
+   */
   handleEditChairButtonClick() {
     this.openEditChairModal();
   }
 
+  /**
+   *  Handles a click onto the delete-chair button
+   */
   async handleDeleteChairButtonClick() {
     const deletionResponse = await chairService.deleteChair(
       this.state.selectedEntry
@@ -274,27 +286,45 @@ class ChairManagement extends React.Component {
     }
   }
 
+  /**
+   * Opens the modal to Edit a chair
+   */
   openEditChairModal() {
     this.setState({
       editChairModalOpen: true
     });
   }
+
+  /**
+   * Closes the modal to edit a chair
+   */
   closeEditChairModal() {
     this.setState({
       editChairModalOpen: false
     });
   }
+
+  /**
+   * Opens the modal to add a chair
+   */
   openAddChairModal() {
     this.setState({
       addChairModalOpen: true
     });
   }
+
+  /**
+   * Closes the modal to add a chair
+   */
   closeAddChairModal() {
     this.setState({
       addChairModalOpen: false
     });
   }
 
+  /**
+   * Triggers when the user clicks outside of the table - used to de-select the previously selected entry.
+   */
   handleClickOutside = evt => {
     this.setState({
       selectedEntry: null

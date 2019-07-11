@@ -10,6 +10,9 @@ import { accountService } from "../services";
 import tableFormattingUtilities from "../utilities/tableFormattingUtilities";
 import AddEntityModal from "./AddEntityModal";
 
+/**
+ *  A component that allows to manage (read, create, update, delete)
+ */
 class UserManagement extends React.Component {
   async componentWillMount() {
     this.fetchAllAccounts();
@@ -276,6 +279,9 @@ class UserManagement extends React.Component {
     );
   }
 
+  /**
+   * Finds the currently selected account in the list of accounts.
+   */
   findSelectedAccount() {
     return this.state.accounts.find(account => {
       return account.id === this.state.selectedEntry;

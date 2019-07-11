@@ -1,5 +1,7 @@
 /**
- * Constants used as action types in ../_actions/user.actions.js
+ * Constants used as action types in ../_actions/chair.actions.js
+ * These constants will be the labels used by reducers that determine
+ * how the application state shall be altered in reaction to an event.
  */
 const chairConstants = {
   GET_CHAIRS_REQUEST: "GET_CHAIRS_REQUEST",

@@ -1,6 +1,12 @@
 import { userService } from "../../services";
 import { userConstants } from "../_constants";
 
+/** ************************************************************************************
+ *  User-related action creators that dispatch actions like network requests
+ *  to the SUN-API and track their progress within redux, so that various components
+ *  in the component tree can react to events regarding these operations.
+ ****************************************************************************************/
+
 /**
  * Isses a Registration request, tracking its progress and status in the redux store by dispatching actions
  * @param email - Email adress that shall be registered

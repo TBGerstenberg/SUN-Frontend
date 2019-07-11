@@ -1,5 +1,7 @@
 /**
  * Constants used as action types in ../_actions/post.actions.js
+ * These constants will be the labels used by reducers that determine
+ * how the application state shall be altered in reaction to an event.
  */
 const postConstants = {
   GET_POSTS_REQUEST: "GET_POSTS_REQUEST",

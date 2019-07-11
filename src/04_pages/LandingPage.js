@@ -17,17 +17,18 @@ import {
   Visibility
 } from "semantic-ui-react";
 import LanguageSwitcher from "../02_molecules/LanguageSwitcher";
+import landingPageImage from "../assets/images/landingpage_01.jpg";
 import logo from "../assets/images/Logo.png";
-import landingPageImage from "../assets/images/landingpage_01.jpg"
 import profile_man from "../assets/images/profile_man.png";
 import profile_woman from "../assets/images/profile_woman.png";
 
-// Heads up!
-// We using React Static to prerender our docs with server side rendering, this is a quite simple solution.
-// For more advanced usage please check Responsive docs under the "Usage" section.
+/**
+ * Landingpage layout customized from the starters in the
+ * semantic-ui-react documentation.
+ */
+
 const getWidth = () => {
   const isSSR = typeof window === "undefined";
-
   return isSSR ? Responsive.onlyTablet.minWidth : window.innerWidth;
 };
 
@@ -82,10 +83,6 @@ HomepageHeading.propTypes = {
   mobile: PropTypes.bool
 };
 
-/* Heads up!
- * Neither Semantic UI nor Semantic UI React offer a responsive navbar, however, it can be implemented easily.
- * It can be more complicated, but you can create really flexible markup.
- */
 class DesktopContainer extends Component {
   state = {};
 

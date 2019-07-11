@@ -144,8 +144,6 @@ const userService = {
         registrationRequestBody
       );
 
-      console.log(signupResponse);
-
       // Handle the response
       if (signupResponse) {
         if (signupResponse.status === 200)

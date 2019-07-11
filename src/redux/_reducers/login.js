@@ -1,9 +1,26 @@
 import { userConstants } from "../_constants";
 
+/***************************************************************
+ * Redux reducer that reacts to authentication-related redux-actions dispatched
+ * by one or more action creatos and changes the application state accordingly.
+ * Each reducer represents a first-level node in the application state
+ * that is represented as a tree of JS-objects. This reducer manages
+ * the first-level node called "login" and all objects nested in
+ * lower levels of the state tree below the "login"-node.
+ * The below "initialstate" is used to define how the state-tree
+ * managed by this reducer looks like when initialized.
+ **************************************************************/
+
 const initialState = {
   loggedIn: false
 };
 
+/**
+ * Utility that takes a user-object as answered
+ * by the SUN API and attaches the admin-role
+ * in an array format that eases auth-filtering
+ * with the deployed navigation solution "redux-first-router"
+ */
 const attachRolesToUser = user => {
   let roles = [];
   if (user.admin) {
@@ -185,7 +202,6 @@ const loginReducer = (state = initialState, action) => {
      * the login reducer.
      */
     case userConstants.GET_SINGLE_USER_SUCCESS: {
-      console.log(action);
       if (action.user.id === state.user.id) {
         return {
           ...state,

@@ -8,6 +8,12 @@ import PersonCard from "../03_organisms/PersonCard";
 import PostCard from "../03_organisms/PostCard";
 import { chairActions, postActions, userActions } from "../redux/_actions";
 
+/**
+ * Page that is reached when pressing enter in the navbar without
+ * having selected an entry of the search results. Capable of
+ * displaying a (potentially) endless list of persons, chairs
+ * or posts.
+ */
 class Search extends React.Component {
   constructor(props) {
     super(props);

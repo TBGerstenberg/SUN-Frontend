@@ -1,5 +1,12 @@
 import i18next from "i18next";
 
+/**
+ * A set of utilites to validate various form-fields
+ * used throughout the system and display localized
+ * error messages. These have been written as
+ * individual utilities to be able to freely combine them on
+ * the form fields depending on the content.
+ */
 const formValidationUtilities = {
   required: value => {
     return value ? undefined : false;

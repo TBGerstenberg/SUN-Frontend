@@ -1,6 +1,9 @@
-import Person from "./person";
 import postTypeEnum from "./enumerations/postTypeEnum";
+import Person from "./person";
 
+/**
+ * Class representing a post as defined by the domain model.
+ */
 class Post {
   constructor(postValues) {
     this.id = postValues.id || null;
@@ -15,6 +18,10 @@ class Post {
     this.updatedAt = postValues.updatedAt || null;
   }
 
+  /**
+   * Converts a number value of a postType, which is represented by an @see PostTypeEnum
+   * to its respective string value in the enum.
+   */
   static typeAsString(typeAsNumber) {
     let valuesInEnum = Object.values(postTypeEnum);
     for (let index = 0; index < valuesInEnum.length; index++) {
@@ -26,10 +33,18 @@ class Post {
     }
   }
 
+  /**
+   * Converts a string value of a postType, which is represented by an @see PostTypeEnum
+   * to its respective index in the enum.
+   */
   static typeAsNumber(typeAsString) {
     return postTypeEnum[typeAsString];
   }
 
+  /**
+   * Generates a relative URL to the chairpage of the chair
+   * @param {Number} pageId -the ID of the page that this post was published at.
+   */
   static getAuthorPageLink(pageId) {
     return "/chair/" + pageId;
   }

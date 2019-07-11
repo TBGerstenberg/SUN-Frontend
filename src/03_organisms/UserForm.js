@@ -6,14 +6,7 @@ import { connect } from "react-redux";
 import { CheckboxField, LabelInputField } from "react-semantic-redux-form";
 import { Field, reduxForm } from "redux-form";
 import { DateInput } from "semantic-ui-calendar-react";
-import {
-  Button,
-  Divider,
-  Form,
-  Grid,
-  Header,
-  Message
-} from "semantic-ui-react";
+import { Button, Divider, Form, Grid, Header, Message } from "semantic-ui-react";
 import ChairRoleList from "../02_molecules/ChairRoleList";
 import CityNameInput from "../02_molecules/CityNameInput";
 import CourseOfStudyInput from "../02_molecules/CourseOfStudyInput";
@@ -34,14 +27,17 @@ import { accountService, chairService } from "../services";
 import userService from "../services/userService";
 import formValidationUtilities from "../utilities/formValidationUtilities";
 
+/**
+ * A Form that can be used to update or create a new User-Account, 
+ * issuing POST or PUT requests depending on the mode set via the components props. 
+ */
 class UserForm extends React.Component {
   constructor(props) {
     super(props);
 
     // Depending on the "Mode" of this form, it either initializes values from a given Account
-    // Or initializes all input
+    // Or initializes all inputs on the Form. 
     const mode = props.account ? "edit" : "add";
-    console.log(props.account);
     const account = props.account ? new Account(props.account) : null;
 
     // StudentStatus values
@@ -85,7 +81,6 @@ class UserForm extends React.Component {
       personChairRelations: personChairRelations,
       mode: mode,
       account: account,
-
       errors: []
     };
 

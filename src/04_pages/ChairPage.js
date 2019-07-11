@@ -25,9 +25,16 @@ import {
 import { chairService } from "../services";
 import tableFormattingUtilities from "../utilities/tableFormattingUtilities";
 
+/**
+ * Page that represents a chair within the system, allows to manage the basic data of the chair
+ * manage its employees, post various types of posts, appoint administators of the chair and subscribe to
+ * news form the chair.
+ */
 export class ChairPage extends React.Component {
   constructor(props) {
     super(props);
+
+    // Method binding
 
     this.renderPostsFragment = this.renderPostsFragment.bind(this);
     this.renderEventFragment = this.renderEventFragment.bind(this);
@@ -43,6 +50,7 @@ export class ChairPage extends React.Component {
     this.handleEmployeeRemoved = this.handleEmployeeRemoved.bind(this);
     this.handleEmployeeChanged = this.handleEmployeeChanged.bind(this);
 
+    // Navigation pane definition
     const panes = [
       {
         menuItem: i18next.t("chairpage-news-fragment-headline"),
@@ -58,6 +66,7 @@ export class ChairPage extends React.Component {
       }
     ];
 
+    // Initialize the components state
     this.state = {
       chairId: null,
       currentlyViewedChair: null,
@@ -77,6 +86,9 @@ export class ChairPage extends React.Component {
     };
   }
 
+  /**
+   * React lifecycle method
+   */
   static getDerivedStateFromProps(nextProps, prevState) {
     // As soon as the chairId of the chair that shall be viewed is available from redux
     if (nextProps.chairId !== prevState.chairId) {
@@ -127,6 +139,10 @@ export class ChairPage extends React.Component {
     } else return null;
   }
 
+  /**
+   * Renders the Fragment in the main Navigation that is capable if displaying events
+   * posted by the chair and create new events.
+   */
   renderEventFragment() {
     const personCanPostForChair =
       this.props.personIsEmployee || this.props.personIsSuperAdmin;
@@ -170,6 +186,10 @@ export class ChairPage extends React.Component {
     );
   }
 
+  /**
+   * Renders the Fragment in the main Navigation that is capable if displaying employees
+   * of a chair and apply to the chair or accept applications.
+   */
   renderEmployeeFragment() {
     // Rechte aus Rollen ableiten
 

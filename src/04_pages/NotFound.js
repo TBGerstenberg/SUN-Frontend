@@ -3,6 +3,9 @@ import React from "react";
 import { Container, Grid, Header, Icon, Segment } from "semantic-ui-react";
 import NavBar from "../03_organisms/NavBar";
 
+/**
+ * Page that is rendered when an entity could not be found
+ */
 const NotFound = () => {
   return (
     <div>

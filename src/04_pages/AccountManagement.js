@@ -14,6 +14,10 @@ import { userActions } from "../redux/_actions";
 import { accountService } from "../services";
 import "./AccountManagement.css";
 
+/**
+ * A component that can render a form in which a user can update his basic account information
+ * like update his password or set a new primary-account email. Further it allows to delete ones account.
+ */
 class AccountManagement extends React.Component {
   constructor(props) {
     super(props);

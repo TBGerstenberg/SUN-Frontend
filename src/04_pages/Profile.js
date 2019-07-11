@@ -52,6 +52,10 @@ var randomFemaleImages = [
   veronikaImage
 ];
 
+/**
+ * Profile page capable of displaying data about a user, like contact, adress or student-status and
+ * a random set of profile images.
+ */
 class Profile extends React.Component {
   constructor(props) {
     super(props);
@@ -71,6 +75,8 @@ class Profile extends React.Component {
     this.closeEditUserModal = this.closeEditUserModal.bind(this);
     this.openEditUserModal = this.openEditUserModal.bind(this);
   }
+
+  // React-Lifecycle Methods
 
   static getDerivedStateFromProps(nextProps, prevState) {
     if (nextProps.userId !== prevState.userId) {
@@ -111,7 +117,6 @@ class Profile extends React.Component {
         this.state.userId == this.props.loggedInUsersAccount.person.id;
     }
 
-    console.log(this.props.loggedInUsersAccount);
     return (
       <div>
         <NavBar />
@@ -141,7 +146,7 @@ class Profile extends React.Component {
 
                         <Grid padded>
                           {profileValuesExist ? (
-                            <FirstProfileRow
+                            <ProfileCore
                               title={props.profileValues.title}
                               birthDate={props.profileValues.birthDate}
                               firstName={props.profileValues.firstName}
@@ -276,12 +281,18 @@ class Profile extends React.Component {
     }, 1000);
   }
 
+  /**
+   * Closes the modal to edit one's profile
+   */
   closeEditUserModal() {
     this.setState({
       editUserModalOpen: false
     });
   }
 
+  /**
+   * Opens the modal to edit one's profile
+   */
   openEditUserModal() {
     this.setState({
       editUserModalOpen: true
@@ -289,7 +300,10 @@ class Profile extends React.Component {
   }
 }
 
-const FirstProfileRow = props => {
+/**
+ * Component capable of displaying the core-information of a users profile.
+ */
+const ProfileCore = props => {
   return (
     <Grid.Row>
       <Grid columns={2}>
@@ -418,6 +432,9 @@ const FirstProfileRow = props => {
   );
 };
 
+/**
+ * Component that displays a personalized greeting message
+ */
 const HeaderProfilePage = props => {
   return (
     <Header as="h1" color="blue">
@@ -427,7 +444,8 @@ const HeaderProfilePage = props => {
 };
 
 /**
- * Skills ommited
+ * Component capable of displaying a set of skills of that particular user
+ * NOTE: Feature ommitted due to time limitations.
  */
 const SkillCatalog = () => {
   return (
@@ -453,6 +471,9 @@ const SkillCatalog = () => {
   );
 };
 
+/**
+ * Placeholder component that is rendered while the profile is still fetching
+ */
 const OneLinePlaceHolder = () => {
   return (
     <Placeholder>

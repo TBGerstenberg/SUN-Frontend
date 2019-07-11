@@ -1,5 +1,14 @@
 import { postConstants } from "../_constants";
 
+/***************************************************************
+ * Redux reducer that reacts to post-related redux-actions dispatched
+ * by one or more action creatos and changes the application state accordingly.
+ * Each reducer represents a first-level node in the application state
+ * that is represented as a tree of JS-objects. This reducer manages
+ * the first-level node called "post" and all objects nested in
+ * lower levels of the state tree below the "post"-node.
+ **************************************************************/
+
 const initialState = {
   posts: []
 };

@@ -6,6 +6,10 @@ import ChairCard from "../03_organisms/ChairCard";
 import NavBar from "../03_organisms/NavBar";
 import { chairActions } from "../redux/_actions";
 
+/**
+ * A Component capable of rendering a list of all chairs
+ * in a Card-based Layout.
+ */
 class AllChairs extends React.Component {
   constructor(props) {
     super(props);

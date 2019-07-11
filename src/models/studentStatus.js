@@ -1,3 +1,6 @@
+/**
+ * Class representing a studentStatus as defined by the domain model.
+ */
 class StudentStatus {
   constructor(studentStatusValues) {
     this.matriculationNumber = studentStatusValues.matriculationNumber;
