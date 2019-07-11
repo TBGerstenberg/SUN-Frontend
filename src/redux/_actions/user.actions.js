@@ -249,7 +249,7 @@ function getSingleUser(userId) {
     const getSingleUserResponse = await userService.getSingleUser(userId);
 
     if (getSingleUserResponse && getSingleUserResponse.user) {
-      dispatch(success(getSingleUserResponse.user));
+      dispatch(success(getSingleUserResponse.user, getSingleUserResponse.status));
     } else {
       dispatch(failure(getSingleUserResponse));
     }
@@ -259,8 +259,8 @@ function getSingleUser(userId) {
     return { type: userConstants.GET_SINGLE_USER_REQUEST };
   }
 
-  function success(user) {
-    return { type: userConstants.GET_SINGLE_USER_SUCCESS, user };
+  function success(user, status) {
+    return { type: userConstants.GET_SINGLE_USER_SUCCESS, user, status };
   }
 
   function failure(error) {

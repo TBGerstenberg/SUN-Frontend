@@ -12,7 +12,8 @@ import {
   Header,
   Label,
   Placeholder,
-  Segment
+  Segment,
+  Image
 } from "semantic-ui-react";
 import BodyText from "../01_atoms/BodyText";
 import AddEntityModal from "../03_organisms/AddEntityModal";
@@ -23,20 +24,67 @@ import UserForm from "../03_organisms/UserForm";
 import { navigationActions, userActions } from "../redux/_actions";
 import tableFormattingUtilities from "../utilities/tableFormattingUtilities";
 
+
+var randomMaleImages = [
+  require("../assets/images/christian.jpg"),
+  require("../assets/images/matthew.png"),
+  require("../assets/images/tom.jpg"),
+  require("../assets/images/daniel.jpg"),
+  require("../assets/images/elliot.jpg")
+];
+
+var randomFemaleImages = [
+  require("../assets/images/helen.jpg"),
+  require("../assets/images/jenny.jpg"),
+  require("../assets/images/molly.png"),
+  require("../assets/images/rachel.png"),
+  require("../assets/images/stevie.jpg"),
+  require("../assets/images/veronika.jpg")
+];
+
 class Profile extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { userId: null, editUserModalOpen: false };
+    this.state = {
+      userId: null,
+      editUserModalOpen: false,
+      imageMaleSrc:
+        randomMaleImages[Math.floor(Math.random() * randomMaleImages.length)],
+      imageFemaleSrc:
+        randomFemaleImages[
+          Math.floor(Math.random() * randomFemaleImages.length)
+        ],
+      gender: 0,
+      imageSource:null
+    };
 
     this.closeEditUserModal = this.closeEditUserModal.bind(this);
     this.openEditUserModal = this.openEditUserModal.bind(this);
+   
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
     if (nextProps.userId !== prevState.userId) {
       nextProps.dispatch(userActions.getSingleUser(nextProps.userId));
-
       return { userId: nextProps.userId };
+    }
+
+    if (nextProps.profileFetchStatus && nextProps.profileFetchStatus === 200) {
+      let imageSource;
+
+      if (nextProps.profileValues.gender === 0) {
+        imageSource = null;
+      } else if (nextProps.profileValues.gender === 1) {
+        imageSource =
+          randomMaleImages[Math.floor(Math.random() * randomMaleImages.length)];
+      } else if (nextProps.profileValues.gender === 2) {
+        imageSource =
+          randomFemaleImages[
+            Math.floor(Math.random() * randomFemaleImages.length)
+          ];
+      }
+
+      return { ...prevState, imageSource: imageSource };
     } else return null;
   }
 
@@ -49,6 +97,8 @@ class Profile extends React.Component {
       this.props.dispatch(navigationActions.redirect(NOT_FOUND));
     }
 
+   
+
     if (this.props.loggedInUsersAccount) {
       userCanEditProfile =
         this.state.userId == this.props.loggedInUsersAccount.person.id;
@@ -60,8 +110,16 @@ class Profile extends React.Component {
         <NavBar />
         <Container>
           <Grid centered padded>
-            <Grid.Row columns={2}>
-              <Grid.Column width={12}>
+            <Grid.Row columns={3}>
+              <Grid.Column width={3}>
+                <Image
+                  rounded
+                  size="large"
+                  style={{ marginLeft: "-25px" }}
+                  src={this.state.imageSource}
+                />
+              </Grid.Column>
+              <Grid.Column width={9}>
                 <Grid centered>
                   <Segment
                     raised

@@ -14,7 +14,8 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         fetchingUser: false,
-        currentlyViewedUser: action.user
+        currentlyViewedUser: action.user,
+        userFetchStatus: action.status
       };
 
     case userConstants.GET_SINGLE_USER_FAILURE:

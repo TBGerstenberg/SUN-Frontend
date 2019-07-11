@@ -16,7 +16,7 @@ const ChangeLanguage = props => {
           <Button
             size="mini"
             onClick={() => props.i18n.changeLanguage("de")}
-            style={{ backgroundColor: "rgba(0,0,0,0)", color: "black" }}
+            style={{ backgroundColor: "rgba(0,0,0,0)", color: "black", width:"100%" }}
             className="languageSwitcher-button"
           >
             de
@@ -26,7 +26,7 @@ const ChangeLanguage = props => {
           <Button
             size="mini"
             onClick={() => props.i18n.changeLanguage("en")}
-            style={{ backgroundColor: "rgba(0,0,0,0)", color: "black" }}
+            style={{ backgroundColor: "rgba(0,0,0,0)", color: "black", width:"100%" }}
             className="languageSwitcher-button"
           >
             en
