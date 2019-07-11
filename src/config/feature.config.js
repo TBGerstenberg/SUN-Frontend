@@ -1,3 +1,8 @@
+/**
+ * Central configuration for feature-switches that allow to completely turn a feature of
+ * the system - that may be implemented accross varios files - to be turned on or off.
+ * Useful for A/B Testing.
+ */
 export const FEATURE_CONFIG = {
   authentication: {
     persistLoginState: true,

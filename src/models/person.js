@@ -2,7 +2,15 @@ import Adress from "./adress";
 import personChairRelationEnum from "./enumerations/personChairRelationEnum";
 import StudentStatus from "./studentStatus";
 
+/**
+ * Class representing a person as defined by the domain model.
+ */
 class Person {
+  /**
+   * Constructs a person from a given set of profileValues
+   * @param {Object} accountValues - Object containting and id (Number), email (String), admin (boolean), password (string) and person(object @see models/person) key.
+   * @returns constructed instance.
+   */
   constructor(profileValues) {
     this.userId = profileValues.userId;
     this.id = profileValues.id;
@@ -38,10 +46,16 @@ class Person {
     this.chairs = personChairRelations;
   }
 
+  /**
+   * Checks wether or not a person is an employee in at least one chair
+   */
   isEmployee() {
     return this.chairs.length !== 0;
   }
 
+  /**
+   * Statically wether a given person is an employee in at least one chair
+   */
   static isEmployee(person) {
     const personActivelyWorksForChair = person.chairs.find(chairRelation => {
       return chairRelation.active === true;
@@ -50,14 +64,23 @@ class Person {
     return person.chairs.length > 0 && personActivelyWorksForChair;
   }
 
+  /**
+   * Checks wether or not a person is a student
+   */
   isStudent() {
     return this.studentStatus != null;
   }
 
+  /**
+   * Checks wether or not a person is a student
+   */
   hasAddress() {
     return this.address != null;
   }
 
+  /**
+   * Contructs a link to
+   */
   static getProfileLinkForId(personId) {
     return "/profile/" + personId;
   }

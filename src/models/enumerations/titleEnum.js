@@ -1,3 +1,4 @@
+/** Enumeration of academic titles known by the system */
 const titleEnum = {
   Bachelor: 0,
   Master: 1,

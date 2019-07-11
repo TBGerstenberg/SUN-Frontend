@@ -25,3 +25,7 @@ body {
 .adminPanel-toastContainer {
   z-index: 5;
 }
+
+.pushable {
+  height: auto;
+}

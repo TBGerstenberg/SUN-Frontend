@@ -1,5 +1,14 @@
 import Person from "../models/person";
+
+/**
+ * Class representing a users account as defined by the domain model.
+ */
 class Account {
+  /**
+   * Constructs an account from a given set of accountValues
+   * @param {Object} accountValues - Object containting and id (Number), email (String), admin (boolean), password (string) and person(object @see models/person) key.
+   * @returns constructed instance.
+   */
   constructor(accountValues) {
     this.id = accountValues.id;
     this.email = accountValues.email;

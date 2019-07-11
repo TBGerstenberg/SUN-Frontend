@@ -615,6 +615,10 @@ class UserForm extends React.Component {
       }
     };
 
+    if (this.state.mode == "add") {
+      accountValues.password = values.password;
+    }
+
     // Temporary workaround, since the BE responds with a 400 when including the admin field
     if (!this.props.editedByOwner) {
       accountValues["newEmail"] = values.email;
@@ -681,6 +685,8 @@ class UserForm extends React.Component {
       accountValues.newEmail,
       accountValues.password
     );
+
+    console.log(newAccountRequest);
 
     // If no errors occur, update the profile of with values from the form.
     if (newAccountRequest.error == null && newAccountRequest.status === 200) {

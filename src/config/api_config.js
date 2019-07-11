@@ -1,5 +1,9 @@
 const BASEURL = "http://localhost:5000/api";
 
+/**
+ * Central configuration for the backend-endpoints utilized by the various
+ * service classes in the system.
+ */
 const API_CONFIG = {
   BASEURL: "http://localhost:5000/api",
   ACCOUNT: {

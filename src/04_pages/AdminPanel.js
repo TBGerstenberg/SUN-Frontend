@@ -122,6 +122,7 @@ class AdminPanel extends React.Component {
   }
 
   toggleErrorMessage(title, message) {
+    console.log(title, message);
     setTimeout(() => {
       toast(
         {

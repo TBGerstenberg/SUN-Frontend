@@ -1,6 +1,11 @@
 # SUN-Frontend
 
-Frontend für das "Siegener Uni Netzwerk" (SUN) - ein System für die Lehrveranstaltung "Implementierung von Anwendungssystemen" der Universität Siegen.
+Frontend für das "Siegener Uni Netzwerk" (SUN) - ein System für die Lehrveranstaltung "Implementierung von Anwendungssystemen" der Universität Siegen. Erstellt in der Entwicklungssprache Javascript unter Verwendung der React.Js Library im Viewlayer, Redux als State-Management Lösung und Semantic-UI-React als CSS Framework.
+Bootstrapped mit der Create-React-App.
+
+Abhängigkeiten des Projektes samt Versionsnummern sind in src/package.json notiert. Die Komponenten sind nach Brad Frost's philosophie zur Strukturierung von Design-Systemen "Atomic Design" strukturiert.
+
+http://bradfrost.com/blog/post/atomic-web-design/
 
 ## Ausführen
 
@@ -15,14 +20,20 @@ Repository klonen mit
 
 Node.js in Version 10.15.0 für die eigene Plattform herunterladen und installieren
 
-> > https://nodejs.org/download/release/v10.15.0/  
-> > Node kommt mit dem node-package-manager (NPM).
+https://nodejs.org/download/release/v10.15.0/  
+Node kommt mit dem node-package-manager (NPM).
 
 Dann:
 
 1. In das Projektverzeichnis wechseln ( auf Kommandozeile (git bash) mit cd ~/<BENUTZERNAME>/<PFAD_ZUM_PROJEKT> )
 2. Abhängigkeiten installieren `npm install`
 3. Development Server starten `npm run start`
+
+## Globale Styles verändern
+
+Falls globale Styleinformationen des verwendeten CSS Frameworks Semantic UI verändert werden sollen, kann dies über die ./semantic.json geschehen. Die Befehle `npm build semantic` erzeugen dann optimierte css-files mit den neuen Einstellungen.
+
+# Original Create-React-App README
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

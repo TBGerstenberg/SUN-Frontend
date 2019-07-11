@@ -1,4 +1,6 @@
 {
+  "WHAT-THIS-FILE-IS-ALL-ABOUT": "Diese Datei enthält alle Texte der Interfaceelemente von SUN in der Deutschen Fassung und wird von der verwendeten internationalisierunglösung i18next als Quelle verwendet.",
+
   "signup-a-new-account-headline": "Registrieren",
   "signup-email-input-placeholder": "Email-Adresse",
   "signup-password-input-placeholder": "Passwort",

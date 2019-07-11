@@ -1,3 +1,6 @@
+/**
+ * Enumeration of Faculties of the university of Siegen
+ */
 const facultyEnum = {
   0: "unset",
   1: "PHIL",
