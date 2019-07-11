@@ -1,7 +1,7 @@
 import i18next from "i18next";
 import React from "react";
 import { connect } from "react-redux";
-import { Button, Card, Icon } from "semantic-ui-react";
+import { Button, Card, Confirm, Icon } from "semantic-ui-react";
 import Account from "../models/account";
 import { postActions } from "../redux/_actions";
 import tableFormattingUtilities from "../utilities/tableFormattingUtilities";
@@ -11,14 +11,19 @@ class PostCard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      postToBeRendered: props.post
+      postToBeRendered: props.post,
+      confirmPostDeletionModalOpen: false
     };
 
     this.handlePostDeleteButtonClick = this.handlePostDeleteButtonClick.bind(
       this
     );
+    this.triggerPostDeletion = this.triggerPostDeletion.bind(this);
   }
 
+  /**
+   * React-Lifecycle Method - Renders a Post depending on its type.
+   */
   render() {
     const props = this.props;
 
@@ -41,6 +46,32 @@ class PostCard extends React.Component {
   }
 
   /**
+   * Renders a confirmation modal before the deletion of a post is triggered
+   */
+  renderConfirmPostDeletionModal() {
+    return (
+      <Confirm
+        onConfirm={this.triggerPostDeletion}
+        onCancel={() => {
+          this.setState({ confirmPostDeletionModalOpen: false });
+        }}
+        onClose={() => {
+          this.setState({ confirmPostDeletionModalOpen: false });
+        }}
+        confirmButton={i18next.t(
+          "postCard-confirm-post-deletion-modal-submit-button-label"
+        )}
+        cancelButton={i18next.t(
+          "postCard-confirm-post-deletion-modal-cancel-button-label"
+        )}
+        header={i18next.t("postCard-confirm-post-deletion-modal-headline")}
+        content={i18next.t("postCard-confirm-post-deletion-modal-content")}
+        open={this.state.confirmPostDeletionModalOpen}
+      />
+    );
+  }
+
+  /**
    * Renders a Button to delete the post, given that the viewer has permission to do so
    * @param {Boolean} userCanDeletePost - Flag indicating wether the viewer can delete the post or not.
    */
@@ -48,16 +79,19 @@ class PostCard extends React.Component {
     return (
       <>
         {userCanDeletePost && (
-          <Button
-            icon
-            size="tiny"
-            color="grey"
-            circular
-            onClick={this.handlePostDeleteButtonClick}
-            floated="right"
-          >
-            <Icon name="trash" />
-          </Button>
+          <>
+            {this.renderConfirmPostDeletionModal()}
+            <Button
+              icon
+              size="tiny"
+              color="grey"
+              circular
+              onClick={this.handlePostDeleteButtonClick}
+              floated="right"
+            >
+              <Icon name="trash" />
+            </Button>
+          </>
         )}
       </>
     );
@@ -273,6 +307,10 @@ class PostCard extends React.Component {
     );
   }
 
+  /**
+   * Renders a post of type "Joboffer".
+   * @param {*} props - React props handed to the PostCard
+   */
   renderJobPost(props) {
     return (
       <Card color="blue" fluid className="postCard-container">
@@ -342,7 +380,14 @@ class PostCard extends React.Component {
   /**
    * Handles a click on the delete-button displayed on each psot
    */
-  async handlePostDeleteButtonClick() {
+  handlePostDeleteButtonClick() {
+    this.setState({ confirmPostDeletionModalOpen: true });
+  }
+
+  /**
+   * Triggers the deletion of this post
+   */
+  async triggerPostDeletion() {
     this.props.dispatch(postActions.deletePost(this.state.postToBeRendered.id));
   }
 }

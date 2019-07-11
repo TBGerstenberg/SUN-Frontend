@@ -188,6 +188,11 @@
   "postCard-eventPost-startsAt-label": "Beginn: ",
   "postCard-eventPost-endsAt-label": "Ende: ",
 
+  "postCard-confirm-post-deletion-modal-content": "Er wird dadurch unwiederbringlich gelöscht und ist auch auf der Seite des Lehrstuhls, auf der er veröffentlicht wurde, nicht mehr zu finden.",
+  "postCard-confirm-post-deletion-modal-headline": "Bist du sicher, dass du diesen Beitrag löschen möchtest?",
+  "postCard-confirm-post-deletion-modal-submit-button-label": "Bestätigen",
+  "postCard-confirm-post-deletion-modal-cancel-button-label": "Abbrechen",
+
   "postCard-jobPost-hoursPerWeek-label": "Wochenstunden: ",
 
   "navbar-home-link-label": "Home",
