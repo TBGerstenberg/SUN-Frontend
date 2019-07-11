@@ -6,7 +6,14 @@ import { connect } from "react-redux";
 import { CheckboxField, LabelInputField } from "react-semantic-redux-form";
 import { Field, reduxForm } from "redux-form";
 import { DateInput } from "semantic-ui-calendar-react";
-import { Button, Divider, Form, Grid, Header, Message } from "semantic-ui-react";
+import {
+  Button,
+  Divider,
+  Form,
+  Grid,
+  Header,
+  Message
+} from "semantic-ui-react";
 import ChairRoleList from "../02_molecules/ChairRoleList";
 import CityNameInput from "../02_molecules/CityNameInput";
 import CourseOfStudyInput from "../02_molecules/CourseOfStudyInput";
@@ -28,15 +35,15 @@ import userService from "../services/userService";
 import formValidationUtilities from "../utilities/formValidationUtilities";
 
 /**
- * A Form that can be used to update or create a new User-Account, 
- * issuing POST or PUT requests depending on the mode set via the components props. 
+ * A Form that can be used to update or create a new User-Account,
+ * issuing POST or PUT requests depending on the mode set via the components props.
  */
 class UserForm extends React.Component {
   constructor(props) {
     super(props);
 
     // Depending on the "Mode" of this form, it either initializes values from a given Account
-    // Or initializes all inputs on the Form. 
+    // Or initializes all inputs on the Form.
     const mode = props.account ? "edit" : "add";
     const account = props.account ? new Account(props.account) : null;
 
@@ -681,8 +688,6 @@ class UserForm extends React.Component {
       accountValues.password
     );
 
-    console.log(newAccountRequest);
-
     // If no errors occur, update the profile of with values from the form.
     if (newAccountRequest.error == null && newAccountRequest.status === 200) {
       // Set the person Id returned from the BE to update the newly created profile with the valeus set in the from
@@ -893,9 +898,13 @@ const mapStateToProps = (state, ownProps) => {
             ownProps.account.person.studentStatus.subject
               ? ownProps.account.person.studentStatus.subject
               : "",
-          matriculatonNumber: ownProps.account.person.studentStatus
-            ? ownProps.account.person.studentStatus.matriculationNumber
-            : "",
+
+          studentId:
+            ownProps.account.person.studentStatus &&
+            ownProps.account.person.studentStatus.matriculationNumber
+              ? ownProps.account.person.studentStatus.matriculationNumber
+              : "",
+
           isEmployee: ownProps.account.person.chairs.length !== 0
         }
       };

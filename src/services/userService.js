@@ -28,15 +28,6 @@ const userService = {
         password: password
       };
 
-      console.log(
-        "Issuing a login request with " +
-          postLoginRequestBody.email +
-          " and " +
-          postLoginRequestBody.password +
-          "to " +
-          API_CONFIG.LOGIN.POST_LOGIN_URL
-      );
-
       // Perform the http request
       const LoginResponse = await apiClient.post(
         API_CONFIG.LOGIN.POST_LOGIN_URL,
@@ -79,7 +70,6 @@ const userService = {
 
       // Handle the response
       if (getSessionRequest.status === 200) {
-        console.log(getSessionRequest);
         return getSessionRequest;
       }
     } catch (error) {
@@ -124,19 +114,6 @@ const userService = {
         //consentToDataProcessingAgreement: consentToDataProcessingAgreement,
         //consentToTermsOfService: consentToTermsOfService
       };
-
-      console.log(
-        "Issuing a Signup request with " +
-          registrationRequestBody.Email +
-          " and " +
-          registrationRequestBody.Password +
-          " and consent to data processing:  " +
-          consentToDataProcessingAgreement +
-          " and Consent to terms of service:  " +
-          consentToTermsOfService +
-          "to  " +
-          API_CONFIG.REGISTRATION.POST_REGISTRATION_URL
-      );
 
       // Perform the request
       const signupResponse = await apiClient.post(
