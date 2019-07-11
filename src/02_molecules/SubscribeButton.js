@@ -3,6 +3,9 @@ import React from "react";
 import { withTranslation } from "react-i18next";
 import { Button } from "semantic-ui-react";
 
+/**
+ * A button capable of displaying subscription status to something
+ */
 class SubscribeButton extends React.Component {
   render() {
     const props = this.props;

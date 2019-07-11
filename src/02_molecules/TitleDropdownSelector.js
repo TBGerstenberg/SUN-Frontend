@@ -4,6 +4,10 @@ import { withTranslation } from "react-i18next";
 import { Field } from "redux-form";
 import DropdownSelector from "../01_atoms/DropdownSelector";
 
+/**
+ * A dropdown to select from a list of academic titles.
+ * @param {*} props
+ */
 const TitleDropdownSelector = props => {
   return (
     <Field

@@ -4,6 +4,10 @@ import { LabelInputField } from "react-semantic-redux-form";
 import { Field } from "redux-form";
 import { Icon } from "semantic-ui-react";
 
+/**
+ * An iconized input field for the email-adress of a member
+ * @param {*} props
+ */
 const EmailInput = props => {
   return (
     <Field

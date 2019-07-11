@@ -4,6 +4,11 @@ import { withTranslation } from "react-i18next";
 import { Field } from "redux-form";
 import DropdownSelector from "../01_atoms/DropdownSelector";
 
+/**
+ * A dropdown-selector containing the faculties of a university.
+ * NOTE: Faculty names should be fetched from the server instead of being hardcoded
+ * in the system, as in @see RoleSelectionDropdown
+ */
 const FacultyDropdownSelector = props => {
   return (
     <Field

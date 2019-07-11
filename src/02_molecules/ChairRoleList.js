@@ -6,6 +6,9 @@ import ChairSelectionDropdown from "../03_organisms/ChairSelectionDropdown";
 import RoleSelectionDropdown from "../03_organisms/RoleSelectionDropdown";
 import personChairRleationEnum from "../models/enumerations/personChairRelationEnum";
 
+/**
+ * Renders a List of relations a person can have towards a chair - when he/she is employed or has applied to them
+ */
 class ChairRoleList extends React.Component {
   constructor(props) {
     super(props);
@@ -23,6 +26,9 @@ class ChairRoleList extends React.Component {
     this.deleteListItem = this.deleteListItem.bind(this);
   }
 
+  /**
+   * Adds a role to the list of personChairRelations rendered by this list
+   */
   handleAddRoleButtonClick() {
     const newPersonChairRelation = {
       personId: this.state.userId,
@@ -78,6 +84,10 @@ class ChairRoleList extends React.Component {
     );
   }
 
+  /**
+   * Renders the Items of this List
+   * @param {Array of PersonChairRelations} items - PersonChairRleations
+   */
   renderListItems(items) {
     if (Array.isArray(items)) {
       if (items.length === 0) {
@@ -106,6 +116,10 @@ class ChairRoleList extends React.Component {
     }
   }
 
+  /**
+   * Adds a new Object to the list of personChairRelation
+   * @param {Object} personChairRelationValues
+   */
   addListItem(personChairRelationValues) {
     let mutatedPersonChairRelations = [...this.state.personChairRelations];
 
@@ -122,6 +136,10 @@ class ChairRoleList extends React.Component {
     this.props.onChange(mutatedPersonChairRelations);
   }
 
+  /**
+   * Deletes an item at a given - zero based - index in this list
+   * @param {Number} index - Index of the object that shall be deleted
+   */
   deleteListItem(index) {
     let mutatedPersonChairRelations = [...this.state.personChairRelations];
     mutatedPersonChairRelations.splice(index, 1);
@@ -129,6 +147,10 @@ class ChairRoleList extends React.Component {
     this.setState({ personChairRelations: mutatedPersonChairRelations });
   }
 
+  /**
+   * Finds a chair with a given ID in the list of personChairRelations
+   * @param {*} id
+   */
   _findChairWithId(id) {
     const chairWithId = this.state.chairs.find(chair => {
       return chair.id === id;
@@ -137,6 +159,9 @@ class ChairRoleList extends React.Component {
   }
 }
 
+/**
+ * Component that renders an individual item in the list of personChairRelations
+ */
 const ChairRoleListItem = props => {
   return (
     <List.Item onClick={props.itemClickHandler} className="chairRoleListItem">

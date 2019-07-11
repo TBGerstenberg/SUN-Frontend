@@ -4,6 +4,10 @@ import Link from "redux-first-router-link";
 import { Icon } from "semantic-ui-react";
 import { navigationConstants } from "../redux/_constants";
 
+/**
+ * Component that renders a chair-preview item in a list of searchResults
+ * @param {*} props
+ */
 const ChairSearchResult = props => {
   return (
     <div>

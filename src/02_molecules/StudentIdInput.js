@@ -4,6 +4,9 @@ import { withTranslation } from "react-i18next";
 import { LabelInputField } from "react-semantic-redux-form";
 import { Field } from "redux-form";
 
+/**
+ * A number based Input field for a student-Identification number
+ */
 const StudentIdInput = props => {
   return (
     <Field

@@ -2,6 +2,10 @@ import i18next from "i18next";
 import React from "react";
 import { withTranslation } from "react-i18next";
 
+/**
+ * A component that renders a searchbar
+ * @param {*} props
+ */
 const Searchbar = props => {
   return (
     <div className="ui icon input">
