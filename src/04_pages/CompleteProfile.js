@@ -412,7 +412,7 @@ class CompleteProfile extends React.Component {
    * @param {} values
    */
   _handleCompleteProfileSubmit(values) {
-    const skillCatalogue = this.props.skillCatalogue;
+    /* const skillCatalogue = this.props.skillCatalogue;
     let skillsRatings = [];
 
     if (skillCatalogue) {
@@ -423,7 +423,7 @@ class CompleteProfile extends React.Component {
         });
       });
     }
-
+ */
     const DEFAULT_DATE_IF_UNSET = "1990-01-01T00:00:00+01:00";
     const DEFAULT_GENDER_IF_UNSET = 0;
 
@@ -462,8 +462,8 @@ class CompleteProfile extends React.Component {
         exmatriculationDate: exmatriculationDate
       },
       employeeStatus: null,
-      chairs: [values.chairs],
-      skills: skillsRatings
+      chairs: [values.chairs]
+      // skills: skillsRatings
     };
 
     const profile = new Person(profileValues);
