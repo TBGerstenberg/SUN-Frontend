@@ -191,6 +191,11 @@
 
   "postCard-jobPost-hoursPerWeek-label": "Weekly hours: ",
 
+  "postCard-confirm-post-deletion-modal-content": "Confirming the deletion will permanently delete the post and remove it from the chair-page that it was published on.",
+  "postCard-confirm-post-deletion-modal-headline": "Are you sure that you want to delete this post?",
+  "postCard-confirm-post-deletion-modal-submit-button-label": "Confirm",
+  "postCard-confirm-post-deletion-modal-cancel-button-label": "Cancel",
+
   "navbar-home-link-label": "Home",
   "navbar-profile-link-label": "Profile",
   "navbar-adminpanel-link-label": "Adminarea",
