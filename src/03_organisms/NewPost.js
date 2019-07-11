@@ -13,6 +13,9 @@ import {
 } from "semantic-ui-react";
 import DateInput from "../03_organisms/DateInput";
 
+/**
+ * Component to create a new Post
+ */
 class NewPostModal extends Component {
   constructor(props) {
     super(props);
@@ -29,7 +32,6 @@ class NewPostModal extends Component {
 
     this.updateInputTheme = this.updateInputTheme.bind(this);
     this.handleContentInputChange = this.handleContentInputChange.bind(this);
-    this.handleRadioButtonsChecked = this.handleRadioButtonsChecked.bind(this);
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -108,10 +110,12 @@ class NewPostModal extends Component {
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
-                <Grid.Row style={{ margin: "20px" }}>
-                  {this.state.selectedType === 1 &&
-                    this.renderHoursPerWeekInput()}
 
+                {this.state.selectedType === 1 && (
+                  <Grid.Row>{this.renderHoursPerWeekInput()}</Grid.Row>
+                )}
+
+                <Grid.Row style={{ margin: "20px" }}>
                   {this.state.selectedType === 3 && this.renderDateInputs()}
                 </Grid.Row>
               </Grid>
@@ -168,22 +172,26 @@ class NewPostModal extends Component {
     );
   }
 
-  handleRadioButtonsChecked(event, { value }) {
-    this.setState({
-      radioButtonValue: value
-    });
-  }
-
+  /**
+   * Handles a change in the input field for the topic of a post
+   */
   updateInputTheme(event) {
     this.setState({
       title: event.target.value
     });
   }
 
+  /**
+   * Handles a change in the input field for the topic of a post
+   */
   handleContentInputChange(event) {
     this.setState({ content: event.target.value });
   }
 
+  /**
+   * Renders two Date-input fields - used when the post type
+   * is an Event.
+   */
   renderDateInputs() {
     return (
       <>
@@ -217,6 +225,9 @@ class NewPostModal extends Component {
     );
   }
 
+  /**
+   * Renders an input for hourly-workhours, used in joboffer postings
+   */
   renderHoursPerWeekInput() {
     return (
       <Grid.Column width={16}>

@@ -326,14 +326,14 @@
 
   "new-event-modal-headline": "Neue Veranstaltung",
   "new-event-modal-abort-button-label": "Abbrechen",
-  "new-event-modal-submit-button-label": "Posten",
+  "new-event-modal-submit-button-label": "Posten ",
 
   "new-event-modal-startdate-label": "Beginn",
   "new-event-modal-startdate-placeholder": "Beginn",
   "new-event-modal-enddate-label": "Ende",
   "new-event-modal-enddate-placeholder": "Ende",
 
-  "new-post-modal-post-button-label": "Posten",
+  "new-post-modal-post-button-label": "Posten ",
   "new-post-modal-abort-button-label": "Abbrechen",
   "new-post-modal-headline": "Neuer Post",
   "new-post-modal-postType-dropdown-placeholder": "Beitragsart wählen",
