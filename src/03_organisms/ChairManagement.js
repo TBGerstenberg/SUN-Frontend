@@ -121,6 +121,9 @@ class ChairManagement extends React.Component {
     );
   }
 
+  /**
+   * Renders the header-row of the chair table
+   */
   renderChairsTableHeader() {
     return (
       <Table.Row>
@@ -155,6 +158,10 @@ class ChairManagement extends React.Component {
     );
   }
 
+  /**
+   * Renders a data row of the chairs table
+   * @param {*} chair
+   */
   renderChairsTableRow(chair) {
     return (
       <Table.Row
@@ -197,6 +204,9 @@ class ChairManagement extends React.Component {
     );
   }
 
+  /**
+   * Renders the footer row of the chairs table
+   */
   renderChairsTableFooter() {
     return (
       <Table.Row>
