@@ -5,7 +5,10 @@ import API_CONFIG from "../config/api_config";
  * Service that handles interaction with the <Account> API.
  */
 const accountService = {
-  getAllAccounts: async accessToken => {
+  /**
+   * Fetches all Accounts within the system
+   */
+  getAllAccounts: async () => {
     try {
       const getAllaccountsResponse = await apiClient.get(
         API_CONFIG.ACCOUNT.GET_ALL_ACCOUNTS_URL
@@ -16,6 +19,12 @@ const accountService = {
     }
   },
 
+  /**
+   * Updates an existing account with the values given in newAccountValues
+   * @param {Object} newAccountValues - JS Object containting Account information
+   * @param {Number} accountId - Unique ID of the account to update
+   * @see /src/models/account
+   */
   editAccount: async (newAccountValues, accountId) => {
     try {
       //Build request headers
@@ -43,9 +52,13 @@ const accountService = {
     }
   },
 
+  /**
+   * Deletes an existing account
+   * @param {Number} accountId - Unique ID of the account to delete
+   * @see /src/models/account
+   */
   deleteAccount: async accountId => {
     try {
-      console.log("Deleting account with id " + accountId + "In service layer");
       // Perform the request
       const deleteSingleAccountResponse = await apiClient.delete(
         API_CONFIG.ACCOUNT.DELETE_ACCOUNT_URL(accountId)

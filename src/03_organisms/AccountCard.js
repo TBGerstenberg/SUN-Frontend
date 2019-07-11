@@ -3,7 +3,11 @@ import { Trans, withTranslation } from "react-i18next";
 import { Card, Label } from "semantic-ui-react";
 import tableFormattingUtilities from "../utilities/tableFormattingUtilities";
 
-const addressCard = props => {
+/**
+ * Renders information about an account on a card-based layout
+ * @param {*} props
+ */
+const AccountCard = props => {
   return (
     <Card color="blue" fluid>
       <Card.Content>
@@ -21,4 +25,4 @@ const addressCard = props => {
   );
 };
 
-export default withTranslation()(addressCard);
+export default withTranslation()(AccountCard);

@@ -15,9 +15,10 @@ const attachRolesToUser = user => {
 
 const loginReducer = (state = initialState, action) => {
   switch (action.type) {
+    // Triggered when a signup-request is successful
     case userConstants.REGISTRATION_SUCCESS:
       //Tempoary workaround that changes the users admin status to an array containing his roles as strings
-      // as this eases the auth filtering
+      // as this eases the auth filtering in the used routing solution "redux-first-router"
       let user = action.payload.user;
       user = attachRolesToUser(user);
 
@@ -29,12 +30,15 @@ const loginReducer = (state = initialState, action) => {
         accessToken: action.payload.token
       };
 
+    // Triggered when a login-request is started
     case userConstants.LOGIN_REQUEST:
       return {
         ...state,
         loggingIn: true,
         user: action.email
       };
+
+    // Triggered when a login-request is successful
     case userConstants.LOGIN_SUCCESS:
       return {
         ...state,
@@ -44,12 +48,40 @@ const loginReducer = (state = initialState, action) => {
         accessToken: action.payload.token,
         error: null
       };
+
+    // Triggered when a login-request fails
     case userConstants.LOGIN_FAILURE:
       return {
         ...state,
         loggingIn: false,
         error: action.error
       };
+
+    // Triggered when a request to refresh the users session is started
+    case userConstants.GET_SESSION_REQUEST:
+      return {
+        ...state,
+        refreshingSession: true
+      };
+
+    // Triggered when a request to refresh the users session is successful
+    case userConstants.GET_SESSION_SUCCESS:
+      return {
+        ...state,
+        refreshingSession: false,
+        user: attachRolesToUser(action.payload.user, action.payload.user.admin),
+        accessToken: action.payload.token,
+        refreshSessionError: null
+      };
+
+    // Triggered when a request to refresh the users session fails
+    case userConstants.GET_SESSION_FAILURE:
+      return {
+        ...state,
+        refreshingSession: false,
+        refreshSessionError: action.error
+      };
+
     case userConstants.LOGOUT_REQUEST:
       return { ...state, loggingOut: true };
     case userConstants.LOGOUT_SUCCESS:
@@ -172,7 +204,6 @@ const loginReducer = (state = initialState, action) => {
      * the login reducer.
      */
     case userConstants.UPDATE_USER_PROFILE_SUCCESS: {
-      console.log(action);
       if (action.payload.user.id === state.user.id) {
         return {
           ...state,

@@ -249,7 +249,9 @@ function getSingleUser(userId) {
     const getSingleUserResponse = await userService.getSingleUser(userId);
 
     if (getSingleUserResponse && getSingleUserResponse.user) {
-      dispatch(success(getSingleUserResponse.user, getSingleUserResponse.status));
+      dispatch(
+        success(getSingleUserResponse.user, getSingleUserResponse.status)
+      );
     } else {
       dispatch(failure(getSingleUserResponse));
     }
@@ -265,6 +267,40 @@ function getSingleUser(userId) {
 
   function failure(error) {
     return { type: userConstants.GET_SINGLE_USER_FAILURE, error };
+  }
+}
+
+/**
+ * Fetches a session for the currently logged in user
+ */
+function getSession() {
+  return async dispatch => {
+    dispatch(request());
+
+    const getSessionRequest = await userService.getSession();
+
+    if (getSessionRequest && getSessionRequest.status === 200) {
+      dispatch(
+        success(getSessionRequest.data.account, getSessionRequest.data.token)
+      );
+    } else {
+      dispatch(failure(getSessionRequest));
+    }
+  };
+
+  function request() {
+    return { type: userConstants.GET_SESSION_REQUEST };
+  }
+
+  function success(user, authToken) {
+    return {
+      type: userConstants.GET_SESSION_SUCCESS,
+      payload: { user: user, token: authToken }
+    };
+  }
+
+  function failure(error) {
+    return { type: userConstants.GET_SESSION_FAILURE };
   }
 }
 
@@ -297,6 +333,9 @@ function deleteAccount(accountId) {
   }
 }
 
+/**
+ * Adds a subscription to a chair to the logged-in-user
+ */
 function addSubscription(subscription) {
   return {
     type: userConstants.ADD_SUBSCRIPTION,
@@ -304,6 +343,9 @@ function addSubscription(subscription) {
   };
 }
 
+/**
+ * Removes a subscription to a chair to the logged-in-user
+ */
 function removeSubscription(subscription) {
   return {
     type: userConstants.REMOVE_SUBSCRIPTION,
@@ -311,6 +353,13 @@ function removeSubscription(subscription) {
   };
 }
 
+/**
+ * Updates the primary email of an acccount.
+ * NOTE: This operation is implemented seperately from update-profile
+ * as it may require additional security checks, like confirming with a password
+ * that is not stored on the client side
+ * @param {String} updatedEmail
+ */
 function updateAccountEmail(updatedEmail) {
   return {
     type: userConstants.UPDATE_ACCOUNT_EMAIL,
@@ -321,6 +370,7 @@ function updateAccountEmail(updatedEmail) {
 const userActions = {
   register,
   login,
+  getSession,
   logout,
   getAllUsers,
   getSingleUser,
