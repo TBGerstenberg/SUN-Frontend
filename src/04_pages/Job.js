@@ -6,6 +6,10 @@ import NewPostModal from "../03_organisms/NewPost";
 import AvatarJob from "../assets/images/job.png";
 import { postActions } from "../redux/_actions";
 
+/**
+ * Job Page created to list a collection of Jobs from all chairs.
+ * Wasn't finished in time.
+ */
 export class Job extends React.Component {
   render() {
     return (
@@ -16,7 +20,7 @@ export class Job extends React.Component {
           <Grid.Row>
             <Grid.Column textAlign="center" width={3}>
               <Avatar_Job />
-              {/* <ConfirmModal /> */}
+
               <NewPostModal
                 onNewPost={newPostText => this.props.addTodo(newPostText)}
               />
@@ -27,9 +31,6 @@ export class Job extends React.Component {
                   return <li key={todo.id}>{todo.title}</li>;
                 })}
               </ul>
-
-              {/**  Klickzähler: {this.props.value}
-  <button onClick={this.props.onIncrement}>Klick</button>*/}
             </Grid.Column>
             <Grid.Column width={4}>
               <SecondProfile />
@@ -81,23 +82,6 @@ let TodoListContainer = connect(
   mapDispatchToProps
 )(Job);
 export default TodoListContainer;
-
-// Klickzähler
-/*let mapStateToProps = function(state) {
-  return {
-    value: state.job.counter,
-    name: "Hallo"
-  }
-}
-
-let mapDispatchToProps = {
-  onIncrement : incrementCounter
-}
-
-let AppContainer = connect(mapStateToProps, mapDispatchToProps)(Job);
-
-export default AppContainer;
-*/
 
 const HeaderJobPage = () => {
   return (

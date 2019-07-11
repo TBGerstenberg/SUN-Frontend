@@ -1,16 +1,19 @@
+import i18next from "i18next";
 import React from "react";
 import { Trans, withTranslation } from "react-i18next";
 import onClickOutside from "react-onclickoutside";
 import { connect } from "react-redux";
 import { Button, Icon, Table } from "semantic-ui-react";
 import UserForm from "../03_organisms/UserForm";
+import Person from "../models/person";
 import { accountService } from "../services";
 import tableFormattingUtilities from "../utilities/tableFormattingUtilities";
 import AddEntityModal from "./AddEntityModal";
 
+/**
+ *  A component that allows to manage (read, create, update, delete)
+ */
 class UserManagement extends React.Component {
-  /** React-component-lifecycle methods */
-
   async componentWillMount() {
     this.fetchAllAccounts();
   }
@@ -75,12 +78,18 @@ class UserManagement extends React.Component {
                 this.setState({ addUserModalOpen: false });
               }}
               onCompleteWithSuccess={() => {
-                this.props.toggleSuccessMessage("Erfolg", "Benutzer angelegt");
+                this.props.toggleSuccessMessage(
+                  i18next.t("userManagement-create-user-success-title"),
+                  i18next.t("userManagement-create-user-success-message")
+                );
                 this.fetchAllAccounts();
                 this.closeAddUserModal();
               }}
               onCompleteWithError={error => {
-                this.props.toggleErrorMessage("Fehler", error);
+                this.props.toggleErrorMessage(
+                  i18next.t("userManagement-create-user-error-title"),
+                  error
+                );
                 this.closeAddUserModal();
               }}
             />
@@ -98,12 +107,18 @@ class UserManagement extends React.Component {
                 this.setState({ editUserModalOpen: false });
               }}
               onCompleteWithSuccess={() => {
-                this.props.toggleSuccessMessage("Erfolg", "Benutzer editiert");
+                this.props.toggleSuccessMessage(
+                  i18next.t("userManagement-edit-user-success-title"),
+                  i18next.t("userManagement-edit-user-success-message")
+                );
                 this.fetchAllAccounts();
                 this.closeEditUserModal();
               }}
               onCompleteWithError={error => {
-                this.props.toggleErrorMessage("Fehler", error);
+                this.props.toggleErrorMessage(
+                  i18next.t("userManagement-edit-user-error-title"),
+                  error
+                );
                 this.closeEditUserModal();
               }}
             />
@@ -167,7 +182,6 @@ class UserManagement extends React.Component {
       <Table.Row
         key={"row" + account.id}
         onClick={() => {
-          console.log("Selected entry" + account.id);
           this.setState({ selectedEntry: account.id });
         }}
         active={this.state.selectedEntry === account.id}
@@ -213,7 +227,7 @@ class UserManagement extends React.Component {
         </Table.Cell>
         <Table.Cell key="isEmployee">
           {tableFormattingUtilities.stringValueForBoolean(
-            account.person.chairs && account.person.chairs.length > 0
+            Person.isEmployee(account.person)
           )}
         </Table.Cell>
       </Table.Row>
@@ -265,6 +279,9 @@ class UserManagement extends React.Component {
     );
   }
 
+  /**
+   * Finds the currently selected account in the list of accounts.
+   */
   findSelectedAccount() {
     return this.state.accounts.find(account => {
       return account.id === this.state.selectedEntry;
@@ -288,15 +305,17 @@ class UserManagement extends React.Component {
     const deleteAccountRequest = await accountService.deleteAccount(
       this.state.selectedEntry
     );
-    console.log(deleteAccountRequest);
 
     if (deleteAccountRequest.status === 200) {
-      this.props.toggleSuccessMessage("Erfolg", "Benutzer gelöscht");
+      this.props.toggleSuccessMessage(
+        i18next.t("userManagement-delete-user-success-title"),
+        i18next.t("userManagement-delete-user-success-message")
+      );
       this.fetchAllAccounts();
     } else {
       this.props.toggleErrorMessage(
-        "Fehler",
-        "Benutzer konnte nicht gelöscht werden"
+        i18next.t("userManagement-delete-user-error-title"),
+        i18next.t("userManagement-delete-user-error-message")
       );
     }
   }

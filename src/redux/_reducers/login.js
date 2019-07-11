@@ -1,9 +1,26 @@
 import { userConstants } from "../_constants";
 
+/***************************************************************
+ * Redux reducer that reacts to authentication-related redux-actions dispatched
+ * by one or more action creatos and changes the application state accordingly.
+ * Each reducer represents a first-level node in the application state
+ * that is represented as a tree of JS-objects. This reducer manages
+ * the first-level node called "login" and all objects nested in
+ * lower levels of the state tree below the "login"-node.
+ * The below "initialstate" is used to define how the state-tree
+ * managed by this reducer looks like when initialized.
+ **************************************************************/
+
 const initialState = {
   loggedIn: false
 };
 
+/**
+ * Utility that takes a user-object as answered
+ * by the SUN API and attaches the admin-role
+ * in an array format that eases auth-filtering
+ * with the deployed navigation solution "redux-first-router"
+ */
 const attachRolesToUser = user => {
   let roles = [];
   if (user.admin) {
@@ -15,9 +32,10 @@ const attachRolesToUser = user => {
 
 const loginReducer = (state = initialState, action) => {
   switch (action.type) {
+    // Triggered when a signup-request is successful
     case userConstants.REGISTRATION_SUCCESS:
       //Tempoary workaround that changes the users admin status to an array containing his roles as strings
-      // as this eases the auth filtering
+      // as this eases the auth filtering in the used routing solution "redux-first-router"
       let user = action.payload.user;
       user = attachRolesToUser(user);
 
@@ -29,26 +47,58 @@ const loginReducer = (state = initialState, action) => {
         accessToken: action.payload.token
       };
 
+    // Triggered when a login-request is started
     case userConstants.LOGIN_REQUEST:
       return {
         ...state,
         loggingIn: true,
         user: action.email
       };
+
+    // Triggered when a login-request is successful
     case userConstants.LOGIN_SUCCESS:
       return {
         ...state,
         loggingIn: false,
         loggedIn: true,
         user: attachRolesToUser(action.payload.user, action.payload.user.admin),
-        accessToken: action.payload.token
+        accessToken: action.payload.token,
+        error: null
       };
+
+    // Triggered when a login-request fails
     case userConstants.LOGIN_FAILURE:
       return {
         ...state,
         loggingIn: false,
         error: action.error
       };
+
+    // Triggered when a request to refresh the users session is started
+    case userConstants.GET_SESSION_REQUEST:
+      return {
+        ...state,
+        refreshingSession: true
+      };
+
+    // Triggered when a request to refresh the users session is successful
+    case userConstants.GET_SESSION_SUCCESS:
+      return {
+        ...state,
+        refreshingSession: false,
+        user: attachRolesToUser(action.payload.user, action.payload.user.admin),
+        accessToken: action.payload.token,
+        refreshSessionError: null
+      };
+
+    // Triggered when a request to refresh the users session fails
+    case userConstants.GET_SESSION_FAILURE:
+      return {
+        ...state,
+        refreshingSession: false,
+        refreshSessionError: action.error
+      };
+
     case userConstants.LOGOUT_REQUEST:
       return { ...state, loggingOut: true };
     case userConstants.LOGOUT_SUCCESS:
@@ -60,7 +110,38 @@ const loginReducer = (state = initialState, action) => {
         loggedIn: false
       };
     case userConstants.LOGOUT_FAILURE:
-      return { ...state, loggingOut: false };
+      return {
+        ...state,
+        loggingOut: false,
+        accessToken: null,
+        user: null,
+        loggedIn: false
+      };
+
+    case userConstants.DELETE_ACCOUNT_REQUEST:
+      return { ...state, requestingAccountDeletion: true };
+    case userConstants.DELETE_ACCOUNT_SUCCESS:
+      return {
+        ...state,
+        requestingAccountDeletion: false,
+        accessToken: null,
+        user: null,
+        loggedIn: false
+      };
+    case userConstants.DELETE_ACCOUNT_FAILURE:
+      return {
+        ...state,
+        deleteAccountRequestStatus: action.status
+      };
+
+    case userConstants.UPDATE_ACCOUNT_EMAIL:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          email: action.payload.updatedEmail
+        }
+      };
 
     case userConstants.ADD_SUBSCRIPTION: {
       const userHasSubscribedToChair = state.user.person.subscriptions.find(
@@ -98,14 +179,8 @@ const loginReducer = (state = initialState, action) => {
       const userHasSubscribedToChair = indexOfChair !== -1;
 
       if (userHasSubscribedToChair) {
-        console.log(state.user.person.subscriptions);
-        console.log(indexOfChair);
-
         let mutatedSubscriptions = [...state.user.person.subscriptions];
-
         mutatedSubscriptions.splice(indexOfChair, 1);
-
-        console.log(mutatedSubscriptions);
 
         return {
           ...state,
@@ -122,8 +197,45 @@ const loginReducer = (state = initialState, action) => {
       }
     }
 
-    default:
+    /**
+     * When a  user is fetched from the backed, and its the one which is logged in, synchronize with the state managed by
+     * the login reducer.
+     */
+    case userConstants.GET_SINGLE_USER_SUCCESS: {
+      if (action.user.id === state.user.id) {
+        return {
+          ...state,
+          user: {
+            ...state.user,
+            person: action.user
+          }
+        };
+      } else {
+        return state;
+      }
+    }
+
+    /**
+     * When a user is updated, and its the one which is logged in, synchronize with the state managed by
+     * the login reducer.
+     */
+    case userConstants.UPDATE_USER_PROFILE_SUCCESS: {
+      if (action.payload.user.id === state.user.id) {
+        return {
+          ...state,
+          user: {
+            ...state.user,
+            person: action.payload.user
+          }
+        };
+      } else {
+        return state;
+      }
+    }
+
+    default: {
       return state;
+    }
   }
 };
 

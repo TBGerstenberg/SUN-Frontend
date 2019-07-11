@@ -17,17 +17,18 @@ import {
   Visibility
 } from "semantic-ui-react";
 import LanguageSwitcher from "../02_molecules/LanguageSwitcher";
-import logo from "../assets/images/landingpage_01.jpg";
-import logo2 from "../assets/images/Logo_2.png";
+import landingPageImage from "../assets/images/landingpage_01.jpg";
+import logo from "../assets/images/Logo.png";
 import profile_man from "../assets/images/profile_man.png";
 import profile_woman from "../assets/images/profile_woman.png";
 
-// Heads up!
-// We using React Static to prerender our docs with server side rendering, this is a quite simple solution.
-// For more advanced usage please check Responsive docs under the "Usage" section.
+/**
+ * Landingpage layout customized from the starters in the
+ * semantic-ui-react documentation.
+ */
+
 const getWidth = () => {
   const isSSR = typeof window === "undefined";
-
   return isSSR ? Responsive.onlyTablet.minWidth : window.innerWidth;
 };
 
@@ -49,7 +50,7 @@ const HomepageHeading = ({ mobile }) => (
     />
 
     <Image
-      src={logo2}
+      src={logo}
       height="175px"
       width="200px"
       style={{
@@ -63,7 +64,6 @@ const HomepageHeading = ({ mobile }) => (
       as="h2"
       content={i18next.t("landingpage-hero-subtext")}
       inverted
-      color="teal"
       style={{
         fontSize: mobile ? "1.5em" : "1.7em",
         fontWeight: "normal",
@@ -72,7 +72,7 @@ const HomepageHeading = ({ mobile }) => (
     />
     <br />
     <br />
-    <Button color="blue" inverted size="massive" href="/signup">
+    <Button color="blue" inverted size="big" href="/signup">
       {i18next.t("landingpage-hero-call-to-action")}
       <Icon name="angle double right" />
     </Button>
@@ -83,10 +83,6 @@ HomepageHeading.propTypes = {
   mobile: PropTypes.bool
 };
 
-/* Heads up!
- * Neither Semantic UI nor Semantic UI React offer a responsive navbar, however, it can be implemented easily.
- * It can be more complicated, but you can create really flexible markup.
- */
 class DesktopContainer extends Component {
   state = {};
 
@@ -242,7 +238,7 @@ const HomepageLayout = () => (
         <Grid container stackable verticalAlign="middle">
           <Grid.Row>
             <div width="750px" height="750px">
-              <Image src={logo} height="350px" width="500px" />
+              <Image src={landingPageImage} height="350px" width="500px" />
             </div>
 
             <Grid.Column width={8}>
@@ -255,7 +251,7 @@ const HomepageLayout = () => (
                   color: "teal"
                 }}
               >
-                Wer wir sind
+                {i18next.t("landingpage-who-we-are-headline")}
               </Header>
 
               <Header as="h3" style={{ fontSize: "2em" }}>
@@ -274,75 +270,72 @@ const HomepageLayout = () => (
       </Segment>
       <Segment style={{ padding: "0em" }} vertical>
         <Grid celled="internally" columns="equal" stackable>
-          <Grid.Row textAlign="center">
+          <Grid.Row textAlign="center" columns={5}>
             <Grid.Column style={{ paddingBottom: "2em", paddingTop: "2em" }}>
-              <Icon name="handshake outline" size="massive" color="blue" />
-              <Header as="h3" style={{ fontSize: "2em" }}>
-                <p style={{ fontSize: "1.33em" }}> Austausch</p>
+              <Icon name="handshake outline" size="big" color="blue" />
+              <Header as="h3" style={{ fontSize: "1em" }}>
+                <p style={{ fontSize: "1.33em" }}>
+                  {i18next.t("landingpage-valueprop-0-header")}
+                </p>
               </Header>
               <p style={{ fontSize: "1.5em", color: "teal" }}>
-                Tausche dich mit deinen Kommolitonen aus und eröffne
-                Lerngruppen!
+                {i18next.t("landingpage-valueprop-0-description")}
               </p>
             </Grid.Column>
 
             <Grid.Column style={{ paddingBottom: "2em", paddingTop: "2em" }}>
-              <Icon
-                name="calendar alternate outline"
-                size="massive"
-                color="blue"
-              />
-              <Header as="h3" style={{ fontSize: "2em" }}>
-                <p style={{ fontSize: "1.33em" }}> Events</p>
+              <Icon name="calendar alternate outline" size="big" color="blue" />
+              <Header as="h3" style={{ fontSize: "1em" }}>
+                <p style={{ fontSize: "1.33em" }}>
+                  {i18next.t("landingpage-valueprop-1-header")}
+                </p>
               </Header>
               <p style={{ fontSize: "1.5em", color: "teal" }}>
-                Informiere dich über die nächsten interessanten Events in deiner
-                Nähe!
+                {i18next.t("landingpage-valueprop-1-description")}
               </p>
             </Grid.Column>
 
             <Grid.Column style={{ paddingBottom: "2em", paddingTop: "2em" }}>
-              <Icon name="graduation cap" size="massive" color="blue" />
-              <Header as="h3" style={{ fontSize: "2em" }}>
-                <p style={{ fontSize: "1.33em" }}> Abschlussarbeiten </p>
+              <Icon name="graduation cap" size="big" color="blue" />
+              <Header as="h3" style={{ fontSize: "1em" }}>
+                <p style={{ fontSize: "1.33em" }}>
+                  {i18next.t("landingpage-valueprop-2-header")}
+                </p>
               </Header>
               <p style={{ fontSize: "1.5em", color: "teal" }}>
-                Informiere dich über die neusten Abschlussarbeitsthemen direkt
-                im Netzwerk!
+                {i18next.t("landingpage-valueprop-2-description")}
               </p>
             </Grid.Column>
 
             <Grid.Column style={{ paddingBottom: "2em", paddingTop: "2em" }}>
-              <Icon name="rocket" size="massive" color="blue" />
-              <Header as="h3" style={{ fontSize: "2em" }}>
-                <p style={{ fontSize: "1.33em" }}> Start Up</p>
+              <Icon name="rocket" size="big" color="blue" />
+              <Header as="h3" style={{ fontSize: "1em" }}>
+                <p style={{ fontSize: "1.33em" }}>
+                  {" "}
+                  {i18next.t("landingpage-valueprop-3-header")}
+                </p>
               </Header>
               <p style={{ fontSize: "1.5em", color: "teal" }}>
-                Du hast eine richtig gute Gründungsidee, aber niemand der Lust
-                hat mitzumachen? Dann vernetze dich hier mit gleichgesinnten!
+                {i18next.t("landingpage-valueprop-3-description")}
               </p>
             </Grid.Column>
 
             <Grid.Column style={{ paddingBottom: "2em", paddingTop: "2em" }}>
-              <Icon name="react" size="massive" color="blue" />
-              <Header as="h3" style={{ fontSize: "2em" }}>
-                <p style={{ fontSize: "1.33em" }}> Job</p>
+              <Icon name="react" size="big" color="blue" />
+              <Header as="h3" style={{ fontSize: "1em" }}>
+                <p style={{ fontSize: "1.33em" }}>
+                  {i18next.t("landingpage-valueprop-4-header")}
+                </p>
               </Header>
               <p style={{ fontSize: "1.5em", color: "teal" }}>
-                Du suchst noch einen passenden Job für dich? Dann besuch unsere
-                Job-Seite!
+                {i18next.t("landingpage-valueprop-4-description")}
               </p>
             </Grid.Column>
           </Grid.Row>
 
-          <p>
-            <br />
-            <br />
-          </p>
-
           <Grid.Row textAlign="center">
             <Grid.Column style={{ paddingBottom: "5em", paddingTop: "5em" }}>
-              <Header as="h3" style={{ fontSize: "2em", color: "teal" }}>
+              <Header as="h3" style={{ fontSize: "1em", color: "teal" }}>
                 {i18next.t("landingpage-testimonials-text-0")}
               </Header>
 
@@ -352,13 +345,16 @@ const HomepageLayout = () => (
                   className="ui right spaced avatar image"
                   src={profile_man}
                 />{" "}
-                Peter B.
-                <div className="detail">Student</div>
+                {i18next.t("landingpage-testimonials-author-0-role")}
+                <div className="detail">
+                  {" "}
+                  {i18next.t("landingpage-testimonials-author-0-name")}
+                </div>
               </div>
             </Grid.Column>
 
             <Grid.Column style={{ paddingBottom: "5em", paddingTop: "5em" }}>
-              <Header as="h3" style={{ fontSize: "2em", color: "teal" }}>
+              <Header as="h3" style={{ fontSize: "1em", color: "teal" }}>
                 {i18next.t("landingpage-testimonials-text-1")}
               </Header>
 
@@ -368,8 +364,10 @@ const HomepageLayout = () => (
                   className="ui right spaced avatar image"
                   src={profile_woman}
                 />{" "}
-                Prof.Sarah Schmitz
-                <div className="detail">Dekanin</div>
+                {i18next.t("landingpage-testimonials-author-1-role")}
+                <div className="detail">
+                  {i18next.t("landingpage-testimonials-author-1-name")}
+                </div>
               </div>
             </Grid.Column>
           </Grid.Row>

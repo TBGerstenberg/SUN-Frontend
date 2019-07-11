@@ -1,27 +1,26 @@
-import i18next from "i18next";
 import React from "react";
 import { withTranslation } from "react-i18next";
 import { LabelInputField } from "react-semantic-redux-form";
 import { Field } from "redux-form";
 import { Icon } from "semantic-ui-react";
-import formValidationUtilities from "../utilities/formValidationUtilities";
 
+/**
+ * An iconized password input capable of hiding the information put into it
+ * @param {*} props
+ */
 const PasswordInput = props => {
   return (
     <Field
-      name="password"
+      disabled={props.disabled || false}
+      name={props.name}
       component={LabelInputField}
       type="password"
       label={{
         content: <Icon color="blue" name="lock" size="small" />
       }}
       labelPosition="left"
-      placeholder={i18next.t("signup-password-input-placeholder")}
-      validate={[
-        formValidationUtilities.requiredPassword,
-        formValidationUtilities.passwordStrength,
-        formValidationUtilities.passwordNotJochen
-      ]}
+      placeholder={props.placeholder}
+      validate={props.validators}
     />
   );
 };

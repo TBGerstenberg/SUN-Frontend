@@ -32,21 +32,15 @@ class Login extends React.Component {
   }
 
   render() {
-    console.log(this.props.loginErrorStatus);
-
     let hasError = false;
     const errorMessageHeader = "Fehler";
     let errorMessageBody = "";
 
     if (this.props.loginErrorStatus) {
       hasError = true;
-
-      if (this.props.loginErrorStatus === 400) {
-        errorMessageBody = "Ungültige Anfrage";
-      }
-      if (this.props.loginErrorStatus === 401) {
-        errorMessageBody = "Falsche Zugangsdaten";
-      }
+      errorMessageBody = i18next.t(
+        `login-error-${this.props.loginErrorStatus}-explanation`
+      );
     }
 
     if (this.props.loggedIn) {
@@ -71,6 +65,7 @@ class Login extends React.Component {
                 <LanguageSwitcher style={{ float: "right" }} />
               </Grid.Column>
             </Grid.Row>
+
             <Grid.Row>
               <Grid.Column style={{ maxWidth: 400 }}>
                 <Segment stacked>
@@ -166,9 +161,10 @@ class Login extends React.Component {
 const mapStateToProps = state => {
   return {
     loggedIn: state.login.loggedIn,
-    loginErrorStatus: state.login.error
-      ? state.login.error.error.response.status
-      : null
+    loginErrorStatus:
+      state.login.error && state.login.error.error.response
+        ? state.login.error.error.response.status
+        : null
   };
 };
 

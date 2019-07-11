@@ -4,6 +4,10 @@ import { withTranslation } from "react-i18next";
 import { LabelInputField } from "react-semantic-redux-form";
 import { Field } from "redux-form";
 
+/**
+ * An text-input field for a persons last name
+ * @param {*} props
+ */
 const LastNameInput = props => {
   return (
     <Field

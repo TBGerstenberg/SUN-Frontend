@@ -1,8 +1,9 @@
 import i18next from "i18next";
 import React from "react";
 import { connect } from "react-redux";
-import { Button, Card, Icon } from "semantic-ui-react";
+import { Button, Card, Confirm, Icon } from "semantic-ui-react";
 import Account from "../models/account";
+import { postActions } from "../redux/_actions";
 import tableFormattingUtilities from "../utilities/tableFormattingUtilities";
 import "./PostCard.css";
 
@@ -10,38 +11,19 @@ class PostCard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      chairs: [],
-      users: [],
-      author: null,
-      authorChair: null,
-      postToBeRendered: props.post
+      postToBeRendered: props.post,
+      confirmPostDeletionModalOpen: false
     };
+
+    this.handlePostDeleteButtonClick = this.handlePostDeleteButtonClick.bind(
+      this
+    );
+    this.triggerPostDeletion = this.triggerPostDeletion.bind(this);
   }
 
-  static getDerivedStateFromProps(nextProps, prevState) {
-    let chairWhichAuthoredPost = null;
-    let userWhoAuthoredPost = null;
-
-    if (nextProps.chairs != prevState.chairs) {
-      // Find chair with ID of props.post.pageId
-      chairWhichAuthoredPost = nextProps.chairs.find(chair => {
-        return chair.id === prevState.postToBeRendered.pageId;
-      });
-    }
-
-    if (nextProps.users != prevState.users) {
-      // find user with ID of props.post.authorId
-      userWhoAuthoredPost = nextProps.users.find(user => {
-        return user.id === prevState.postToBeRendered.authorId;
-      });
-    }
-
-    return {
-      author: userWhoAuthoredPost,
-      authorChair: chairWhichAuthoredPost
-    };
-  }
-
+  /**
+   * React-Lifecycle Method - Renders a Post depending on its type.
+   */
   render() {
     const props = this.props;
 
@@ -63,36 +45,74 @@ class PostCard extends React.Component {
     }
   }
 
+  /**
+   * Renders a confirmation modal before the deletion of a post is triggered
+   */
+  renderConfirmPostDeletionModal() {
+    return (
+      <Confirm
+        onConfirm={this.triggerPostDeletion}
+        onCancel={() => {
+          this.setState({ confirmPostDeletionModalOpen: false });
+        }}
+        onClose={() => {
+          this.setState({ confirmPostDeletionModalOpen: false });
+        }}
+        confirmButton={i18next.t(
+          "postCard-confirm-post-deletion-modal-submit-button-label"
+        )}
+        cancelButton={i18next.t(
+          "postCard-confirm-post-deletion-modal-cancel-button-label"
+        )}
+        header={i18next.t("postCard-confirm-post-deletion-modal-headline")}
+        content={i18next.t("postCard-confirm-post-deletion-modal-content")}
+        open={this.state.confirmPostDeletionModalOpen}
+      />
+    );
+  }
+
+  /**
+   * Renders a Button to delete the post, given that the viewer has permission to do so
+   * @param {Boolean} userCanDeletePost - Flag indicating wether the viewer can delete the post or not.
+   */
   renderDeletePostButton(userCanDeletePost) {
     return (
       <>
         {userCanDeletePost && (
-          <Button
-            icon
-            size="tiny"
-            color="gray"
-            circular
-            onClick={() => {}}
-            floated="right"
-          >
-            <Icon name="trash" />
-          </Button>
+          <>
+            {this.renderConfirmPostDeletionModal()}
+            <Button
+              icon
+              size="tiny"
+              color="grey"
+              circular
+              onClick={this.handlePostDeleteButtonClick}
+              floated="right"
+            >
+              <Icon name="trash" />
+            </Button>
+          </>
         )}
       </>
     );
   }
 
+  /**
+   * Renders a post of type "generic".
+   * @param {*} props - React props handed to the PostCard
+   */
   renderStandardPost(props) {
     return (
       <Card color="blue" fluid className="postCard-container">
         <Card.Content>
           <Card.Content>
-            {this.state.author && (
+            {props.post.authorName && props.post.pageName && (
               <div className="postCard-authorInfo-container">
                 <span>
-                  {" "}
                   <Icon name="university" />{" "}
-                  {this.state.authorChair && this.state.authorChair.name}
+                  <a href={"/chair/" + props.post.pageId}>
+                    {props.post.pageName}
+                  </a>
                 </span>
                 <span className="postCard-authorInfo-personInfo">
                   {i18next.t("postCard-written-by-label")}
@@ -100,9 +120,7 @@ class PostCard extends React.Component {
                     className="postCard-authorInfo-link"
                     href={"/profile/" + props.post.authorId}
                   >
-                    {this.state.author.firstName +
-                      " " +
-                      this.state.author.lastName}
+                    {props.post.authorName}
                   </a>
                 </span>
                 <span>
@@ -114,7 +132,11 @@ class PostCard extends React.Component {
         </Card.Content>
         <Card.Content>
           <Card.Header>{props.post.title}</Card.Header>
-          <Card.Description>{props.post.content}</Card.Description>
+          <Card.Description
+            style={{ minHeight: "100px", paddingBottom: "20px" }}
+          >
+            {props.post.content}
+          </Card.Description>
           <Card.Meta className="postCard-meta">
             <span>
               <Icon name="info" />
@@ -131,21 +153,22 @@ class PostCard extends React.Component {
     );
   }
 
+  /**
+   * Renders a post of type "Thesis / Graduation Work".
+   * @param {*} props - React props handed to the PostCard
+   */
   renderThesisPost(props) {
-    return null;
-  }
-
-  renderEventPost(props) {
     return (
       <Card color="blue" fluid className="postCard-container">
         <Card.Content>
           <Card.Content>
-            {this.state.author && (
+            {props.post.authorName && props.post.pageName && (
               <div className="postCard-authorInfo-container">
                 <span>
-                  {" "}
                   <Icon name="university" />{" "}
-                  {this.state.authorChair && this.state.authorChair.name}
+                  <a href={"/chair/" + props.post.pageId}>
+                    {props.post.pageName}
+                  </a>
                 </span>
                 <span className="postCard-authorInfo-personInfo">
                   {i18next.t("postCard-written-by-label")}
@@ -153,9 +176,7 @@ class PostCard extends React.Component {
                     className="postCard-authorInfo-link"
                     href={"/profile/" + props.post.authorId}
                   >
-                    {this.state.author.firstName +
-                      " " +
-                      this.state.author.lastName}
+                    {props.post.authorName}
                   </a>
                 </span>
                 <span>
@@ -167,7 +188,11 @@ class PostCard extends React.Component {
         </Card.Content>
         <Card.Content>
           <Card.Header>{props.post.title}</Card.Header>
-          <Card.Description>{props.post.content}</Card.Description>
+          <Card.Description
+            style={{ minHeight: "100px", paddingBottom: "20px" }}
+          >
+            {props.post.content}
+          </Card.Description>
           <Card.Content
             style={{
               display: "flex",
@@ -176,7 +201,81 @@ class PostCard extends React.Component {
             }}
           >
             <Card.Content>
-              {" "}
+              {i18next.t("postCard-eventPost-startsAt-label") +
+                " " +
+                tableFormattingUtilities.getFormattedDate(props.post.startDate)}
+            </Card.Content>
+
+            <Card.Content>
+              {i18next.t("postCard-eventPost-endsAt-label") +
+                " " +
+                tableFormattingUtilities.getFormattedDate(props.post.endDate)}
+            </Card.Content>
+          </Card.Content>
+          <Card.Meta className="postCard-meta">
+            <span>
+              <Icon name="info" />
+              {tableFormattingUtilities.postTypeEnumToString(props.post.type)}
+            </span>
+            <span>
+              {tableFormattingUtilities.getTimeSinceCreated(
+                props.post.createdAt
+              )}
+            </span>
+          </Card.Meta>
+        </Card.Content>
+      </Card>
+    );
+  }
+
+  /**
+   * Renders a post of type "Event".
+   * @param {*} props - React props handed to the PostCard
+   */
+  renderEventPost(props) {
+    return (
+      <Card color="blue" fluid className="postCard-container">
+        <Card.Content>
+          <Card.Content>
+            {props.post.authorName && props.post.pageName && (
+              <div className="postCard-authorInfo-container">
+                <span>
+                  <Icon name="university" />{" "}
+                  <a href={"/chair/" + props.post.pageId}>
+                    {props.post.pageName}
+                  </a>
+                </span>
+                <span className="postCard-authorInfo-personInfo">
+                  {i18next.t("postCard-written-by-label")}
+                  <a
+                    className="postCard-authorInfo-link"
+                    href={"/profile/" + props.post.authorId}
+                  >
+                    {props.post.authorName}
+                  </a>
+                </span>
+                <span>
+                  {this.renderDeletePostButton(props.userCanDeletePost)}
+                </span>
+              </div>
+            )}
+          </Card.Content>
+        </Card.Content>
+        <Card.Content>
+          <Card.Header>{props.post.title}</Card.Header>
+          <Card.Description
+            style={{ minHeight: "100px", paddingBottom: "20px" }}
+          >
+            {props.post.content}
+          </Card.Description>
+          <Card.Content
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              padding: "10px 0px"
+            }}
+          >
+            <Card.Content>
               {i18next.t("postCard-eventPost-startsAt-label") +
                 " " +
                 tableFormattingUtilities.getFormattedDateTime(
@@ -185,7 +284,6 @@ class PostCard extends React.Component {
             </Card.Content>
 
             <Card.Content>
-              {" "}
               {i18next.t("postCard-eventPost-endsAt-label") +
                 " " +
                 tableFormattingUtilities.getFormattedDateTime(
@@ -209,8 +307,89 @@ class PostCard extends React.Component {
     );
   }
 
-  renderJobPost() {
-    return null;
+  /**
+   * Renders a post of type "Joboffer".
+   * @param {*} props - React props handed to the PostCard
+   */
+  renderJobPost(props) {
+    return (
+      <Card color="blue" fluid className="postCard-container">
+        <Card.Content>
+          <Card.Content>
+            {props.post.authorName && props.post.pageName && (
+              <div className="postCard-authorInfo-container">
+                <span>
+                  <Icon name="university" />{" "}
+                  <a href={"/chair/" + props.post.pageId}>
+                    {props.post.pageName}
+                  </a>
+                </span>
+                <span className="postCard-authorInfo-personInfo">
+                  {i18next.t("postCard-written-by-label")}
+                  <a
+                    className="postCard-authorInfo-link"
+                    href={"/profile/" + props.post.authorId}
+                  >
+                    {props.post.authorName}
+                  </a>
+                </span>
+                <span>
+                  {this.renderDeletePostButton(props.userCanDeletePost)}
+                </span>
+              </div>
+            )}
+          </Card.Content>
+        </Card.Content>
+        <Card.Content>
+          <Card.Header>{props.post.title}</Card.Header>
+          <Card.Description
+            style={{ minHeight: "100px", paddingBottom: "20px" }}
+          >
+            {props.post.content}
+          </Card.Description>
+          <Card.Content
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              padding: "10px 0px"
+            }}
+          >
+            <Card.Content>
+              <span style={{ fontWeight: "bold" }}>
+                {i18next.t("postCard-jobPost-hoursPerWeek-label") + " "}
+              </span>
+              {props.post.hoursPerWeek}
+            </Card.Content>
+          </Card.Content>
+          <Card.Meta className="postCard-meta">
+            <span>
+              <Icon name="info" />
+              {tableFormattingUtilities.postTypeEnumToString(props.post.type)}
+            </span>
+            <span>
+              {tableFormattingUtilities.getTimeSinceCreated(
+                props.post.createdAt
+              )}
+            </span>
+          </Card.Meta>
+        </Card.Content>
+      </Card>
+    );
+  }
+
+  /**
+   * Handles a click on the delete-button displayed on each psot
+   */
+  handlePostDeleteButtonClick() {
+    this.setState({ confirmPostDeletionModalOpen: true });
+  }
+
+  /**
+   * Triggers the deletion of this post
+   */
+  async triggerPostDeletion() {
+    this.props.dispatch(postActions.deletePost(this.props.post.id));
+    this.setState({ confirmPostDeletionModalOpen: false });
   }
 }
 
@@ -227,19 +406,14 @@ let mapStateToProps = (state, ownProps) => {
     if (
       loggedInUser.isAuthorOfPost(ownProps.post) ||
       loggedInUser.isSuperAdmin() ||
-      loggedInUser.isEmployeeForChair(ownProps.post.pageId)
+      loggedInUser.isChairAdmin(ownProps.post.pageId)
     ) {
-      console.log("Setting canDeletePost to true");
       userCanDeletePost = true;
     }
   }
 
-  console.log(userCanDeletePost);
-  console.log(loggedInUser.isEmployeeForChair(ownProps.post.pageId));
-
   return {
     userCanDeletePost: userCanDeletePost,
-
     chairs: state.chair.chairs || [],
     users: state.user.users || []
   };

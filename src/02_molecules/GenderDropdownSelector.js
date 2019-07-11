@@ -4,6 +4,10 @@ import { withTranslation } from "react-i18next";
 import { Field } from "redux-form";
 import DropdownSelector from "../01_atoms/DropdownSelector";
 
+/**
+ * An dropdown to select from a  list of genders
+ * @param {*} props
+ */
 const GenderDropdownSelector = props => {
   return (
     <Field

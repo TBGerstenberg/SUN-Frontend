@@ -10,6 +10,9 @@ import { chairService } from "../services";
 import tableFormattingUtilities from "../utilities/tableFormattingUtilities";
 import AddEntityModal from "./AddEntityModal";
 
+/**
+ * Component that allows to manage  (read, create, update, delete) chair-entities.
+ */
 class ChairManagement extends React.Component {
   componentWillMount() {
     this.props.dispatch(chairActions.getAllChairs());
@@ -42,12 +45,14 @@ class ChairManagement extends React.Component {
     // Modal opening methods
     this.openAddChairModal = this.openAddChairModal.bind(this);
     this.openEditChairModal = this.openEditChairModal.bind(this);
+    this.closeAddChairModal = this.closeAddChairModal.bind(this);
+    this.closeEditChairModal = this.closeEditChairModal.bind(this);
   }
 
   render() {
     return (
       <div className="adminpanel-fragment-wrapper">
-        {this.props.chairs.length > 0 && (
+        {this.props.chairs && (
           <Table
             celled
             selectable
@@ -66,12 +71,18 @@ class ChairManagement extends React.Component {
               chair={null}
               onAbortButtonClick={this.closeAddChairModal}
               onCompleteWithSuccess={() => {
-                this.props.toggleSuccessMessage("Erfolg", "Lehrstuhl angelegt");
+                this.props.toggleSuccessMessage(
+                  i18next.t("chairManagement-create-chair-success-title"),
+                  i18next.t("chairManagement-create-chair-success-message")
+                );
                 this.closeAddChairModal();
                 this.props.dispatch(chairActions.getAllChairs());
               }}
               onCompleteWithError={error => {
-                this.props.toggleErrorMessage("Fehler", error);
+                this.props.toggleErrorMessage(
+                  i18next.t("chairManagement-create-chair-error-title"),
+                  error
+                );
                 this.closeAddChairModal();
               }}
             />
@@ -84,17 +95,25 @@ class ChairManagement extends React.Component {
           size="large"
           modalContent={
             <ChairForm
-              chair={this.props.chairs[this.state.selectedEntry - 1] || null}
+              chair={this.props.chairs.find(chair => {
+                return chair.id === this.state.selectedEntry;
+              })}
               onAbortButtonClick={() => {
                 this.setState({ editChairModalOpen: false });
               }}
               onCompleteWithSuccess={() => {
-                this.props.toggleSuccessMessage("Erfolg", "Lehrstuhl editiert");
+                this.props.toggleSuccessMessage(
+                  i18next.t("chairManagement-edit-chair-success-title"),
+                  i18next.t("chairManagement-edit-chair-success-message")
+                );
                 this.closeEditChairModal();
                 this.props.dispatch(chairActions.getAllChairs());
               }}
               onCompleteWithError={error => {
-                this.props.toggleErrorMessage("Fehler", error);
+                this.props.toggleErrorMessage(
+                  i18next.t("chairManagement-edit-chair-error-title"),
+                  error
+                );
                 this.closeEditChairModal();
               }}
             />
@@ -105,6 +124,9 @@ class ChairManagement extends React.Component {
     );
   }
 
+  /**
+   * Renders the header-row of the chair table
+   */
   renderChairsTableHeader() {
     return (
       <Table.Row>
@@ -113,6 +135,9 @@ class ChairManagement extends React.Component {
         </Table.HeaderCell>
         <Table.HeaderCell>
           <Trans i18nKey="chairManagement-tableheader-name" />
+        </Table.HeaderCell>
+        <Table.HeaderCell>
+          <Trans i18nKey="chairManagement-tableheader-faculty" />
         </Table.HeaderCell>
         <Table.HeaderCell>
           <Trans i18nKey="chairManagement-tableheader-city" />
@@ -136,6 +161,10 @@ class ChairManagement extends React.Component {
     );
   }
 
+  /**
+   * Renders a data row of the chairs table
+   * @param {*} chair
+   */
   renderChairsTableRow(chair) {
     return (
       <Table.Row
@@ -150,6 +179,9 @@ class ChairManagement extends React.Component {
         </Table.Cell>
         <Table.Cell key="name">
           {tableFormattingUtilities.numberOrEmpty(chair.name)}
+        </Table.Cell>
+        <Table.Cell key="faculty">
+          {tableFormattingUtilities.facultyEnumToString(chair.faculty)}
         </Table.Cell>
         <Table.Cell key="city">
           {tableFormattingUtilities.stringOrEmpty(chair.address.city)}
@@ -175,6 +207,9 @@ class ChairManagement extends React.Component {
     );
   }
 
+  /**
+   * Renders the footer row of the chairs table
+   */
   renderChairsTableFooter() {
     return (
       <Table.Row>
@@ -219,14 +254,23 @@ class ChairManagement extends React.Component {
     );
   }
 
+  /**
+   * Handles a click onto the add-chair button
+   */
   handleAddChairButtonClick() {
     this.openAddChairModal();
   }
 
+  /**
+   * Handles a click onto the edit-chair button
+   */
   handleEditChairButtonClick() {
     this.openEditChairModal();
   }
 
+  /**
+   *  Handles a click onto the delete-chair button
+   */
   async handleDeleteChairButtonClick() {
     const deletionResponse = await chairService.deleteChair(
       this.state.selectedEntry
@@ -242,27 +286,45 @@ class ChairManagement extends React.Component {
     }
   }
 
+  /**
+   * Opens the modal to Edit a chair
+   */
   openEditChairModal() {
     this.setState({
       editChairModalOpen: true
     });
   }
+
+  /**
+   * Closes the modal to edit a chair
+   */
   closeEditChairModal() {
     this.setState({
       editChairModalOpen: false
     });
   }
+
+  /**
+   * Opens the modal to add a chair
+   */
   openAddChairModal() {
     this.setState({
       addChairModalOpen: true
     });
   }
+
+  /**
+   * Closes the modal to add a chair
+   */
   closeAddChairModal() {
     this.setState({
       addChairModalOpen: false
     });
   }
 
+  /**
+   * Triggers when the user clicks outside of the table - used to de-select the previously selected entry.
+   */
   handleClickOutside = evt => {
     this.setState({
       selectedEntry: null

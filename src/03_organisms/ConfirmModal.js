@@ -1,3 +1,4 @@
+import i18next from "i18next";
 import React, { Component } from "react";
 import { Button, Modal } from "semantic-ui-react";
 
@@ -26,7 +27,7 @@ class ConfirmModal extends Component {
             positive
             icon="checkmark"
             labelPosition="right"
-            content="Alles klar"
+            content={i18next.t("confirmModal-accept-button-text")}
             onClick={this.props.onClose}
           />
         </Modal.Actions>

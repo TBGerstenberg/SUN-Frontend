@@ -1,3 +1,6 @@
+/**
+ * Enumeration of roles a person can fill when employed at a chair
+ */
 const personChairRelationEnum = {
   0: "PROFESSOR",
   1: "RESEARCHER",

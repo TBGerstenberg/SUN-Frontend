@@ -1,10 +1,13 @@
 import i18next from "i18next";
 import React from "react";
 import { connect } from "react-redux";
+import { SemanticToastContainer, toast } from "react-semantic-toasts";
 import { Button, Container, Grid, Header, Image, Tab } from "semantic-ui-react";
 import SubscribeButton from "../02_molecules/SubscribeButton";
+import AddEntityModal from "../03_organisms/AddEntityModal";
 import AdressCard from "../03_organisms/AdressCard";
 import ApplyToChairModal from "../03_organisms/ApplyToChairModal";
+import ChairForm from "../03_organisms/ChairForm";
 import ConfirmModal from "../03_organisms/ConfirmModal";
 import ContactCard from "../03_organisms/ContactCard";
 import NavBar from "../03_organisms/NavBar";
@@ -13,12 +16,25 @@ import NewPostModal from "../03_organisms/NewPost";
 import PersonList from "../03_organisms/PersonList";
 import PostCard from "../03_organisms/PostCard";
 import universityImage from "../assets/images/universityImage.jpg";
-import { chairActions, postActions, userActions } from "../redux/_actions";
+import {
+  chairActions,
+  navigationActions,
+  postActions,
+  userActions
+} from "../redux/_actions";
 import { chairService } from "../services";
+import tableFormattingUtilities from "../utilities/tableFormattingUtilities";
 
+/**
+ * Page that represents a chair within the system, allows to manage the basic data of the chair
+ * manage its employees, post various types of posts, appoint administators of the chair and subscribe to
+ * news form the chair.
+ */
 export class ChairPage extends React.Component {
   constructor(props) {
     super(props);
+
+    // Method binding
 
     this.renderPostsFragment = this.renderPostsFragment.bind(this);
     this.renderEventFragment = this.renderEventFragment.bind(this);
@@ -32,7 +48,9 @@ export class ChairPage extends React.Component {
     this.handleApplicantAccepted = this.handleApplicantAccepted.bind(this);
     this.handleApplicantDenied = this.handleApplicantDenied.bind(this);
     this.handleEmployeeRemoved = this.handleEmployeeRemoved.bind(this);
+    this.handleEmployeeChanged = this.handleEmployeeChanged.bind(this);
 
+    // Navigation pane definition
     const panes = [
       {
         menuItem: i18next.t("chairpage-news-fragment-headline"),
@@ -48,6 +66,7 @@ export class ChairPage extends React.Component {
       }
     ];
 
+    // Initialize the components state
     this.state = {
       chairId: null,
       currentlyViewedChair: null,
@@ -60,22 +79,32 @@ export class ChairPage extends React.Component {
       applyToChairConfirmedModalOpen: false,
       userHasSubscribedToChair: false,
       subscriptions: null,
+      editChairModalOpen: false,
       persons: [],
       employees: [],
       applicants: []
     };
   }
 
+  /**
+   * React lifecycle method
+   */
   static getDerivedStateFromProps(nextProps, prevState) {
+    // As soon as the chairId of the chair that shall be viewed is available from redux
     if (nextProps.chairId !== prevState.chairId) {
+      // Fetch the data for it
       nextProps.getSingleChair(nextProps.chairId);
       nextProps.getChairPosts(nextProps.chairId);
 
-      const chair = nextProps.chairSubscriptions.find(element => {
-        return element.pageId == nextProps.chairId;
-      });
+      // Check if the user has subscribed to the chair that is being viewed
+      const chairIsInUsersSubscriptions = nextProps.chairSubscriptions.find(
+        element => {
+          return element.pageId == nextProps.chairId;
+        }
+      );
 
-      if (chair != null) {
+      // If so, save it in the componens state
+      if (chairIsInUsersSubscriptions != null) {
         return {
           chairId: nextProps.chairId,
           userHasSubscribedToChair: true
@@ -86,7 +115,10 @@ export class ChairPage extends React.Component {
           userHasSubscribedToChair: false
         };
       }
+
+      // As soon as the chair that shall be displayed arrives
     } else if (nextProps.currentlyViewedChair) {
+      // Filter applicants and employees
       const applicants = nextProps.currentlyViewedChair.persons.filter(
         element => {
           return element.active === false;
@@ -107,6 +139,10 @@ export class ChairPage extends React.Component {
     } else return null;
   }
 
+  /**
+   * Renders the Fragment in the main Navigation that is capable if displaying events
+   * posted by the chair and create new events.
+   */
   renderEventFragment() {
     const personCanPostForChair =
       this.props.personIsEmployee || this.props.personIsSuperAdmin;
@@ -150,25 +186,29 @@ export class ChairPage extends React.Component {
     );
   }
 
+  /**
+   * Renders the Fragment in the main Navigation that is capable if displaying employees
+   * of a chair and apply to the chair or accept applications.
+   */
   renderEmployeeFragment() {
-    const chairHasEmployees =
-      this.props.currentlyViewedChair &&
-      this.props.currentlyViewedChair.persons &&
-      this.props.currentlyViewedChair.persons.length > 0;
-
-    const personCanApplyToChair =
-      !this.props.personIsEmployee && !this.props.personIsApplicant;
-
-    const personHasAlreadyApplied = this.props.personIsApplicant;
+    // Rechte aus Rollen ableiten
 
     const personCanEditEmployees =
-      this.props.personIsChairAdmin || this.props.personIsSuperAdmin;
+        this.props.personIsChairAdmin || this.props.personIsSuperAdmin,
+      personCanManageChairAdmins =
+        this.props.personIsChairAdmin || this.props.personIsSuperAdmin,
+      personCanApplyToChair =
+        !this.props.personIsEmployee && !this.props.personIsApplicant,
+      personHasAlreadyApplied = this.props.personIsApplicant,
+      chairHasEmployees =
+        this.props.currentlyViewedChair &&
+        this.props.currentlyViewedChair.persons &&
+        this.props.currentlyViewedChair.persons.length > 0;
 
     return (
       <Grid>
         <Grid.Row columns={2} verticalAlign="middle">
           <Grid.Column width={10}>
-            {" "}
             <Header>{i18next.t("chairpage-employee-fragment-headline")}</Header>
           </Grid.Column>
 
@@ -200,9 +240,11 @@ export class ChairPage extends React.Component {
               <PersonList
                 itemsRemoveable={personCanEditEmployees}
                 itemsAcceptable={false}
+                itemsChangeable={personCanManageChairAdmins}
                 persons={this.state.employees}
                 onItemAdded={() => {}}
                 onItemDeleted={this.handleEmployeeRemoved}
+                onItemChanged={this.handleEmployeeChanged}
               />
             </Grid.Column>
           </Grid.Row>
@@ -215,10 +257,12 @@ export class ChairPage extends React.Component {
                 {i18next.t("chairpage-employee-fragment-applicants-headline")}
               </Header>
               <PersonList
-                itemsRemoveable={true}
-                itemsAcceptable={true}
+                itemsRemoveable={personCanEditEmployees}
+                itemsAcceptable={personCanEditEmployees}
+                itemsChangeable={false}
                 onItemAdded={this.handleApplicantAccepted}
                 onItemDeleted={this.handleApplicantDenied}
+                onItemChanged={() => {}}
                 persons={this.state.applicants}
               />
             </Grid.Column>
@@ -228,6 +272,27 @@ export class ChairPage extends React.Component {
     );
   }
 
+  /**
+   * Called when data about the relation between an employee and the chair changes,
+   * e.g. when someone is appointed to be chairAdmin or no longer granted that role
+   * @param {Array of PersonChairRelation Objects} alteredEmployeeList - Collection of personChairRelations of Employees that have been updated
+   * @see /src/models/personChairRelation
+   */
+  handleEmployeeChanged(alteredEmployeeList) {
+    this.setState({ employees: alteredEmployeeList });
+
+    this.updatePersonChairRelations([
+      ...alteredEmployeeList,
+      ...this.state.applicants
+    ]);
+  }
+
+  /**
+   * Called when an Item from the list of employees is removed
+   * e.g. when an employee is no longer granted to be chairAdmin
+   * @param {Array of PersonChairRelation Objects} alteredEmployeeList - Collection of personChairRelations of Employees in which one or more entries have been removed
+   * @see /src/models/personChairRelation
+   */
   handleEmployeeRemoved(alteredEmployeeList) {
     this.setState({ employees: alteredEmployeeList });
 
@@ -237,6 +302,12 @@ export class ChairPage extends React.Component {
     ]);
   }
 
+  /**
+   * Handles a click onto the "deny" button which is visible for each applicant of the chair
+   * Given that the user has permission to perform this operation.
+   * @param {Array of PersonChairRelation Objects} personChairRelations - List of PersonChairRelations containg applicants of a chair where one or more have been denied
+   * @see /src/models/personChairRelation
+   */
   handleApplicantDenied(personChairRelations) {
     this.setState({ applicants: personChairRelations });
 
@@ -246,14 +317,22 @@ export class ChairPage extends React.Component {
     ]);
   }
 
+  /**
+   * Handles a click onto the "accept button" which is visible for each applicant of a chair.
+   * Given that the user has permission to perform this operation.
+   * @param {Array of PersonChairRelation Objects} personChairRelations - List of PersonChairRelations containg applicants of a chair where one or more have been accepted
+   * @see /src/models/personChairRelation
+   */
   handleApplicantAccepted(personChairRelations) {
     const acceptedApplicantIndex = personChairRelations.findIndex(applicant => {
       return applicant.active === true;
     });
 
+    // Remove the applicant from the "applicants" list
     let mutatedApplicants = [...this.state.applicants];
     mutatedApplicants.splice(acceptedApplicantIndex, 1);
 
+    // Push him to the list of employees
     let mutatedEmployees = [...this.state.employees];
     mutatedEmployees.push(personChairRelations[acceptedApplicantIndex]);
 
@@ -266,23 +345,34 @@ export class ChairPage extends React.Component {
       mutatedEmployees
     );
 
+    // Synchronize with BE
     this.updatePersonChairRelations(mutatedPersonChairRelations);
   }
 
+  /**
+   *  Triggers a network request to update the relations of employees to the chair they are employed at or applied to.
+   * @param {Array of PersonChairRelation Objects} personChairRelations - Complete list of personChairRelations containing applicants and employees that shall be synchronized to the backend services.
+   * @see /src/models/personChairRelation
+   */
   async updatePersonChairRelations(personChairRelations) {
     const updatedPersonChairRelations = await chairService.updateAllPersonChairRelationsForChair(
       this.state.chairId,
       personChairRelations
     );
 
+    // Re-fetch the chair to allow refreshing the content of the page without a page reload.
     if (updatedPersonChairRelations.status === 200) {
       this.props.getSingleChair(this.props.chairId);
     }
   }
 
+  /**
+   * Renders the fragment of the page that contains "current news" and generic posts of the chair.
+   */
   renderPostsFragment() {
     const personCanPostForChair =
       this.props.personIsEmployee || this.props.personIsSuperAdmin;
+
     return (
       <Grid>
         <Grid.Row columns={2} verticalAlign="middle">
@@ -309,7 +399,7 @@ export class ChairPage extends React.Component {
             return (
               <Grid.Row key={index}>
                 <Grid.Column>
-                  <PostCard post={post} />
+                  <PostCard post={post} key={index} />
                 </Grid.Column>
               </Grid.Row>
             );
@@ -318,6 +408,10 @@ export class ChairPage extends React.Component {
     );
   }
 
+  /**
+   * Handles a click on the subsribe button on the chairpage
+   * which triggers a subscribe- or remove-subscription request
+   */
   async _handleSubscribeButtonClick() {
     if (this.state.userHasSubscribedToChair) {
       const unsubscribeRequest = await chairService.unsubscribeFromChair(
@@ -348,35 +442,69 @@ export class ChairPage extends React.Component {
     }
   }
 
-  render() {
-    if (
-      !this.props.users ||
-      (this.props.users && this.props.users.length === 0)
-    ) {
-      this.props.getAllUsers();
-    }
-    if (
-      !this.props.chairs ||
-      (this.props.chairs && this.props.chairs.length === 0)
-    ) {
-      this.props.getAllChairs();
-    }
+  // Renders a success message in response to failed network requests
+  toggleSuccessMessage(title, message) {
+    setTimeout(() => {
+      toast(
+        {
+          title: title,
+          description: <p>{message}</p>,
+          type: "success",
+          color: "green",
+          size: "mini",
+          animation: "fly left"
+        },
+        () => console.log("toast closed"),
+        () => console.log("toast clicked")
+      );
+    }, 1000);
+  }
 
-    const chairName = this.props.currentlyViewedChair
-      ? this.props.currentlyViewedChair.name
-      : "";
+  // Renders an error message in response to failed network requests
+  toggleErrorMessage(title, message) {
+    setTimeout(() => {
+      toast(
+        {
+          title: title,
+          description: <p>{message}</p>,
+          type: "success",
+          color: "green",
+          size: "mini",
+          animation: "fly left"
+        },
+        () => console.log("toast closed"),
+        () => console.log("toast clicked")
+      );
+    }, 1000);
+  }
+
+  render() {
+    // Catch if no chair with the given ID can be found, which is the case when a user directly changes the url in his browser
+    if (this.props.fetchChairStatus && this.props.fetchChairStatus === 404) {
+      this.props.redirectToNotFound();
+    }
 
     var chairExists = this.props.currentlyViewedChair;
 
-    let email;
-    let phoneNumber;
-    let phoneNumberMobile;
-    let city;
-    let street;
-    let postCode;
+    // Populate information about the chair if it exists
+    let chairName,
+      email,
+      phoneNumber,
+      phoneNumberMobile,
+      city,
+      street,
+      postCode,
+      room,
+      facultyEnumValue;
+
+    const personCanEditChairInfo =
+      this.props.personIsChairAdmin || this.props.personIsSuperAdmin;
 
     if (chairExists) {
-      if (chairExists && this.props.currentlyViewedChair.address) {
+      chairName = this.props.currentlyViewedChair.name;
+      facultyEnumValue = this.props.currentlyViewedChair.faculty;
+
+      if (this.props.currentlyViewedChair.address) {
         email = this.props.currentlyViewedChair.address.email || "";
         phoneNumber = this.props.currentlyViewedChair.address.phoneNumber || "";
         phoneNumberMobile =
@@ -384,11 +512,12 @@ export class ChairPage extends React.Component {
         city = this.props.currentlyViewedChair.address.city || "";
         street = this.props.currentlyViewedChair.address.street || "";
         postCode = this.props.currentlyViewedChair.address.postCode || "";
+        room = this.props.currentlyViewedChair.address.room || "";
       }
     }
 
     return (
-      <div>
+      <div style={{ minHeight: "800px" }}>
         <NavBar />
 
         <Container>
@@ -413,6 +542,14 @@ export class ChairPage extends React.Component {
               <Grid.Column width={11}>
                 <Header as="h1" color="blue">
                   {i18next.t("chairpage-chairName-headline") + " " + chairName}
+                </Header>
+
+                <Header color="black" sub>
+                  {i18next.t("chairpage-faculty-headline") +
+                    " " +
+                    tableFormattingUtilities.facultyEnumToString(
+                      facultyEnumValue
+                    )}
                 </Header>
               </Grid.Column>
               <Grid.Column textAlign="center" width={1} />
@@ -511,17 +648,68 @@ export class ChairPage extends React.Component {
                   }}
                   open={this.state.newPostModalOpen}
                 />
+
+                {/** Used to edit a chair  */}
+                <AddEntityModal
+                  size="large"
+                  modalContent={
+                    <ChairForm
+                      chair={this.props.currentlyViewedChair}
+                      onAbortButtonClick={() => {
+                        this.setState({ editChairModalOpen: false });
+                      }}
+                      onCompleteWithSuccess={() => {
+                        this.toggleSuccessMessage(
+                          i18next.t("chairManagement-edit-chair-success-title"),
+                          i18next.t(
+                            "chairManagement-edit-chair-success-message"
+                          )
+                        );
+                        this.setState({ editChairModalOpen: false });
+                        this.props.getSingleChair(this.props.chairId);
+                      }}
+                      onCompleteWithError={error => {
+                        this.toggleErrorMessage(
+                          i18next.t("chairManagement-edit-chair-error-title"),
+                          error
+                        );
+                        this.setState({ editChairModalOpen: false });
+                      }}
+                    />
+                  }
+                  open={this.state.editChairModalOpen}
+                />
               </Grid.Column>
               <Grid.Column width={4}>
-                <Header>
-                  {i18next.t("chairpage-general-information-label")}
-                </Header>
-                <AdressCard city={city} postCode={postCode} street={street} />
+                <AdressCard
+                  city={city}
+                  postCode={postCode}
+                  street={street}
+                  room={room}
+                />
                 <ContactCard
                   email={email}
                   phoneNumber={phoneNumber}
                   phoneNumberMobile={phoneNumberMobile}
                 />
+                {personCanEditChairInfo && (
+                  <Button
+                    style={{ float: "left" }}
+                    color="blue"
+                    onClick={() => {
+                      this.setState({ editChairModalOpen: true });
+                    }}
+                  >
+                    {i18next.t("chairpage-edit-chair-button-label")}
+                  </Button>
+                )}
+              </Grid.Column>
+            </Grid.Row>
+            <Grid.Row columns={3}>
+              <Grid.Column width={11} />
+              <Grid.Column width={1} />
+              <Grid.Column width={4}>
+                <SemanticToastContainer />
               </Grid.Column>
             </Grid.Row>
           </Grid>
@@ -531,7 +719,7 @@ export class ChairPage extends React.Component {
   }
 }
 
-//todo
+// Map Redux-store data to the components props.
 let mapStateToProps = state => {
   const loggedInUserPersonId = state.login.user
     ? state.login.user.person.id
@@ -543,6 +731,7 @@ let mapStateToProps = state => {
   let personIsApplicant = false;
   let personIsChairAdmin = false;
 
+  // Rechte für die aktuelle Seite berechnen
   if (currentlyViewedChair && loggedInUserPersonId) {
     if (currentlyViewedChair.persons) {
       // 1. Finden ob der eingeloggte User eine der "persons" im "currentlyViewedChair" ist (e.g. das Recht hat zu Posten)
@@ -559,13 +748,14 @@ let mapStateToProps = state => {
           personIsApplicant = true;
         }
 
-        if (personChairRelation.chairAdmin) {
+        if (personChairRelation.chairAdmin === true) {
           personIsChairAdmin = true;
         }
       }
     }
   }
 
+  // Daten aus dem Redux-Store auf die Props der Komponente mappen
   return {
     // Chair related info
     chairId: state.location.payload.chairId,
@@ -582,7 +772,8 @@ let mapStateToProps = state => {
     personIsSuperAdmin: personIsSuperAdmin,
     personIsChairAdmin: personIsChairAdmin,
     personIsEmployee: personIsEmployee,
-    personIsApplicant: personIsApplicant
+    personIsApplicant: personIsApplicant,
+    fetchChairStatus: state.chair.fetchChairStatus
   };
 };
 
@@ -593,7 +784,9 @@ let mapDispatchToProps = {
   addSubscription: userActions.addSubscription,
   removeSubscription: userActions.removeSubscription,
   getAllUsers: userActions.getAllUsers,
-  getAllChairs: chairActions.getAllChairs
+  getAllChairs: chairActions.getAllChairs,
+  redirect: navigationActions.redirect,
+  redirectToNotFound: navigationActions.redirectToNotFound
 };
 
 let PostContainer = connect(

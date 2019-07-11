@@ -11,7 +11,7 @@ const SUN_DateInput = props => {
       iconPosition="left"
       onChange={props.onChange}
       label={props.label}
-      dateFormat="DD-MM-YYYY"
+      dateFormat="DD.MM.YYYY"
     />
   );
 };

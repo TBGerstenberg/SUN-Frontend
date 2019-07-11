@@ -36,7 +36,6 @@ class SubscriptionList extends React.Component {
   }
 
   render() {
-    console.log(this.state.subscriptions);
     return (
       <List relaxed>
         {this.state.subscriptions &&

@@ -1,4 +1,6 @@
 {
+  "WHAT-THIS-FILE-IS-ALL-ABOUT": "Diese Datei enthält alle Texte der Interfaceelemente von SUN in der Deutschen Fassung und wird von der verwendeten internationalisierunglösung i18next als Quelle verwendet.",
+
   "signup-a-new-account-headline": "Registrieren",
   "signup-email-input-placeholder": "Email-Adresse",
   "signup-password-input-placeholder": "Passwort",
@@ -10,8 +12,14 @@
   "signup-a-new-account-call-to-action-button": "Registrieren",
   "signup-message-already-have-an-account": "Bereits registriert? ",
   "signup-message-already-have-an-account-call-to-action": "Anmelden",
+
+  "signup-error-409-message": "Konflikt",
+  "signup-error-409-explanation": "Die von ihnen gewählte Email ist bereits vergeben.",
   "signup-error-500-message": "Oops, da ist etwas schiefgelaufen",
   "signup-error-500-explanation": "Wir können die Anfrage aufgrund technischer Probleme aktuell nicht beantworten. Bitte versuchen Sie es später erneut.",
+
+  "login-error-400-explanation": "Ungültige Anfrage",
+  "login-error-401-explanation": "Falsche Zugangsdaten oder Account nicht vorhanden",
 
   "userForm-error-401-message": "Fehler - Unbefugt",
   "userForm-error-401-explanation": "Die Anfrage konnte nicht beendet werden, da Sie nicht über ausreichende Berechtigungen verfügen",
@@ -35,9 +43,25 @@
   "posttype-dropdown-jobOffer-option-text": "Stellenausschreibung",
   "posttype-dropdown-thesis-option-text": "Abschlussarbeit",
 
+  "faculty-dropdown-label": "Fakultät",
+  "faculty-enum-undefined-option": "Nicht definiert",
+  "faculty-enum-unset-option": "Keine Angabe",
+  "faculty-enum-PHIL-option": "PHIL - Philosophische Fakultät",
+  "faculty-enum-BAK-option": "BAK - Bildung - Architektur - Künste",
+  "faculty-enum-WIWI-option": "WIWI - Wirtschaftswissenschaften, Wirtschaftsinformatik und Wirtschaftsrecht",
+  "faculty-enum-NT-option": "NT - Naturwissenschaften und Technik",
+  "faculty-enum-LWF-option": "LWF - Lebenswissenschaftliche Fakultät",
+
+  "title-enum-undefined-option": "k.A",
+  "title-enum-0-option": "k.A",
+  "title-enum-1-option": "Bachelor",
+  "title-enum-2-option": "Master",
+  "title-enum-3-option": "Prof.",
+  "title-enum-4-option": "Prof. Dr.",
+
   "complete-your-profile-headline": "Vervollständige dein Profil",
   "complete-profile-personal-information-headline": "Persönliches",
-  "complete-profile-contact-information-headline": "Kontaktinformationen",
+  "complete-profile-contact-information-headline": "Kontakt",
   "complete-profile-adress-information-headline": "Anschrift",
   "complete-profile-firstName-label": "Vorname",
   "complete-profile-firstName-placeholder": "Vorname",
@@ -88,8 +112,8 @@
   "complete-profile-role-headline": "Rolle an der Universität",
   "complete-profile-skills-headline": "Fähigkeiten",
   "complete-profile-skill-input-placeholder": "Fähigkeit",
+  "complete-profile-skill-input-no-skills-yet": "Noch keine Fähigkeiten gelistet.",
   "complete-your-profile-add-skill-button": "Hinzufügen",
-
   "complete-your-profile-abort-button": "Abbrechen",
   "complete-your-profile-continue-button": "Abschließen",
 
@@ -101,6 +125,41 @@
   "profile-birthDate-label": "Geburtsdatum",
   "profile-matriculationNumber-label": "Matrikelnummer",
   "profile-courseOfStudy-label": "Studiengang",
+  "profile-matriculationDate-label": "Einschreibungsdatum",
+  "profile-exmatriculationDate-label": "Exmatrikulationsdatum",
+  "edit-profile-button-label": "Profil bearbeiten",
+  "profile-update-success-title": "Erfolg",
+  "profile-update-success-message": "Profil aktualisiert",
+
+  "accountManagement-edit-email-button-label": "Email ändern",
+  "accountManagement-edit-password-button-label": "Passwort ändern",
+  "accountManagement-delete-account-button-label": "Account löschen",
+
+  "accountManagement-delete-account-confirmation-modal-confirm-button-label": "Ich bin sicher, Account löschen",
+  "accountManagement-delete-account-confirmation-modal-cancel-button-label": "Abbrechen",
+  "accountManagement-delete-account-confirmation-modal-content": "Sind Sie sicher, dass Sie ihren Account beim Siegener Uni Netzwerk löschen wollen? Diese Aktion führt dazu, dass ihr Account samt ihrer Beiträge und Lehrstuhlzugehörigkeiten unwiederbringlich gelöscht wird. Sie werden unverzüglich abgemeldet und benötigen einen neuen Benutzeraccount, um sich wieder anzumelden.",
+  "accountManagement-confirm-account-deletion-headline": "Löschen ihres Accounts bestätigen?",
+
+  "accountManagement-edit-password-headline": "Passwort ändern",
+  "edit-password-modal-old-password-input-placeholder": "Altes Passwort",
+  "edit-password-modal-new-password-input-placeholder": "Neues Passwort",
+  "edit-password-form-success-message-title": "Erfolg",
+  "edit-password-form-success-message-message": "Passwort aktualisiert",
+  "edit-password-form-error-message-title": "Fehler",
+  "edit-password-form-error-message-message": "Passwort konnte nicht aktualisiert werden",
+
+  "accountManagement-edit-email-headline": "Account-Email bearbeiten",
+  "edit-private-email-modal-oldEmail-placeholder": "Alte Email",
+  "edit-private-email-modal-newEmail-placeholder": "Neue Email",
+  "edit-private-email-form-success-message-title": "Erfolg",
+  "edit-private-email-form-success-message-message": "Email aktualisiert",
+  "edit-private-email-form-error-title": "Fehler",
+  "edit-private-email-form-error-message": "Email konnte nicht aktualisiert werden",
+  "edit-private-email-form-error-409-title": "Konflikt",
+  "edit-private-email-form-error-409-message": "Email bereits vergeben",
+
+  "account-card-header": "Mein Account",
+  "account-card-email-label": "Private Email: ",
 
   "chair-card-email-label": "Email: ",
   "chair-card-phoneNumber-label": "Tel: ",
@@ -110,6 +169,7 @@
   "address-card-city-label": "Stadt:",
   "address-card-postCode-label": "PLZ:",
   "address-card-street-label": "Straße:",
+  "address-card-room-label": "Raum:",
 
   "contact-card-header": "Kontakt",
   "contact-card-email-label": "Email:",
@@ -130,6 +190,13 @@
   "postCard-eventPost-startsAt-label": "Beginn: ",
   "postCard-eventPost-endsAt-label": "Ende: ",
 
+  "postCard-confirm-post-deletion-modal-content": "Er wird dadurch unwiederbringlich gelöscht und ist auch auf der Seite des Lehrstuhls, auf der er veröffentlicht wurde, nicht mehr zu finden.",
+  "postCard-confirm-post-deletion-modal-headline": "Bist du sicher, dass du diesen Beitrag löschen möchtest?",
+  "postCard-confirm-post-deletion-modal-submit-button-label": "Bestätigen",
+  "postCard-confirm-post-deletion-modal-cancel-button-label": "Abbrechen",
+
+  "postCard-jobPost-hoursPerWeek-label": "Wochenstunden: ",
+
   "navbar-home-link-label": "Home",
   "navbar-profile-link-label": "Profil",
   "navbar-adminpanel-link-label": "Adminbereich",
@@ -146,17 +213,30 @@
   "landingpage-hero-call-to-action": "Los geht's",
   "landingpage-login-button-text": "Anmelden",
   "landingpage-signup-button-text": "Registrieren",
+  "landingpage-who-we-are-headline": "Wer wir sind",
+
   "landingpage-what-we-do-headline": "Wir bringen die Erfahrung, die du von sozialen Netzwerken gewohnt bist in dein Uni-Netz.",
   "landingpage-what-we-do-bodyText": "Soziale Netzwerke bringen instantane Updates aus der ganzen Welt zusammen. Gängige Universitätsnetzwerke kämpfen mit Inkonsistenzen, Undurchsichtigkeit und mittelmäßiger Organisation. Wir wollen helfen, diese Lücke zu schließen.",
   "landingpage-see-features-call-to-action": "Features",
 
+  "landingpage-valueprop-0-header": "Austausch",
+  "landingpage-valueprop-0-description": "Tausche dich mit deinen Kommolitonen aus und eröffne Lerngruppen!",
+  "landingpage-valueprop-1-header": "Events",
+  "landingpage-valueprop-1-description": "Informiere dich über die nächsten interessanten Events in deiner Nähe!",
+  "landingpage-valueprop-2-header": "Abschlussarbeiten",
+  "landingpage-valueprop-2-description": "Informiere dich über die neusten Abschlussarbeitsthemen direkt im Netzwerk!",
+  "landingpage-valueprop-3-header": "Start Up",
+  "landingpage-valueprop-3-description": "Du hast eine richtig gute Gründungsidee, aber niemand der Lust hat mitzumachen? Dann vernetze dich hier mit gleichgesinnten!",
+  "landingpage-valueprop-4-header": "Job",
+  "landingpage-valueprop-4-description": "Du suchst noch einen passenden Job für dich? Dann besuch unsere Job-Seite!",
+
   "landingpage-testimonials-text-0": "'Endlich zeitgemäßes Networking an Unis!'",
-  "landingpage-author-0-role": "Student",
-  "landingpage-author-0-name": "Peter",
+  "landingpage-testimonials-author-0-role": "Student",
+  "landingpage-testimonials-author-0-name": "Peter",
 
   "landingpage-testimonials-text-1": "'Mit SUN konnten wir die Zufriedenheit unserer Studenten spürbar steigern. Auch das Gründungsengagement ist gestiegen.'",
-  "landingpage-author-1-role": "Dekan",
-  "landingpage-author-1-name": "Volker W.",
+  "landingpage-testimonials-author-1-role": "Dekan",
+  "landingpage-testimonials-author-1-name": "Prof. Dr. Stefanie Erberas",
 
   "landingpage-footer-faq": "FAQ",
   "landingpage-footer-contact": "Kontakt",
@@ -174,8 +254,21 @@
   "adminpanel-menu-group-management-label": "Gruppenverwaltung",
   "adminpanel-menu-chair-management-label": "Lehrstuhlverwaltung",
 
-  "usermanagement-edit-user-headline": "Benutzer bearbeiten",
   "usermanagement-add-user-headline": "Neuen Benutzer anlegen",
+  "userManagement-create-user-success-title": "Erfolg",
+  "userManagement-create-user-success-message": "Benutzer angelegt",
+  "userManagement-create-user-error-title": "Fehler",
+
+  "usermanagement-edit-user-headline": "Benutzer bearbeiten",
+  "userManagement-edit-user-success-title": "Erfolg",
+  "userManagement-edit-user-success-message": "Benutzer editiert",
+  "userManagement-edit-user-error-title": "Fehler",
+
+  "userManagement-delete-user-success-title": "Erfolg",
+  "userManagement-delete-user-success-message": "Benutzer gelöscht",
+  "userManagement-delete-user-error-title": "Fehler",
+  "userManagement-delete-user-error-message": "Benutzer konnte nicht gelöscht werden",
+
   "complete-profile-account-information-headline": "Accountinformation",
 
   "usermanagement-tableheader-id": "BenutzerId",
@@ -199,6 +292,7 @@
 
   "chairManagement-tableheader-id": "LehrstuhlId",
   "chairManagement-tableheader-name": "Name",
+  "chairManagement-tableheader-faculty": "Fakultät",
   "chairManagement-tableheader-city": "Stadt",
   "chairManagement-tableheader-postCode": "Postleitzahl",
   "chairManagement-tableheader-street": "Straße",
@@ -210,7 +304,15 @@
   "chairmanagement-add-chair-headline": "Lehrstuhl hinzufügen",
   "chairmanagement-edit-chair-headline": "Lehrstuhl bearbeiten",
 
-  "chairManagement-delete-chair-success-title": "",
+  "chairManagement-create-chair-success-title": "Erfolg",
+  "chairManagement-create-chair-success-message": "Lehrstuhl angelegt",
+  "chairManagement-create-chair-error-title": "Fehler",
+
+  "chairManagement-edit-chair-success-title": "Erfolg",
+  "chairManagement-edit-chair-success-message": "Lehrstuhl editiert",
+  "chairManagement-edit-chair-error-title": "Fehler",
+
+  "chairManagement-delete-chair-success-title": "Erfolg",
   "chairManagement-delete-chair-success-message": "Lehrstuhl gelöscht",
 
   "chairForm-add-chair-core-data-headline": "Stammdaten",
@@ -222,14 +324,36 @@
   "chairManagement-edit-chair-button": "Lehrstuhl bearbeiten",
   "chairManagement-delete-chair-button": "Lehrstuhl löschen",
 
+  "new-event-modal-headline": "Neue Veranstaltung",
+  "new-event-modal-abort-button-label": "Abbrechen",
+  "new-event-modal-submit-button-label": "Posten ",
+
   "new-event-modal-startdate-label": "Beginn",
   "new-event-modal-startdate-placeholder": "Beginn",
-
   "new-event-modal-enddate-label": "Ende",
   "new-event-modal-enddate-placeholder": "Ende",
 
+  "new-post-modal-post-button-label": "Posten ",
+  "new-post-modal-abort-button-label": "Abbrechen",
+  "new-post-modal-headline": "Neuer Post",
+  "new-post-modal-postType-dropdown-placeholder": "Beitragsart wählen",
+  "new-post-modal-topic-textArea-placeholder": "Thema",
+  "new-post-modal-content-textArea-placeholder": "Beschreibung",
+  "new-post-modal-hoursPerWeekInput-label": "Arbeitsstunden pro Woche",
+  "new-post-modal-hoursPerWeekInput-placeholder": "Arbeitsstunden pro Woche",
+  "new-post-modal-hoursPerWeekInput-metric-label": "Wochenstunden",
+
+  "confirmModal-accept-button-text": "Alles klar",
+
   "home-page-no-subscriptions-placeholder": "Du hast noch keine Lehrstühle abonniert",
   "home-page-refresh-button-text": "Aktualisieren",
+  "homePage-all-chairs-card-headline": "Alle Lehrstühle",
+  "homePage-my-subscriptions-card-headline": "Meine Abonnements",
+
+  "searchResultPage-searchResult-list-header": "Suchergebnisse: ",
+  "searchResultPage-person-list-header": "Personen: ",
+  "searchResultPage-chair-list-header": "Lehrstühle: ",
+  "searchResultPage-post-list-header": "Beiträge: ",
 
   "languageswitcher-label": "Sprache",
 
@@ -241,12 +365,47 @@
   "chairpage-apply-to-chair-button-label": "Bewerben",
   "chairpage-new-post-button-label": "Neuer Post",
   "chairpage-chairName-headline": "Lehrstuhl",
+  "chairpage-faculty-headline": "",
   "chairpage-successfully-subscribed-message": "Erfolgreich abonniert",
   "chairpage-successfully-unsubscribed-message": "Erfolgreich deabonniert",
   "chairpage-successfully-applied-message": "Erfolgreich beworben",
   "chairpage-general-information-label": "Informationen",
   "chairpage-employee-fragment-applicants-headline": "Bewerber",
+  "chairpage-edit-chair-button-label": "Lehrstuhl bearbeiten",
 
+  "chairpage-apply-to-chair-modal-header": "Neue Bewerbung am Lehrstuhl ",
+  "chairpage-apply-to-chair-modal-error-headline": "Fehler",
+  "chairpage-apply-to-chair-modal-error-body": "Bewerbung konnte nicht abgeschickt werden, bitte versuchen Sie es später erneut",
+  "chairpage-apply-to-chair-modal-abort-button-label": "Abbrechen",
+  "chairpage-apply-to-chair-modal-submit-button-label": "Bewerbung abschicken",
+
+  "chairRoleList-add-role-button-label": "Hinzufügen",
+  "chairRoleList-for-chair-label": "bei Lehrstuhl",
+  "chairRoleList-no-items-placeholder": "Keine Lehrstuhlzugehörigkeit angegeben",
   "personList-no-items-placehodler": "Keine",
-  "chairpage-already-applied-button-label": "Bereits beworben"
+  "chairRoleList-chair-does-not-exist-label": "Lehrstuhl nicht vorhanden",
+  "chairpage-already-applied-button-label": "Bereits beworben",
+
+  "subscribeButton-active-label": "abonniert ✓",
+  "subscribeButton-unsubscribed-label": "abonnieren",
+
+  "personList-chairAdmin-checkbox-label": "Lehrstuhladministrator",
+  "personList-confirm-chairAdmin-change-button-label": "Bestätigen",
+  "personList-confirm-chairAdmin-appointed-content-1": "Sie sie sicher, dass sie ",
+  "personList-confirm-chairAdmin-appointed-content-2": " zum Lehrstuhladministrator ernennen wollen?",
+  "personList-confirm-chairAdmin-appointed-content-3": "Er/Sie wird dadurch in der Lage sein die Stammdaten des Lehrstuhls zu verwalten, Beiträge und Veranstaltungen im Namen des Lehrstuhls zu erstellen und zu löschen, sowie die Rechte anderer Mitarbeiter des Lehrstuhls zu verwalten",
+
+  "personList-confirm-chairAdmin-removed-content-1": "Sie sie sicher, dass sie ",
+  "personList-confirm-chairAdmin-removed-content-2": "die Rolle als Lehrstuhladministrator entziehen wollen?",
+  "personList-confirm-chairAdmin-removed-content-3": "Er/Sie wird dadurch nicht mehr in der Lage sein die Stammdaten des Lehrstuhls oder seine Mitarbeiter zu verwalten.",
+
+  "personList-cancel-chairAdmin-change-button-label": "Abbrechen",
+
+  "404-Page-Text": "404 - Wir konnten nicht finden wonach du suchst",
+
+  "formValidationMessages-required-email": "Email Adresse wird beötigt, um ihre Identität als Student oder Mitarbeiter zu verifizieren.",
+  "formValidationMessages-required-password": "Bitte geben Sie ein Passwort an.",
+  "formValidationMessages-invalid-email": "Ungültige Email Adresse",
+  "formValidationMessages-invalid-siegen-email": "Dies ist keine gültige Email-Adresse der Universität Siegen",
+  "formValidationMessages-password-strength": "Passwort muss mindestens einen Kleinbuchstaben, einen Großbuchstaben und eine Zahl enthalten, sowie mindestens 8 Zeichen lang sein."
 }

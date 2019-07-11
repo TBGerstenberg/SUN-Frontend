@@ -4,6 +4,10 @@ import Link from "redux-first-router-link";
 import { Icon } from "semantic-ui-react";
 import { navigationConstants } from "../redux/_constants";
 
+/**
+ * A component that displays a post-preview in a  list of searchresults
+ * @param {*} props
+ */
 const PostSearchResult = props => {
   return (
     <div>

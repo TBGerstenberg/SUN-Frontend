@@ -1,10 +1,15 @@
 import { redirect } from "redux-first-router";
-import navigationConstants from "./_constants/navigation.constants";
 import { FEATURE_CONFIG } from "../config/feature.config";
+import navigationConstants from "./_constants/navigation.constants";
 
 // package to build upon a previously exiting browser history
 const createHistory = require("history").createBrowserHistory;
 
+/**
+ * Configures the options-object that can be used to configure
+ * the behaviour of redux-first-router, the routing solution
+ * deployed in this project.
+ */
 const reduxFirstRouterOptions = {
   // Hook that fires before a navigation action is triggered
   onBeforeChange: (dispatch, getState, action) => {
@@ -12,6 +17,10 @@ const reduxFirstRouterOptions = {
     const loginState = state.login;
     const location = state.location;
 
+    // If enabled, routes that are configures as being protected
+    // in navigation.constants.js will trigger a redirect when
+    // visited unauthenticated or when the user does not have
+    // one of the required roles to access the route.
     if (
       FEATURE_CONFIG.authentication
         .redirectToLoginWhenAccessingProtectedRoutesUnauthenticated
@@ -39,11 +48,18 @@ const reduxFirstRouterOptions = {
     }
   },
 
+  // Sets redux-first router to connect to existing browsing-history
+  // when the router is initialized. So "back"-navigation in the browser works.
   history: createHistory,
 
   extra: {}
 };
 
+/**
+ * Utility that computes wether or not a user
+ * is allowed to visit a route based on his auth-data stored in
+ * the login-Node of the redux state.
+ */
 const isAllowedToVisitRoute = (navigationActionType, loginState, routesMap) => {
   const route = routesMap[navigationActionType];
   if (route && route.requiresAuth) {

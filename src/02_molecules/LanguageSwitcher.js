@@ -4,6 +4,10 @@ import { withTranslation } from "react-i18next";
 import { Button, Dropdown } from "semantic-ui-react";
 import "./LanguageSwitcher.css";
 
+/**
+ * A component capable of switching the current locale
+ * in the used internationalization solution i18next.
+ */
 const ChangeLanguage = props => {
   return (
     <Dropdown
@@ -16,7 +20,11 @@ const ChangeLanguage = props => {
           <Button
             size="mini"
             onClick={() => props.i18n.changeLanguage("de")}
-            style={{ backgroundColor: "rgba(0,0,0,0)", color: "black" }}
+            style={{
+              backgroundColor: "rgba(0,0,0,0)",
+              color: "black",
+              width: "100%"
+            }}
             className="languageSwitcher-button"
           >
             de
@@ -26,7 +34,11 @@ const ChangeLanguage = props => {
           <Button
             size="mini"
             onClick={() => props.i18n.changeLanguage("en")}
-            style={{ backgroundColor: "rgba(0,0,0,0)", color: "black" }}
+            style={{
+              backgroundColor: "rgba(0,0,0,0)",
+              color: "black",
+              width: "100%"
+            }}
             className="languageSwitcher-button"
           >
             en
@@ -39,25 +51,3 @@ const ChangeLanguage = props => {
 
 // extended main view with translate hoc
 export default withTranslation()(ChangeLanguage);
-
-{
-  /* <div className={"languageSwitcher"}>
-      <Button
-        size="mini"
-        onClick={() => props.i18n.changeLanguage("de")}
-        style={{ backgroundColor: "rgba(0,0,0,0)", color: "#FFF" }}
-        className="languageSwitcher-button"
-      >
-        de
-      </Button>
-      <Button
-        size="mini"
-        onClick={() => props.i18n.changeLanguage("en")}
-        color="white"
-        style={{ backgroundColor: "rgba(0,0,0,0)", color: "#FFF" }}
-        className="languageSwitcher-button"
-      >
-        en
-      </Button>
-    </div> */
-}

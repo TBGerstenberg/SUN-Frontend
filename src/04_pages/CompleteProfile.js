@@ -35,6 +35,10 @@ import {
 import { navigationConstants } from "../redux/_constants";
 import formValidationUtilities from "../utilities/formValidationUtilities";
 
+/**
+ *  Page that contains a form that lets users update their basic profile information
+ *  Currently displayed right after a succesful signup.
+ */
 class CompleteProfile extends React.Component {
   constructor(props) {
     super(props);
@@ -412,7 +416,7 @@ class CompleteProfile extends React.Component {
    * @param {} values
    */
   _handleCompleteProfileSubmit(values) {
-    const skillCatalogue = this.props.skillCatalogue;
+    /* const skillCatalogue = this.props.skillCatalogue;
     let skillsRatings = [];
 
     if (skillCatalogue) {
@@ -423,18 +427,18 @@ class CompleteProfile extends React.Component {
         });
       });
     }
-
-    const DEFAULT_DATE_IF_UNSET = "1990-01-01T00:00:00+01:00";
+ */
+    const DEFAULT_DATE_IF_UNSET = "1990-01-01T00:00:00";
     const DEFAULT_GENDER_IF_UNSET = 0;
 
     const birthDate = this.state.dateOfBirth
-      ? moment(this.state.dateOfBirth, "DD-MM-YYYY").format()
+      ? moment(this.state.dateOfBirth, "DD.MM.YYYY").format()
       : DEFAULT_DATE_IF_UNSET;
-    const matriculationDate = this.state.matriculationDate
-      ? moment(this.state.matriculationDate, "DD-MM-YYYY").format()
+    const matriculationDate = this.state.immatriculationDate
+      ? moment(this.state.immatriculationDate, "DD.MM.YYYY").format()
       : DEFAULT_DATE_IF_UNSET;
     const exmatriculationDate = this.state.exmatriculationDate
-      ? moment(this.state.exmatriculationDate, "DD-MM-YYYY").format()
+      ? moment(this.state.exmatriculationDate, "DD.MM.YYYY").format()
       : DEFAULT_DATE_IF_UNSET;
 
     // Values that are extracted from the various input fields, each field is either managed by redux form
@@ -462,14 +466,16 @@ class CompleteProfile extends React.Component {
         exmatriculationDate: exmatriculationDate
       },
       employeeStatus: null,
-      chairs: [values.chairs],
-      skills: skillsRatings
+      chairs: [values.chairs]
+      // skills: skillsRatings
     };
 
     const profile = new Person(profileValues);
 
     this.props.dispatch(userActions.updateProfile(profile));
   }
+
+  // Field rendering methods
 
   renderBirthDateInput() {
     return (
@@ -479,7 +485,7 @@ class CompleteProfile extends React.Component {
         value={this.state.dateOfBirth}
         iconPosition="left"
         onChange={this._handleDateOfBirthChange}
-        dateFormat="DD-MM-YYYY"
+        dateFormat="DD.MM.YYYY"
       />
     );
   }
@@ -495,7 +501,7 @@ class CompleteProfile extends React.Component {
         iconPosition="left"
         onChange={this._handleImmatriculationDateChange}
         label={i18next.t("complete-profile-immatriculationDate-label")}
-        dateFormat="DD-MM-YYYY"
+        dateFormat="DD.MM.YYYY"
       />
     );
   }
@@ -511,7 +517,7 @@ class CompleteProfile extends React.Component {
         iconPosition="left"
         onChange={this._handleExmatriculationDateChange}
         label={i18next.t("complete-profile-exmatriculationDate-label")}
-        dateFormat="DD-MM-YYYY"
+        dateFormat="DD.MM.YYYY"
       />
     );
   }

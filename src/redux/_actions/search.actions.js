@@ -1,6 +1,16 @@
-import { searchConstants } from "../_constants";
 import searchService from "../../services/searchService";
+import { searchConstants } from "../_constants";
 
+/** ************************************************************************************
+ *  Search-related action creators that dispatch actions like network requests
+ *  to the SUN-API and track their progress within redux, so that various components
+ *  in the component tree can react to events regarding these operations.
+ ****************************************************************************************/
+
+/**
+ * Performs a search-operation at the search API and tracks progress, success or failure within redux
+ * @param {String} query - the keysword that the search shall be performed for
+ */
 function search(query) {
   return async dispatch => {
     dispatch(request());
@@ -14,15 +24,15 @@ function search(query) {
   };
 
   /**
-   * Redux action creator triggered when a FETCH-ALL-request for chairs is started
+   * Redux action creator triggered when a search is started
    */
   function request() {
     return { type: searchConstants.SEARCH_REQUEST };
   }
 
   /**
-   * Redux action creator triggered when a FETCH-ALL-request succeeded
-   * @param {Array of objects } chairs - Chairs that have been fetched
+   * Redux action creator triggered when a search succeeded
+   * @param {Array of objects } searchResults - @See backend Postman Collection for details.
    */
   function success(searchResults) {
     return {
@@ -34,8 +44,8 @@ function search(query) {
   }
 
   /**
-   * Redux action creator triggered when a FETCH-ALL-request failed
-   * @param {*} error - Error object thrown when creating the registration request
+   * Redux action creator triggered when a search failed
+   * @param {*} error - Error object thrown when creating the request
    */
   function failure(error) {
     return { type: searchConstants.SEARCH_FAILURE, error };

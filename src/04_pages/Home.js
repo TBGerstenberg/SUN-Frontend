@@ -1,5 +1,6 @@
 import i18next from "i18next";
 import React from "react";
+import { Trans, withTranslation } from "react-i18next";
 import { connect } from "react-redux";
 import { Button, Card, Container, Grid, Icon, Image } from "semantic-ui-react";
 import AllChairsCard from "../03_organisms/AllChairsCard";
@@ -9,6 +10,10 @@ import SubscriptionList from "../03_organisms/SubscriptionList";
 import logoImageSource from "../assets/images/logo_blue.png";
 import { chairActions, postActions, userActions } from "../redux/_actions";
 
+/**
+ * Home page of the system - capable of displaying a list of posts in the news-feed,
+ * the chairs a user has subscribed to and a list of all chairs that are currently represented within the system.
+ */
 class Home extends React.Component {
   constructor(props) {
     super(props);
@@ -17,7 +22,6 @@ class Home extends React.Component {
 
   componentWillMount() {
     this.props.getAllChairs();
-    this.props.getAllUsers();
     this.props.getFeedPosts();
   }
 
@@ -51,10 +55,12 @@ class Home extends React.Component {
             </Grid.Row>
 
             <Grid.Row columns={3}>
-              <Grid.Column width={3} floated="left">
+              <Grid.Column width={4} floated="left">
                 <Card color="blue">
                   <Card.Content>
-                    <Card.Header>Alle Lehrstühle:</Card.Header>
+                    <Card.Header>
+                      <Trans i18nKey="homePage-all-chairs-card-headline" />
+                    </Card.Header>
                   </Card.Content>
                   <Card.Content>
                     {props.chairs &&
@@ -100,10 +106,12 @@ class Home extends React.Component {
                   </Card>
                 </Grid.Column>
               )}
-              <Grid.Column width={3} floated="right">
+              <Grid.Column width={4} floated="right">
                 <Card color="blue">
                   <Card.Content>
-                    <Card.Header>Meine Abonnements:</Card.Header>
+                    <Card.Header>
+                      <Trans i18nKey="homePage-my-subscriptions-card-headline" />
+                    </Card.Header>
                   </Card.Content>
                   <Card.Content>
                     {this.props.subs && (
@@ -126,7 +134,10 @@ class Home extends React.Component {
  */
 let mapStateToProps = state => {
   return {
-    subs: state.login.user ? state.login.user.person.subscriptions : [],
+    subs:
+      state.login.user && state.login.user.person
+        ? state.login.user.person.subscriptions
+        : [],
     chairs: state.chair.chairs,
     feedPosts: state.post.feedPosts,
     feedLoading: state.post.fetchingPosts
@@ -139,9 +150,11 @@ let mapDispatchToProps = {
   getFeedPosts: postActions.getFeedPosts
 };
 
-let HomeContainer = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Home);
+let HomeContainer = withTranslation()(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(Home)
+);
 
 export default HomeContainer;

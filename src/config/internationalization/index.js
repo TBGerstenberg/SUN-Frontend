@@ -6,6 +6,11 @@ import LanguageDetector from "i18next-browser-languagedetector";
 import common_de from "./locales/de/common.json";
 import common_en from "./locales/en/common.json";
 
+/**
+ * Loaded on startup. this file loads the language-specific files containg the texts
+ * of the application (exclusing user generated content) and configures react-i18next
+ * to use these files.
+ */
 const options = {
   interpolation: {
     escapeValue: false // not needed for react, since interpolation is done by react itself

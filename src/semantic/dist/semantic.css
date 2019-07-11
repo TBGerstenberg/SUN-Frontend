@@ -37184,7 +37184,7 @@ a.ui.nag {
 ---------------*/
 
 .pushable {
-  height: 100%;
+  height: auto !important;
   overflow-x: hidden;
   padding: 0em !important;
 }

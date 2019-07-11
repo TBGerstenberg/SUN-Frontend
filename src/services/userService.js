@@ -15,7 +15,7 @@ const userService = {
    */
 
   /**
-   * Issues an HTTP-POST request to Auth-API (config.login.POST_LOGIN_URL)
+   * Issues a HTTP-POST request to Auth-API (config.login.POST_LOGIN_URL)
    * @param email - Email of the user that shall be logged in
    * @param password - Password of the user that shall be logged in
    * @return {LoginResponse}
@@ -27,15 +27,6 @@ const userService = {
         email: email,
         password: password
       };
-
-      console.log(
-        "Issuing a login request with " +
-          postLoginRequestBody.email +
-          " and " +
-          postLoginRequestBody.password +
-          "to " +
-          API_CONFIG.LOGIN.POST_LOGIN_URL
-      );
 
       // Perform the http request
       const LoginResponse = await apiClient.post(
@@ -63,6 +54,26 @@ const userService = {
       }
     } catch (error) {
       return { authToken: null, user: null, status: null, error: error };
+    }
+  },
+
+  /**
+   * Issues a HTTP-GET request to Auth-API (config.login.GET_SESSION_URL)
+   * that refreshes the session of a given user
+   */
+  getSession: async () => {
+    try {
+      // Perform the request
+      const getSessionRequest = await apiClient.get(
+        API_CONFIG.LOGIN.GET_SESSION_URL
+      );
+
+      // Handle the response
+      if (getSessionRequest.status === 200) {
+        return getSessionRequest;
+      }
+    } catch (error) {
+      return error;
     }
   },
 
@@ -104,26 +115,11 @@ const userService = {
         //consentToTermsOfService: consentToTermsOfService
       };
 
-      console.log(
-        "Issuing a Signup request with " +
-          registrationRequestBody.Email +
-          " and " +
-          registrationRequestBody.Password +
-          " and consent to data processing:  " +
-          consentToDataProcessingAgreement +
-          " and Consent to terms of service:  " +
-          consentToTermsOfService +
-          "to  " +
-          API_CONFIG.REGISTRATION.POST_REGISTRATION_URL
-      );
-
       // Perform the request
       const signupResponse = await apiClient.post(
         API_CONFIG.REGISTRATION.POST_REGISTRATION_URL,
         registrationRequestBody
       );
-
-      console.log(signupResponse);
 
       // Handle the response
       if (signupResponse) {
@@ -183,8 +179,6 @@ const userService = {
         skills: profile.skills
       };
 
-      console.log(updateProfileRequestBody);
-
       // Perform the request
       const updateProfileResponse = await apiClient.put(
         API_CONFIG.USERS.UPDATE_PROFILE_URL + profile.userId,
@@ -226,20 +220,22 @@ const userService = {
     }
   },
 
+  /**
+   * Fetches a single user identified by his userId
+   * @param {Number} userId unique identifier of the user to fetch
+   */
   getSingleUser: async userId => {
     try {
-      console.log("Fetching user with id " + userId + "In service layer");
       // Perform the request
       const getSingleUserResponse = await apiClient.get(
         API_CONFIG.USERS.GET_SINGLE_USER_URL(userId)
       );
 
-      console.log(getSingleUserResponse);
       // Handle the response
       if (getSingleUserResponse.status === 200) {
-        console.log("Request succeeded");
         return {
           user: getSingleUserResponse.data,
+          status: getSingleUserResponse.status,
           error: null
         };
       }

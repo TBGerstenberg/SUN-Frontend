@@ -4,6 +4,10 @@ import Link from "redux-first-router-link";
 import { Icon } from "semantic-ui-react";
 import { navigationConstants } from "../redux/_constants";
 
+/**
+ * A component that displays a person-preview in a  list of searchresults
+ * @param {*} props
+ */
 const PersonSearchResult = props => {
   return (
     <div>

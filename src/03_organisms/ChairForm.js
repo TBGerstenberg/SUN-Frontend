@@ -6,6 +6,7 @@ import { LabelInputField } from "react-semantic-redux-form";
 import { Field, reduxForm } from "redux-form";
 import { Button, Divider, Form, Grid, Header } from "semantic-ui-react";
 import CityNameInput from "../02_molecules/CityNameInput";
+import FacultyDropdownSelector from "../02_molecules/FacultyDropdownSelector";
 import PhoneNumberInput from "../02_molecules/PhoneNumberInput";
 import PostalCodeInput from "../02_molecules/PostalCodeInput";
 import StreetNameInput from "../02_molecules/StreetNameInput";
@@ -74,6 +75,13 @@ class ChairForm extends React.Component {
           <Grid.Row textAlign="left">
             <Grid.Column width={6} textAlign="left">
               {this.renderChairNameInput()}
+            </Grid.Column>
+            <Grid.Column width={6} />
+          </Grid.Row>
+
+          <Grid.Row textAlign="left">
+            <Grid.Column width={6} textAlign="left">
+              <FacultyDropdownSelector />
             </Grid.Column>
             <Grid.Column width={6} />
           </Grid.Row>
@@ -167,6 +175,7 @@ class ChairForm extends React.Component {
                 control={Button}
                 secondary
                 onClick={props.onAbortButtonClick}
+                type="button"
               >
                 {i18next.t("complete-your-profile-abort-button")}
               </Form.Field>
@@ -228,6 +237,7 @@ class ChairForm extends React.Component {
     // or via the components state.
     const chairValues = {
       name: values.chairName,
+      faculty: values.faculty,
       address: {
         city: values.cityName,
         postCode: values.postCode,
@@ -266,6 +276,7 @@ const mapStateToProps = (state, ownProps) => {
   if (ownProps.chair) {
     const initialValues = {
       chairName: ownProps.chair.name || "",
+      faculty: ownProps.chair.faculty || 0,
       cityName: ownProps.chair.address ? ownProps.chair.address.city : "",
       postCode: ownProps.chair.address ? ownProps.chair.address.postCode : "",
       street: ownProps.chair.address ? ownProps.chair.address.street : "",

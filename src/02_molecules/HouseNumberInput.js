@@ -4,6 +4,10 @@ import { withTranslation } from "react-i18next";
 import { LabelInputField } from "react-semantic-redux-form";
 import { Field } from "redux-form";
 
+/**
+ * A number-based input field for a housenumber
+ * @param {*} props
+ */
 const HouseNumberInput = props => {
   return (
     <Field

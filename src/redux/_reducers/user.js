@@ -1,5 +1,18 @@
 import { userConstants } from "../_constants";
 
+/***************************************************************
+ * Redux reducer that reacts to user-related redux-actions dispatched
+ * by one or more action creatos and changes the application state accordingly.
+ * This reducer handles application state that contains users other than
+ * the one currently logged in.
+ * Each reducer represents a first-level node in the application state
+ * that is represented as a tree of JS-objects. This reducer manages
+ * the first-level node called "user" and all objects nested in
+ * lower levels of the state tree below the "user"-node.
+ * The below "initialstate" is used to define how the state-tree
+ * managed by this reducer looks like when initialized.
+ **************************************************************/
+
 const initialState = { users: [] };
 
 const userReducer = (state = initialState, action) => {
@@ -14,14 +27,16 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         fetchingUser: false,
-        currentlyViewedUser: action.user
+        currentlyViewedUser: action.user,
+        userFetchStatus: action.status
       };
 
     case userConstants.GET_SINGLE_USER_FAILURE:
       return {
         ...state,
         fetchingUser: false,
-        ownProfileFetchError: action.error
+        userFetchError: action.error,
+        userFetchStatus: action.error.error.response.status
       };
 
     case userConstants.UPDATE_USER_PROFILE_REQUEST:
@@ -62,6 +77,7 @@ const userReducer = (state = initialState, action) => {
         ...state,
         error: action.error
       };
+
     default:
       return state;
   }

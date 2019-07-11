@@ -3,7 +3,6 @@ import { Trans, withTranslation } from "react-i18next";
 import { Card } from "semantic-ui-react";
 
 const ChairCard = props => {
-  console.log(props);
   return (
     <Card color="blue">
       <Card.Content>

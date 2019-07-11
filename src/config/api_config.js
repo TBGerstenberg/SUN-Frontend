@@ -1,21 +1,31 @@
 const BASEURL = "http://localhost:5000/api";
 
+/**
+ * Central configuration for the backend-endpoints utilized by the various
+ * service classes in the system.
+ */
 const API_CONFIG = {
   BASEURL: "http://localhost:5000/api",
   ACCOUNT: {
     GET_ALL_ACCOUNTS_URL: BASEURL + "/account",
+
     EDIT_ACCCOUNT_URL: BASEURL + "/account/", // : accountId
+
     DELETE_ACCOUNT_URL: accountId => {
       return BASEURL + "/account/" + accountId; // : accountId
     }
   },
+
   REGISTRATION: {
     POST_REGISTRATION_URL: BASEURL + "/auth/signup"
   },
+
   LOGIN: {
     POST_LOGIN_URL: BASEURL + "/auth/login",
+    GET_SESSION_URL: BASEURL + "/auth/session",
     GET_LOGOUT_URL: BASEURL + "/auth/logout"
   },
+
   USERS: {
     GET_ALL_USERS_URL: BASEURL + "/person",
     GET_SINGLE_USER_URL: userId => {
@@ -52,10 +62,9 @@ const API_CONFIG = {
     CREATE_PERSON_CHAIR_RELATION_URL: chairId => {
       return BASEURL + "/chairs/" + chairId + "/my-relation";
     },
-    UPDATE_PERSON_CHAIR_RELATION_URL: chairId => {
+    UPDATE_PERSON_CHAIR_RELATIONS_URL: chairId => {
       return BASEURL + "/chairs/" + chairId + "/admin/person-relations";
-    },
-    UPDATE_ALL_PERSON_CHAIR_RELATIONS_URL: chairId => {}
+    }
   },
 
   POSTS: {
@@ -72,7 +81,7 @@ const API_CONFIG = {
       return BASEURL + "/posts/" + postId;
     },
     DELETE_POST_URL: postId => {
-      return BASEURL + "/posts/" + postId;
+      return BASEURL + "/post/" + postId;
     },
     GET_FEED_POSTS_URL: () => {
       return BASEURL + "/feed";

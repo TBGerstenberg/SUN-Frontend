@@ -17,7 +17,8 @@ const navigationConstants = {
   NAVIGATE_TO_JOB_PAGE: "NAVIGATE_TO_JOB_PAGE",
   NAVIGATE_TO_CHAIR_PAGE: "NAVIGATE_TO_CHAIR_PAGE",
   NAVIGATE_TO_ALLCHAIRS_PAGE: "NAVIGATE_TO_ALLCHAIRS_PAGE",
-  NAVIGATE_TO_SEARCH_PAGE: "NAVIGATE_TO_SEARCH_PAGE"
+  NAVIGATE_TO_SEARCH_PAGE: "NAVIGATE_TO_SEARCH_PAGE",
+  NAVIGATE_TO_ACCOUNT_MANAGEMENT: "NAVIGATE_TO_ACCOUNT_MANAGEMENT"
 };
 
 /**
@@ -74,12 +75,16 @@ export const routesMap = {
     path: "/search",
     requiresAuth: true,
     role: ""
+  },
+  NAVIGATE_TO_ACCOUNT_MANAGEMENT: {
+    path: "/my-account",
+    requiresAuth: true,
+    role: ""
   }
 };
 
 /**
  * Maps Redux-actions to components that shall be rendered when an action is dispatched.
- * Is used in
  */
 export const componentsMap = {
   NAVIGATE_TO_LOGIN: "Login",
@@ -95,7 +100,7 @@ export const componentsMap = {
   NAVIGATE_TO_CHAIR_PAGE: "ChairPage",
   NAVIGATE_TO_ALLCHAIRS_PAGE: "AllChairs",
   NAVIGATE_TO_SEARCH_PAGE: "Search",
-
+  NAVIGATE_TO_ACCOUNT_MANAGEMENT: "AccountManagement",
   [NOT_FOUND]: "NotFound"
 };
 

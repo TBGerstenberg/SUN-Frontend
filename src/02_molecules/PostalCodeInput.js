@@ -4,6 +4,10 @@ import { withTranslation } from "react-i18next";
 import { LabelInputField } from "react-semantic-redux-form";
 import { Field } from "redux-form";
 
+/**
+ * An Input field capable of displaying a postcode
+ * @param {*} props
+ */
 const PostalCodeInput = props => {
   return (
     <Field

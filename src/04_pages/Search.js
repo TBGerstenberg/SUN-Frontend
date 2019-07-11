@@ -1,4 +1,5 @@
 import React from "react";
+import { Trans } from "react-i18next";
 import { connect } from "react-redux";
 import { Container, Grid, Header } from "semantic-ui-react";
 import ChairCard from "../03_organisms/ChairCard";
@@ -7,6 +8,12 @@ import PersonCard from "../03_organisms/PersonCard";
 import PostCard from "../03_organisms/PostCard";
 import { chairActions, postActions, userActions } from "../redux/_actions";
 
+/**
+ * Page that is reached when pressing enter in the navbar without
+ * having selected an entry of the search results. Capable of
+ * displaying a (potentially) endless list of persons, chairs
+ * or posts.
+ */
 class Search extends React.Component {
   constructor(props) {
     super(props);
@@ -23,20 +30,26 @@ class Search extends React.Component {
           <Grid>
             <Grid.Row columns={1}>
               <Grid.Column width={16} verticalAlign="middle">
-                <Header>Suchergebnisse:</Header>
+                <Header>
+                  <Trans i18nKey="searchResultPage-searchResult-list-header" />
+                </Header>
               </Grid.Column>
             </Grid.Row>
 
             <Grid.Row columns={3}>
               <Grid.Column width={5}>
-                <Header>Personen:</Header>
+                <Header>
+                  <Trans i18nKey="searchResultPage-person-list-header" />
+                </Header>
                 {props.users &&
                   props.users.map((user, index) => {
                     return <PersonCard user={user} />;
                   })}
               </Grid.Column>
               <Grid.Column width={5}>
-                <Header>Lehrstühle:</Header>
+                <Header>
+                  <Trans i18nKey="searchResultPage-chair-list-header" />
+                </Header>
                 {props.chairs &&
                   props.chairs.map((chair, index) => {
                     return (
@@ -49,7 +62,9 @@ class Search extends React.Component {
                   })}
               </Grid.Column>
               <Grid.Column width={5}>
-                <Header>Postings:</Header>
+                <Header>
+                  <Trans i18nKey="searchResultPage-post-list-header" />
+                </Header>
                 {props.posts &&
                   props.posts.map((post, index) => {
                     return <PostCard post={post} />;

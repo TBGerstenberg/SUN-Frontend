@@ -1,10 +1,15 @@
 import React from "react";
+import { Trans, withTranslation } from "react-i18next";
 import { connect } from "react-redux";
 import { Container, Grid, Header } from "semantic-ui-react";
 import ChairCard from "../03_organisms/ChairCard";
 import NavBar from "../03_organisms/NavBar";
 import { chairActions } from "../redux/_actions";
 
+/**
+ * A Component capable of rendering a list of all chairs
+ * in a Card-based Layout.
+ */
 class AllChairs extends React.Component {
   constructor(props) {
     super(props);
@@ -64,15 +69,17 @@ let mapDispatchToProps = {
   getAllChairs: chairActions.getAllChairs
 };
 
-let chairContainer = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AllChairs);
+let chairContainer = withTranslation()(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(AllChairs)
+);
 
 const HeaderAllChairsPage = () => {
   return (
     <Header as="h1" color="blue">
-      Alle Lehrstühle
+      <Trans i18nKey="homePage-all-chairs-card-headline" />
     </Header>
   );
 };

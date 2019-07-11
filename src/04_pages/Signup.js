@@ -40,6 +40,9 @@ class Signup extends React.Component {
     );
   }
 
+  /**
+   * Triggers a redirect to the complete-profile page
+   */
   redirectToCompleteProfilePage() {
     const action = redirect({
       type: navigationConstants.NAVIGATE_TO_COMPLETE_PROFILE
@@ -59,55 +62,81 @@ class Signup extends React.Component {
             style={{ height: "100%" }}
             verticalAlign="middle"
           >
-            <Grid.Column style={{ maxWidth: 400 }}>
-              <LanguageSwitcher />
-              <Segment stacked>
-                <Header as="h2" color="blue" textAlign="center">
-                  <Trans i18nKey="signup-a-new-account-headline" />
-                </Header>
+            <Grid.Row>
+              <Grid.Column
+                style={{ maxWidth: 400, marginTop: "20px", float: "right" }}
+              >
+                <LanguageSwitcher style={{ float: "right" }} />
+              </Grid.Column>
+            </Grid.Row>
 
-                <Form
-                  onSubmit={this.props.handleSubmit(
-                    this._handleRegistrationSubmit.bind(this)
-                  )}
-                >
-                  <EmailInput
-                    validate={[
-                      formValidationUtilities.requiredEmail,
-                      formValidationUtilities.email,
-                      formValidationUtilities.uniSiegenEmail
-                    ]}
-                  />
+            <Grid.Row>
+              <Grid.Column style={{ maxWidth: 400 }}>
+                <Segment stacked>
+                  <Header as="h2" color="blue" textAlign="center">
+                    <Trans i18nKey="signup-a-new-account-headline" />
+                  </Header>
 
-                  <PasswordInput />
-
-                  <Form.Group>
-                    <Field
-                      name="consentToDataProcessingAgreement"
-                      component={CheckboxField}
-                      label={this._renderToSAgreementSnippet()}
-                      error={this.state.ToSCheckboxError}
+                  <Form
+                    onSubmit={this.props.handleSubmit(
+                      this._handleRegistrationSubmit.bind(this)
+                    )}
+                  >
+                    <EmailInput
+                      name="email"
+                      placeholder={i18next.t("signup-email-input-placeholder")}
+                      validate={[
+                        formValidationUtilities.requiredEmail,
+                        formValidationUtilities.email,
+                        formValidationUtilities.uniSiegenEmail
+                      ]}
                     />
-                  </Form.Group>
 
-                  <Form.Field control={Button} primary type="submit">
-                    {i18next.t("signup-a-new-account-call-to-action-button")}
-                  </Form.Field>
-                </Form>
-              </Segment>
-              <Trans i18nKey="signup-message-already-have-an-account" />
-              <Link to="/">
-                <Trans i18nKey="signup-message-already-have-an-account-call-to-action" />
-              </Link>
-              {this.props.registrationErrorStatus &&
-                this.renderErrorMessage(this.props.registrationErrorStatus)}
-            </Grid.Column>
+                    <PasswordInput
+                      name="password"
+                      placeholder={i18next.t(
+                        "signup-password-input-placeholder"
+                      )}
+                      validators={[
+                        formValidationUtilities.requiredPassword,
+                        formValidationUtilities.passwordStrength,
+                        formValidationUtilities.passwordNotJochen
+                      ]}
+                    />
+
+                    <Form.Group>
+                      <Field
+                        name="consentToDataProcessingAgreement"
+                        component={CheckboxField}
+                        label={this._renderToSAgreementSnippet()}
+                        error={this.state.ToSCheckboxError}
+                      />
+                    </Form.Group>
+
+                    <Form.Field control={Button} primary type="submit">
+                      {i18next.t("signup-a-new-account-call-to-action-button")}
+                    </Form.Field>
+                  </Form>
+                </Segment>
+                <Trans i18nKey="signup-message-already-have-an-account" />
+                <Link to="/">
+                  <Trans i18nKey="signup-message-already-have-an-account-call-to-action" />
+                </Link>
+                {this.props.registrationErrorStatus &&
+                  this.renderErrorMessage(this.props.registrationErrorStatus)}
+              </Grid.Column>
+            </Grid.Row>
           </Grid>
         </Container>
       </div>
     );
   }
 
+  /**
+   * Renders a snippet that explains that a user has to comply to
+   * the terms of service and data-processing agreement
+   * in order to sign up.
+   */
   _renderToSAgreementSnippet() {
     const tos_snippet = (
       <label>
@@ -155,6 +184,10 @@ class Signup extends React.Component {
     );
   }
 
+  /**
+   * Renders signup-errors localized to the users language.
+   * @param {Number} status - HTTP Statuscode of the error.
+   */
   renderErrorMessage(status) {
     return (
       <Message negative>

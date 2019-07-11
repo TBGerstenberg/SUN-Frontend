@@ -1,5 +1,11 @@
-import { userConstants } from "../_constants";
 import { userService } from "../../services";
+import { userConstants } from "../_constants";
+
+/** ************************************************************************************
+ *  User-related action creators that dispatch actions like network requests
+ *  to the SUN-API and track their progress within redux, so that various components
+ *  in the component tree can react to events regarding these operations.
+ ****************************************************************************************/
 
 /**
  * Isses a Registration request, tracking its progress and status in the redux store by dispatching actions
@@ -249,7 +255,9 @@ function getSingleUser(userId) {
     const getSingleUserResponse = await userService.getSingleUser(userId);
 
     if (getSingleUserResponse && getSingleUserResponse.user) {
-      dispatch(success(getSingleUserResponse.user));
+      dispatch(
+        success(getSingleUserResponse.user, getSingleUserResponse.status)
+      );
     } else {
       dispatch(failure(getSingleUserResponse));
     }
@@ -259,15 +267,81 @@ function getSingleUser(userId) {
     return { type: userConstants.GET_SINGLE_USER_REQUEST };
   }
 
-  function success(user) {
-    return { type: userConstants.GET_SINGLE_USER_SUCCESS, user };
+  function success(user, status) {
+    return { type: userConstants.GET_SINGLE_USER_SUCCESS, user, status };
   }
 
   function failure(error) {
-    return { type: userConstants.UPDATE_USER_PROFILE_FAILURE, error };
+    return { type: userConstants.GET_SINGLE_USER_FAILURE, error };
   }
 }
 
+/**
+ * Fetches a session for the currently logged in user
+ */
+function getSession() {
+  return async dispatch => {
+    dispatch(request());
+
+    const getSessionRequest = await userService.getSession();
+
+    if (getSessionRequest && getSessionRequest.status === 200) {
+      dispatch(
+        success(getSessionRequest.data.account, getSessionRequest.data.token)
+      );
+    } else {
+      dispatch(failure(getSessionRequest));
+    }
+  };
+
+  function request() {
+    return { type: userConstants.GET_SESSION_REQUEST };
+  }
+
+  function success(user, authToken) {
+    return {
+      type: userConstants.GET_SESSION_SUCCESS,
+      payload: { user: user, token: authToken }
+    };
+  }
+
+  function failure(error) {
+    return { type: userConstants.GET_SESSION_FAILURE };
+  }
+}
+
+/**
+ * Requests to the delete the account with "accountId".
+ */
+function deleteAccount(accountId) {
+  return async (dispatch, getState) => {
+    dispatch(request());
+
+    const deleteAccountRequest = await userService.deleteAccount(accountId);
+
+    if (deleteAccountRequest && deleteAccountRequest.status === 200) {
+      dispatch(success());
+    } else {
+      dispatch(failure(deleteAccountRequest.error));
+    }
+  };
+
+  function request() {
+    return { type: userConstants.DELETE_ACCOUNT_REQUEST };
+  }
+
+  function success(user) {
+    return { type: userConstants.DELETE_ACCOUNT_SUCCESS, user };
+  }
+
+  function failure(error) {
+    return { type: userConstants.DELETE_ACCOUNT_FAILURE, error };
+  }
+}
+
+/**
+ * Adds a subscription to a chair to the logged-in-user
+ */
 function addSubscription(subscription) {
   return {
     type: userConstants.ADD_SUBSCRIPTION,
@@ -275,6 +349,9 @@ function addSubscription(subscription) {
   };
 }
 
+/**
+ * Removes a subscription to a chair to the logged-in-user
+ */
 function removeSubscription(subscription) {
   return {
     type: userConstants.REMOVE_SUBSCRIPTION,
@@ -282,15 +359,32 @@ function removeSubscription(subscription) {
   };
 }
 
+/**
+ * Updates the primary email of an acccount.
+ * NOTE: This operation is implemented seperately from update-profile
+ * as it may require additional security checks, like confirming with a password
+ * that is not stored on the client side
+ * @param {String} updatedEmail
+ */
+function updateAccountEmail(updatedEmail) {
+  return {
+    type: userConstants.UPDATE_ACCOUNT_EMAIL,
+    payload: { updatedEmail: updatedEmail }
+  };
+}
+
 const userActions = {
   register,
   login,
+  getSession,
   logout,
   getAllUsers,
   getSingleUser,
   updateProfile,
   addSubscription,
-  removeSubscription
+  removeSubscription,
+  deleteAccount,
+  updateAccountEmail
 };
 
 export default userActions;
