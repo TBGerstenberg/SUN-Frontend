@@ -3,11 +3,13 @@
 Frontend für das "Siegener Uni Netzwerk" (SUN) - ein System für die Lehrveranstaltung "Implementierung von Anwendungssystemen" der Universität Siegen. Erstellt in der Entwicklungssprache Javascript unter Verwendung der React.Js Library im Viewlayer, Redux als State-Management Lösung und Semantic-UI-React als CSS Framework.
 Bootstrapped mit der Create-React-App.
 
-Abhängigkeiten des Projektes samt Versionsnummern sind in src/package.json notiert. Die Komponenten sind nach Brad Frost's philosophie zur Strukturierung von Design-Systemen "Atomic Design" strukturiert.
+Abhängigkeiten des Projektes samt Versionsnummern sind in src/package.json notiert. Die Komponenten sind nach Brad Frost's philosophie zur Strukturierung von Design-Systemen "Atomic Design" strukturiert. Für mehr information, besuche: http://bradfrost.com/blog/post/atomic-web-design/. Die Entwicklung fand im FE-Team mithilfe der Git-Flow Methodik statt. Für jedes Feature wurde - sofern sinnvoll - ein eigener Git-Branch geführt. Feature Branches wurden auf dem Development-branch zusammengeführt und zum "release"-datum des Projekts auf einen Release-Branch (aktuell Master)überführt.
 
-http://bradfrost.com/blog/post/atomic-web-design/
+Ausgeliefert wird dieses Frontend vom ASP.NET basierten Backend,
+zu finden unter https://github.com/TobiGe/SUN-Backend. Der Service wurde für mehrpersonen tests und zu demonstrationszwecken auch unter
+http://impl.uni.zilles.io bereitgestellt.
 
-## Ausführen
+## Das Projekt im Entwicklungsmodus Ausführen
 
 Falls notwendig - git kommandozeilentool herunterladen
 
@@ -29,15 +31,11 @@ Dann:
 2. Abhängigkeiten installieren `npm install`
 3. Development Server starten `npm run start`
 
-
 ## Globale Styles verändern
 
 Falls globale Styleinformationen des verwendeten CSS Frameworks Semantic UI verändert werden sollen, kann dies über die ./semantic.json geschehen. Die Befehle `npm build semantic` erzeugen dann optimierte css-files mit den neuen Einstellungen.
 
-# Original Create-React-App README
-
-
-# Create React App - README
+## Original Create-React-App README
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
