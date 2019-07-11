@@ -10,10 +10,10 @@ import {
   Container,
   Grid,
   Header,
+  Image,
   Label,
   Placeholder,
-  Segment,
-  Image
+  Segment
 } from "semantic-ui-react";
 import BodyText from "../01_atoms/BodyText";
 import AddEntityModal from "../03_organisms/AddEntityModal";
@@ -21,25 +21,35 @@ import AddressCard from "../03_organisms/AdressCard";
 import ContactCard from "../03_organisms/ContactCard";
 import NavBar from "../03_organisms/NavBar";
 import UserForm from "../03_organisms/UserForm";
+import christianImage from "../assets/images/christian.jpg";
+import danielImage from "../assets/images/daniel.jpg";
+import elliotImage from "../assets/images/elliot.jpg";
+import helenImage from "../assets/images/helen.jpg";
+import jennyImage from "../assets/images/jenny.jpg";
+import matthewImage from "../assets/images/matthew.png";
+import mollyImage from "../assets/images/molly.png";
+import rachelImage from "../assets/images/rachel.png";
+import stevieImage from "../assets/images/stevie.jpg";
+import tomImage from "../assets/images/tom.jpg";
+import veronikaImage from "../assets/images/veronika.jpg";
 import { navigationActions, userActions } from "../redux/_actions";
 import tableFormattingUtilities from "../utilities/tableFormattingUtilities";
 
-
 var randomMaleImages = [
-  require("../assets/images/christian.jpg"),
-  require("../assets/images/matthew.png"),
-  require("../assets/images/tom.jpg"),
-  require("../assets/images/daniel.jpg"),
-  require("../assets/images/elliot.jpg")
+  christianImage,
+  matthewImage,
+  tomImage,
+  danielImage,
+  elliotImage
 ];
 
 var randomFemaleImages = [
-  require("../assets/images/helen.jpg"),
-  require("../assets/images/jenny.jpg"),
-  require("../assets/images/molly.png"),
-  require("../assets/images/rachel.png"),
-  require("../assets/images/stevie.jpg"),
-  require("../assets/images/veronika.jpg")
+  helenImage,
+  jennyImage,
+  mollyImage,
+  rachelImage,
+  stevieImage,
+  veronikaImage
 ];
 
 class Profile extends React.Component {
@@ -55,12 +65,11 @@ class Profile extends React.Component {
           Math.floor(Math.random() * randomFemaleImages.length)
         ],
       gender: 0,
-      imageSource:null
+      imageSource: null
     };
 
     this.closeEditUserModal = this.closeEditUserModal.bind(this);
     this.openEditUserModal = this.openEditUserModal.bind(this);
-   
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -96,8 +105,6 @@ class Profile extends React.Component {
     if (props.profileFetchStatus && props.profileFetchStatus === 404) {
       this.props.dispatch(navigationActions.redirect(NOT_FOUND));
     }
-
-   
 
     if (this.props.loggedInUsersAccount) {
       userCanEditProfile =

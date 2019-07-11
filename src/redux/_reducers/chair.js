@@ -58,16 +58,20 @@ const chairReducer = (state = initialState, action) => {
       return { ...state };
 
     case postConstants.REMOVE_POST_SUCCESS:
-      let mutatedChairPosts = [...state.chairPosts];
-      const indexOfDeletedChair = mutatedChairPosts.findIndex(post => {
-        return (post.id = action.removedPostId);
-      });
-      mutatedChairPosts.splice(indexOfDeletedChair, 1);
+      if (state.chairPosts) {
+        let mutatedChairPosts = [...state.chairPosts];
+        const indexOfDeletedChair = mutatedChairPosts.findIndex(post => {
+          return (post.id = action.removedPostId);
+        });
+        mutatedChairPosts.splice(indexOfDeletedChair, 1);
 
-      return {
-        ...state,
-        chairPosts: mutatedChairPosts
-      };
+        return {
+          ...state,
+          chairPosts: mutatedChairPosts
+        };
+      } else {
+        return state;
+      }
 
     case postConstants.REMOVE_POST_FAILURE:
       return {

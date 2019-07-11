@@ -40,6 +40,10 @@ class PostCard extends React.Component {
     }
   }
 
+  /**
+   * Renders a Button to delete the post, given that the viewer has permission to do so
+   * @param {Boolean} userCanDeletePost - Flag indicating wether the viewer can delete the post or not.
+   */
   renderDeletePostButton(userCanDeletePost) {
     return (
       <>
@@ -59,6 +63,10 @@ class PostCard extends React.Component {
     );
   }
 
+  /**
+   * Renders a post of type "generic".
+   * @param {*} props - React props handed to the PostCard
+   */
   renderStandardPost(props) {
     return (
       <Card color="blue" fluid className="postCard-container">
@@ -111,6 +119,10 @@ class PostCard extends React.Component {
     );
   }
 
+  /**
+   * Renders a post of type "Thesis / Graduation Work".
+   * @param {*} props - React props handed to the PostCard
+   */
   renderThesisPost(props) {
     return (
       <Card color="blue" fluid className="postCard-container">
@@ -182,6 +194,10 @@ class PostCard extends React.Component {
     );
   }
 
+  /**
+   * Renders a post of type "Event".
+   * @param {*} props - React props handed to the PostCard
+   */
   renderEventPost(props) {
     return (
       <Card color="blue" fluid className="postCard-container">
