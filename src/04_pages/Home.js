@@ -18,7 +18,6 @@ class Home extends React.Component {
 
   componentWillMount() {
     this.props.getAllChairs();
-    this.props.getAllUsers();
     this.props.getFeedPosts();
   }
 
