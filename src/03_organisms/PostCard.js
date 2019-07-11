@@ -389,6 +389,7 @@ class PostCard extends React.Component {
    */
   async triggerPostDeletion() {
     this.props.dispatch(postActions.deletePost(this.state.postToBeRendered.id));
+    this.setState({ confirmPostDeletionModalOpen: false });
   }
 }
 
