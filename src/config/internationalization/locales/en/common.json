@@ -129,7 +129,7 @@
   "profile-update-success-title": "Success",
   "profile-update-success-message": "Profile updated",
 
-  "accountManagement-edit-email-button-label": "Edit Pmail",
+  "accountManagement-edit-email-button-label": "Edit Email",
   "accountManagement-edit-password-button-label": "Edit Password",
   "accountManagement-delete-account-button-label": "Delete Account",
 
@@ -395,5 +395,11 @@
 
   "personList-cancel-chairAdmin-change-button-label": "Cancel",
 
-  "404-Page-Text": "404 - We could not find what you were looking for"
+  "404-Page-Text": "404 - We could not find what you were looking for",
+
+  "formValidationMessages-required-email": "A valid email from your organization is required to validate your identity and status as a student or employee.",
+  "formValidationMessages-required-password": "Please specify a password",
+  "formValidationMessages-invalid-email": "Invalid Email",
+  "formValidationMessages-invalid-siegen-email": "This is not a valid email from the University of Siegen.",
+  "formValidationMessages-password-strength": "Password needs to have at least one lower case letter, one upper case letter, at least one number and must be at least 8 characters long."
 }

@@ -6,6 +6,7 @@ import { reduxForm } from "redux-form";
 import { Button, Form, Grid, Header } from "semantic-ui-react";
 import PasswordInput from "../02_molecules/PasswordInput";
 import { accountService } from "../services";
+import formValidationUtilities from "../utilities/formValidationUtilities";
 
 class EditEmailForm extends React.Component {
   constructor(props) {
@@ -42,12 +43,20 @@ class EditEmailForm extends React.Component {
                 placeholder={i18next.t(
                   "edit-password-modal-old-password-input-placeholder"
                 )}
+                validators={[
+                  formValidationUtilities.requiredPassword,
+                  formValidationUtilities.passwordStrength
+                ]}
               />
               <PasswordInput
                 name="newPassword"
                 placeholder={i18next.t(
                   "edit-password-modal-new-password-input-placeholder"
                 )}
+                validators={[
+                  formValidationUtilities.requiredPassword,
+                  formValidationUtilities.passwordStrength
+                ]}
               />
             </Grid.Column>
           </Grid.Row>

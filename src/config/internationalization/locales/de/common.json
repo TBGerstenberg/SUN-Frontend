@@ -394,5 +394,11 @@
 
   "personList-cancel-chairAdmin-change-button-label": "Abbrechen",
 
-  "404-Page-Text": "404 - Wir konnten nicht finden wonach du suchst"
+  "404-Page-Text": "404 - Wir konnten nicht finden wonach du suchst",
+
+  "formValidationMessages-required-email": "Email Adresse wird beötigt, um ihre Identität als Student oder Mitarbeiter zu verifizieren.",
+  "formValidationMessages-required-password": "Bitte geben Sie ein Passwort an.",
+  "formValidationMessages-invalid-email": "Ungültige Email Adresse",
+  "formValidationMessages-invalid-siegen-email": "Dies ist keine gültige Email-Adresse der Universität Siegen",
+  "formValidationMessages-password-strength": "Passwort muss mindestens einen Kleinbuchstaben, einen Großbuchstaben und eine Zahl enthalten, sowie mindestens 8 Zeichen lang sein."
 }

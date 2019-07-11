@@ -7,6 +7,7 @@ import { Icon } from "semantic-ui-react";
 const EmailInput = props => {
   return (
     <Field
+      disabled={props.disabled || false}
       name={props.name}
       component={LabelInputField}
       label={{

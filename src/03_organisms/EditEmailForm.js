@@ -6,6 +6,7 @@ import { reduxForm } from "redux-form";
 import { Button, Form, Grid, Header } from "semantic-ui-react";
 import EmailInput from "../02_molecules/EmailInput";
 import { accountService } from "../services";
+import formValidationUtilities from "../utilities/formValidationUtilities";
 
 class EditEmailForm extends React.Component {
   constructor(props) {
@@ -39,6 +40,7 @@ class EditEmailForm extends React.Component {
           <Grid.Row>
             <Grid.Column width={16}>
               <EmailInput
+                disabled
                 name="oldEmail"
                 placeholder={i18next.t(
                   "edit-private-email-modal-oldEmail-placeholder"
@@ -49,6 +51,11 @@ class EditEmailForm extends React.Component {
                 placeholder={i18next.t(
                   "edit-private-email-modal-newEmail-placeholder"
                 )}
+                validate={[
+                  formValidationUtilities.requiredEmail,
+                  formValidationUtilities.email,
+                  formValidationUtilities.uniSiegenEmail
+                ]}
               />
             </Grid.Column>
           </Grid.Row>

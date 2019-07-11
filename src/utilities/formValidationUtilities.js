@@ -1,14 +1,13 @@
+import i18next from "i18next";
+
 const formValidationUtilities = {
   required: value => {
-    console.log(value);
     return value ? undefined : false;
   },
   requiredEmail: value =>
-    value
-      ? undefined
-      : "Email Adresse wird beötigt, um ihre Identität als Student oder Mitarbeiter zu verifizieren.",
+    value ? undefined : i18next.t("formValidationMessages-required-email"),
   requiredPassword: value =>
-    value ? undefined : "Bitte geben Sie ein Passwort an.",
+    value ? undefined : i18next.t("formValidationMessages-required-password"),
   maxLength: max => value =>
     value && value.length > max
       ? `Must be ${max} characters or less`
@@ -19,15 +18,15 @@ const formValidationUtilities = {
     value && value < min ? `Must be at least ${min}` : undefined,
   email: value =>
     value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)
-      ? "Ungültige Email Adresse"
+      ? i18next.t("formValidationMessages-invalid-email")
       : undefined,
   uniSiegenEmail: value =>
     value && !/.+@(student\.)?uni-siegen\.de/.test(value)
-      ? "Dies ist keine gültige Uni Siegen Email"
+      ? i18next.t("formValidationMessages-invalid-siegen-email")
       : undefined,
   passwordStrength: value =>
     value && !/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/.test(value)
-      ? "Passwort muss mindestens einen Kleinbuchstaben, einen Großbuchstaben und eine Zahl enthalten, sowie mindestens 8 Zeichen lang sein."
+      ? i18next.t("formValidationMessages-password-strength")
       : undefined,
   passwordNotJochen: value =>
     value && value.indexOf("Jochen") !== -1 && value.indexOf("jochen") !== -1
