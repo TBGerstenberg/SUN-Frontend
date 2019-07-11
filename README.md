@@ -11,8 +11,8 @@ http://bradfrost.com/blog/post/atomic-web-design/
 
 Falls notwendig - git kommandozeilentool herunterladen
 
-> > https://git-scm.com/downloads
-> > Windows: https://gitforwindows.org/
+https://git-scm.com/downloads
+Windows: https://gitforwindows.org/
 
 Repository klonen mit
 
@@ -29,11 +29,15 @@ Dann:
 2. Abhängigkeiten installieren `npm install`
 3. Development Server starten `npm run start`
 
+
 ## Globale Styles verändern
 
 Falls globale Styleinformationen des verwendeten CSS Frameworks Semantic UI verändert werden sollen, kann dies über die ./semantic.json geschehen. Die Befehle `npm build semantic` erzeugen dann optimierte css-files mit den neuen Einstellungen.
 
 # Original Create-React-App README
+
+
+# Create React App - README
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
